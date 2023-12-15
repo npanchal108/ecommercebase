@@ -4,9 +4,9 @@ import { CommonModule } from '@angular/common';
 import { wishlistRoutingModule } from './wishlist-routing.module';
 import { WishlistComponent } from './wishlist.component';
 
-import { sharedModule } from '../shared.module';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+
 import { FormsModule } from '@angular/forms';
+import { sharedModule } from '../model/shared.module';
 
 
 
@@ -21,7 +21,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     FormsModule,
     sharedModule,
-    TypeaheadModule,
+    //TypeaheadModule,
     wishlistRoutingModule
     
   ],

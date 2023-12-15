@@ -9,9 +9,10 @@ import { SEOService } from '../services/seo.service';
 // import * as $ from 'jquery';
 
 import { Subscription } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { filter, map } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment.development';
+
 @Component({
   selector: 'app-wishlist',
   templateUrl: './wishlist.component.html',
@@ -25,7 +26,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
   currentwishlist: any;
   currentproductlist: any;
   addtonotavail: any;
-  showdiv: string;
+  showdiv: string | undefined;
   itemList: any;
   newitem: any;
   warehouse: any;
@@ -114,11 +115,11 @@ export class WishlistComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._routerSub.unsubscribe();
   }
-  searchallnew(token) {
+  searchallnew(token: string) {
     this.dataSource = this.filterResults(token);
   }
 
-  onplus(pro) {
+  onplus(pro: { quantity: number; }) {
     if (pro.quantity > 0) {
       pro.quantity = pro.quantity + 1;
     }
@@ -127,7 +128,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
     }
   }
 
-  onminus(pro) {
+  onminus(pro: { quantity: number; }) {
     if (pro.quantity > 0) {
       pro.quantity = pro.quantity - 1;
     }
@@ -148,10 +149,9 @@ export class WishlistComponent implements OnInit, OnDestroy {
       customer: Common.getWithExpiry("CustID"),
       company_sy: Common.getWithExpiry("company_sy")
     }
-    return this.http.post(environment.APIUrl + '/Product/GetProductListBySearchforheader', pmodel, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) })
-      .map((results: any[]) => results.filter(res => res.freeform.toLowerCase().indexOf(token.toLowerCase()) > -1));
+    return this.http.post(environment.APIUrl + '/Product/GetProductListBySearchforheader', pmodel, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) }).pipe(map((results: any) => results.filter((res:any) => res.freeform.toLowerCase().indexOf(token.toLowerCase()) > -1)));
   }
-  typeaheadOnSelect(event) {
+  typeaheadOnSelect(event: { item: { itemname: any; } | null | undefined; }) {
     if (event.item != undefined && event.item != null) {
       this.newitem = event.item.itemname;
     }
@@ -266,7 +266,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
     }
 
   }
-  getumdescbyumcode(umcode) {
+  getumdescbyumcode(umcode: string) {
     if (this.isumdescr == '1') {
       for (var i = 0; i < this.umdescrlist.length; i++) {
         if (this.umdescrlist[i].code.toLowerCase() == umcode.toLowerCase()) {
@@ -520,7 +520,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
       }
     });
   }
-  findandreplace(stringval) {
+  findandreplace(stringval: string) {
     try {
       stringval = stringval.trim();
       stringval = stringval.replace(new RegExp("\/", "g"), '');
@@ -530,7 +530,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
   }
 
 
-  RemoveSpacesandSpeacialCharacters(str) {
+  RemoveSpacesandSpeacialCharacters(str: string) {
     try {
       str = str.trim();
       var newString = str.replace(/[^A-Z0-9]+/ig, "-");
@@ -597,14 +597,14 @@ export class WishlistComponent implements OnInit, OnDestroy {
       this.wishlist = res;
     });
   }
-  onbluerevent(item) {
+  onbluerevent(item: { quantity: number; }) {
     if (item.quantity > 0) {
       this.itemList.push(item);
     }
   }
-  onKeydown(event, item, i) {
+  onKeydown(event: { key: string; }, item: { quantity: number; }, i: any) {
     if (event.key === "Enter" && item.quantity > 0) {
-      this.Addtocart(item, i);
+      this.Addtocart(item);
     }
     else {
       if (item.quantity < 0) {
@@ -613,7 +613,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
       }
     }
   }
-  Addtocart(getitem, i) {
+  Addtocart(getitem: any) {
 
     try {
       if (getitem.quantity != undefined) {
@@ -648,7 +648,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
               }
               else {
                 this.toastr.error(getitem.itemname + " is not available", 'Message!');
-                i = i + 1;
+                //i = i + 1;
                 //$("#" + i).focus();
               }
 
@@ -657,7 +657,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
                 warehouse: Common.getWithExpiry("warehouse"),
                 company_sy: Common.getWithExpiry("company_sy")
               }
-              var getproduct = null;
+              var getproduct: any;
               for (let cprod of this.cartProducts) {
                 if (cprod.itemname == getitem.itemname) {
                   getproduct = cprod;
@@ -799,7 +799,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
                     this.toastr.success(getitem.quantity + " " + this.getumdescbyumcode(getitem.units.trim().replace('"', '').replace('"', '')) + " of item " + getitem.itemname + " has been added to your cart.", 'Success!');
                     getitem.quantity = "";
                   })
-                  i = i + 1;
+                  //i = i + 1;
                   //$("#" + i).focus();
 
                 })
@@ -816,11 +816,11 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
     } catch (exception) {
       this.toastr.error("Cannot be added to cart", 'Product not available!');
-      i = i + 1;
+      //i = i + 1;
       //$("#" + i).focus();
     }
   }
-  getproductprice(bulkPrice) {
+  getproductprice(bulkPrice: string | any[] | null | undefined) {
     if (bulkPrice != null && bulkPrice != undefined && bulkPrice.length > 0) {
       this.cartService.getBulkPrice(bulkPrice).subscribe((res: any) => {
         var data = res;
@@ -836,10 +836,10 @@ export class WishlistComponent implements OnInit, OnDestroy {
   }
 
 
-  GetwishlistProductByID(wishlistId) {
+  GetwishlistProductByID(wishlistId: any) {
     this.dataService.GetwishlistProductByID(wishlistId, Common.getWithExpiry("CustID")).subscribe((res: any) => {
       this.currentproductlist = res;
-      var bulkPrice = [];
+      var bulkPrice:any= [];
       for (let oo of this.currentproductlist) {
 
         if (oo.item.indexOf('~') != -1) {
@@ -906,7 +906,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
     });
   }
-  DeletewishlistByID(wishlistId) {
+  DeletewishlistByID(wishlistId: any) {
     this.dataService.Deletewishlistbyusername(wishlistId).subscribe((res: any) => {
       var results = res;
       if (results) {
@@ -953,7 +953,7 @@ export class WishlistComponent implements OnInit, OnDestroy {
     });
   }
 
-  AddProducttowishlist(WishlistitemID, WishlistID, item, Qty) {
+  AddProducttowishlist(WishlistitemID: null, WishlistID: any, item: any, Qty: number) {
     this.dataService.AddProducttowishlist(WishlistitemID, WishlistID, item, Qty).subscribe((res: any) => {
       var results = res;
       if (results) {
@@ -965,14 +965,14 @@ export class WishlistComponent implements OnInit, OnDestroy {
       }
     });
   }
-  Clicktoeditwishlist(currentwishlist) {
+  Clicktoeditwishlist(currentwishlist: { canEditCode: boolean; }) {
     currentwishlist.canEditCode = true;
     //window.setTimeout(() =>{
     const element = this.renderer.selectRootElement("#WishlistName");
     element.focus();
     //});
   }
-  Addwishlistheader(WishlistName) {
+  Addwishlistheader(WishlistName: string | null | undefined) {
 
     if (WishlistName == undefined || WishlistName == undefined || WishlistName == null || WishlistName == '') {
       this.toastr.error("Enter the " + this.wishlistlable + " name", 'Message!');
@@ -998,14 +998,14 @@ export class WishlistComponent implements OnInit, OnDestroy {
         this.toastr.success("Invalid quantity", 'Message!');
       }
       else {
-        this.Addtocart(this.itemList[i], i);
+        this.Addtocart(this.itemList[i]);
       }
     }
     this.itemList = [];
     //$(".text-input").val('');
   }
 
-  createnewlist(WishlistID) {
+  createnewlist(WishlistID: number) {
     if (WishlistID > 0) {
       this.showdiv = '2';
       this.Getcurrentwishlist(WishlistID);
@@ -1025,20 +1025,20 @@ export class WishlistComponent implements OnInit, OnDestroy {
       });
     }
   }
-  navigatetowishdetails(WishlistID) {
+  navigatetowishdetails(WishlistID: any) {
     this.showdiv = '2';
     this.itemList = [];
     this.Getcurrentwishlist(WishlistID);
     this.GetwishlistProductByID(WishlistID);
   }
-  Getcurrentwishlist(WishlistID) {
+  Getcurrentwishlist(WishlistID: any) {
     for (let wish1 of this.wishlist) {
       if (wish1.WishlistID == WishlistID) {
         this.currentwishlist = wish1;
       }
     }
   }
-  DeleteProducttowishlist(WishlistID, wishlistproductid) {
+  DeleteProducttowishlist(WishlistID: any, wishlistproductid: any) {
     this.dataService.DeleteProducttowishlist(wishlistproductid).subscribe((res: any) => {
       var results = res;
       if (results) {

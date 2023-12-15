@@ -12,10 +12,10 @@ export const AppRoutes: Routes = [
     path: 'sitemap',
     loadChildren: () => import('./sitemap/sitemap.module').then(m => m.SitemapModule)
   },
-  // {
-  //   path: 'wishlist/:item',
-  //   loadChildren: () => import('./wishlist/wishlist.module').then(m => m.wishlistModule)
-  // },
+  {
+    path: 'wishlist/:item',
+    loadChildren: () => import('./wishlist/wishlist.module').then(m => m.wishlistModule)
+  },
   // {
   //   path: 'rfqlist/:item/:rfqid',canActivate: [AuthGuardGuard],
   //   loadChildren: () => import('./rfqlist/rfqlist.module').then(m => m.rfqlistModule)
