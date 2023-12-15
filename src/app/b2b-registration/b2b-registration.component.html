@@ -1,0 +1,100 @@
+<div class="section-box posi-absolute">
+  <div class="breadcrumbs-div">
+      <div class="container-fluid">
+          <ul class="breadcrumb">
+              <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+              <li><a class="font-xs color-gray-500" href="b2b-registration">Registration</a></li>
+          </ul>
+      </div>
+  </div>
+</div>
+<form *ngIf="isShowForm" #registerForm="ngForm" novalidate (ngSubmit)="OnSubmit(registerForm)">
+  <section class="section-box shop-template mt-60 padding-lr-80">
+    
+      <div class="row mb-100 mt-30">
+        <div class="col-md-12 border-bottom">
+          <!-- <h3>Create an account</h3> -->
+          <h1 class="head-text">{{RegistrationLable}}</h1>
+          <p class="font-md color-gray-500">All fields marked with an asterisk (*) must be completed</p>
+        </div>
+        <div class="col-lg-12">
+          <form action="" class="requires-validation" novalidate>
+            <div class="form-register align-flex mt-30">
+
+              <div class="col-md-4" id="rc{{rcontrol.controlid}}" *ngFor="let rcontrol of registrationcontrols">
+                <div class="form-group" id="fg{{rcontrol.controlid}}">
+                  <label class="mb-5 font-sm color-gray-700"
+                    id="it{{rcontrol.controlid}}">{{rcontrol.controlname}}</label>
+                  <div class="did-floating-label-content mb-0">
+                    <input class="did-floating-input brder-color-grey" type="text" id="con{{rcontrol.controlid}}"
+                      class="form-control unicase-form-control text-input" [(ngModel)]="rcontrol.DefaultValues"
+                      [disabled]="rcontrol.IsDisabled" [ngModelOptions]="{standalone: true}"
+                      name="{{rcontrol.DefaultValues}}" autocomplete="off" *ngIf="rcontrol.controltype=='textbox'">
+
+                    <select class="did-floating-select" id="con{{rcontrol.controlid}}"
+                      *ngIf="rcontrol.controltype=='dropdown' && rcontrol.dropdowntype=='state'"
+                      (change)="onStateChange($event.target.value)" [ngModelOptions]="{standalone:true}"
+                      [(ngModel)]='rcontrol.DefaultValues' id="State">
+                      <option value="0">Select State</option>
+                      <option *ngFor="let state of stateList" [value]="state.state" [disabled]="rcontrol.IsDisabled">
+                        {{state.descr}}
+                      </option>
+                    </select>
+                    <select id="con{{rcontrol.controlid}}"
+                      *ngIf="rcontrol.controltype=='dropdown' && rcontrol.dropdowntype=='country'"
+                      [ngModelOptions]="{standalone:true}" [(ngModel)]='rcontrol.DefaultValues'
+                      class="did-floating-select" (change)="onCountryChange($event.target.value)">
+                      <option *ngFor="let country of countryList" [value]="country.country_code"
+                        [disabled]="rcontrol.IsDisabled">
+                        {{country.country_descr}}
+                      </option>
+                    </select>
+                    <input id="con{{rcontrol.controlid}}" *ngIf="rcontrol.controltype=='bit'" class="checkagree"
+                      type="checkbox" #rcontrol.controlname="ngModel" [disabled]="rcontrol.IsDisabled"
+                      [(ngModel)]="rcontrol.DefaultValues" name="rcontrol.controlname">
+                    <select *ngIf="rcontrol.controltype=='dropdown' && rcontrol.dropdowntype=='Other'"
+                      [ngModelOptions]="{standalone:true}" [(ngModel)]='rcontrol.DefaultValues'
+                      id="con{{rcontrol.controlid}}" class="did-floating-select">
+                      <option *ngFor="let opt of rcontrol.optionlist" [value]="opt" [disabled]="rcontrol.IsDisabled">
+                        {{opt}}
+                      </option>
+                    </select>
+
+                    <label class="did-floating-label">{{rcontrol.controlname}} <span *ngIf="rcontrol.isrequired"
+                      id="sp{{rcontrol.controlid}}">*</span></label>
+                    <div class="invalid-feedback">{{rcontrol.controlname}} cannot be blank.</div>
+
+                  </div>
+                </div>
+              </div>
+
+
+
+              <div class="col-md-12" *ngIf="isError==true">
+                <div class="form-group">
+                  <label class="text-danger"> {{Errormsg}}</label>
+                </div>
+              </div>
+              <div class="col-md-12" *ngIf="iscaptcha=='1'">
+                <div class="form-group">
+                  <re-captcha name="resolved" (resolved)="resolved($event)" required
+                    siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+                </div>
+              </div>
+
+              <div class="col-md-12 outer-bottom-small m-t-20">
+                <button type="button" *ngIf="isvalidateemail==true" (click)="OnSubmit(registerForm)"
+                  class="btn btn-buy mr-15 w-auto mb-10">Submit</button>
+              </div>
+
+            </div>
+          </form>
+          <div *ngIf="isShowMsg" class="b2bmsg">
+            <h4> {{returnmsg}}
+            </h4>
+          </div>
+        </div>
+      </div>
+  </section>
+  </form>
+  

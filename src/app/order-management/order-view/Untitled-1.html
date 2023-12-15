@@ -1,0 +1,72 @@
+<div class="col-md-6"
+    *ngIf="(priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q'))">
+    <div class="col-md-6"
+        *ngIf="(orderHead.oe_head_curx_o_tot_gross!=undefined && orderHead.oe_head_curx_o_tot_gross!=null && orderHead.oe_head_curx_o_tot_gross>0)
+                || (orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[7]!=undefined && orderHead.misc_dec[7]!=null && orderHead.misc_dec[7]!='')">
+        <div>Sub Total</div>
+        <div data-title="Sub Total" style="text-align: right;" colspan="2">
+            <span *ngIf="type!=1 && orderHead.oe_head_rec_type!='I'"
+                style="font-weight: bold;">${{orderHead.oe_head_curx_o_tot_gross |
+                million}}</span>
+            <span *ngIf="type!=1 && orderHead.oe_head_rec_type=='I'"
+                style="font-weight: bold;">${{orderHead.oe_head_curx_c_tot_gross |
+                million}}</span>
+            <span
+                *ngIf="type==1 && orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[7]!=undefined && orderHead.misc_dec[7]!=null && orderHead.misc_dec[7]!=''"
+                style="font-weight: bold;">${{orderHead.misc_dec[7] | million}}</span>
+        </div>
+    </div>
+    <ng-container *ngFor="let totCode of aftertotcodes;let i = index">
+        <div *ngIf="totCode.amt!=undefined && totCode.amt!=null && totCode.amt>0">
+            <div *ngIf="totCode != ''">{{totCode.name}}</div>
+            <div data-title="Code" colspan="2" style="text-align: right;" *ngIf="totCode != ''">
+                <span style="font-weight: bold;">${{totCode.amt | million}}</span>
+            </div>
+        </div>
+    </ng-container>
+    <div *ngIf="(orderHead.oe_head_curx_o_tot_tax_amt !=undefined && orderHead.oe_head_curx_o_tot_tax_amt!=null && orderHead.oe_head_curx_o_tot_tax_amt>0)
+                || (orderHead.tax_amount !=undefined && orderHead.tax_amount!=null && orderHead.tax_amount>0)">
+        <div>TAX</div>
+        <div data-title="Freight" style="text-align: right;" colspan="2">
+            <span *ngIf="type!=1" style="font-weight: bold;">${{orderHead.oe_head_curx_o_tot_tax_amt |
+                million}}</span>
+            <span *ngIf="type==1" style="font-weight: bold;">${{orderHead.tax_amount |
+                million}}</span>
+        </div>
+    </div>
+    <div class="col-md-6"
+        *ngIf="type!=1 && orderHead.oe_head_curx_o_disc_amt!=undefined && orderHead.oe_head_curx_o_disc_amt!=null && orderHead.oe_head_curx_o_disc_amt>0">
+        <div>Discount</div>
+        <div data-title="Tax" style="text-align: right;" colspan="2">
+            <span *ngIf="type!=1" style="font-weight: bold;">${{orderHead.oe_head_curx_o_disc_amt |
+                million}}</span>
+            <span *ngIf="type==1" style="font-weight: bold;">${{orderHead.oe_head_curx_o_disc_amt |
+                million}}</span>
+        </div>
+    </div>
+    <div class="col-md-6"
+        *ngIf="type!=1 && orderHead.oe_head_curx_o_deposit!=undefined && orderHead.oe_head_curx_o_deposit!=null && orderHead.oe_head_curx_o_deposit>0">
+        <div>Payment</div>
+        <div data-title="Tax" style="text-align: right;" colspan="2">
+            <span *ngIf="type!=1" style="font-weight: bold;">${{orderHead.oe_head_curx_o_deposit
+                | million}}</span>
+            <span *ngIf="type==1" style="font-weight: bold;">${{orderHead.oe_head_curx_o_deposit
+                | million}}</span>
+        </div>
+    </div>
+    <div class="col-md-6"
+        *ngIf="(orderHead.oe_head_curx_o_tot_net_ar !=undefined && orderHead.oe_head_curx_o_tot_net_ar!=null && orderHead.oe_head_curx_o_tot_net_ar>0)
+                || (orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[8]!=undefined && orderHead.misc_dec[8]!=null && orderHead.misc_dec[8]!='')">
+        <div>
+            <span *ngIf="type!=1 && orderHead.oe_head_rec_type!='I'"
+                style="font-weight: bold;">${{orderHead.oe_head_curx_o_tot_net_ar |
+                million}}</span>
+            <span *ngIf="type!=1 && orderHead.oe_head_rec_type=='I'"
+                style="font-weight: bold;">${{orderHead.oe_head_curx_c_tot_net_ar |
+                million}}</span>
+            <span
+                *ngIf="type==1 && orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[8]!=undefined && orderHead.misc_dec[8]!=null && orderHead.misc_dec[8]!=''"
+                style="font-weight: bold;">${{orderHead.misc_dec[8] | million}}</span>
+        </div>
+    </div>
+</div>

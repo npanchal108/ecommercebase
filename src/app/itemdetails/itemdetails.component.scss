@@ -1,0 +1,41 @@
+.center {
+    margin: auto;
+    width: 50%;
+    padding: 10px;
+}
+
+// .fa{
+//     font-size: x-large;
+// }
+.btn-primary {
+    line-height: 32px;
+}
+
+// A:hover { COLOR: orange !important; TEXT-DECORATION: none;}
+.pimage {
+    width: 100%;
+    height: 100%;
+}
+
+#Position:hover {
+    color: white;
+}
+.refresh-btn{
+    border: none;
+    background: none;
+}
+.refresh-icon-clr{
+    color: #008B99;
+}
+.go-icon-clr{
+    color: #008B99;
+    font-size: 17px;
+}
+.item-details-align-flex{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.item-details-list-checkbox{
+    display: flex !important;
+}

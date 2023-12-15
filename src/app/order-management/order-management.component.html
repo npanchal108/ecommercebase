@@ -1,0 +1,106 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                <li *ngIf="isactive=='po'" (click)="pendingOrderClick()"><a class="font-xs color-gray-500" href="/order-management/pending-order">Pending Orders</a></li>
+                <li *ngIf="isactive=='os'" (click)="openshipmentClick()"><a class="font-xs color-gray-500" href="/order-management/open-shipment">Open Shipment</a></li>
+                <li *ngIf="isactive=='bo' && !iskyraden" (click)="BOClick()"><a class="font-xs color-gray-500" href="/order-management/back-orders">{{backorderlable}}</a></li>
+                <li *ngIf="isactive=='ES' && iskyraden" (click)="ESClick()"><a class="font-xs color-gray-500" href="/order-management/expected-shipment">{{expectedshipmentlable}}</a></li>
+                <li *ngIf="isactive=='oi'" (click)="OIClick()"><a class="font-xs color-gray-500" href="/order-management/invoices">Open Invoices</a></li>
+                <li *ngIf="isactive=='oh'" (click)="OHClick()"><a class="font-xs color-gray-500" href="/order-management/order-history">Order History</a></li>
+                <li *ngIf="isactive=='ph'" (click)="PHClick()"><a class="font-xs color-gray-500" href="/order-management/purchase-history">Purchase History</a></li>
+                <li *ngIf="isactive=='cp'" (click)="CPClick()"><a class="font-xs color-gray-500" href="/order-management/customer-products">{{customerlable}}</a></li>
+                <li *ngIf="isactive=='HD'" (click)="HDClick()"><a class="font-xs color-gray-500" href="/order-management/HelpDesk">Help Desk</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<br />
+<br />
+<div class="head-main bd-gray-200 mt-20">
+    <div class="row align-items-center padding-lr-80">
+        <div class="col-lg-6">
+            <!-- <h3 class="mb-5">Pending Orders</h3> -->
+            <h1 class="head-text" *ngIf="isactive=='po'" (click)="pendingOrderClick()"><a href="/order-management/pending-order">Pending Orders</a></h1>
+            <h1 class="head-text" *ngIf="isactive=='os'" (click)="openshipmentClick()"><a href="/order-management/open-shipment">Open Shipment</a></h1>
+            <h1 class="head-text" *ngIf="isactive=='bo' && !iskyraden" (click)="BOClick()"><a href="/order-management/back-orders">{{backorderlable}}</a></h1>
+            <h1 class="head-text" *ngIf="isactive=='ES' && iskyraden" (click)="ESClick()"><a href="/order-management/expected-shipment">{{expectedshipmentlable}}</a></h1>
+            <h1 class="head-text" *ngIf="isactive=='oi'" (click)="OIClick()"><a href="/order-management/invoices">Open Invoices</a></h1>
+            <h1 class="head-text" *ngIf="isactive=='oh'" (click)="OHClick()"><a href="/order-management/order-history">Order History</a></h1>
+            <!-- <h3 *ngIf="isactive=='ph'" (click)="PHClick()"><a href="javascript:void(0);"> Quick Order</a></h3> -->
+            <h1 class="head-text" *ngIf="isactive=='ph'" (click)="PHClick()"><a href="/order-management/purchase-history">Purchase History </a></h1>
+            <h1 class="head-text" *ngIf="isactive=='cp'" (click)="CPClick()"><a href="/order-management/customer-products">{{customerlable}}</a></h1>
+            <h1 class="head-text" *ngIf="isactive=='HD'" (click)="HDClick()"><a href="/order-management/HelpDesk">Help Desk</a></h1>
+        </div>
+        <div class="col-lg-6">
+            <div class="form-group">
+                <!-- <label class="mb-5 font-sm color-gray-700">Select Page</label> -->
+                <div class="did-floating-label-content">
+                    <select class="did-floating-select" [(ngModel)]='sorttype' (change)="changeDropdown()" [ngModelOptions]="{standalone:true}">
+              <option [value]="1" *ngIf="isShowPendingOrders=='1' && isShowPendingOrdersConf=='1'" [ngClass]="{'active': isactive=='po'}" (click)="pendingOrderClick()"><a href="/order-management/pending-order">Pending Orders</a></option>
+              <option [value]="8" *ngIf="isShowopenshipment=='1' && isShowopenshipmentConf=='1'" [ngClass]="{'active': isactive=='os'}" (click)="openshipmentClick()"><a href="/order-management/open-shipment">Open Shipment</a></option>
+          <option [value]="2" *ngIf="isShowBackOrders=='1' && isShowBackOrdersConf=='1' && !iskyraden" [ngClass]="{'active': isactive=='bo'}" (click)="BOClick()"><a href="/order-management/back-orders">{{backorderlable}}</a></option>
+          <option [value]="2" *ngIf="isShowexpectedshipment=='1' && isShowexpectedshipmentConf=='1' && iskyraden" [ngClass]="{'active': isactive=='ES'}" (click)="ESClick()"><a href="/order-management/expected-shipment">{{expectedshipmentlable}}</a></option>
+          <option [value]="3" *ngIf="isShowOpenInvoice=='1' && isShowOpenInvoiceConf=='1'" [ngClass]="{'active': isactive=='oi'}" (click)="OIClick()"><a href="/order-management/invoices">Open Invoices</a></option>
+          <option [value]="4" *ngIf="isShowOrderHistory=='1' && isShowOrderHistoryConf=='1'" [ngClass]="{'active': isactive=='oh'}" (click)="OHClick()"><a href="/order-management/order-history">Order History</a></option>
+          <!-- <option [value]="5" *ngIf="isShowPurchaseHistory=='1' && isShowPurchaseHistoryConf=='1' && IsMuscle=='1' && UserType=='3'" [ngClass]="{'active': isactive=='ph'}" (click)="PHClick()"><a href="javascript:void(0);"> Quick Order</a></option> -->
+          <option [value]="5" *ngIf="isShowPurchaseHistory=='1' && isShowPurchaseHistoryConf=='1' && !(IsMuscle=='1' && UserType=='3')" [ngClass]="{'active': isactive=='ph'}" (click)="PHClick()"><a href="/order-management/purchase-history">Purchase History</a></option>
+          <option [value]="6" *ngIf="isShowCustomerProducts=='1' && isShowCustomerProductsConf=='1'" [ngClass]="{'active': isactive=='cp'}" (click)="CPClick()"><a href="/order-management/customer-products">{{customerlable}}</a></option>
+          <option [value]="7" *ngIf="isShowHelpDesk=='1'" [ngClass]="{'active': isactive=='HD'}" (click)="HDClick()"><a href="/order-management/HelpDesk">Help Desk</a></option>
+              </select>
+                    <label class="did-floating-label">Select Page</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <div class="row">
+     <div class="col-lg-12">
+        <h4 class="mt-5 mb-5">PROCESSING ORDERS & QUOTES</h4>
+     </div>
+  </div> -->
+    <div class="row">
+        <router-outlet></router-outlet>
+    </div>
+</div>
+
+
+<!-- 
+      <div class="contact-page lrpadding15">
+        
+        <ul style="display: none;" *ngIf="!isPunchOut && type != 'Southern'" class="nav nav-tabs mobile-hide-tabs">
+          <li *ngIf="isShowPendingOrders=='1' && isShowPendingOrdersConf=='1'" [ngClass]="{'active': isactive=='po'}" (click)="pendingOrderClick()"><a href="javascript:void(0);">Pending Orders</a></li>
+          <li *ngIf="isShowopenshipment=='1' && isShowopenshipmentConf=='1'" [ngClass]="{'active': isactive=='os'}" (click)="openshipmentClick()"><a href="javascript:void(0);">Open Shipment</a></li>
+          <li *ngIf="isShowBackOrders=='1' && isShowBackOrdersConf=='1'" [ngClass]="{'active': isactive=='bo'}" (click)="BOClick()"><a href="javascript:void(0);">Backorder items</a></li>
+          <li *ngIf="isShowOpenInvoice=='1' && isShowOpenInvoiceConf=='1'" [ngClass]="{'active': isactive=='oi'}" (click)="OIClick()"><a href="javascript:void(0);">Open Invoices</a></li>
+          <li *ngIf="isShowOrderHistory=='1' && isShowOrderHistoryConf=='1'" [ngClass]="{'active': isactive=='oh'}" (click)="OHClick()"><a href="javascript:void(0);">Order History</a></li>
+          <li *ngIf="isShowPurchaseHistory=='1' && isShowPurchaseHistoryConf=='1' && IsMuscle=='1' && UserType=='3'" [ngClass]="{'active': isactive=='ph'}" (click)="PHClick()"><a href="javascript:void(0);"> Quick Order</a></li>
+          <li *ngIf="isShowPurchaseHistory=='1' && isShowPurchaseHistoryConf=='1' && !(IsMuscle=='1' && UserType=='3')" [ngClass]="{'active': isactive=='ph'}" (click)="PHClick()"><a href="javascript:void(0);">Purchase History </a></li>
+          <li *ngIf="isShowCustomerProducts=='1' && isShowCustomerProductsConf=='1'" [ngClass]="{'active': isactive=='cp'}" (click)="CPClick()"><a href="javascript:void(0);">{{customerlable}}</a></li>
+          <li *ngIf="isShowHelpDesk=='1'" [ngClass]="{'active': isactive=='HD'}" (click)="HDClick()"><a href="javascript:void(0);">Help Desk</a></li>
+          
+        </ul>
+        
+         <div class="row">
+          <div class="col-md-12">
+            <select style="display: none;" class="mobile-select unicase-form-control" [(ngModel)]='sorttype' (change)="changeDropdown()"  [ngModelOptions]="{standalone:true}">
+              <option [value]="1" *ngIf="isShowPendingOrders=='1' && isShowPendingOrdersConf=='1'" [ngClass]="{'active': isactive=='po'}" (click)="pendingOrderClick()"><a href="javascript:void(0);">Pending Orders</a></option>
+              <option [value]="8" *ngIf="isShowopenshipment=='1' && isShowopenshipmentConf=='1'" [ngClass]="{'active': isactive=='os'}" (click)="openshipmentClick()"><a href="javascript:void(0);">Open Shipment</a></option>
+          <option [value]="2" *ngIf="isShowBackOrders=='1' && isShowBackOrdersConf=='1'" [ngClass]="{'active': isactive=='bo'}" (click)="BOClick()"><a href="javascript:void(0);">Backorder items</a></option>
+          <option [value]="3" *ngIf="isShowOpenInvoice=='1' && isShowOpenInvoiceConf=='1'" [ngClass]="{'active': isactive=='oi'}" (click)="OIClick()"><a href="javascript:void(0);">Open Invoices</a></option>
+          <option [value]="4" *ngIf="isShowOrderHistory=='1' && isShowOrderHistoryConf=='1'" [ngClass]="{'active': isactive=='oh'}" (click)="OHClick()"><a href="javascript:void(0);">Order History</a></option>
+          <option [value]="5" *ngIf="isShowPurchaseHistory=='1' && isShowPurchaseHistoryConf=='1' && IsMuscle=='1' && UserType=='3'" [ngClass]="{'active': isactive=='ph'}" (click)="PHClick()"><a href="javascript:void(0);"> Quick Order</a></option>
+          <option [value]="5" *ngIf="isShowPurchaseHistory=='1' && isShowPurchaseHistoryConf=='1' && !(IsMuscle=='1' && UserType=='3')" [ngClass]="{'active': isactive=='ph'}" (click)="PHClick()"><a href="javascript:void(0);">Purchase History</a></option>
+          <option [value]="6" *ngIf="isShowCustomerProducts=='1' && isShowCustomerProductsConf=='1'" [ngClass]="{'active': isactive=='cp'}" (click)="CPClick()"><a href="javascript:void(0);">{{customerlable}}</a></option>
+          <option [value]="7" *ngIf="isShowHelpDesk=='1'" [ngClass]="{'active': isactive=='HD'}" (click)="HDClick()"><a href="javascript:void(0);">Help Desk</a></option>
+            </select>
+
+            <router-outlet></router-outlet>
+          </div>
+        </div>
+      
+<div class="container" *ngIf="type == 'Southern'">
+  <div class="contact-page" style="background-color: #fff;padding: 20px;">
+    <router-outlet></router-outlet>
+  </div>
+</div> -->

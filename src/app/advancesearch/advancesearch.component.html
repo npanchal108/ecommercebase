@@ -1,0 +1,131 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="/home">Home</a></li>
+                <li><a class="font-xs color-gray-500" href="/advancesearch">Advanced Search</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="head-main">
+    <div class="row align-items-center bd-gray-200 padding-lr-80">
+        <div class="col-lg-6">
+            <h1 class="head-text mt-60 color-gray-900">Advanced Search</h1>
+        </div>
+    </div>
+</div>
+<div class="row mb-50 padding-lr-80">
+    <div class="col-lg-6 col-md-6">
+        <div class="box-cart-left mb-15">
+            <h5 class="font-md-bold mb-10">KEYWORDS</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Enter a space delimited list of keywords to search on.</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" value=" " name="skeywoard" [(ngModel)]="skeywoard">
+                            <label class="did-floating-label">KEYWORDS</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Match Type:</label>
+                        <div class="did-floating-label-content">
+                            <select class="did-floating-select" id="ExpirationMonth" [(ngModel)]='keytype' [ngModelOptions]="{standalone:true}">                       
+                       <option [value]="1">Any</option>
+                       <option [value]="2">All</option>
+                       <option [value]="3">Exact</option>
+                    </select>
+                            <label class="did-floating-label">Match Type:</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="col-lg-6 col-md-6">
+        <div class="box-cart-left mb-15">
+            <h5 class="font-md-bold mb-10">ITEM NUMBERS</h5>
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Enter a space delimited list of item numbers to find just specific items.</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" name="itemnums" [(ngModel)]="itemnums">
+                            <label class="did-floating-label">ITEM NUMBERS</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Sort By</label>
+                        <div class="did-floating-label-content">
+                            <select class="did-floating-select" id="ExpirationMonth" [(ngModel)]="sorttype" [ngModelOptions]="{standalone:true}">                       
+                     <option [value]="1">Relevance</option>
+                     <option [value]="2">Product Name</option>
+                     <option [value]="3">Item Number</option>
+                  </select>
+                            <label class="did-floating-label">Sort By</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <div class="box-cart-left mb-15">
+            <h5 class="font-md-bold mb-10">PROUDUCT LINES & CATEGORIES</h5>
+            <div class="row">
+                <div class="col-lg-6" *ngIf="brandList!=undefined && brandList!=null && brandList.length > 0">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700"> PRODUCT LINES <br /> Choose what product lines to search within. Leave all uncheck to search within all product lines.</label>
+                        <div class="box-cart-left height-200">
+                            <ul>
+                                <li *ngFor="let permission of brandList">
+                                    <input type="checkbox" class="mr-10" name="{{permission.product_line}}" value="{{permission.product_line}}" (change)="updatePermission($event)" />
+                                    <span class="font-md color-brand-3">{{permission.descr}}</span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6" *ngIf="treeList!=undefined && treeList!=null && treeList.length > 0">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">CATEGORIES <br /> Choose what Category to search within. Leave all uncheck to search within all categories.</label>
+                        <div class="box-cart-left height-200">
+                            <ul>
+                                <li *ngFor="let trel of treeList">
+                                    <input type="checkbox" class="mr-10" name="{{trel.tree_node}}" value="{{trel.tree_node}}" (change)="updatetreelist($event)" />
+                                    <span class="font-md color-brand-3">{{trel.name}}</span>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="form-group align-flex">
+                    <!-- <input class="btn btn-buy w-auto" type="submit" value="Begin Search"> -->
+                    <button type="button" class="btn btn-buy w-auto" (click)="beginsearch()">Begin Search</button>
+                    <button type="button" class="btn btn-buy w-auto" (click)="ResetForm()">Reset Form</button>
+                </div>
+            </div>
+            <!-- <div class="col-lg-6">
+                <div class="form-group text-end">
+                    <input class="btn btn-buy w-auto" type="submit" value="Reset Form">
+                    <button type="button" class="btn btn-buy w-auto" (click)="ResetForm()">Reset Form</button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,317 @@
+<!-- <div class="row">
+  <div class="col-lg-12">
+   <h1 class="mt-5 mb-5">Invoice Information</h1>
+  </div>
+</div> -->
+<!-- <div class="row" *ngIf="priceshowcust=='1' || SalesUserType==2">
+  <div class="col-md-12" *ngIf="ARTotal!=null">
+     <div class="align-flex">
+        <div class="col-md-6" *ngIf="ordertotal!=undefined" id="obalance">
+           <h5 class="font-md-bold mb-10">Total Open Balance: ${{ordertotal | million}}</h5>
+        </div>
+        <div class="col-md-6 text-end" *ngIf="creditlimit!=undefined && showcreditlimit=='1'" id="creditlimit">
+           <h5 class="font-md-bold mb-10">Credit Limit: ${{creditlimit | million}}</h5>
+        </div>
+        
+     </div>
+  </div>
+</div> -->
+<div class="head-main bd-gray-200 mt-20">
+
+    <div class="row padding-lr-80" *ngIf="priceshowcust=='1' || SalesUserType==2">
+        <div class="col-md-12" *ngIf="ARTotal!=undefined && ARTotal!=null && IsARTotal=='1'">
+            <div class="align-flex">
+                <div class="col-md-6" *ngIf="ordertotal!=undefined" id="obalance">
+                    <h5 class="font-md-bold mb-10">Total Balance: ${{totalbalance | million}}</h5>
+                </div>
+                <div class="col-md-6 text-end" id="ototals">
+                    <h5 class="font-md-bold mb-10">Total order Balance: ${{ordertotal | million}}</h5>
+                </div>
+                <div class="col-md-6" id="ocreditl" *ngIf="showcreditlimit=='1'">
+                    <h5 class="font-md-bold mb-10">Credit Limit: ${{creditlimit | million}}</h5>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="row padding-lr-80" *ngIf="ARTotal!=undefined && ARTotal!=null && IsARTotal=='1'">
+    <div class="container">
+        <table class="rwd-table mb-20">
+            <tbody>
+                <tr>
+                    <th *ngFor="let art1 of ARTotal.aging_headers">{{art1}}</th>
+
+                </tr>
+                <tr>
+                    <td data-th="Current" *ngFor="let art of ARTotal.aging_balances">
+                        ${{art | million}}
+                    </td>
+
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<div class="row justify-content-end padding-lr-80" *ngIf="priceshowcust=='1'">
+    <div class="col-md-3" *ngIf="showPayment">
+        <div class="align-flex">
+            <div class="form-group mr-15">
+                <a (click)="payinvoice()" class="btn btn-buy w-auto">Pay Now</a>
+            </div>
+            <h5 class="font-md-bold mb-10">${{totalAmt | million}}</h5>
+
+        </div>
+    </div>
+    <div class="col-md-9 text-end">
+        <div class="d-inline-block text-end">
+            <span class="font-sm color-gray-500 font-medium">Sort by:</span>
+            <div class="dropdown dropdown-sort">
+                <button class="btn dropdown-toggle font-sm color-gray-900 font-medium" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+        <span *ngIf="sorttype==1">Order Date Latest First</span>
+        <span *ngIf="sorttype==2">Order Date Latest Last</span>
+        <span *ngIf="sorttype==3">{{wanterdatelable}} Latest First</span>
+        <span *ngIf="sorttype==4">{{wanterdatelable}} Latest Last</span>
+        <span *ngIf="sorttype==5">Order Number Latest First</span>
+        <span *ngIf="sorttype==6">Order Number Latest Last</span>
+      </button>
+                <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort" style="margin: 0px;">
+                    <li><a class="dropdown-item active" (click)="changeDropdown(1)">Order Date Latest First</a></li>
+                    <li><a class="dropdown-item" (click)="changeDropdown(2)">Order Date Latest Last</a></li>
+                    <li><a class="dropdown-item" (click)="changeDropdown(3)">{{wanterdatelable}} First</a></li>
+                    <li><a class="dropdown-item" (click)="changeDropdown(4)">{{wanterdatelable}} Last</a></li>
+                    <li><a class="dropdown-item" (click)="changeDropdown(5)">Order Number Latest First</a></li>
+                    <li><a class="dropdown-item" (click)="changeDropdown(6)">Order Number Latest Last</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row padding-lr-80">
+    <div class="container">
+        <table class="rwd-table mb-20">
+            <tbody>
+                <tr>
+                    <th *ngIf="paymentmode=='1' && priceshowcust=='1'">SELECT <br /> TO PAY</th>
+                    <th>Disputed</th>
+                    <th>Date</th>
+                    <th>Due</th>
+                    <th>Ref #</th>
+                    <th>Cust Po#</th>
+                    <th class="orderamounttext" *ngIf="priceshowcust=='1'">Orig Amt</th>
+                    <th class="orderamounttext" *ngIf="priceshowcust=='1'">Open Amt</th>
+                    <th>Type</th>
+                </tr>
+                <tr class="cpointer" *ngFor="let order of orderList | paginate : { itemsPerPage:10, currentPage:page,totalItems:totalPage, id:'second' }">
+                    <td data-th="Date" *ngIf="paymentmode=='1' && priceshowcust=='1'">
+                        <input *ngIf="order.opn_balance>0" type="checkbox" [ngModelOptions]="{standalone:true}" (change)="chkChange($event,order.opn_balance, order)">
+                    </td>
+                    <td data-th="Wanted" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        <span *ngIf="order.disp_flag==true">Yes</span>
+                    </td>
+                    <td data-th="Customer" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        {{order.item_date | date: 'MMM-dd-yyyy'}}
+                    </td>
+                    <td data-th="Order No" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        {{order.due_date | date: 'MMM-dd-yyyy'}}
+                    </td>
+                    <td data-th="Web #" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        {{order.ar_id}}-{{order.invc_seq}}
+                    </td>
+                    <td data-th="Cust PO #" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        {{order.cu_po}}
+                    </td>
+                    <td data-th="Type" *ngIf="priceshowcust=='1'" class="orderamounttext" data-th="ORIG AMT" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        ${{order.orig_balance | million}}
+                    </td>
+                    <td *ngIf="priceshowcust=='1'" class="orderamounttext" data-th="OPEN AMT" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        ${{order.opn_balance | million}}
+                    </td>
+                    <td data-th="TYPE" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+                        {{order.ar_type}}
+                    </td>
+                </tr>
+                <tr *ngIf="IsShow">
+                    <td data-th="Current" colspan="9" class="td-pagination tacenter">
+                        <pagination-controls id="second" (pageChange)="page = GetOpenInvoices($event)" maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- </div> -->
+    </div>
+
+
+
+
+
+
+    <!--<div class="col-md-12 contact-form">
+  <h1 class="displaynone">Invoice Information</h1>    
+  <div class="row" *ngIf="priceshowcust=='1' || SalesUserType==2">
+    <div class="col-md-6 artable">
+    <div class="table-responsive mtop30">
+      <table id="table1" *ngIf="ARTotal!=null" class="table table-striped">
+        <tr *ngIf="ordertotal!=undefined" id="obalance">
+           <td><label>Total Open Balance:</label></td> 
+           <td>${{ordertotal | million}}</td>
+        </tr>
+        <tr *ngIf="creditlimit!=undefined && showcreditlimit=='1'" id="creditlimit">
+            <td><label> Credit Limit:</label></td>
+            <td>${{creditlimit | million}}</td>
+        </tr>
+
+        <tr *ngFor="let art1 of ARTotal.aging_headers;let i = index;" id="agbalance">
+          <td><label> {{art1}}</label></td>
+          <td>${{ARTotal.aging_balances[i]}}</td>
+        </tr>
+      </table>
+    </div>
+    </div>
+  </div>
+  
+  <div class="table-responsive mtop30 artable1" *ngIf="priceshowcust=='1' || SalesUserType==2"> 
+    <table id="table1" *ngIf="ARTotal!=undefined && ARTotal!=null && IsARTotal=='1'" class="table table-striped">
+      <thead>
+        <tr>
+            <td id="tbalance">
+            <label>Total  Balance: ${{totalbalance | million}}</label>
+          </td>
+          <td style="text-align: center;" id="ototals">
+            <label>Total order Balance: ${{ordertotal | million}}</label>
+          </td>
+          <td id="ocreditl">
+            <label *ngIf="showcreditlimit=='1'">Credit Limit: ${{creditlimit | million}}</label>
+          </td>
+        </tr>
+      </thead>
+    </table>
+    <table class="table table-striped" *ngIf="ARTotal!=undefined && ARTotal!=null && IsARTotal=='1'">
+      <thead>
+
+        <tr>
+          <th scope="col" class="invoiceth" *ngFor="let art1 of ARTotal.aging_headers">
+            {{art1}}
+          </th>
+
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="invoiceth" *ngFor="let art of ARTotal.aging_balances">
+            ${{art | million}}
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="col-md-12 contact-form">
+  <div class="payment-sort-block">
+    <div class="sort-left-block">
+      <label class="info-title">Sort by</label>
+      <select class="form-control unicase-form-control text-input" [(ngModel)]='sorttype' (change)="changeDropdown()" [ngModelOptions]="{standalone:true}">
+        <option [value]="1">Order Date Latest First</option>
+        <option [value]="2">Order Date Latest Last</option>
+        <option [value]="3">Due Date Latest First</option>
+        <option [value]="4">Due Date Latest Last</option>
+        <option [value]="5">REF Number Latest First</option>
+        <option [value]="6">REF Number Latest Last</option>
+      </select>
+    </div>
+    <div class="sort-right-block" *ngIf="priceshowcust=='1'">
+      <div *ngIf="showPayment">
+        <label> ${{totalAmt | million}}</label>
+        <a (click)="payinvoice()" class="btn btn-upper btn-primary pull-right outer-right-xs">Payment</a>
+      </div>
+    </div>
+  </div>
+  
+
+  <div class="table-responsive table-mobile outer-top-vs">
+    <table id="table2" class="table table-striped">
+      <thead>
+        <tr>
+          <th class="hidden-xs pad10" scope="col" *ngIf="paymentmode=='1' && priceshowcust=='1'">
+            SELECT <br /> TO PAY
+          </th>
+          
+          <th class="hidden-xs pad10" scope="col">
+            Disputed
+          </th>
+          <th class="hidden-xs pad10" scope="col">
+            DATE
+          </th>
+          <th class="hidden-xs pad10" scope="col">
+            DUE
+          </th>
+          <th scope="col pad10">
+            REF #
+          </th>
+          <th class="hidden-xs pad10" scope="col">
+            CUST PO#
+          </th>
+          <th scope="col" class="orderamounttext" *ngIf="priceshowcust=='1'">
+            ORIG AMT
+          </th>
+          <th scope="col" class="orderamounttext" *ngIf="priceshowcust=='1'">
+            OPEN AMT
+          </th>
+          <th class="hidden-xs pad10" scope="col">
+            TYPE
+          </th>
+          
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="cpointer" *ngFor="let order of orderList | paginate : { itemsPerPage:10, currentPage:page,totalItems:totalPage, id:'second' }">
+          <td class="pad10" data-th="Select to Pay" *ngIf="paymentmode=='1' && priceshowcust=='1'">
+            <input *ngIf="order.opn_balance>0" type="checkbox"  [ngModelOptions]="{standalone:true}" (change)="chkChange($event,order.opn_balance, order)">
+          </td>
+          <td  class="pad10" data-th="DISPUTE" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+             <span *ngIf="order.disp_flag==true">Yes</span>           
+          </td>
+          <td class="pad10" data-th="DATE" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            {{order.item_date | date: 'MMM-dd-yyyy'}}
+          </td>
+          <td class="pad10" data-th="DUE" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            {{order.due_date | date: 'MMM-dd-yyyy'}}
+          </td>
+          <td class="pad10" data-th="REF #" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            {{order.ar_id}}-{{order.invc_seq}}
+          </td>
+          <td class="pad10" data-th="CUST PO#" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            {{order.cu_po}}
+          </td>
+          <td *ngIf="priceshowcust=='1'" class="orderamounttext" data-th="ORIG AMT" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            ${{order.orig_balance | million}}
+          </td>
+          <td *ngIf="priceshowcust=='1'" class="orderamounttext" data-th="OPEN AMT" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            ${{order.opn_balance | million}}
+          </td>
+          <td class="pad10" data-th="TYPE" (click)="navigatetoOrderView(order.ar_id,order.invc_seq)">
+            {{order.ar_type}}
+          </td>
+        </tr>
+      </tbody>
+      <tr *ngIf="IsShow">
+        <td colspan="9" class="td-pagination tacenter">
+          <pagination-controls id="second" (pageChange)="page = GetOpenInvoices($event)" maxSize="9" directionLinks="true" autoHide="false"
+            previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page"
+            screenReaderCurrentLabel="You're on page">
+          </pagination-controls>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>-->

@@ -11,6 +11,12 @@ export function app(): express.Express {
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
+  global['localStorage'] = window.localStorage;
+  global['window'] = window;
+global['document'] = window.document;
+//global['object'] = window.object;
+global['navigator'] = window.navigator;
+global['Event'] = window.Event;
 
   const commonEngine = new CommonEngine();
 

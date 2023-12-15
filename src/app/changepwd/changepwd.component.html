@@ -1,0 +1,81 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                <li><a class="font-xs color-gray-500" href="changepwd">Change Password</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<form class="section-box shop-template mt-60 padding-lr-80" *ngIf="isShowForm" #registerForm="ngForm" (ngSubmit)="OnSubmit(registerForm)">
+    <div class="col-md-5 m-auto">
+
+
+        <div class="head-main bd-gray-200">
+            <div class="row align-items-center">
+                <div class="col-lg-12">
+                    <h1 class="head-text mt-60 color-gray-900">Change Password</h1>
+                    <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="font-sm color-gray-700 mb-15">Password
+        </label><span class="displaynone">*</span>
+                <table id="passwordtable" width="100%">
+                    <tr>
+                        <td>
+                            <div class="did-floating-label-content mb-0">
+                                <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey mt-0" #Password="ngModel" id="userPassword" [(ngModel)]="user.Password" name="Password" required>
+                                <label class="did-floating-label">Password *</label>
+                            </div>
+                        </td>
+                        <td class="bg-19" style="vertical-align: middle;text-align: center;">
+                            <i class="fa fa-eye" style="font-size: 16px;" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                            <i class="fa fa-eye-slash" style="font-size: 16px;" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+                <small [hidden]="Password.valid || (Password.pristine && !registerForm.submitted)" class="text-danger">
+          Password is required
+        </small>
+            </div>
+        </div>
+
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="info-title mb-15 displaynone">Confirm Password
+        </label><span class="displaynone">*</span>
+                <table id="passwordtable" width="100%">
+                    <tr>
+                        <td>
+                            <div class="did-floating-label-content mb-0">
+                                <input [type]="hide1 ? 'password' : 'text'" class="did-floating-input brder-color-grey mt-0" #ConfirmPassword="ngModel" id="userConfirmPassword" [(ngModel)]="user.ConfirmPassword" name="ConfirmPassword" required validateEqual="Password" reverse="false">
+                                <label class="did-floating-label">Confirm Password *</label>
+                            </div>
+                        </td>
+                        <td class="bg-19" style="vertical-align: middle;text-align: center;">
+                            <i class="fa fa-eye" style="font-size: 16px;" (click)="hide1 = !hide1" *ngIf="!hide1" aria-hidden="true"></i>
+                            <i class="fa fa-eye-slash" style="font-size: 16px;" (click)="hide1 = !hide1" *ngIf="hide1" aria-hidden="true"></i>
+                        </td>
+                    </tr>
+                </table>
+                <small *ngIf="confirmPass" class="text-danger">
+          Password mismatch
+        </small>
+            </div>
+        </div>
+        <div class="col-md-12 outer-bottom-small m-t-20">
+            <div class="align-flex">
+                <button type="button" (click)="back()" class="btn btn-buy w-auto">Back</button>
+                <button type="submit" class="btn btn-buy w-auto">Submit</button>
+                
+            </div>
+        </div>
+    </div>
+</form>

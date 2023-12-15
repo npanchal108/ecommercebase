@@ -1,0 +1,250 @@
+<ng-container *ngIf="IsMuscle=='0'">
+    <div class="head-main bd-gray-200 mt-20"></div>
+
+    <div class="row mb-50 padding-lr-80">
+        <div class="col-lg-12 col-md-12">
+            <div class="box-cart-left mb-20" data-match-height="groupName">
+                <h5 class="font-md-bold mb-10">Purchase History Details</h5>
+                <div class="row">
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="mb-5 font-sm color-gray-700">Start Date</label>
+
+                            <div class="did-floating-label-content mb-0">
+                                <dp-date-picker [(ngModel)]="FromDate" style="width: 100%;" [config]="config" [ngModelOptions]="{standalone:true}"></dp-date-picker>
+                                <label class="did-floating-label mt-8">Start Date</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="mb-5 font-sm color-gray-700">End Date</label>
+                            <div class="did-floating-label-content mb-0">
+                                <dp-date-picker [(ngModel)]="ToDate" style="width: 100%;" [config]="config" [ngModelOptions]="{standalone:true}"></dp-date-picker>
+
+
+                                <label class="did-floating-label mt-8">End Date</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6" *ngIf="itemsearchinpurchasehistory=='1'">
+                        <div class="form-group">
+                            <label class="mb-5 font-sm color-gray-700">Item </label>
+                            <div class="did-floating-label-content mb-0">
+                                <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" [(ngModel)]="itemname" name="itemname">
+                                <label class="did-floating-label">Item</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="mb-5 font-sm color-gray-700">Year</label>
+                            <div class="did-floating-label-content">
+                                <select class="did-floating-select" [(ngModel)]='Year'
+                                    [ngModelOptions]="{standalone:true}">
+                                    <option *ngFor="let year1 of getyearlist" [value]="year1">{{year1}}</option>
+                                </select>
+                                
+                                <label class="did-floating-label">Year</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="mb-5 font-sm color-gray-700">YTD Type</label>
+                            <div class="did-floating-label-content">
+                                <select class="did-floating-select" [(ngModel)]='YTDType'
+                                    [ngModelOptions]="{standalone:true}">
+                                    <option [value]="1">Last 12 Months</option>
+                                    <option [value]="2">Calendar Year</option>
+                                </select>
+                                
+                                <label class="did-floating-label">YTD Type</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="mb-5 font-sm color-gray-700">Month</label>
+                            <div class="did-floating-label-content">
+                                
+                                <select class="did-floating-select" [(ngModel)]='Month'
+                                    [ngModelOptions]="{standalone:true}">
+                                    <option [value]="01">January</option>
+                                    <option [value]="02">February</option>
+                                    <option [value]="03">March</option>
+                                    <option [value]="04">April</option>
+                                    <option [value]="05">May</option>
+                                    <option [value]="06">June</option>
+                                    <option [value]="07">July</option>
+                                    <option [value]="08">August</option>
+                                    <option [value]="09">September</option>
+                                    <option [value]="10">October</option>
+                                    <option [value]="11">November</option>
+                                    <option [value]="12">December</option>
+                                </select>
+                                <label class="did-floating-label">Month</label>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <label class="info-title">Range
+                            </label><br />
+                            <h5>{{FromDate}} to {{ToDate}}</h5>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row">
+                    <div class="align-flex">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <!-- <input class="btn btn-buy w-auto" type="submit" value="Update"> -->
+                                <button type="button" class="btn btn-buy w-auto" (click)="clearall()">Clear</button>
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group text-end">
+                                <!-- <input class="btn btn-buy w-auto" type="submit" value="Clear"> -->
+                                <button type="button" class="btn btn-buy w-auto" (click)="getPurchaseHistoryCount()">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12">
+            <div class="card-grid-inner">
+                <div class="row">
+                    <!-- <div class="container"> -->
+                    <div class="product-wishlist">
+                        <!-- <div *ngIf="(webtype=='5' || webtype=='6') && isreorder=='1'" class="row"  >
+                    <div class="form-group">
+                      <button type="submit" class="btn-upper btn btn-primary checkout-page-button" (click)="addToCartMultiple()">add to cart</button>
+                    </div>
+                  </div> -->
+                        <table class="rwd-table mb-20">
+                            <tbody>
+                                <tr>
+
+                                    <th class="font-md-bold text-white"><a class="cpointer text-white" (click)="toggaleforitem()"> Image </a>
+                                        <i *ngIf="stype==1" class="fa fa-arrow-circle-up cpointer"></i> &nbsp;
+                                        <i *ngIf="stype==2" class="fa fa-arrow-circle-down cpointer"></i>
+                                    </th>
+                                    <th class="font-md-bold text-white">Description</th>
+                                    <th class="font-md-bold text-white"><a class="cpointer text-white" (click)="toggaleforQUANTITY()">Qty</a>
+                                        <i *ngIf="stype==3" class="fa fa-arrow-circle-up cpointer"></i> &nbsp;
+                                        <i *ngIf="stype==4" class="fa fa-arrow-circle-down cpointer"></i>
+                                    </th>
+                                    <th class="font-md-bold text-white">Unit</th>
+                                    <!-- <th class="font-md-bold text-white"><a class="cpointer text-white" (click)="toggaleforAMOUNT()">Amount</a>
+                                        <i *ngIf="stype==5" class="fa fa-arrow-circle-up cpointer"></i> &nbsp;
+                                        <i *ngIf="stype==6" class="fa fa-arrow-circle-down cpointer"></i>
+                                    </th> -->
+                                    <th class="font-md-bold text-white text-center" *ngIf="(webtype=='5' || webtype=='6') && isreorder=='1'">Quantity</th>
+                                </tr>
+                                <tr *ngFor="let order of finalorderList | paginate : { itemsPerPage:100, currentPage:page,totalItems:totalPage, id:'second' } ;let i = index">
+
+                                    <td class="d-flex-td-respo" data-th="Image" style="vertical-align: middle;">
+                                        <a [routerLink]="['/productdetail',order.sum_key_2.toLowerCase(), order.links.toLowerCase()]">
+                                            <img src="assets/images/png" alt="{{order.sum_key_2}}" *ngIf="order.image == 'NotFound'" class="cart5050px">
+                                            <img src="{{order.image}}" alt="{{order.sum_key_2}}" *ngIf="order.image != undefined" class="cart5050px">
+
+                                        </a>
+                                    </td>
+                                    <td class="d-flex-td-respo" data-th="Description" style="vertical-align: top;">
+                                        <div class="product-info pl-td-0">
+                                            <h4 class="cart-product-description cpointer color-brand-1">
+                                                {{order.sum_key_2}}</h4>
+                                            <a [routerLink]="['/productdetail',order.sum_key_2.toLowerCase(), order.links.toLowerCase()]">
+                                                <!-- <h6 class="font-base color-brand-3">Angle Grinder Cordless 1/2 In. Compact Drill/Driver Kit 20V</h6> -->
+                                                <div *ngFor="let pdesc of order.descrarray;let l=index;">
+                                                    <h6 class="font-base color-brand-3" *ngIf="pdesc!=''"> {{pdesc}}
+                                                    </h6>
+                                                </div>
+                                                <label *ngIf="order.flag">{{ProductNotAvailableinPurchasehistory}}</label>
+                                            </a>
+                                            <!-- <a href="product-detail.html">
+                                     <h6 class="font-base color-brand-3">Angle Grinder Cordless 1/2 In.
+                                        Compact
+                                        Drill/Driver
+                                        Kit 20V</h6>
+                                  </a>
+                                  <div class="rating"><img src="assets/imgs/template/icons/star.svg"
+                                        alt="Ecom"><img src="assets/imgs/template/icons/star.svg"
+                                        alt="Ecom"><img src="assets/imgs/template/icons/star.svg"
+                                        alt="Ecom"><img src="assets/imgs/template/icons/star.svg"
+                                        alt="Ecom"><img src="assets/imgs/template/icons/star.svg"
+                                        alt="Ecom"><span class="font-xs color-gray-500"> (65)</span></div> -->
+                                        </div>
+                                    </td>
+                                    <td class="d-flex-td-respo" data-th="Quantity">
+                                        <h4 class="font-base color-brand-3">{{order.qty / order.um_displayQty}}</h4>
+                                    </td>
+                                    <td class="d-flex-td-respo" data-th="UM">
+                                        <h4 class="font-base color-brand-3">{{order.um_display}}</h4>
+                                    </td>
+                                    <!-- <td class="d-flex-td-respo" data-th="Amount" *ngIf="priceshowcust=='1'">
+                                        <h4 class="font-base color-brand-3">${{order.amt | million}}</h4>
+                                    </td> -->
+                                    <td class="d-flex-td-respo" id="phQty3" data-th="Image" *ngIf="(webtype=='5' || webtype=='6') && isreorder=='1'" style="padding:10px;" class="d-flex-td-respo" data-th="REORDER">
+                                        <div class="box-quantity justify-content-center" id="phQty2">
+                                            <div class="did-floating-label-content mb-0 mt-8" id="phQty1">
+                                                <div class="increment-wrapper d-flex justify-content-end align-items-center" id="phQty">
+
+                                                    <button class="button dec" (click)="minusqty(order)">
+                                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <input class="did-floating-input brder-color-grey mt-0" aria-label="Quantity input" autocomplete="off" name="quantity-field" type="tel" title="Qty" [disabled]="order.flag" #Product{{i}} id="Product{{i}}" name="Product{{i}}" (blur)="onbluerevent(order)"
+                                                        [ngModelOptions]="{standalone:true}" [(ngModel)]='order.quantity' (keydown)="onKeydown($event,order,i)" maxlength="5" value="1">
+                                                    <label class="did-floating-label" style="left: 40% !important">Qty</label>
+                                                    <button class="button inc" (click)="addqty(order)">
+                                                            <i class="fa fa-plus" aria-hidden="true"></i></button>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <input type="text" [disabled]="order.flag" class="form-control unicase-form-control text-input reordertext" 
+         #Product{{i}} id="Product{{i}}" name="Product{{i}}" (blur)="onbluerevent(order)" 
+         [ngModelOptions]="{standalone:true}" [(ngModel)]='order.quantity' 
+         (keydown)="onKeydown($event,order,i)"  
+         style="width: 100px;height: 35px;margin-bottom: 10px;"> -->
+
+                                    </td>
+                                </tr>
+                                <!-- <tr *ngIf="IsShow">
+                                        <td colspan="8" class="td-pagination tacenter">
+                                            <pagination-controls id="second" (pageChange)="page = getorderlistpage($event)" maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                                            </pagination-controls>
+                                        </td>
+                                    </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <!-- </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-lg-12 text-end">
+                        <div class="form-group">
+                            <a (click)="addToCartMultiple()" class="btn btn-buy w-auto">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="IsShow" class="pagination">
+                    <div class="page-item text-center">
+                        <pagination-controls id="second" (pageChange)="page = getPendingOrders($event)" maxSize="9" directionLinks="true" autoHide="false" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-container>

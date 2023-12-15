@@ -1,0 +1,140 @@
+<div class="container outer-top-xs">
+    <!-- <div class="contact-page"> -->
+    <div class="row">
+        <div class="col-md-12">
+            <h1 class="displaynone">Search Quotes</h1>
+            <div class="shopping-cart shop-cart rfq-table" >
+                <h1 style="text-align: center;color: #005FAA;font-size: 30px;">Welcome Disney!</h1>
+                <br />
+                <div style="margin-left: 20%;">
+                <h4 class="shop-title" style="padding: 0;">CHOOSE THE ACCOUNT TO FIND QUOTE FOR: </h4>
+                <label>Florida Accounts</label>
+                <select [(ngModel)]='model'
+                    class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid height40"
+                    style="width: 450px;display: inline-block;margin-left: 30px;" (change)="FLChange()">
+                    <option value="0">Select Florida Account</option>
+                    <optgroup *ngFor='let grp of dataSource' label="{{grp.Description}} ({{grp.TerritoryName}})">
+                        <option *ngFor='let item of grp.AccountList' [value]="item.customer">{{item.customer}} - {{item.name}} - {{item.adr}}</option>
+                    </optgroup>
+                </select>
+                <br>
+                <label style="margin-top: 10px;">California Accounts</label>
+                <select [(ngModel)]='calmodel'
+                    class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid height40"
+                    style="width: 450px;display: inline-block;margin-left: 10px;margin-top: 10px;" (change)="CLChange()">
+                    <option value="0">Select California Account</option>
+                    <optgroup *ngFor='let grp of dataSource1' label="{{grp.Description}} ({{grp.TerritoryName}})">
+                        <option *ngFor='let item of grp.AccountList' [value]="item.customer">{{item.customer}} - {{item.name}} - {{item.adr}}</option>
+                    </optgroup>
+                </select>
+                <br>
+                <button type="button" class="btn btn-upper btn-success outer-right-xs ml10"
+                    style="margin-left: 465px !important;margin-top: 10px;" (click)="searchAllQuotes()">Find My Quote</button>
+                    <hr>
+
+                <h4 class="shop-title" style="padding: 0;">OR IF YOU KNOW YOUR QUOTE NUMBER, ENTER IT BELOW.</h4>
+                <label>Find a Quote Number*</label>
+                <input type="text" class="form-control" style="width: 308px;display: inline-block;margin-left: 10px;"
+                    [(ngModel)]="quoteNo" />
+                <button type="button" class="btn btn-upper btn-success outer-right-xs ml10" style="width: 127px;"
+                    (click)="searchQuote()">Search</button>
+                <br>
+            </div>
+                <div *ngIf="showResult" style="padding: 20px;">
+                    <div style="font-size: 20px;font-weight: bold;margin-top: 50px;margin-bottom: 5px;">
+                        <span>Quote Number: {{quoteNo}}</span>
+                    </div>
+                    <div *ngIf="shipName!=undefined && shipName!=''">{{shipName}}</div>
+                    <div *ngFor="let ships of shipaddress">
+                        <div *ngIf="ships!=undefined && ships!=''">{{ships}}</div>
+                    </div>
+                    <div> {{state}} {{postal_code}}</div>
+                    {{country_code}}
+
+                    <table id="table1" class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th class="hidden-xs padleft25" scope="col">
+                                    DATE
+                                </th>
+                                <th class="hidden-xs padleft25" scope="col">
+                                    WANTED
+                                </th>
+                                <th class="hidden-xs padleft25" scope="col">
+                                    CUSTOMER
+                                </th>
+                                <th scope="col" class="pad10">
+                                    Quote No
+                                </th>
+                                <th scope="col" class="padleft25">
+                                    WEB#
+                                </th>
+                                <th scope="col" class="padleft25">
+                                    CUST PO#
+                                </th>
+                                <th scope="col" class="padleft25">
+                                    Type
+                                </th>
+                                <th scope="col" class="padleft10 text-right">
+                                    AMOUNT
+                                </th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="cursor: pointer;" (click)="navigatetoOrderView1(order.order,order.rec_type, order.customer)"
+                                class="cursorp" *ngFor="let order of processingOrderList | paginate : { itemsPerPage:10, currentPage:page,totalItems:totalPage, id:'second' }">
+                                <td class="pad10" data-title="DATE">
+                                    {{order.ord_date | date: 'MM/dd/yyyy'}}
+                                </td>
+                                <td class="pad10" data-title="WANTED">
+                                    {{order.wanted_date | date: 'MM/dd/yyyy'}}
+                                </td>
+                                <td class="pad10" data-title="CUSTOMER">
+                                    {{order.customer}}
+                                </td>
+                                <td class="pad10">
+                                    {{order.order}}
+                                </td>
+                                <td class="pad10" data-title="WEB#">
+                                    {{order.ord_ext}}
+                                </td>
+                                <td class="pad10" data-title="CUST PO#">
+                                    {{order.cu_po}}
+                                </td>
+                                <td class="pad10" data-title="rec_type">
+                                    <span *ngIf="order.rec_type=='O' || order.rec_type=='o'">Order</span>
+                                    <span *ngIf="order.rec_type=='Q' || order.rec_type=='q'">Quote</span>
+                                </td>
+                                <td class="pad10 text-right" data-title="AMOUNT">
+                                    ${{order.o_tot_gross | million}}
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tr *ngIf="IsShow">
+                            <td colspan="8" class="td-pagination text-center">
+                              <pagination-controls  id="second"
+                              (pageChange)="page = getProcessingOrders($event)"
+                              maxSize="9"
+                              directionLinks="true"
+                              autoHide="false"
+                              previousLabel="Previous"
+                              nextLabel="Next"
+                              screenReaderPaginationLabel="Pagination"
+                              screenReaderPageLabel="page"
+                              screenReaderCurrentLabel="You're on page">
+                              </pagination-controls>
+                            </td>
+                          </tr>
+                    </table>
+                </div>
+
+                <div *ngIf="isError" style="padding:25px">
+                    <label style="font-size: 14px;margin-top: 25px;margin-left: 155px;">No result found</label>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- </div> -->
+</div>

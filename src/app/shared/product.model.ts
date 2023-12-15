@@ -1,0 +1,20 @@
+export class Product{
+  itemnumber:string
+  itemname:string
+  description1:string
+  description2:string
+  image:string
+  um:string
+  umqty:string
+  product_line:string
+  prodline:string
+  manufacturer:string
+  vendnum:string 
+  vendorname:string
+  list_price:number
+  list_price_per:string
+  qty_oh:number
+  qty_cmtd:number
+  category:string
+  categoryname:string
+}

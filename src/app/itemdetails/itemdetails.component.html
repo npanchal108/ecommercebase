@@ -1,0 +1,127 @@
+<div class="section-box posi-absolute">
+  <div class="breadcrumbs-div">
+      <div class="container-fluid">
+          <ul class="breadcrumb">
+              <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+              <li><a class="font-xs color-gray-500" href="library">Library</a></li>
+          </ul>
+      </div>
+  </div>
+</div>
+<main class="main">
+  <div class="section-box shop-template mt-60">
+    <div class="row padding-lr-80">
+      <div class="col-lg-12 order-first order-lg-last">
+        <!-- <h4>Library</h4> -->
+        <div class="box-filters mt-0 pb-5 border-bottom">
+          <div class="row">
+            <div class="item-details-align-flex">
+              <div class="col-lg-3 text-lg-start text-center">
+                <div class="dropdown d-inline-block">
+                  <button class="toggle btn btn-filter font-sm color-brand-3 font-medium"
+                    (click)="getsetopenview(setopenview)">Filters</button>
+                </div>
+              </div>
+              <div class="col-lg-3 mr-15">
+                <input type="text" class="form-control" [(ngModel)]="searchText" />
+              </div>
+              <div class="col-lg-3">
+
+                <button class="refresh-btn" (click)="applyFilter()" class="btn btn-buy w-auto mr-15">
+                  <!-- <i class="fa fa-arrow-circle-right go-icon-clr"
+                    aria-hidden="true"></i> -->
+                  Search
+                </button>
+                <button class="refresh-btn" (click)="onReset()" class="btn btn-buy w-auto mr-15">
+                  <!-- <i class="fa fa-refresh refresh-icon-clr"
+                    aria-hidden="true"></i> -->
+                  Reset
+                </button>
+              </div>
+              <div class="d-inline-block">
+                <span class="font-sm color-gray-500 font-medium">Show</span>
+                <div class="dropdown dropdown-sort border-1-right">
+                  <button class="btn dropdown-toggle font-sm color-gray-900 font-medium" id="dropdownSort2"
+                    type="button" data-bs-toggle="dropdown" aria-expanded="false"
+                    data-bs-display="static"><span>{{pagesize}} items</span></button>
+                  <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort2">
+                    <li><a class="dropdown-item active" (click)="GetNewPageSizeNew(15)">15 items</a>
+                    </li>
+                    <li><a class="dropdown-item" (click)="GetNewPageSizeNew(30)">30 items</a></li>
+                    <li><a class="dropdown-item" (click)="GetNewPageSizeNew(45)">45 items</a></li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <!-- id="target" -->
+            <div [ngClass]="{'displynone': setopenview=='0','displyblock': setopenview=='1'}">
+              <div class="row">
+                <div class="col-md-2">
+                  <ul class="list-checkbox item-details-list-checkbox">
+                    <li *ngFor="let filter of filtersList">
+                      <label class="cb-container">
+                        <input type="checkbox" id="{{ filter }}"
+                          [checked]="selecctedsatags.indexOf(filter.toLowerCase()) > -1"
+                          (change)="addRemoveSatags(filter)" />
+                        <!-- <input type="checkbox" id="{{filter}}" [checked]="selecctedsatags.indexOf(filter) > -1"
+                          name="{{filter}}" value="{{filter}}" (change)="addremovesatags(filter)"> -->
+                        <span class="text-small">{{filter}}</span><span class="checkmark"></span>
+                      </label>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row mt-60 display-list">
+          <table class="rwd-table mb-20">
+            <tbody>
+              <tr>
+                <th>Type</th>
+                <th>Manufacturer</th>
+                <th>Item</th>
+                <th>Name </th>
+                <!-- <th>Url</th> -->
+              </tr>
+              
+              <tr
+                *ngFor="let product of itemDetailslist  | paginate : { itemsPerPage:pagesize, currentPage:pageNo,totalItems:totalLinePage, id:'second' };let ind = index;">
+                <td data-th="Type" (click)="openPopup(product)">
+                  <i *ngIf="product.ItemType == 'video'" class="fa fa-youtube-play" style="font-size: 20px;" aria-hidden="true"></i>
+                  <i *ngIf="product.ItemType != 'video'" class="fa fa-file-text" style="font-size: 20px;" aria-hidden="true"></i>
+
+                </td>
+                <td data-th="Manufacturer" (click)="openPopup(product)" class="upcase">
+                  {{product.Manufacture}}
+                </td>
+                <td data-th="Item" (click)="openPopup(product)" class="upcase">
+                  {{product.Item}}
+                </td>
+                <td data-th="Name" (click)="openPopup(product)" class="upcase">
+                  {{product.Name}}
+                </td>
+                <!-- <td data-th="{{item.Url}}" (click)="openPopup(item)">
+                  <button *ngIf="item.ItemType == 'video'" class="btn btn-buy w-auto"
+                    (click)="openPopup(item.Url)">Open</button>
+                  <button *ngIf="item.ItemType != 'video'" class="btn btn-buy w-auto" (click)="redirectToUrl(item.Url)">Open</button>
+                
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+          <div class="row center">
+            <div class="col-sm-12 col-md-12" style="text-align: center;">
+              <pagination-controls id="second" (pageChange)="pageNo = bindProducts($event)" maxSize="9" directionLinks="true" autoHide="false" previousLabel="" nextLabel="" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+              </pagination-controls>
+            </div>
+        </div>
+        </div>
+        <!-- *ngIf="itemDetailslist.length==pagesize" -->
+      
+      </div>
+    </div>
+  </div>
+</main>

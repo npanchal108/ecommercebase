@@ -1,0 +1,29 @@
+<div class="body-content outer-top-xs">
+  <div class="padding-lr-80">
+      <div class="head-main">
+          <div class="row">
+              <div class="shopping-cart">
+                  <h3 class="mb-15">Sitemap</h3>
+                  <div class="col-md-12 site-map-cont">
+                      <div *ngFor="let mm of urlheaderlist1">
+                          <h4 class="mb-15">{{mm}}</h4>
+                          <div *ngFor="let nn of urllisttodisplay1">
+                              <a target="_blank" *ngIf="mm==nn.header" href="{{nn.urls}}" class="cpointer"><label
+                                      class="cpointer mb-10">{{nn.lable}}</label></a>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-md-12 site-map-cont">
+                      <div *ngFor="let mm of urlheaderlist2">
+                          <h4 class="mb-15">{{mm}}</h4>
+                          <div *ngFor="let nn of urllisttodisplay2">
+                              <a target="_blank" *ngIf="mm==nn.header" href="{{nn.urls}}" class="cpointer"><label
+                                      class="cpointer mb-10">{{nn.lable}}</label></a>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+</div>

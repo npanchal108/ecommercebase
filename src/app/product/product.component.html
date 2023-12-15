@@ -1,0 +1,1944 @@
+<main class="main">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+
+
+                    <ng-container *ngFor="let titl1 of titleheader1; let last = last;let first=first;">
+                        <li *ngIf="titl1.name!='' && first && last" (click)="catclick(titl1.treeNode,titl1.name)"><a class="font-xs color-gray-1000" [routerLink]="[titl1.urls.toLowerCase()]">{{titl1.name}}</a>
+                        </li>
+                        <li *ngIf="titl1.name!='' && !first && !last" (click)="catclick(titl1.treeNode,titl1.name)"><a class="font-xs color-gray-500" [routerLink]="[titl1.urls.toLowerCase()]">{{titl1.name}}</a></li>
+                        <li *ngIf="titl1.name!='' && first && !last" (click)="catclick(titl1.treeNode,titl1.name)"><a class="font-xs color-gray-1000" [routerLink]="[titl1.urls.toLowerCase()]">{{titl1.name}}</a></li>
+                        <li *ngIf="titl1.name!='' && !first && last" (click)="catclick(titl1.treeNode,titl1.name)"><a class="font-xs color-gray-500" [routerLink]="[titl1.urls.toLowerCase()]">{{titl1.name}}</a></li>
+                    </ng-container>
+
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="section-box shop-template mt-60">
+        <!-- <app-side-menu></app-side-menu> -->
+        <div class="add-to-cart">
+            <div class="modal-overlay" [ngClass]="{'active': isrfq==true}">
+                <div class="modal" [ngClass]="{'active': isrfq==true}">
+
+
+
+                    <div class="modal-content">
+                        <a class="btn-close close-modal" type="button" data-bs-dismiss="modal" (click)="openpopup()" aria-label="Close"></a>
+                        <!-- <div class="wow fadeInUp popup_main" *ngIf="isrfq==true">
+            <div class="popup_inner wishdivprimary"> -->
+                        <h3>RFQ List</h3>
+                        <div (click)="AddtonewrfqList(wish.WishlistID)" class="cpointer wishinnerdiv" *ngFor="let wish of userrfqlist">
+                            <h4>{{wish.WishlistName}} </h4>
+                        </div>
+                        <br />
+                        <div class="btn-group">
+                            <button type="button" class="btn btn-buy w-auto mb-10" style="width:100px;" (click)="createnewrfqlist()">Create a New List</button>
+                            <!-- <button type="button" class="btn-upper btn btn-primary checkout-page-button"
+                        (click)="closerfqbox()">close</button> -->
+                        </div>
+                        <!-- </div>
+        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row padding-lr-80">
+            <div class="col-lg-12 order-first order-lg-last">
+
+
+                <div class="head-main bd-gray-200 border-bottom" *ngIf="productdetailsforlist!=undefined && productdetailsforlist.length>0">
+
+                    <div class="row">
+                        <div class="col-lg-3 text-center">
+                            <img src="{{productdetailsforlist[0].image}}" style="width: 200px;height:200px;" alt="{{productdetailsforlist[0].descr+''+productdetailsforlist[0].web_descr}}">
+                        </div>
+                        <div class="col-lg-9">
+                            <h3 class="mb-5" *ngIf="pptype==1 && productdetailsforlist[0].name!=undefined">{{productdetailsforlist[0].name}}</h3>
+                            <p *ngIf="pptype==1 && productdetailsforlist[0].descr!=undefined" class="font-base color-gray-500" [innerHTML]="productdetailsforlist[0].descr | safe: 'html'"></p>
+                            <h3 class="mb-5" *ngIf="pptype!=1 && productdetailsforlist[0].descr!=undefined">{{productdetailsforlist[0].descr}}</h3>
+                            <p *ngIf="pptype!=1 && productdetailsforlist[0].web_descrs!=undefined" class="font-base color-gray-500" [innerHTML]="productdetailsforlist[0].web_descrs | safe: 'html'"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="box-filters mt-0 pb-5 border-bottom">
+                    <div class="row">
+                        <div class="align-flex">
+                            <div class="col-xl-2 col-lg-3 mb-10 text-lg-start text-center">
+                                <!-- <a class="btn btn-filter font-sm color-brand-3 font-medium" href="#ModalFiltersForm" data-bs-toggle="modal">All Fillters</a> -->
+
+                                <div class="dropdown d-inline-block" *ngIf="safilterslistparent!=undefined && safilterslistparent!=null && safilterslistparent.length>0 && showsafilter=='1' && showsafilter1=='1'">
+                                    <button class="toggle btn btn-filter font-sm color-brand-3 font-medium" (click)="getsetopenview(setopenview)">{{SaFilterLable}}</button>
+                                </div>
+                            </div>
+                            <div class="col-xl-10 col-lg-9 text-lg-end text-center">
+                                <div class="d-inline-block">
+                                    <span class="font-sm color-gray-500 font-medium">Sort by:</span>
+                                    <div class="dropdown dropdown-sort border-1-right">
+                                        <button class="btn dropdown-toggle font-sm color-gray-900 font-medium" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>{{Position}}</span></button>
+                                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort" style="margin: 0px;">
+
+
+
+                                            <li>
+                                                <a (click)="lowestFirst()" class="dropdown-item">{{LowestPriceFirst}}</a>
+                                            </li>
+                                            <li>
+                                                <a (click)="highestFirst()" class="dropdown-item">{{highestPriceFirst}}</a>
+                                            </li>
+                                            <li>
+                                                <a (click)="AtoZ()" class="dropdown-item">{{ItemAtoZ}}</a>
+                                            </li>
+                                            <li>
+                                                <a (click)="ZtoA()" class="dropdown-item">{{ItemZtoA}}</a>
+                                            </li>
+                                            <li *ngIf="isDimensions=='1'">
+                                                <a (click)="SortByDimensions()" class="dropdown-item">{{DimensionLable}}</a>
+                                            </li>
+                                            <li *ngIf="treesort=='1'">
+                                                <a (click)="streesort()" class="dropdown-item">{{Sequencelable}}</a>
+                                            </li>
+                                            <li *ngIf="QuantitySort=='1'">
+                                                <a (click)="Quantitysortltoh()" class="dropdown-item">{{LowestQtyFirst}}</a>
+                                            </li>
+                                            <li *ngIf="QuantitySort=='1'">
+                                                <a (click)="Quantitysorthtol()" class="dropdown-item">{{highestQtyFirst}}
+                                                </a>
+                                            </li>
+                                            <li *ngIf="DescrSort=='1'">
+                                                <a (click)="DescrSortsortltoh()">{{descrAtoZ}}</a>
+                                            </li>
+                                            <li *ngIf="DescrSort=='1'">
+                                                <a (click)="DescrSortsorthtol()" class="dropdown-item">{{descrZtoA}}</a>
+                                            </li>
+                                            <li *ngIf="sa13sort=='1'">
+                                                <a (click)="sa13sortascsorting()" class="dropdown-item">{{sa13sortasc}}</a>
+                                            </li>
+                                            <li *ngIf="sa13sort=='1'">
+                                                <a (click)="sa13sortdescsorting()" class="dropdown-item">{{sa13sortdesc}}</a>
+                                            </li>
+                                            <li *ngIf="newestfirstsort=='1'">
+                                                <a (click)="newestfirstsorting()" class="dropdown-item">{{newestfirstsortlabel}}</a>
+                                            </li>
+
+
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="d-inline-block">
+                                    <span class="font-sm color-gray-500 font-medium">Show</span>
+                                    <div class="dropdown dropdown-sort border-1-right">
+                                        <button class="btn dropdown-toggle font-sm color-gray-900 font-medium" id="dropdownSort2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>{{pagesize}} items</span></button>
+                                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort2">
+                                            <li><a class="dropdown-item active" (click)="GetNewPageSizeNew(15)">15 items</a>
+                                            </li>
+                                            <li><a class="dropdown-item" (click)="GetNewPageSizeNew(30)">30 items</a></li>
+                                            <li><a class="dropdown-item" (click)="GetNewPageSizeNew(45)">45 items</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="d-inline-block">
+                                    <a class="view-type-grid mr-5" [ngClass]="{'active': ListTypeView=='1'}" (click)="setlistview(1)"></a>
+                                    <a class="view-type-list mr-5" [ngClass]="{'active': ListTypeView=='2'}" (click)="setlistview(2)"></a>
+                                    <a class="view-type-table" *ngIf="TableView=='1'" [ngClass]="{'active': ListTypeView=='3'}" (click)="setlistview(3)"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-12 mb-10 text-lg-start">
+                            <div class="filter-data">
+                                <ul class="align-flex justify-content-start">
+                                    <li *ngFor="let tags of selecctedsatags"><a class="font-xs filter-btn" (click)="addremovesatags(tags)">{{tags | split :';'}}<i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                    <!-- <li><a class="font-xs filter-btn" href="index.html">Color<i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                 <li><a class="font-xs filter-btn" href="index.html">Custom Fields<i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                 <li><a class="font-xs filter-btn" href="index.html">Size<i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                 <li><a class="font-xs filter-btn" href="index.html">Rating<i class="fa fa-times" aria-hidden="true"></i></a></li>
+                                 <li><a class="font-xs filter-btn" href="index.html">Price Range<i class="fa fa-times" aria-hidden="true"></i></a></li> -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <!-- id="target" -->
+                        <div [ngClass]="{'displynone': setopenview=='0','displyblock': setopenview=='1'}">
+                            <div class="row">
+                                <div class="col-md-2" *ngFor="let menu of safilterslistparent;let l=index;">
+                                    <h6 class="color-gray-900 mb-0" (click)="togglemenubar(l)">{{menu.sa_lables}}</h6>
+                                    <ul class="list-checkbox" id="Filt{{l}}">
+                                        <li *ngFor="let menu1 of menu.mitemlist">
+                                            <label class="cb-container" *ngIf="menu1.sa_lables==menu.sa_lables">
+                                           <input type="checkbox" id="{{menu1.code}}" [checked]="selecctedsatags.indexOf(menu1.code) > -1"
+                                           name="{{menu1.code}}" value="{{menu1.code}}" (change)="addremovesatags(menu1.code)">
+                                           <span class="text-small">{{menu1.code_lables}}</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <!-- <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">DiamondTip</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">Driven Tools</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">LST Products</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">OFS</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">Precision Tooling</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">Super Pump</span><span class="checkmark"></span>
+                                           </label>
+                                        </li>
+                                        <li>
+                                           <label class="cb-container">
+                                           <input type="checkbox"><span class="text-small">Texas Tools</span><span class="checkmark"></span>
+                                           </label>
+                                        </li> -->
+                                    </ul>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+                <div *ngIf="productList1!=undefined && productList1!=null && productList1.length>0">
+                <ul class="list-grid-col mt-60 mb-60" *ngIf="ListTypeView=='1'">
+                    
+                    <li class="" *ngFor="let product of productList1 | paginate : { itemsPerPage:pagesize, currentPage:LNpage,totalItems:totalLinePage, id:'second1' }">
+                        <div class="card-grid-style-3 card-style-full-image" id="{{product.itemname}}">
+                            <div class="card-grid-inner text-center">
+
+                                <div class="image-box itembox">
+                                    <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" (click)="Setitemname(product)">
+                                        <img src="assets/images/Product.png" class="pimage itemimg" alt="{{product.itemname+''+product.descrstring +''+product.freeform}}" *ngIf="product.image == 'NotFound' || product.image==null">
+                                        <img src="{{product.image}}" class="pimage itemimg" alt="{{product.itemname+''+product.descrstring +''+product.freeform}}" *ngIf="product.image != undefined && product.image!=null">
+                                    </a>
+                                </div>
+
+                                <div class="info-right">
+
+                                    <div *ngIf="isLoggedIn==true && withloginprice=='1' && israteshowforcu==true && priceshowcust=='1'" class="font-lg-bold color-brand-2 price-main text-end text-end">
+                                        <b *ngIf="withloginprice=='1' && withloginpricelist=='1' && product.list_price!='0'">
+                                            <span
+                                                *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                            ${{product.list_price | million}} <span
+                                                *ngIf="umafterpriceinproductlist=='1'">
+                                                {{getumdescbyumcode(product.um_display)}}</span>
+                                        </b>
+                                        <b *ngIf="withloginprice=='1' && withloginpricelist!='1' && product.price!='0'">
+                                            <span
+                                                *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                            ${{product.price | million}} <span
+                                                *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                        </b>
+
+
+
+                                        <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}&nbsp;</b>
+                                    </div>
+                                    <div class="font-lg-bold color-brand-2 price-main text-end text-end" *ngIf="(isLoggedIn==true && withloginprice=='1' && product.price=='0' && product.Addtocart==true) 
+                                                                    || (isLoggedIn==true && withloginpricelist=='1' && product.list_price=='0' && product.Addtocart==true)">
+                                        <b>{{pricemsg}}</b>
+                                    </div>
+                                    <div *ngIf="isLoggedIn==false && priceshow=='1' && israteshowforcu==true && priceshowcust=='1'" class="font-lg-bold color-brand-2 price-main text-end text-end">
+                                        <b *ngIf="priceshow=='1' && listprice=='1' && product.list_price!='0'">
+                                            <span
+                                                *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                            ${{product.list_price | million}} <span
+                                                *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                        </b>
+                                        <b *ngIf="priceshow=='1' && listprice!='1' && product.price!='0'">
+                                            <span
+                                                *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                            ${{product.price | million}} <span
+                                                *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                        </b>
+
+                                        <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}&nbsp;</b>
+                                    </div>
+                                    <div class="font-lg-bold color-brand-2 price-main text-end text-end" *ngIf="(isLoggedIn==false && priceshow=='0') || (isLoggedIn==false && priceshow=='1' && listprice=='1' && product.list_price=='0' && product.Addtocart==true) || (isLoggedIn==false && priceshow=='1' && listprice!='1' && product.price=='0' && product.Addtocart==true)">
+                                        <b>{{pricemsgwithoutlogin}} &nbsp;</b>
+                                    </div>
+
+                                    <div class="tag sale sale1" *ngIf="product.origin!=undefined && product.origin!=null && product.origin!='' && product.origin.includes('SP')">
+                                        <span class="sale2">sale</span>
+                                    </div>
+                                    <div class="tag sale sale3" *ngIf="product.itemnewcheck=='new'">
+                                        <span class="sale4">New</span>
+                                    </div>
+
+
+                                    <div class="product-info text-left" data-match-height="groupName">
+
+                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer" style="width:66% !important">
+                                            <h3 class="color-brand-3 font-md-bold" id="itemname">
+                                                {{itlable}} {{product.itemname}}
+                                            </h3>
+                                            <div *ngIf="isLoggedIn==false && DisplayListPriceInProductListwithoutLogin=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.list_price!=undefined && product.list_price!=null && product.list_price!=''">
+                                                    {{DisplayListPriceLable}}:&nbsp; ${{product.list_price | million}}
+                                                </h4>
+                                            </div>
+                                            <div *ngIf="isLoggedIn==true && DisplayListPriceInProductListwithLogin=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.list_price!=undefined && product.list_price!=null && product.list_price!=''">
+                                                    {{DisplayListPriceLable}}:&nbsp; ${{product.list_price | million}}
+                                                </h4>
+                                            </div>
+                                            <div *ngIf="ListPriceShow=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.ListPriceShow!=undefined && product.ListPriceShow!=null && product.ListPriceShow!=''">
+                                                    Price Per Each:&nbsp;${{product.ListPriceShow | million}}
+                                                </h4>
+                                            </div>
+
+                                            <div *ngIf="IsRetailPrice=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold">{{RetailPriceLabel}}&nbsp;</h4>
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.retail_price!=undefined && product.retail_price!=null && product.retail_price!=''">
+                                                    ${{product.retail_price | million}} </h4>
+                                            </div>
+
+                                            <h4 class="color-brand-3 font-xs-bold" *ngIf="manufacturerproductlist=='1' && product.manufacturer!=undefined && product.manufacturer!=null && product.manufacturer!=''">
+                                                <label>
+                                                    Manufacturer:</label> {{product.manufacturer}}
+                                            </h4>
+                                            <h4 class="color-brand-3 font-xs-bold" *ngIf="vendorinproductlist=='1' && product.vendorname!=undefined && product.vendorname!=null && product.vendorname!=''">
+                                                <label>
+                                                    Vendor:</label>{{product.vendorname}}</h4>
+                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="iskrayden && product.vendnum!=undefined && product.vendnum!=null && product.vendnum!=''">
+                                                        <label>
+                                                            Vendor item:</label>{{product.vendnum}}</h4>
+                                            <ng-container *ngIf="(isprofiledesc=='0' || isprofiledesc=='2') && product.descrarray!=undefined">
+                                                <ng-container *ngFor="let pdesc of product.descrarray;let l=index;" style="text-transform: uppercase;">
+                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="pdesc!=null && pdesc!=''&& pdesc!=undefined">
+                                                        {{pdesc}} </h4>
+                                                </ng-container>
+                                            </ng-container>
+                                            <h5 class="color-brand-3 font-xs-bold height-54" *ngIf="isprofiledesc=='1' || isprofiledesc=='2'">
+                                                {{product.freeform}} </h5>
+                                            <!-- <div class="rating rateit-small"></div> -->
+                                            <div class="description m-t-10 color-brand-3 font-xs-bold" *ngIf="Productlineshow=='1'">
+                                                {{product.prodline}}
+                                            </div>
+                                        </a>
+
+                                        <div id="hwl">
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="ship_height1">H: <span id="ship_height2">{{product.ship_height}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="ship_length1">L: <span id="ship_length2">{{product.ship_length}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="ship_width1">W: <span id="ship_width2">{{product.ship_width}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="weight1">Weight: <span id="weight2">{{product.weight}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="weight_per1">Weight Per: <span id="weight_per2">{{product.weight_per}}</span></label>
+                                        </div>
+
+                                        <!-- <h4 id="kship_height" class="color-brand-3 font-xs-bold">
+                                            <label>H: </label> {{product.ship_height}}
+                                     </h4>
+                                     <h4 id="ship_length" class="color-brand-3 font-xs-bold">
+                                         <label>L: </label> {{product.ship_length}}
+                                  </h4>
+                                  <h4 id="ship_width" class="color-brand-3 font-xs-bold">
+                                     <label>W: </label> {{product.ship_width}}
+                              </h4>
+                              <h4 id="weight" class="color-brand-3 font-xs-bold">
+                                <label>Weight: </label> {{product.weight}}
+                         </h4>
+                         <h4 id="weight_per" class="color-brand-3 font-xs-bold">
+                            <label>Weight Per: </label> {{product.weight_per}}
+                     </h4> -->
+                                        <div id="sa_group_label">
+                                            <ng-contaciner *ngIf="product.sa_group_label!=undefined && product.sa_group_label!=null && product.sa_group_label.length>0">
+                                                <ng-container *ngFor="let sa_label of product.sa_group_label;let i =index;">
+                                                    <div *ngIf="sa_label!=undefined && sa_label!=null && sa_label!=''">
+                                                        <label>{{sa_label}}:  
+                                                            <span *ngIf="i==0">{{product.sa_group_1}}</span> 
+                                                            <span *ngIf="i==1">{{product.sa_group_2}}</span> 
+                                                            <span *ngIf="i==2">{{product.sa_group_3}}</span> 
+                                                            <span *ngIf="i==3">{{product.sa_group_4}}</span> 
+                                                            <span *ngIf="i==4">{{product.sa_group_5}}</span> 
+                                                            <span *ngIf="i==5">{{product.sa_group_6}}</span> 
+                                                            <span *ngIf="i==6">{{product.sa_group_7}}</span> 
+                                                            <span *ngIf="i==7">{{product.sa_group_8}}</span> 
+                                                            <span *ngIf="i==8">{{product.sa_group_9}}</span> 
+                                                            <span *ngIf="i==9">{{product.sa_group_10}}</span> 
+                                                            <span *ngIf="i==10">{{product.sa_group_11}}</span> 
+                                                            <span *ngIf="i==11">{{product.sa_group_12}}</span> 
+                                                            <span *ngIf="i==12">{{product.sa_group_13}}</span> 
+                                                            <span *ngIf="i==13">{{product.sa_group_14}}</span> 
+                                                            <span *ngIf="i==14">{{product.sa_group_15}}</span> 
+                                                        </label>
+                                                    </div>
+                                                </ng-container>
+                                            </ng-contaciner>
+                                        </div>
+                                        <h4 id="min" class="color-brand-3 font-xs-bold" *ngIf="minlable!=undefined && minlable!=null && minlable!='' && product.min>0">
+                                            <label>{{minlable}}
+                                            </label> {{product.min}}
+                                        </h4> &nbsp;&nbsp;
+                                        <h4 id="max" class="color-brand-3 font-xs-bold" *ngIf="maxlable!=undefined && maxlable!=null && maxlable!='' && product.max>0">
+                                            <label>{{maxlable}}
+                                            </label> {{product.max}}
+                                        </h4>
+                                        <div class="description m-t-10" *ngIf=" product.UPC1!=undefined && product.UPC1!='' && showups=='1'">
+                                            UPC: {{product.UPC1}}
+                                            <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(product.UPC1)"></i>
+                                        </div>
+                                        <h4 class="color-brand-3 font-xs-bold" id="qty_transfer_req_in" *ngIf="logintype=='3' && (product.qty_transfer_req_in!=undefined && product.qty_transfer_req_in!=null)">
+                                            <label>IN
+                                                BOUND: </label> {{product.qty_transfer_req_in}}
+                                        </h4>
+                                        <h4 id="cu_item" class="color-brand-3 font-xs-bold" *ngIf="logintype=='3' && (product.cu_item!=undefined && product.cu_item!=null && product.cu_item!='')">
+                                            <label>CRC:
+                                            </label> {{product.cu_item}}
+                                        </h4>
+                                        <h4 id="inprocess" class="color-brand-3 font-xs-bold" *ngIf="logintype=='3' && (product.inprocess!=undefined && product.inprocess!=null)">
+                                            <label>In
+                                                Process: </label> {{product.inprocess}}
+                                        </h4>
+
+
+                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer">
+                                            <div *ngIf="Multiplewarehouseforavaibility==undefined || Multiplewarehouseforavaibility==null || Multiplewarehouseforavaibility==''">
+                                                <div *ngIf="product.drop_ship==true && product.IsBaseProduct==false">
+                                                    <b>{{avaibilitylable}} {{drop_shiplable}}</b>
+                                                </div>
+                                                <div *ngIf="isLoggedIn==true && product.IsBaseProduct==false && product.drop_ship==false">
+                                                    <div *ngIf="displaynewavails=='1'">
+                                                        <b>
+                                                            {{displaynewavailslable}}
+                                                            {{product.availablenew1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}
+                                                        </b>
+                                                    </div>
+                                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty=='1'">
+                                                        <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}</b>
+                                                        <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}</b>
+                                                    </div>
+                                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty!='1'">
+                                                        <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}} {{stocklable}}</b>
+                                                        <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}} {{stocklable}}</b>
+                                                    </div>
+                                                    <div *ngIf="(withloginavailshow=='1' && withloginavaillist=='1' && product.available=='0') 
+                                    || (withloginavailshow=='1' && withloginavaillist!='1' && product.available1=='0')">
+                                                        <b>{{avaibilitylable}} <ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container>
+                                                             <ng-container *ngIf="iskrayden">{{product.profile_2[9]}}  </ng-container></b>
+                                                    </div>
+                                                    <div id="avgdiv" *ngIf="(avg_lead_time=='1'  && product.available=='0' && product.avg_lead_time>0) 
+                                  || (avg_lead_time=='1'  && product.available1=='0' && product.avg_lead_time>0)">
+                                                        <span id="avglable">{{avg_lead_time_lable}}
+                                                            <strong
+                                                                *ngIf="avg_lead_time_value=='1'">{{product.avg_lead_time}}</strong>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="isLoggedIn==false && product.IsBaseProduct==false && product.drop_ship==false">
+                                                    <div *ngIf="displaynewavails=='1'">
+                                                        <b>
+                                                            {{displaynewavailslable}}
+                                                            {{product.availablenew1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}
+                                                        </b>
+                                                    </div>
+                                                    <div *ngIf="annavail=='1' && showstock=='1'">
+                                                        <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}</b>
+                                                        <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}
+
+                                                        </b>
+
+                                                    </div>
+                                                    <div *ngIf="annavail=='1' && showstock!='1'">
+                                                        <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}} <ng-container *ngIf="!iskrayden"> In
+                                                            Stock  </ng-container> <ng-container *ngIf="iskrayden"> {{stocklable}} </ng-container> </b>
+                                                        <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}} <ng-container *ngIf="!iskrayden"> In
+                                                                Stock  </ng-container> <ng-container *ngIf="iskrayden"> {{stocklable}} </ng-container></b>
+                                                    </div>
+                                                    <div *ngIf="(annavail=='1' && withoutloginavaillist=='1' && product.available=='0') 
+                                 || (annavail=='1' && withoutloginavaillist!='1' && product.available1=='0')">
+                                                        <b>{{avaibilitylable}} <ng-container *ngIf="!iskrayden"> {{qtymsgwithoutlogin}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="iskrayden">{{product.profile_2[9]}}  </ng-container>
+                                                        </b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="oldlogic" *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                <b *ngFor="let avails of product.productavails;">
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false && showstock=='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty=='1' && avails.available>0)">{{avaibilitylable}}
+                                                        {{avails.available}}
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false && showstock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">{{avaibilitylable}}
+                                                        {{stocklable}}
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">{{avaibilitylable}}
+                                                        <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                        <span *ngIf="isLoggedIn==true"><ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></span>
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                </b>
+                                            </div>
+                                            <div id="newlogic" *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                <b *ngFor="let avails of product.productavails;">
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false && showstock=='1') || (isLoggedIn==true && withloginavailqty=='1')">
+                                                        <!-- {{avaibilitylable}} -->
+                                                        
+                                                        <ng-container *ngIf="avails.warehouse=='01'">
+                                                        <label id="whlable11">  {{whlable1}}
+                                                       <span id="whlable12"> {{avails.available}}</span> </label><br />
+                                                    </ng-container> 
+                                                    <ng-container *ngIf="avails.warehouse=='IT'">
+                                                       <label id="whlable21"> {{whlable2}}
+                                                   <span id="whlable22"> {{avails.on_hand}} </span></label><br />
+                                                </ng-container>
+                                                <!-- <ng-container *ngIf="avails.warehouse=='IT'">
+                                                   <label id="whlable31"> {{whlable3}}
+                                               <span id="whlable32"> {{avails.on_po}}</span> </label><br />
+                                            </ng-container> -->
+                                                        <!-- Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}} -->
+                                                    </div>
+                                                    <!-- <div
+                                                        *ngIf="(isLoggedIn==false && showstock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">
+                                                        {{avaibilitylable}}
+                                                        {{stocklable}}1
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">
+                                                        {{avaibilitylable}}2
+                                                        <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                        <span *ngIf="isLoggedIn==true">{{qtymsg}}</span>
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div> -->
+                                                </b>
+
+                                            </div>
+                                            
+                                            <div *ngIf="multiplewarehouseinone=='1' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                        *ngIf="(isLoggedIn==false && !iskrayden && showstock=='1' && product.available>0) || (isLoggedIn==true && withloginavailqty=='1' && product.available>0)">
+                                                        {{avaibilitylable}} {{product.available}} </span>
+                                                </b>
+                                                
+                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                        *ngIf="(isLoggedIn==false && !iskrayden && showstock!='1' && product.available>0) || (isLoggedIn==true && withloginavailqty!='1' && product.available>0)">
+                                                        {{avaibilitylable}} {{stocklable}}</span> </b>
+                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                        *ngIf="(isLoggedIn==false && !iskrayden && product.available==0) || (isLoggedIn==true && product.available==0)">
+                                                        {{avaibilitylable}} <span
+                                                            *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                        <span *ngIf="isLoggedIn==true"><ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></span></span>
+                                                </b>
+                                            </div>
+                                            <div *ngIf="IsProfileShow=='1'">
+                                                <label id="ProfileLable1" style="font-weight: bold;">{{ProfileLable}}&nbsp;</label>
+                                                <span id="ProfileLable2" style="font-weight: bold;" *ngIf="product.profilelabel!=undefined && product.profilelabel!=null && product.profilelabel!=''">{{product.profilelabel}}&nbsp;
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <br />
+                                    <div class="box-quantity justify-content-center mb-10">
+                                        <div class="did-floating-label-content mb-0 mt-8">
+                                            <div class="increment-wrapper d-flex justify-content-center align-items-center">
+
+                                                <button class="button dec" (click)="minusqty(product)">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                                <input class="did-floating-input brder-color-grey mt-0" aria-label="Quantity input" autocomplete="off" name="quantity-field" type="tel" title="Qty" id="txtqty" [ngModelOptions]="{standalone:true}" [(ngModel)]='product.quantity' maxlength="5" value="1">
+                                                <label class="did-floating-label qty-txt">Qty</label>
+                                                <!-- style="left: 60px;" -->
+                                                <button class="button inc" (click)="addqty(product)">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i></button>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="align-flex justify-content-center">
+
+                                        <!-- <i class="fa fa-shopping-cart product-btn mb-0" title="Add to Cart" aria-label="Quick view" *ngIf="(iscartthere=='1' && product.Addtocart==true && isLoggedIn) || (iscartthere=='1' && product.Addtocart==true && !isLoggedIn && GuestLogin=='1')" data-toggle="dropdown"
+                                            type="button" (click)="onAddToCart(product)"></i> -->
+                                        <div class="col-md-12 p-1">
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="(iscartthere=='1' && product.Addtocart==true && isLoggedIn) || (iscartthere=='1' && product.Addtocart==true && !isLoggedIn && GuestLogin=='1')" (click)="onAddToCart(product)">Add to
+                                                      Cart</a>
+                                            </div>
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true" (click)="AddtoList(product)" title="Add to {{wishlistlable}}">Add to
+                                                {{wishlistlable}}</a>
+                                            </div>
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'" (click)="AddtorfqList(product)" title="Add to Quote">Add to
+                                        Quote</a>
+                                            </div>
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="!isLoggedIn" (click)="LoginForAddtoQuote()" title="Login to Quote">Login to Quote</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- <i class="fa fa-list-alt product-btn mb-0" aria-hidden="true" aria-label="Quick view" *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true" type="button" (click)="AddtoList(product)" title="Add to {{wishlistlable}}"></i>
+
+                                        <i class="fa fa-list-ul  product-btn mb-0" aria-hidden="true" aria-label="Quick view" *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'" type="button" (click)="AddtorfqList(product)" title="Add to quote"></i> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row mt-60 display-list" *ngIf="ListTypeView=='2'">
+                    <div class="col-lg-12 mb-15" *ngFor="let product of productList1 | paginate : { itemsPerPage:pagesize, currentPage:LNpage,totalItems:totalLinePage, id:'second1' }">
+                        <div class="card-grid-style-3 card-style-full-image" id="{{product.itemname}}">
+                            <div class="card-grid-inner text-center product-grid-align">
+
+                                <div class="image-box itembox">
+                                    <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" (click)="Setitemname(product)">
+                                        <img src="assets/images/Product.png" class="pimage itemimg" alt="{{product.itemname+''+product.descrstring +''+product.freeform}}" *ngIf="product.image == 'NotFound' || product.image==null">
+                                        <img src="{{product.image}}" class="pimage itemimg" alt="{{product.itemname+''+product.descrstring +''+product.freeform}}" *ngIf="product.image != undefined && product.image!=null">
+                                    </a>
+                                </div>
+
+                                <div class="info-right">
+
+                                    
+
+                                    <div class="tag sale sale1" *ngIf="product.origin!=undefined && product.origin!=null && product.origin!='' && product.origin.includes('SP')">
+                                        <span class="sale2">sale</span>
+                                    </div>
+                                    <div class="tag sale sale3" *ngIf="product.itemnewcheck=='new'">
+                                        <span class="sale4">New</span>
+                                    </div>
+
+
+                                    <div class="product-info text-left" data-match-height="groupName">
+
+                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer" style="width:66% !important">
+                                            <h3 class="color-brand-3 font-md-bold" id="itemname">
+                                                {{itlable}} {{product.itemname}}
+                                            </h3>
+                                            <div *ngIf="isLoggedIn==false && DisplayListPriceInProductListwithoutLogin=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.list_price!=undefined && product.list_price!=null && product.list_price!=''">
+                                                    {{DisplayListPriceLable}}:&nbsp; ${{product.list_price | million}}
+                                                </h4>
+                                            </div>
+                                            <div *ngIf="isLoggedIn==true && DisplayListPriceInProductListwithLogin=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.list_price!=undefined && product.list_price!=null && product.list_price!=''">
+                                                    {{DisplayListPriceLable}}:&nbsp; ${{product.list_price | million}}
+                                                </h4>
+                                            </div>
+                                            <div *ngIf="ListPriceShow=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.ListPriceShow!=undefined && product.ListPriceShow!=null && product.ListPriceShow!=''">
+                                                    Price Per Each:&nbsp;${{product.ListPriceShow | million}}
+                                                </h4>
+                                            </div>
+
+                                            <div *ngIf="IsRetailPrice=='1'">
+                                                <h4 class="color-brand-3 font-xs-bold">{{RetailPriceLabel}}&nbsp;</h4>
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="product.retail_price!=undefined && product.retail_price!=null && product.retail_price!=''">
+                                                    ${{product.retail_price | million}} </h4>
+                                            </div>
+
+                                            <h4 class="color-brand-3 font-xs-bold" *ngIf="manufacturerproductlist=='1' && product.manufacturer!=undefined && product.manufacturer!=null && product.manufacturer!=''">
+                                                <label>
+                                                    Manufacturer:</label> {{product.manufacturer}}
+                                            </h4>
+                                            <h4 class="color-brand-3 font-xs-bold" *ngIf="vendorinproductlist=='1' && product.vendorname!=undefined && product.vendorname!=null && product.vendorname!=''">
+                                                <label>
+                                                    Vendor:</label>{{product.vendorname}}</h4>
+                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="iskrayden && product.vendnum!=undefined && product.vendnum!=null && product.vendnum!=''">
+                                                    <label>
+                                                        Vendor item:</label>{{product.vendnum}}</h4>
+                                            <ng-container *ngIf="(isprofiledesc=='0' || isprofiledesc=='2') && product.descrarray!=undefined">
+                                                <ng-container *ngFor="let pdesc of product.descrarray;let l=index;" style="text-transform: uppercase;">
+                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="pdesc!=null && pdesc!=''&& pdesc!=undefined">
+                                                        {{pdesc}} </h4>
+                                                </ng-container>
+                                            </ng-container>
+                                            <h5 class="color-brand-3 font-xs-bold" *ngIf="isprofiledesc=='1' || isprofiledesc=='2'">
+                                                {{product.freeform}} </h5>
+                                            <!-- <div class="rating rateit-small"></div> -->
+                                            <div class="description m-t-10 color-brand-3 font-xs-bold" *ngIf="Productlineshow=='1'">
+                                                {{product.prodline}}
+                                            </div>
+                                        </a>
+
+                                        <div id="hwl">
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="ship_height1">H: <span id="ship_height2">{{product.ship_height}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="ship_length1">L: <span id="ship_length2">{{product.ship_length}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="ship_width1">W: <span id="ship_width2">{{product.ship_width}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="weight1">Weight: <span id="weight2">{{product.weight}}</span></label>
+                                            <label class="color-brand-3 font-xs-bold pl10px" id="weight_per1">Weight Per: <span id="weight_per2">{{product.weight_per}}</span></label>
+                                        </div>
+
+                                        <!-- <h4 id="kship_height" class="color-brand-3 font-xs-bold">
+                                            <label>H: </label> {{product.ship_height}}
+                                     </h4>
+                                     <h4 id="ship_length" class="color-brand-3 font-xs-bold">
+                                         <label>L: </label> {{product.ship_length}}
+                                  </h4>
+                                  <h4 id="ship_width" class="color-brand-3 font-xs-bold">
+                                     <label>W: </label> {{product.ship_width}}
+                              </h4>
+                              <h4 id="weight" class="color-brand-3 font-xs-bold">
+                                <label>Weight: </label> {{product.weight}}
+                         </h4>
+                         <h4 id="weight_per" class="color-brand-3 font-xs-bold">
+                            <label>Weight Per: </label> {{product.weight_per}}
+                     </h4> -->
+                                        <div id="sa_group_label">
+                                            <ng-contaciner *ngIf="product.sa_group_label!=undefined && product.sa_group_label!=null && product.sa_group_label.length>0">
+                                                <ng-container *ngFor="let sa_label of product.sa_group_label;let i =index;">
+                                                    <div *ngIf="sa_label!=undefined && sa_label!=null && sa_label!=''">
+                                                        <label>{{sa_label}}:  
+                                                            <span *ngIf="i==0">{{product.sa_group_1}}</span> 
+                                                            <span *ngIf="i==1">{{product.sa_group_2}}</span> 
+                                                            <span *ngIf="i==2">{{product.sa_group_3}}</span> 
+                                                            <span *ngIf="i==3">{{product.sa_group_4}}</span> 
+                                                            <span *ngIf="i==4">{{product.sa_group_5}}</span> 
+                                                            <span *ngIf="i==5">{{product.sa_group_6}}</span> 
+                                                            <span *ngIf="i==6">{{product.sa_group_7}}</span> 
+                                                            <span *ngIf="i==7">{{product.sa_group_8}}</span> 
+                                                            <span *ngIf="i==8">{{product.sa_group_9}}</span> 
+                                                            <span *ngIf="i==9">{{product.sa_group_10}}</span> 
+                                                            <span *ngIf="i==10">{{product.sa_group_11}}</span> 
+                                                            <span *ngIf="i==11">{{product.sa_group_12}}</span> 
+                                                            <span *ngIf="i==12">{{product.sa_group_13}}</span> 
+                                                            <span *ngIf="i==13">{{product.sa_group_14}}</span> 
+                                                            <span *ngIf="i==14">{{product.sa_group_15}}</span> 
+                                                        </label>
+                                                    </div>
+                                                </ng-container>
+                                            </ng-contaciner>
+                                        </div>
+                                        <h4 id="min" class="color-brand-3 font-xs-bold" *ngIf="minlable!=undefined && minlable!=null && minlable!='' && product.min>0">
+                                            <label>{{minlable}}
+                                            </label> {{product.min}}
+                                        </h4> &nbsp;&nbsp;
+                                        <h4 id="max" class="color-brand-3 font-xs-bold" *ngIf="maxlable!=undefined && maxlable!=null && maxlable!='' && product.max>0">
+                                            <label>{{maxlable}}
+                                            </label> {{product.max}}
+                                        </h4>
+                                        <div class="description m-t-10" *ngIf=" product.UPC1!=undefined && product.UPC1!='' && showups=='1'">
+                                            UPC: {{product.UPC1}}
+                                            <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(product.UPC1)"></i>
+                                        </div>
+                                        <h4 class="color-brand-3 font-xs-bold" id="qty_transfer_req_in" *ngIf="logintype=='3' && (product.qty_transfer_req_in!=undefined && product.qty_transfer_req_in!=null)">
+                                            <label>IN
+                                                BOUND: </label> {{product.qty_transfer_req_in}}
+                                        </h4>
+                                        <h4 id="cu_item" class="color-brand-3 font-xs-bold" *ngIf="logintype=='3' && (product.cu_item!=undefined && product.cu_item!=null && product.cu_item!='')">
+                                            <label>CRC:
+                                            </label> {{product.cu_item}}
+                                        </h4>
+                                        <h4 id="inprocess" class="color-brand-3 font-xs-bold" *ngIf="logintype=='3' && (product.inprocess!=undefined && product.inprocess!=null)">
+                                            <label>In
+                                                Process: </label> {{product.inprocess}}
+                                        </h4>
+                                        <div *ngIf="isLoggedIn==true && withloginprice=='1' && israteshowforcu==true && priceshowcust=='1'" class="font-lg-bold color-brand-2 price-main text-start">
+                                            <b *ngIf="withloginprice=='1' && withloginpricelist=='1' && product.list_price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                ${{product.list_price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">
+                                                    {{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+                                            <b *ngIf="withloginprice=='1' && withloginpricelist!='1' && product.price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                ${{product.price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+    
+    
+    
+                                            <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}&nbsp;</b>
+                                        </div>
+                                        <div class="font-lg-bold color-brand-2 price-main text-start" *ngIf="(isLoggedIn==true && withloginprice=='1' && product.price=='0' && product.Addtocart==true) 
+                                                                        || (isLoggedIn==true && withloginpricelist=='1' && product.list_price=='0' && product.Addtocart==true)">
+                                            <b>{{pricemsg}}</b>
+                                        </div>
+                                        <div *ngIf="isLoggedIn==false && priceshow=='1' && israteshowforcu==true && priceshowcust=='1'" class="font-lg-bold color-brand-2 price-main text-start">
+                                            <b *ngIf="priceshow=='1' && listprice=='1' && product.list_price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                ${{product.list_price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+                                            <b *ngIf="priceshow=='1' && listprice!='1' && product.price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                ${{product.price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+    
+                                            <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}&nbsp;</b>
+                                        </div>
+                                        <div class="font-lg-bold color-brand-2 price-main text-start" *ngIf="(isLoggedIn==false && priceshow=='0') || (isLoggedIn==false && priceshow=='1' && listprice=='1' && product.list_price=='0' && product.Addtocart==true) || (isLoggedIn==false && priceshow=='1' && listprice!='1' && product.price=='0' && product.Addtocart==true)">
+                                            <b>{{pricemsgwithoutlogin}} &nbsp;</b>
+                                        </div>
+
+                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer">
+                                            <div *ngIf="Multiplewarehouseforavaibility==undefined || Multiplewarehouseforavaibility==null || Multiplewarehouseforavaibility==''">
+                                                <div *ngIf="product.drop_ship==true && product.IsBaseProduct==false">
+                                                    <b>{{avaibilitylable}} {{drop_shiplable}}</b>
+                                                </div>
+                                                <div *ngIf="isLoggedIn==true && product.IsBaseProduct==false && product.drop_ship==false">
+                                                    <div *ngIf="displaynewavails=='1'">
+                                                        <b>
+                                                            {{displaynewavailslable}}
+                                                            {{product.availablenew1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}
+                                                        </b>
+                                                    </div>
+                                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty=='1'">
+                                                        <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}</b>
+                                                        <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}</b>
+                                                    </div>
+                                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty!='1'">
+                                                        <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}} {{stocklable}}</b>
+                                                        <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}} {{stocklable}}</b>
+                                                    </div>
+                                                    <div *ngIf="(withloginavailshow=='1' && withloginavaillist=='1' && product.available=='0') 
+                                    || (withloginavailshow=='1' && withloginavaillist!='1' && product.available1=='0')">
+                                                        <b>{{avaibilitylable}} <ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></b>
+                                                    </div>
+                                                    <div id="avgdiv" *ngIf="(avg_lead_time=='1'  && product.available=='0' && product.avg_lead_time>0) 
+                                  || (avg_lead_time=='1'  && product.available1=='0' && product.avg_lead_time>0)">
+                                                        <span id="avglable">{{avg_lead_time_lable}}
+                                                            <strong
+                                                                *ngIf="avg_lead_time_value=='1'">{{product.avg_lead_time}}</strong>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div *ngIf="isLoggedIn==false && product.IsBaseProduct==false && product.drop_ship==false">
+                                                    <div *ngIf="displaynewavails=='1'">
+                                                        <b>
+                                                            {{displaynewavailslable}}
+                                                            {{product.availablenew1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}
+                                                        </b>
+                                                    </div>
+                                                    <div *ngIf="annavail=='1' && showstock=='1'">
+                                                        <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}</b>
+                                                        <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}}
+                                                            {{product.available1 /
+                                                            product.um_displayQty | floor}}
+                                                            {{getumdescbyumcode(product.um_display)}}
+
+                                                        </b>
+
+                                                    </div>
+                                                    <div *ngIf="annavail=='1' && showstock!='1'">
+                                                        <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                            {{avaibilitylable}} <ng-container *ngIf="!iskrayden"> In
+                                                                Stock  </ng-container> <ng-container *ngIf="iskrayden"> {{stocklable}} </ng-container> </b>
+                                                        <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                            {{avaibilitylable}} <ng-container *ngIf="!iskrayden"> In
+                                                                Stock  </ng-container> <ng-container *ngIf="iskrayden"> {{stocklable}} </ng-container> </b>
+                                                    </div>
+                                                    <div *ngIf="(annavail=='1' && withoutloginavaillist=='1' && product.available=='0') 
+                                 || (annavail=='1' && withoutloginavaillist!='1' && product.available1=='0')">
+                                                        <b>{{avaibilitylable}} <ng-container *ngIf="!iskrayden"> {{qtymsgwithoutlogin}}
+                                                        </ng-container>
+                                                        <ng-container *ngIf="iskrayden">{{product.profile_2[9]}}  </ng-container></b>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="oldlogic" *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                <b *ngFor="let avails of product.productavails;">
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false && showstock=='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty=='1' && avails.available>0)">{{avaibilitylable}}
+                                                        {{avails.available}}
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false && showstock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">{{avaibilitylable}}
+                                                        {{stocklable}}
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">{{avaibilitylable}}
+                                                        <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                        <span *ngIf="isLoggedIn==true"><ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></span>
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                </b>
+                                            </div>
+                                            <div id="newlogic" *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                <b *ngFor="let avails of product.productavails;">
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false && showstock=='1') || (isLoggedIn==true && withloginavailqty=='1')">
+                                                        <!-- {{avaibilitylable}} -->
+                                                        
+                                                        <ng-container *ngIf="avails.warehouse=='01'">
+                                                        <label id="whlable11">  {{whlable1}}
+                                                       <span id="whlable12"> {{avails.available}}</span> </label><br />
+                                                    </ng-container> 
+                                                    <ng-container *ngIf="avails.warehouse=='IT'">
+                                                       <label id="whlable21"> {{whlable2}}
+                                                   <span id="whlable22"> {{avails.on_hand}} </span></label><br />
+                                                </ng-container>
+                                                <!-- <ng-container *ngIf="avails.warehouse=='IT'">
+                                                   <label id="whlable31"> {{whlable3}}
+                                               <span id="whlable32"> {{avails.on_po}}</span> </label><br />
+                                            </ng-container> -->
+                                                        <!-- Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}} -->
+                                                    </div>
+                                                    <!-- <div
+                                                        *ngIf="(isLoggedIn==false && showstock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">
+                                                        {{avaibilitylable}}
+                                                        {{stocklable}}1
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div>
+                                                    <div
+                                                        *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">
+                                                        {{avaibilitylable}}2
+                                                        <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                        <span *ngIf="isLoggedIn==true">{{qtymsg}}</span>
+                                                        Warehouse:
+                                                        {{getwarehousenamebycode(avails.warehouse)}}
+                                                    </div> -->
+                                                </b>
+
+                                            </div>
+                                            <div *ngIf="multiplewarehouseinone=='1' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                        *ngIf="(isLoggedIn==false && !iskrayden && showstock=='1' && product.available>0) || (isLoggedIn==true && withloginavailqty=='1' && product.available>0)">
+                                                        {{avaibilitylable}} {{product.available}} </span>
+                                                </b>
+                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                        *ngIf="(isLoggedIn==false && !iskrayden && showstock!='1' && product.available>0) || (isLoggedIn==true && withloginavailqty!='1' && product.available>0)">
+                                                        {{avaibilitylable}} {{stocklable}}</span> </b>
+                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                        *ngIf="(isLoggedIn==false && !iskrayden && product.available==0) || (isLoggedIn==true && product.available==0)">
+                                                        {{avaibilitylable}} <span
+                                                            *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                        <span *ngIf="isLoggedIn==true"><ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></span></span>
+                                                </b>
+                                            </div>
+                                            <div *ngIf="IsProfileShow=='1'">
+                                                <label id="ProfileLable1" style="font-weight: bold;">{{ProfileLable}}&nbsp;</label>
+                                                <span id="ProfileLable2" style="font-weight: bold;" *ngIf="product.profilelabel!=undefined && product.profilelabel!=null && product.profilelabel!=''">{{product.profilelabel}}&nbsp;
+                                                </span>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <br />
+                                    <div class="box-quantity justify-content-start mb-10">
+                                        <div class="did-floating-label-content mb-0 mt-8">
+                                            <div class="increment-wrapper d-flex justify-content-center align-items-center">
+
+                                                <button class="button dec" (click)="minusqty(product)">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                                <input class="did-floating-input brder-color-grey mt-0" aria-label="Quantity input" autocomplete="off" name="quantity-field" type="tel" title="Qty" id="txtqty" [ngModelOptions]="{standalone:true}" [(ngModel)]='product.quantity' maxlength="5" value="1">
+                                                <label class="did-floating-label qty-txt">Qty</label>
+                                                <!-- style="left: 60px;" -->
+                                                <button class="button inc" (click)="addqty(product)">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i></button>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="align-flex justify-content-start">
+
+                                        <!-- <i class="fa fa-shopping-cart product-btn mb-0" title="Add to Cart" aria-label="Quick view" *ngIf="(iscartthere=='1' && product.Addtocart==true && isLoggedIn) || (iscartthere=='1' && product.Addtocart==true && !isLoggedIn && GuestLogin=='1')" data-toggle="dropdown"
+                                            type="button" (click)="onAddToCart(product)"></i> -->
+                                        <div class="col-md-12 p-1 text-start">
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="(iscartthere=='1' && product.Addtocart==true && isLoggedIn) || (iscartthere=='1' && product.Addtocart==true && !isLoggedIn && GuestLogin=='1')" (click)="onAddToCart(product)">Add to
+                                                      Cart</a>
+                                            </div>
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true" (click)="AddtoList(product)" title="Add to {{wishlistlable}}">Add to
+                                                {{wishlistlable}}</a>
+                                            </div>
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'" (click)="AddtorfqList(product)" title="Add to Quote">Add to
+                                        Quote</a>
+                                            </div>
+                                            <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="!isLoggedIn" (click)="LoginForAddtoQuote()" title="Login to Quote">Login to Quote</a>
+                                            </div>
+                                        </div>
+
+                                        <!-- <i class="fa fa-list-alt product-btn mb-0" aria-hidden="true" aria-label="Quick view" *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true" type="button" (click)="AddtoList(product)" title="Add to {{wishlistlable}}"></i>
+
+                                        <i class="fa fa-list-ul  product-btn mb-0" aria-hidden="true" aria-label="Quick view" *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'" type="button" (click)="AddtorfqList(product)" title="Add to quote"></i> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+                <div class="row mt-60 display-list" *ngIf="ListTypeView=='3'">
+
+                    <table class="rwd-table mb-20">
+                        <tbody>
+                            <tr>
+                                <th>{{Lable1}} <i (click)="sa_group_1_asc()" class="fa fa-arrow-circle-up"></i>
+                                    <i (click)="sa_group_1_desc()" class="fa fa-arrow-circle-down"></i>
+                                </th>
+                                <th>{{Lable2}} <i (click)="sa_group_2_asc()" class="fa fa-arrow-circle-up"></i>
+                                    <i (click)="sa_group_2_desc()" class="fa fa-arrow-circle-down"></i>
+                                </th>
+                                <th>{{Lable3}} <i (click)="sa_group_3_asc()" class="fa fa-arrow-circle-up"></i>
+                                    <i (click)="sa_group_3_desc()" class="fa fa-arrow-circle-down"></i>
+                                </th>
+                                <th>{{Lable4}} <i (click)="sa_group_4_asc()" class="fa fa-arrow-circle-up"></i>
+                                    <i (click)="sa_group_4_desc()" class="fa fa-arrow-circle-down"></i>
+                                </th>
+                                <th>Item <i (click)="AtoZ()" class="fa fa-arrow-circle-up"></i> <i (click)="ZtoA()" class="fa fa-arrow-circle-down"></i></th>
+                                <th>Price <i (click)="lowestFirst()" class="fa fa-arrow-circle-up"></i> <i (click)="highestFirst()" class="fa fa-arrow-circle-down"></i></th>
+                            </tr>
+                            <ng-container *ngFor="let product of productList | paginate : { itemsPerPage:pagesize, currentPage:LNpage,totalItems:totalLinePage, id:'second' };let ind = index;">
+
+
+                                <tr id="row{{ind}}" data-bs-toggle="collapse" [attr.data-bs-target]="'.row' + ind">
+                                    <td data-th="Manufacturer">
+                                        {{product.sa_group_1}}
+                                    </td>
+                                    <td data-th="Chemistry">
+                                        {{product.sa_group_2}}
+                                    </td>
+                                    <td data-th="Packaging">
+                                        {{product.sa_group_3}}
+                                    </td>
+                                    <td data-th="Color">
+                                        {{product.sa_group_4}}
+                                    </td>
+                                    <td data-th="Item">
+                                        {{product.itemname}}
+                                    </td>
+                                    <td data-th="Price" class="d-flex">
+                                        <div *ngIf="isLoggedIn==true && withloginprice=='1' && israteshowforcu==true && priceshowcust=='1'">
+                                            <b *ngIf="withloginprice=='1' && withloginpricelist=='1' && product.list_price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}</span>
+                                                ${{product.list_price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+                                            <b *ngIf="withloginprice=='1' && withloginpricelist!='1' && product.price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}</span>
+                                                ${{product.price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}
+                                                </span></b>
+
+
+
+                                            <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}</b>
+                                        </div>
+                                        <div>
+                                            <b *ngIf="(isLoggedIn==true && withloginprice=='1' && product.price=='0' && product.Addtocart==true) 
+                                                        || (isLoggedIn==true && withloginpricelist=='1' && product.list_price=='0' && product.Addtocart==true)">{{pricemsg}}</b>
+                                        </div>
+                                        <div *ngIf="isLoggedIn==false && priceshow=='1' && israteshowforcu==true && priceshowcust=='1'">
+                                            <b *ngIf="priceshow=='1' && listprice=='1' && product.list_price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}</span>
+                                                ${{product.list_price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+                                            <b *ngIf="priceshow=='1' && listprice!='1' && product.price!='0'">
+                                                <span
+                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}</span>
+                                                ${{product.price | million}} <span
+                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                            </b>
+
+
+                                            <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}</b>
+                                        </div>
+                                        <b *ngIf="(isLoggedIn==false && priceshow=='0') || (isLoggedIn==false && priceshow=='1' && listprice=='1' && product.list_price=='0' && product.Addtocart==true) || (isLoggedIn==false && priceshow=='1' && listprice!='1' && product.price=='0' && product.Addtocart==true)">{{pricemsgwithoutlogin}}
+                                            &nbsp;</b>
+                                    </td>
+                                </tr>
+                                <tr class="collapse row{{ind}}">
+                                    <td data-th="Products" class="w-100" colspan="6">
+                                        <div class="col-lg-12">
+                                            <div class="card-grid-style-3 card-style-full-image" id="{{product.itemname}}">
+                                                <div class="card-grid-inner text-center product-grid-align">
+
+                                                    <div class="image-box itembox">
+                                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" (click)="Setitemname(product)">
+                                                            <img src="assets/images/Product.png" class="pimage itemimg" alt="{{product.itemname+''+product.descrstring +''+product.freeform}}" *ngIf="product.image == 'NotFound' || product.image==null">
+                                                            <img src="{{product.image}}" class="pimage itemimg" alt="{{product.itemname+''+product.descrstring +''+product.freeform}}" *ngIf="product.image != undefined && product.image!=null">
+                                                        </a>
+                                                    </div>
+
+                                                    <div class="info-right">
+
+                                                        <div *ngIf="isLoggedIn==true && withloginprice=='1' && israteshowforcu==true && priceshowcust=='1'" class="font-lg-bold color-brand-2 price-main text-end">
+                                                            <b *ngIf="withloginprice=='1' && withloginpricelist=='1' && product.list_price!='0'">
+                                                                <span
+                                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                                ${{product.list_price | million}} <span
+                                                                    *ngIf="umafterpriceinproductlist=='1'">
+                                                                    {{getumdescbyumcode(product.um_display)}}</span>
+                                                            </b>
+                                                            <b *ngIf="withloginprice=='1' && withloginpricelist!='1' && product.price!='0'">
+                                                                <span
+                                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                                ${{product.price | million}} <span
+                                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                                            </b>
+
+
+
+                                                            <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}&nbsp;</b>
+                                                        </div>
+                                                        <div class="font-lg-bold color-brand-2 price-main text-end" *ngIf="(isLoggedIn==true && withloginprice=='1' && product.price=='0' && product.Addtocart==true) 
+                                                                                        || (isLoggedIn==true && withloginpricelist=='1' && product.list_price=='0' && product.Addtocart==true)">
+                                                            <b>{{pricemsg}}</b>
+                                                        </div>
+                                                        <div *ngIf="isLoggedIn==false && priceshow=='1' && israteshowforcu==true && priceshowcust=='1'" class="font-lg-bold color-brand-2 price-main text-end">
+                                                            <b *ngIf="priceshow=='1' && listprice=='1' && product.list_price!='0'">
+                                                                <span
+                                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                                ${{product.list_price | million}} <span
+                                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                                            </b>
+                                                            <b *ngIf="priceshow=='1' && listprice!='1' && product.price!='0'">
+                                                                <span
+                                                                    *ngIf="beforepricelableinproductlist!=undefined && beforepricelableinproductlist!=null && beforepricelableinproductlist!=''">{{beforepricelableinproductlist}}&nbsp;</span>
+                                                                ${{product.price | million}} <span
+                                                                    *ngIf="umafterpriceinproductlist=='1'">{{getumdescbyumcode(product.um_display)}}</span>
+                                                            </b>
+
+                                                            <b *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}&nbsp;</b>
+                                                        </div>
+                                                        <div class="font-lg-bold color-brand-2 price-main text-end" *ngIf="(isLoggedIn==false && priceshow=='0') || (isLoggedIn==false && priceshow=='1' && listprice=='1' && product.list_price=='0' && product.Addtocart==true) || (isLoggedIn==false && priceshow=='1' && listprice!='1' && product.price=='0' && product.Addtocart==true)">
+                                                            <b>{{pricemsgwithoutlogin}} &nbsp;</b>
+                                                        </div>
+
+                                                        <div class="tag sale sale1" *ngIf="product.origin!=undefined && product.origin!=null && product.origin!='' && product.origin.includes('SP')">
+                                                            <span class="sale2">sale</span>
+                                                        </div>
+                                                        <div class="tag sale sale3" *ngIf="product.itemnewcheck=='new'">
+                                                            <span class="sale4">New</span>
+                                                        </div>
+
+
+                                                        <div class="product-info text-left" data-match-height="groupName">
+
+                                                            <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer" style="width:66% !important">
+                                                                <h3 class="color-brand-3 font-md-bold" id="itemname">
+                                                                    {{itlable}} {{product.itemname}}
+                                                                </h3>
+                                                                <div *ngIf="isLoggedIn==false && DisplayListPriceInProductListwithoutLogin=='1'">
+                                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="product.list_price!=undefined && product.list_price!=null && product.list_price!=''">
+                                                                        {{DisplayListPriceLable}}:&nbsp; ${{product.list_price | million}}
+                                                                    </h4>
+                                                                </div>
+                                                                <div *ngIf="isLoggedIn==true && DisplayListPriceInProductListwithLogin=='1'">
+                                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="product.list_price!=undefined && product.list_price!=null && product.list_price!=''">
+                                                                        {{DisplayListPriceLable}}:&nbsp; ${{product.list_price | million}}
+                                                                    </h4>
+                                                                </div>
+                                                                <div *ngIf="ListPriceShow=='1'">
+                                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="product.ListPriceShow!=undefined && product.ListPriceShow!=null && product.ListPriceShow!=''">
+                                                                        Price Per Each:&nbsp;${{product.ListPriceShow | million}}
+                                                                    </h4>
+                                                                </div>
+
+                                                                <div *ngIf="IsRetailPrice=='1'">
+                                                                    <h4 class="color-brand-3 font-xs-bold">{{RetailPriceLabel}}&nbsp;</h4>
+                                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="product.retail_price!=undefined && product.retail_price!=null && product.retail_price!=''">
+                                                                        ${{product.retail_price | million}} </h4>
+                                                                </div>
+
+                                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="manufacturerproductlist=='1' && product.manufacturer!=undefined && product.manufacturer!=null && product.manufacturer!=''">
+                                                                    <label>
+                                                                        Manufacturer:</label> {{product.manufacturer}}
+                                                                </h4>
+                                                                <h4 class="color-brand-3 font-xs-bold" *ngIf="vendorinproductlist=='1'  && product.vendorname!=undefined && product.vendorname!=null && product.vendorname!=''">
+                                                                    <label>
+                                                                        Vendor:</label> {{product.vendorname}}</h4>
+                                                                    <h4 class="color-brand-3 font-xs-bold" *ngIf="iskrayden  && product.vendnum!=undefined && product.vendnum!=null && product.vendnum!=''">
+                                                                        <label>
+                                                                            Vendor item:</label>{{product.vendnum}}</h4>
+                                                                <ng-container *ngIf="(isprofiledesc=='0' || isprofiledesc=='2') && product.descrarray!=undefined">
+                                                                    <ng-container *ngFor="let pdesc of product.descrarray;let l=index;" style="text-transform: uppercase;">
+                                                                        <h4 class="color-brand-3 font-xs-bold" *ngIf="pdesc!=null && pdesc!=''&& pdesc!=undefined">
+                                                                            {{pdesc}} </h4>
+                                                                    </ng-container>
+                                                                </ng-container>
+                                                                <h5 class="color-brand-3 font-xs-bold" *ngIf="isprofiledesc=='1' || isprofiledesc=='2'">
+                                                                    {{product.freeform}} </h5>
+                                                                <!-- <div class="rating rateit-small"></div> -->
+                                                                <div class="description m-t-10 color-brand-3 font-xs-bold" *ngIf="Productlineshow=='1'">
+                                                                    {{product.prodline}}
+                                                                </div>
+                                                            </a>
+
+                                                            <div id="hwl">
+                                                                <label class="color-brand-3 font-xs-bold pl10px" id="ship_height1">H: <span id="ship_height2">{{product.ship_height}}</span></label>
+                                                                <label class="color-brand-3 font-xs-bold pl10px" id="ship_length1">L: <span id="ship_length2">{{product.ship_length}}</span></label>
+                                                                <label class="color-brand-3 font-xs-bold pl10px" id="ship_width1">W: <span id="ship_width2">{{product.ship_width}}</span></label>
+                                                                <label class="color-brand-3 font-xs-bold pl10px" id="weight1">Weight: <span id="weight2">{{product.weight}}</span></label>
+                                                                <label class="color-brand-3 font-xs-bold pl10px" id="weight_per1">Weight Per: <span id="weight_per2">{{product.weight_per}}</span></label>
+                                                            </div>
+
+                                                            <!-- <h4 id="kship_height" class="color-brand-3 font-xs-bold">
+                                                                <label>H: </label> {{product.ship_height}}
+                                                         </h4>
+                                                         <h4 id="ship_length" class="color-brand-3 font-xs-bold">
+                                                             <label>L: </label> {{product.ship_length}}
+                                                      </h4>
+                                                      <h4 id="ship_width" class="color-brand-3 font-xs-bold">
+                                                         <label>W: </label> {{product.ship_width}}
+                                                  </h4>
+                                                  <h4 id="weight" class="color-brand-3 font-xs-bold">
+                                                    <label>Weight: </label> {{product.weight}}
+                                             </h4>
+                                             <h4 id="weight_per" class="color-brand-3 font-xs-bold">
+                                                <label>Weight Per: </label> {{product.weight_per}}
+                                         </h4> -->
+                                                            <div id="sa_group_label">
+                                                                <ng-contaciner *ngIf="product.sa_group_label!=undefined && product.sa_group_label!=null && product.sa_group_label.length>0">
+                                                                    <ng-container *ngFor="let sa_label of product.sa_group_label;let i =index;">
+                                                                        <div *ngIf="sa_label!=undefined && sa_label!=null && sa_label!=''">
+                                                                            <label>{{sa_label}}:  
+                                                                                <span *ngIf="i==0">{{product.sa_group_1}}</span> 
+                                                                                <span *ngIf="i==1">{{product.sa_group_2}}</span> 
+                                                                                <span *ngIf="i==2">{{product.sa_group_3}}</span> 
+                                                                                <span *ngIf="i==3">{{product.sa_group_4}}</span> 
+                                                                                <span *ngIf="i==4">{{product.sa_group_5}}</span> 
+                                                                                <span *ngIf="i==5">{{product.sa_group_6}}</span> 
+                                                                                <span *ngIf="i==6">{{product.sa_group_7}}</span> 
+                                                                                <span *ngIf="i==7">{{product.sa_group_8}}</span> 
+                                                                                <span *ngIf="i==8">{{product.sa_group_9}}</span> 
+                                                                                <span *ngIf="i==9">{{product.sa_group_10}}</span> 
+                                                                                <span *ngIf="i==10">{{product.sa_group_11}}</span> 
+                                                                                <span *ngIf="i==11">{{product.sa_group_12}}</span> 
+                                                                                <span *ngIf="i==12">{{product.sa_group_13}}</span> 
+                                                                                <span *ngIf="i==13">{{product.sa_group_14}}</span> 
+                                                                                <span *ngIf="i==14">{{product.sa_group_15}}</span> 
+                                                                            </label>
+                                                                        </div>
+                                                                    </ng-container>
+                                                                </ng-contaciner>
+                                                            </div>
+                                                            <h4 id="min" class="color-brand-3 font-xs-bold" *ngIf="minlable!=undefined && minlable!=null && minlable!='' && product.min>0">
+                                                                <label>{{minlable}}
+                                                                </label> {{product.min}}
+                                                            </h4> &nbsp;&nbsp;
+                                                            <h4 id="max" class="color-brand-3 font-xs-bold" *ngIf="maxlable!=undefined && maxlable!=null && maxlable!='' && product.max>0">
+                                                                <label>{{maxlable}}
+                                                                </label> {{product.max}}
+                                                            </h4>
+                                                            <div class="description m-t-10" *ngIf=" product.UPC1!=undefined && product.UPC1!='' && showups=='1'">
+                                                                UPC: {{product.UPC1}}
+                                                                <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(product.UPC1)"></i>
+                                                            </div>
+                                                            <h4 class="color-brand-3 font-xs-bold" id="qty_transfer_req_in" *ngIf="logintype=='3' && (product.qty_transfer_req_in!=undefined && product.qty_transfer_req_in!=null)">
+                                                                <label>IN
+                                                                    BOUND: </label> {{product.qty_transfer_req_in}}
+                                                            </h4>
+                                                            <h4 id="cu_item" class="color-brand-3 font-xs-bold" *ngIf="logintype=='3' && (product.cu_item!=undefined && product.cu_item!=null && product.cu_item!='')">
+                                                                <label>CRC:
+                                                                </label> {{product.cu_item}}
+                                                            </h4>
+                                                            <h4 id="inprocess" class="color-brand-3 font-xs-bold" *ngIf="logintype=='3' && (product.inprocess!=undefined && product.inprocess!=null)">
+                                                                <label>In
+                                                                    Process: </label> {{product.inprocess}}
+                                                            </h4>
+
+
+                                                            <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer">
+                                                                <div *ngIf="Multiplewarehouseforavaibility==undefined || Multiplewarehouseforavaibility==null || Multiplewarehouseforavaibility==''">
+                                                                    <div *ngIf="product.drop_ship==true && product.IsBaseProduct==false">
+                                                                        <b>{{avaibilitylable}} {{drop_shiplable}}</b>
+                                                                    </div>
+                                                                    <div *ngIf="isLoggedIn==true && product.IsBaseProduct==false && product.drop_ship==false">
+                                                                        <div *ngIf="displaynewavails=='1'">
+                                                                            <b>
+                                                                                {{displaynewavailslable}}
+                                                                                {{product.availablenew1 /
+                                                                                product.um_displayQty | floor}}
+                                                                                {{getumdescbyumcode(product.um_display)}}
+                                                                            </b>
+                                                                        </div>
+                                                                        <div *ngIf="withloginavailshow=='1' && withloginavailqty=='1'">
+                                                                            <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                                                {{avaibilitylable}}
+                                                                                {{product.available /
+                                                                                product.um_displayQty | floor}}
+                                                                                {{getumdescbyumcode(product.um_display)}}</b>
+                                                                            <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                                                {{avaibilitylable}}
+                                                                                {{product.available1 /
+                                                                                product.um_displayQty | floor}}
+                                                                                {{getumdescbyumcode(product.um_display)}}</b>
+                                                                        </div>
+                                                                        <div *ngIf="withloginavailshow=='1' && withloginavailqty!='1'">
+                                                                            <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                                                {{avaibilitylable}} {{stocklable}}</b>
+                                                                            <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                                                {{avaibilitylable}} {{stocklable}}</b>
+                                                                        </div>
+                                                                        <div *ngIf="(withloginavailshow=='1' && withloginavaillist=='1' && product.available=='0') 
+                                                        || (withloginavailshow=='1' && withloginavaillist!='1' && product.available1=='0')">
+                                                                            <b>{{avaibilitylable}} <ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></b>
+                                                                        </div>
+                                                                        <div id="avgdiv" *ngIf="(avg_lead_time=='1'  && product.available=='0' && product.avg_lead_time>0) 
+                                                      || (avg_lead_time=='1'  && product.available1=='0' && product.avg_lead_time>0)">
+                                                                            <span id="avglable">{{avg_lead_time_lable}}
+                                                                                <strong
+                                                                                    *ngIf="avg_lead_time_value=='1'">{{product.avg_lead_time}}</strong>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div *ngIf="isLoggedIn==false && product.IsBaseProduct==false && product.drop_ship==false">
+                                                                        <div *ngIf="displaynewavails=='1'">
+                                                                            <b>
+                                                                                {{displaynewavailslable}}
+                                                                                {{product.availablenew1 /
+                                                                                product.um_displayQty | floor}}
+                                                                                {{getumdescbyumcode(product.um_display)}}
+                                                                            </b>
+                                                                        </div>
+                                                                        <div *ngIf="annavail=='1' && showstock=='1'">
+                                                                            <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                                                {{avaibilitylable}}
+                                                                                {{product.available /
+                                                                                product.um_displayQty | floor}}
+                                                                                {{getumdescbyumcode(product.um_display)}}</b>
+                                                                            <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                                                {{avaibilitylable}}
+                                                                                {{product.available1 /
+                                                                                product.um_displayQty | floor}}
+                                                                                {{getumdescbyumcode(product.um_display)}}
+                    
+                                                                            </b>
+
+                                                                        </div>
+                                                                        <div *ngIf="annavail=='1' && showstock!='1'">
+                                                                            <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                                                {{avaibilitylable}} <ng-container *ngIf="!iskrayden"> In
+                                                                                    Stock  </ng-container> <ng-container *ngIf="iskrayden"> {{stocklable}} </ng-container> </b>
+                                                                            <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                                                {{avaibilitylable}} <ng-container *ngIf="!iskrayden"> In
+                                                                                    Stock  </ng-container> <ng-container *ngIf="iskrayden"> {{stocklable}} </ng-container> </b>
+                                                                        </div>
+                                                                        <div *ngIf="(annavail=='1' && withoutloginavaillist=='1' && product.available=='0') 
+                                                     || (annavail=='1' && withoutloginavaillist!='1' && product.available1=='0')">
+                                                                            <b>{{avaibilitylable}} <ng-container *ngIf="!iskrayden"> {{qtymsgwithoutlogin}}
+                                                                            </ng-container>
+                                                                            <ng-container *ngIf="iskrayden">{{product.profile_2[9]}}  </ng-container></b>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div id="oldlogic" *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                                    <b *ngFor="let avails of product.productavails;">
+                                                                        <div
+                                                                            *ngIf="(isLoggedIn==false && showstock=='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty=='1' && avails.available>0)">{{avaibilitylable}}
+                                                                            {{avails.available}}
+                                                                            Warehouse:
+                                                                            {{getwarehousenamebycode(avails.warehouse)}}
+                                                                        </div>
+                                                                        <div
+                                                                            *ngIf="(isLoggedIn==false && showstock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">{{avaibilitylable}}
+                                                                            {{stocklable}}
+                                                                            Warehouse:
+                                                                            {{getwarehousenamebycode(avails.warehouse)}}
+                                                                        </div>
+                                                                        <div
+                                                                            *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">{{avaibilitylable}}
+                                                                            <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                                            <span *ngIf="isLoggedIn==true"><ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></span>
+                                                                            Warehouse:
+                                                                            {{getwarehousenamebycode(avails.warehouse)}}
+                                                                        </div>
+                                                                    </b>
+                                                                </div>
+                                                                <div id="newlogic" *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                                    <b *ngFor="let avails of product.productavails;">
+                                                                        <div
+                                                                            *ngIf="(isLoggedIn==false && showstock=='1') || (isLoggedIn==true && withloginavailqty=='1')">
+                                                                            <!-- {{avaibilitylable}} -->
+                                                                            
+                                                                            <ng-container *ngIf="avails.warehouse=='01'">
+                                                                            <label id="whlable11">  {{whlable1}}
+                                                                           <span id="whlable12"> {{avails.available}}</span> </label><br />
+                                                                        </ng-container> 
+                                                                        <ng-container *ngIf="avails.warehouse=='IT'">
+                                                                           <label id="whlable21"> {{whlable2}}
+                                                                       <span id="whlable22"> {{avails.on_hand}} </span></label><br />
+                                                                    </ng-container>
+                                                                    <!-- <ng-container *ngIf="avails.warehouse=='IT'">
+                                                                       <label id="whlable31"> {{whlable3}}
+                                                                   <span id="whlable32"> {{avails.on_po}}</span> </label><br />
+                                                                </ng-container> -->
+                                                                            <!-- Warehouse:
+                                                                            {{getwarehousenamebycode(avails.warehouse)}} -->
+                                                                        </div>
+                                                                        <!-- <div
+                                                                            *ngIf="(isLoggedIn==false && showstock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">
+                                                                            {{avaibilitylable}}
+                                                                            {{stocklable}}1
+                                                                            Warehouse:
+                                                                            {{getwarehousenamebycode(avails.warehouse)}}
+                                                                        </div>
+                                                                        <div
+                                                                            *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">
+                                                                            {{avaibilitylable}}2
+                                                                            <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                                            <span *ngIf="isLoggedIn==true">{{qtymsg}}</span>
+                                                                            Warehouse:
+                                                                            {{getwarehousenamebycode(avails.warehouse)}}
+                                                                        </div> -->
+                                                                    </b>
+
+                                                                </div>
+                                                                <div *ngIf="multiplewarehouseinone=='1' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                                    <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                                            *ngIf="(isLoggedIn==false && !iskrayden && showstock=='1' && product.available>0) || (isLoggedIn==true && withloginavailqty=='1' && product.available>0)">
+                                                                           {{avaibilitylable}} {{product.available}} </span>
+                                                                    </b>
+                                                                    <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                                            *ngIf="(isLoggedIn==false && !iskrayden && showstock!='1' && product.available>0) || (isLoggedIn==true && withloginavailqty!='1' && product.available>0)">
+                                                                            {{avaibilitylable}} {{stocklable}}</span> </b>
+                                                                    <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                                            *ngIf="(isLoggedIn==false && !iskrayden && product.available==0) || (isLoggedIn==true && product.available==0)">
+                                                                            {{avaibilitylable}} <span
+                                                                                *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                                            <span *ngIf="isLoggedIn==true"><ng-container *ngIf="!iskrayden"> {{qtymsg}}</ng-container> <ng-container *ngIf="iskrayden">{{product.profile_2[9]}} </ng-container></span></span>
+                                                                    </b>
+                                                                </div>
+                                                                <div *ngIf="IsProfileShow=='1'">
+                                                                    <label id="ProfileLable1" style="font-weight: bold;">{{ProfileLable}}&nbsp;</label>
+                                                                    <span id="ProfileLable2" style="font-weight: bold;" *ngIf="product.profilelabel!=undefined && product.profilelabel!=null && product.profilelabel!=''">{{product.profilelabel}}&nbsp;
+                                                                    </span>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <br />
+                                                        <div class="box-quantity justify-content-start mb-10">
+                                                            <div class="did-floating-label-content mb-0 mt-8">
+                                                                <div class="increment-wrapper d-flex justify-content-center align-items-center">
+
+                                                                    <button class="button dec" (click)="minusqty(product)">
+                                                                        <i class="fa fa-minus" aria-hidden="true"></i>
+                                                                    </button>
+                                                                    <input class="did-floating-input brder-color-grey mt-0" aria-label="Quantity input" autocomplete="off" name="quantity-field" type="tel" title="Qty" id="txtqty" [ngModelOptions]="{standalone:true}" [(ngModel)]='product.quantity' maxlength="5" value="1">
+                                                                    <label class="did-floating-label qty-txt">Qty</label>
+                                                                    <!-- style="left: 60px;" -->
+                                                                    <button class="button inc" (click)="addqty(product)">
+                                                                            <i class="fa fa-plus" aria-hidden="true"></i></button>
+
+
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="align-flex justify-content-start">
+
+                                                            <!-- <i class="fa fa-shopping-cart product-btn mb-0" title="Add to Cart" aria-label="Quick view" *ngIf="(iscartthere=='1' && product.Addtocart==true && isLoggedIn) || (iscartthere=='1' && product.Addtocart==true && !isLoggedIn && GuestLogin=='1')" data-toggle="dropdown"
+                                                                type="button" (click)="onAddToCart(product)"></i> -->
+                                                            <div class="col-md-12 p-1 text-start">
+                                                                <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="(iscartthere=='1' && product.Addtocart==true && isLoggedIn) || (iscartthere=='1' && product.Addtocart==true && !isLoggedIn && GuestLogin=='1')" (click)="onAddToCart(product)">Add to
+                                                                          Cart</a>
+                                                                </div>
+                                                                <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true" (click)="AddtoList(product)" title="Add to {{wishlistlable}}">Add to
+                                                                    {{wishlistlable}}</a>
+                                                                </div>
+                                                                <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'" (click)="AddtorfqList(product)" title="Add to Quote">Add to
+                                                            Quote</a>
+                                                                </div>
+                                                                <div class="box-btn-cart"><a class="btn btn-cart w-auto" *ngIf="!isLoggedIn" (click)="LoginForAddtoQuote()" title="Login to Quote">Login to Quote</a>
+                                                                </div>
+                                                            </div>
+
+                                                            <!-- <i class="fa fa-list-alt product-btn mb-0" aria-hidden="true" aria-label="Quick view" *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true" type="button" (click)="AddtoList(product)" title="Add to {{wishlistlable}}"></i>
+                    
+                                                            <i class="fa fa-list-ul  product-btn mb-0" aria-hidden="true" aria-label="Quick view" *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'" type="button" (click)="AddtorfqList(product)" title="Add to quote"></i> -->
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </ng-container>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
+
+                <div class="row center">
+                    <div class="col-sm-12 col-md-12" style="text-align: center;">
+                        <pagination-controls (pageChange)="bindProducts($event)" id="second1">
+                        </pagination-controls>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <h3 *ngIf="(productList1==undefined || productList1==null || productList1.length==0) && isEmpty" class="text-center mb-10">No Products Found.</h3>
+            </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="ModalQuickview" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content apply-job-form">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body p-30">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="gallery-image">
+                                <div class="galleries-2">
+                                    <div class="detail-gallery">
+                                        <div class="product-image-slider-2">
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                        </div>
+                                    </div>
+                                    <div class="slider-nav-thumbnails-2">
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-tags">
+                                <div class="d-inline-block mr-25"><span class="font-sm font-medium color-gray-900">Category:</span><a class="link" href="#">Lorem,
+                                        ipsum.</a></div>
+                                <div class="d-inline-block"><span class="font-sm font-medium color-gray-900">Tags:</span><a class="link" href="#">Lorem</a>,<a class="link" href="#">Lorem, ipsum.</a></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="product-info">
+                                <h4 class="mb-15">Angle Grinder Cordless 1/2 In. Compact Drill/Driver Kit 20V
+                                </h4>
+                                <div class="info-by">
+                                    <span class="bytext color-gray-500 font-xs font-medium">by</span><a class="byAUthor color-gray-900 font-xs font-medium" href="shop-vendor-list.html">
+                                        Company Name</a>
+                                    <div class="rating d-inline-block"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg"
+                                            alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><span class="font-xs color-gray-500 font-medium"> (65
+                                            reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="border-bottom pt-10 mb-20"></div>
+                                <div class="box-product-price">
+                                    <h3 class="color-brand-3 price-main d-inline-block mr-10">$1001.5</h3>
+                                    <span class="color-gray-500 price-line font-xl line-througt">$1052.2</span>
+                                </div>
+                                <div class="product-description mt-10">
+                                    <ul>
+                                        <li class="font-md"><strong>SKU :</strong> DPB12</li>
+                                        <li class="font-md"><strong>Weight :</strong> 1.00 LBS</li>
+                                        <li class="font-md"><strong>Shipping :</strong> Calculated at Checkout</li>
+                                        <li class="font-md"><strong>Custom Field :</strong> Sample C</li>
+                                    </ul>
+                                </div>
+                                <div class="box-product-color mt-10">
+                                    <p class="font-md"><strong>Color :</strong> Light Blue</p>
+                                    <ul class="list-colors">
+                                        <li class="disabled"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Pink">
+                                        </li>
+                                        <li><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Gold"></li>
+                                        <li><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Pink Gold">
+                                        </li>
+                                        <li><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Silver"></li>
+                                        <li class="active"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Pink Gold">
+                                        </li>
+                                        <li class="disabled"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Black">
+                                        </li>
+                                        <li class="disabled"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Red">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="box-product-style-size mt-10">
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-10">
+                                            <p class="font-md"><strong>Size :</strong> 100 x 100</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="buy-product mt-5">
+                                    <p class="font-sm mb-10">Quantity</p>
+                                    <div class="box-quantity">
+                                        <div class="input-quantity">
+                                            <input class="font-xl color-brand-3" type="text" value="1"><span class="minus-cart"></span><span class="plus-cart"></span>
+                                        </div>
+                                    </div>
+                                    <div class="box-quantity mt-3">
+                                        <div class="button-buy"><a class="btn btn-cart" href="cart.html">Add to
+                                                cart</a><a class="btn btn-buy" href="checkout.html">Buy now</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="pt-30 mb-10">
+                            <ul class="nav nav-tabs nav-tabs-product" role="tablist">
+                                <li><a class="active" href="#tab-description" data-bs-toggle="tab" role="tab" aria-controls="tab-description" aria-selected="true">Description</a></li>
+                                <li><a href="#tab-specification" data-bs-toggle="tab" role="tab" aria-controls="tab-specification" aria-selected="true">Specification</a></li>
+                                <li><a href="#tab-additional" data-bs-toggle="tab" role="tab" aria-controls="tab-additional" aria-selected="true">Additional information</a>
+                                </li>
+                                <li><a href="#tab-reviews" data-bs-toggle="tab" role="tab" aria-controls="tab-reviews" aria-selected="true">Reviews (2)</a></li>
+                                <li><a href="#tab-vendor" data-bs-toggle="tab" role="tab" aria-controls="tab-vendor" aria-selected="true">Vendor</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade active show" id="tab-description" role="tabpanel" aria-labelledby="tab-description">
+                                    <div class="display-text-short">
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum expedita laboriosam quas enim. Facere accusantium in amet dicta culpa voluptatum ad officia maiores dolorem pariatur voluptas sapiente corrupti laborum
+                                            voluptatem quod, natus quas ipsum aspernatur ipsa officiis tempora harum iste molestias facilis. Magnam nihil labore ipsam neque quaerat exercitationem voluptatum fugit animi magni asperiores corrupti facilis
+                                            quisquam harum repudiandae architecto temporibus minus, dicta, illo facere, reiciendis inventore aut? Quibusdam amet quaerat veniam inventore nam eius, quia ab recusandae ex ad corporis at praesentium dicta
+                                            error consectetur officiis alias expedita, laboriosam voluptates sint debitis dolores velit nobis. Illo accusantium vel harum.
+                                        </p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum expedita laboriosam quas enim. Facere accusantium in amet dicta culpa voluptatum ad officia maiores dolorem pariatur voluptas sapiente corrupti laborum
+                                            voluptatem quod, natus quas ipsum aspernatur ipsa officiis tempora harum iste molestias facilis. Magnam nihil labore ipsam neque quaerat exercitationem voluptatum fugit animi magni asperiores corrupti facilis
+                                            quisquam harum repudiandae architecto temporibus minus, dicta, illo facere, reiciendis inventore aut? Quibusdam amet quaerat veniam inventore nam eius, quia ab recusandae ex ad corporis at praesentium dicta
+                                            error consectetur officiis alias expedita, laboriosam voluptates sint debitis dolores velit nobis. Illo accusantium vel harum.
+                                        </p>
+                                        <div class="align-flex">
+                                            <p><img src="assets/imgs/prodcut-1.jpeg" alt="Ecom"></p>
+                                            <p><img src="assets/imgs/prodcut-1.jpeg" alt="Ecom"></p>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum expedita laboriosam quas enim. Facere accusantium in amet dicta culpa voluptatum ad officia maiores dolorem pariatur voluptas sapiente corrupti laborum
+                                            voluptatem quod, natus quas ipsum aspernatur ipsa officiis tempora harum iste molestias facilis. Magnam nihil labore ipsam neque quaerat exercitationem voluptatum fugit animi magni asperiores corrupti facilis
+                                            quisquam harum repudiandae architecto temporibus minus, dicta, illo facere, reiciendis inventore aut? Quibusdam amet quaerat veniam inventore nam eius, quia ab recusandae ex ad corporis at praesentium dicta
+                                            error consectetur officiis alias expedita, laboriosam voluptates sint debitis dolores velit nobis. Illo accusantium vel harum.
+                                        </p>
+                                    </div>
+                                    <div class="mt-20 text-center"><a class="btn btn-border font-sm-bold pl-80 pr-80 btn-expand-more">More
+                                            Details</a></div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="tab-specification">
+                                    <h5 class="mb-25">Specification</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Mode</td>
+                                                    <td>#SK10923</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Brand</td>
+                                                    <td>Brand</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Size</td>
+                                                    <td>6.7"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Finish</td>
+                                                    <td>Light Blue</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Origin of Country</td>
+                                                    <td>United States</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Manufacturer</td>
+                                                    <td>USA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Released Year</td>
+                                                    <td>2022</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Warranty</td>
+                                                    <td>International</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-additional" role="tabpanel" aria-labelledby="tab-additional">
+                                    <h5 class="mb-25">Additional information</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Weight</td>
+                                                    <td>
+                                                        <p>0.240 kg</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Dimensions</td>
+                                                    <td>
+                                                        <p>0.74 x 7.64 x 16.08 cm</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews">
+                                    <div class="comments-area">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <h4 class="mb-30 title-question">Customer questions &amp; answers</h4>
+                                                <div class="comment-list">
+                                                    <div class="single-comment justify-content-between d-flex mb-30 hover-up">
+                                                        <div class="user justify-content-between d-flex">
+                                                            <div class="thumb text-center"><img src="assets/imgs/author-2.png" alt="Ecom"><a class="font-heading text-brand" href="#">Sienna</a>
+                                                            </div>
+                                                            <div class="desc">
+                                                                <div class="d-flex justify-content-between mb-10">
+                                                                    <div class="d-flex align-items-center"><span class="font-xs color-gray-700">January 24,
+                                                                            2023 at 3:12
+                                                                            pm</span></div>
+                                                                    <div class="product-rate d-inline-block">
+                                                                        <div class="product-rating" style="width: 100%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-10 font-sm color-gray-900">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt?
+                                                                    <a class="reply" href="#"> Reply</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-comment justify-content-between d-flex mb-30 ml-30 hover-up">
+                                                        <div class="user justify-content-between d-flex">
+                                                            <div class="thumb text-center"><img src="assets/imgs/author-3.png" alt="Ecom"><a class="font-heading text-brand" href="#">Brenna</a>
+                                                            </div>
+                                                            <div class="desc">
+                                                                <div class="d-flex justify-content-between mb-10">
+                                                                    <div class="d-flex align-items-center"><span class="font-xs color-gray-700">January 24,
+                                                                            2023 at 3:12
+                                                                            pm</span></div>
+                                                                    <div class="product-rate d-inline-block">
+                                                                        <div class="product-rating" style="width: 80%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-10 font-sm color-gray-900">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt?
+                                                                    <a class="reply" href="#"> Reply</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-comment justify-content-between d-flex hover-up">
+                                                        <div class="user justify-content-between d-flex">
+                                                            <div class="thumb text-center"><img src="assets/imgs/author-4.png" alt="Ecom"><a class="font-heading text-brand" href="#">Gemma</a>
+                                                            </div>
+                                                            <div class="desc">
+                                                                <div class="d-flex justify-content-between mb-10">
+                                                                    <div class="d-flex align-items-center"><span class="font-xs color-gray-700">January 24,
+                                                                            2023 at 3:12
+                                                                            pm</span></div>
+                                                                    <div class="product-rate d-inline-block">
+                                                                        <div class="product-rating" style="width: 80%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-10 font-sm color-gray-900">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt?
+                                                                    <a class="reply" href="#"> Reply</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <h4 class="mb-30 title-question">Customer reviews</h4>
+                                                <div class="d-flex mb-30">
+                                                    <div class="product-rate d-inline-block mr-15">
+                                                        <div class="product-rating" style="width: 90%"></div>
+                                                    </div>
+                                                    <h6>4.8 out of 5</h6>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>5 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%
+                                                    </div>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>4 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                                    </div>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>3 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%
+                                                    </div>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>2 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%
+                                                    </div>
+                                                </div>
+                                                <div class="progress mb-30">
+                                                    <span>1 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%
+                                                    </div>
+                                                </div>
+                                                <a class="font-xs text-muted" href="#">How are ratings calculated?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-vendor" role="tabpanel" aria-labelledby="tab-vendor">
+                                    <div class="vendor-logo d-flex mb-30">
+                                        <img src="assets/imgs/page/product/futur.png" alt="">
+                                        <div class="vendor-name ml-15">
+                                            <h6><a href="shop-vendor-single.html">Futur Tech.</a></h6>
+                                            <div class="product-rate-cover text-end">
+                                                <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width: 90%"></div>
+                                                </div>
+                                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="contact-infor mb-50">
+                                        <li><img src="assets/imgs/page/product/icon-location.svg" alt=""><strong>Address:</strong><span> Lorem ipsum dolor sit, amet
+                                                consectetur
+                                                adipisicing elit. Quos, reprehenderit.</span></li>
+                                        <li><img src="assets/imgs/page/product/icon-contact.svg" alt=""><strong>Contact
+                                                Seller:</strong><span> (+91) - 123-456-7890</span></li>
+                                    </ul>
+                                    <div class="d-flex mb-25">
+                                        <div class="mr-30">
+                                            <p class="color-brand-1 font-xs">Rating</p>
+                                            <h4 class="mb-0">90%</h4>
+                                        </div>
+                                        <div class="mr-30">
+                                            <p class="color-brand-1 font-xs">Ship on time</p>
+                                            <h4 class="mb-0">100%</h4>
+                                        </div>
+                                        <div>
+                                            <p class="color-brand-1 font-xs">Chat response</p>
+                                            <h4 class="mb-0">92%</h4>
+                                        </div>
+                                    </div>
+                                    <p class="font-sm color-gray-500 mb-15">
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, voluptates blanditiis aut beatae consequatur, deserunt facilis repellat doloremque dolorem neque ducimus molestias sed ab tempore. Consequatur, error laborum enim, cupiditate voluptate adipisci
+                                        voluptatum eos earum architecto suscipit repudiandae vel veritatis beatae consectetur nulla veniam? Dignissimos possimus velit maxime quis quae.
+                                    </p>
+                                    <p class="font-sm color-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora nulla nihil aperiam, ex nostrum cupiditate commodi quod reiciendis. Minus optio tenetur illo, eius cum iste explicabo architecto doloremque quia possimus.</p>
+                                </div>
+                                <div class="border-bottom pt-30 mb-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

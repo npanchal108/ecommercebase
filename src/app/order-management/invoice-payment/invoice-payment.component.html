@@ -1,0 +1,310 @@
+<div class="head-main bd-gray-200 mt-20">
+    <div class="row padding-lr-80">
+        <div class="col-md-12">
+            <h1 class="head-text">Invoice Information</h1>
+        </div>
+    </div>
+</div>
+
+<!-- New Implement -->
+<div class="row padding-lr-80">
+    <!-- <div class="container"> -->
+    <div class="align-flex align-items-start">
+        <div class="col-lg-12 col-md-12">
+            <div class="card-grid-style-3">
+                <div class="row">
+                    <div class="align-flex">
+                        <div class="col-md-12">
+                            <div class="card-grid-inner bg-none">
+                                <div class="row bg-white top-lr-radius">
+                                    <h5 class="top-lr-radius bg-2 p-1">Invoice Information</h5>
+                                    <div class="align-flex align-items-start column-set">
+                                        <table class="table table-striped align-pd-tr" *ngFor="let trans of invoiceModel; let i = index">
+                                            <tr>
+                                                <td><b>Order No</b></td>
+                                                <td data-title="Order No">{{trans.OrderNo}}</td>
+                                                <!-- </tr>
+                        <tr> -->
+                                                <td><b>Invoice Sequence</b></td>
+                                                <td data-title="Invoice Sequence">{{trans.SeqNo}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>PO No</b></td>
+                                                <td data-title="PO No">{{trans.cu_po}}</td>
+                                                <!-- </tr>
+                        <tr> -->
+                                                <td><b>Order Ext</b></td>
+                                                <td data-title="Order Ext">{{trans.ord_ext}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Date</b></td>
+                                                <td data-title="Date">{{trans.item_date | date: 'MMM-dd-yyyy'}}</td>
+                                                <!-- </tr>
+                        <tr> -->
+                                                <td><b>Due Date</b></td>
+                                                <td data-title="Due Date">{{trans.due_date | date: 'MMM-dd-yyyy'}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td><b>Due Amount</b></td>
+                                                <td data-title="Due Amount">
+                                                    ${{trans.PayAmount | million}}
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="ispaypartial=='1'">
+                                                <td *ngIf="ispaypartial=='1'"><b>Payment
+                              Amount</b>
+                                                    <td data-title="Payment Amount" *ngIf="ispaypartial=='1'">
+                                                        <label class="cpointer" (click)="Clicktoedit(trans,i)" *ngIf="!trans.canEditCode"><span
+                                *ngIf="trans.Amount==undefined || trans.Amount==null || trans.Amount==''">Add
+                                Amount</span> <span
+                                *ngIf="trans.Amount!=undefined && trans.Amount!=null && trans.Amount!=''">{{trans.Amount}}</span>
+                            </label>
+                                                        <input class="invoiceinput flot-left" [ngStyle]="{'display': trans.canEditCode ? 'block' : 'none' }" maxlength="30" #Product{{i}} id="Product{{i}}" name="Product{{i}}" [ngModelOptions]="{standalone:true}" (focusout)="addNote(trans)" (keyup.enter)="addNote(trans)"
+                                                            placeholder="Add Amount" [(ngModel)]="trans.Amount" type="number" /> &nbsp;
+                                                        <i (click)="Clicktoedit(trans,i)" title="Edit Amount" *ngIf="trans.canEditCode==undefined || trans.canEditCode == false" style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i>
+                                                    </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <div class="row plr-5-percent">
+                                <div class="col-6"><span class="font-md-bold color-gray-500">Grand
+                      Total</span></div>
+                                <div class="col-6">
+                                    <h4>${{totalAmount1 | number:'1.0-1'}}</h4>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-12 col-md-12 pl-15">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h4 class="mt-5 mb-5">Payment Information</h4>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="head.type=='1'">Choose Card</label>
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="head.type=='2'">Choose Card</label>
+                        <div class="did-floating-label-content">
+                            <select class="did-floating-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" name="head" [(ngModel)]='head.CardNo' (change)="cardChanged($event.target.value)">
+                  <option value="0" *ngIf="head.type=='1'">Choose Card</option>
+                  <option value="0" *ngIf="head.type=='2'">Choose Account</option>
+                  <option value="-1" *ngIf="head.type=='1'">One Time Use Card (Not Stored)</option>
+                  <option *ngFor="let card of cardList" [value]="card.Id">{{card.CardName}}</option>
+                </select>
+                            <label class="did-floating-label">Choose Card</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Name</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" [maxlength]="40" id="CardHoldersName" [(ngModel)]='head.CardHoldersName' [ngModelOptions]="{standalone: true}" [disabled]="iscardfreeform">
+                            <label class="did-floating-label">Name</label>
+                            <div class="invalid-feedback">Please write Name</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group" *ngIf="head.type=='1'">
+                        <label class="mb-5 font-sm color-gray-700">Select Card Type</label>
+                        <div class="did-floating-label-content">
+                            <select class="did-floating-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" disabled [(ngModel)]='head.CreditCardType' *ngIf="iscardfreeform==true" [ngModelOptions]="{standalone:true}">
+                  <option value="0" selected>Select Card Type</option>
+                  <option *ngFor="let cardtype of cardtypelist" [value]="cardtype.CardTypeCode">
+                    {{cardtype.CardTypeName}}</option>
+                </select>
+                            <select class="did-floating-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" [(ngModel)]='head.CreditCardType' *ngIf="iscardfreeform==false" [ngModelOptions]="{standalone:true}">
+                  <option value="0" selected>Select Card Type</option>
+                  <option *ngFor="let cardtype of cardtypelist" [value]="cardtype.CardTypeCode">
+                    {{cardtype.CardTypeName}}</option>
+                </select>
+                            <label class="did-floating-label">Select Card Type</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="head.type=='1'">Card No</label>
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="head.type=='2'">Account No</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" [maxlength]="20" onkeydown="javascript: return event.keyCode == 69 ? false : true" id="CardNumber" (blur)="setcardvalues()" [(ngModel)]='head.CardNumber' [ngModelOptions]="{standalone: true}"
+                                *ngIf="iscardfreeform==false">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" [maxlength]="20" onkeydown="javascript: return event.keyCode == 69 ? false : true" id="CardNumber" (blur)="setcardvalues()" [(ngModel)]='head.CardNumber' [ngModelOptions]="{standalone: true}"
+                                *ngIf="iscardfreeform==true" disabled>
+                            <label class="did-floating-label">Card No</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="head.type=='1'">Security Code</label>
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="head.type=='2'">Routing No</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" id="SecurityCode" [(ngModel)]='head.SecurityCode' [ngModelOptions]="{standalone: true}" [maxlength]="4" *ngIf="iscardfreeform==true" disabled>
+                            <input type="password" *ngIf="iscardfreeform==false" [maxlength]="4" class="form-control unicase-form-control text-input" id="SecurityCode" (blur)="setcardvalues()" [(ngModel)]='head.SecurityCode' [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">Security Code</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group" *ngIf="head.type=='1'">
+                        <label class="mb-5 font-sm color-gray-700">Expiration Month</label>
+                        <div class="did-floating-label-content">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" id="ExpirationMonth" [(ngModel)]='head.ExpirationMonth' [ngModelOptions]="{standalone: true}" *ngIf="iscardfreeform==true" disabled>
+                            <select class="did-floating-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" id="ExpirationMonth" *ngIf="iscardfreeform==false" [(ngModel)]='head.ExpirationMonth' [ngModelOptions]="{standalone:true}">
+                  <option [value]="1">January</option>
+                  <option [value]="2">February</option>
+                  <option [value]="3">March</option>
+                  <option [value]="4">April</option>
+                  <option [value]="5">May</option>
+                  <option [value]="6">June</option>
+                  <option [value]="7">July</option>
+                  <option [value]="8">August</option>
+                  <option [value]="9">September</option>
+                  <option [value]="10">October</option>
+                  <option [value]="11">November</option>
+                  <option [value]="12">December</option>
+                </select>
+                            <label class="did-floating-label">Expiration Month</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group" *ngIf="head.type=='1'">
+                        <label class="mb-5 font-sm color-gray-700">Expiration Year</label>
+                        <div class="did-floating-label-content">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" id="ExpirationYear" [(ngModel)]='head.ExpirationYear' [ngModelOptions]="{standalone: true}" *ngIf="iscardfreeform==true" disabled>
+                            <select class="did-floating-select" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" id="ExpirationYear" *ngIf="iscardfreeform==false" [(ngModel)]='head.ExpirationYear' [ngModelOptions]="{standalone:true}">
+                  <option *ngFor="let year1 of getyearlist" [value]="year1">{{year1}}</option>
+                </select>
+                            <label class="did-floating-label">Expiration Year</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Address 1</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" [maxlength]="40" id="adr1" [(ngModel)]='head.cardDetailadr1' [ngModelOptions]="{standalone:true}" [disabled]="iscardfreeform==true">
+                            <label class="did-floating-label">Address 1</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Address 2</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" [maxlength]="40" id="adr1" [(ngModel)]='head.cardDetailadr2' [ngModelOptions]="{standalone:true}" [disabled]="iscardfreeform==true">
+                            <label class="did-floating-label">Address 2</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Country</label>
+                        <div class="did-floating-label-content">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" id="adr1" [(ngModel)]='head.cardDetailselectedCountry' [ngModelOptions]="{standalone:true}" *ngIf="iscardfreeform==true" disabled>
+                            <select class="did-floating-select ng-untouched ng-pristine ng-valid h40" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" [ngModelOptions]="{standalone:true}" *ngIf="iscardfreeform==false" [(ngModel)]='head.cardDetailselectedCountry'
+                                (change)="onCountryChange($event.target.value)">
+                  <option *ngFor="let country of countryList" [value]="country.country_code">
+                    {{country.country_descr}}
+                  </option>
+                </select>
+                            <label class="did-floating-label">Country</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">State</label>
+                        <div class="did-floating-label-content">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" id="adr1" [(ngModel)]='head.cardDetailselectedState' [ngModelOptions]="{standalone:true}" *ngIf="iscardfreeform==true" disabled>
+                            <select class="did-floating-select ng-untouched ng-pristine ng-valid h40" onclick="this.setAttribute('value', this.value);" onchange="this.setAttribute('value', this.value);" [ngModelOptions]="{standalone:true}" *ngIf="iscardfreeform==false && isstateshow==true"
+                                [(ngModel)]='head.cardDetailselectedState'>
+                  <option value="0">Select State</option>
+                  <option *ngFor="let state of stateList" [value]="state.state">
+                    {{state.descr}}
+                  </option>
+                </select>
+                            <input type="text" *ngIf="isstateshow==false" class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid h40" id="State" [(ngModel)]='head.cardDetailselectedState' [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">State</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">City</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" id="adr1" [(ngModel)]='head.cardDetailcity' [ngModelOptions]="{standalone:true}" [disabled]="iscardfreeform==true">
+                            <label class="did-floating-label">City</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Zip</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" required="" [maxlength]="20" id="adr1" [(ngModel)]='head.cardDetailzip' [ngModelOptions]="{standalone:true}" [disabled]="iscardfreeform==true">
+                            <label class="did-floating-label">Zip</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">e-mail</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="email" required="" [maxlength]="60" id="adr1" [(ngModel)]='head.cardDetailEmail' id="CreaditEmail" #CreaditEmail [ngModelOptions]="{standalone:true}" [disabled]="iscardfreeform==true">
+                            <label class="did-floating-label">e-mail</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="align-flex">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <a (click)="payment()" *ngIf="issubmit" class="btn btn-buy w-auto">Back</a>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group text-end">
+                            <a (click)="payment()" *ngIf="issubmit" class="btn btn-buy w-auto">Submit Payment</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- </div> -->
+<!-- End New -->
+
+<div class="paymentinvoicemsg" *ngIf="submitted && isSuccess">
+    <label class="paymentinvoicemsgtexts">Payment received successfully. Reference number is : {{refNo}}</label>
+</div>
+
+
+<div class="paymentinvoicemsg" *ngIf="submitted && !isSuccess">
+    <label class="paymentinvoicemsgtexte">Error: {{refNo}}</label>
+</div>

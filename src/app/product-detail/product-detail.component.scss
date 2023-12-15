@@ -1,0 +1,25 @@
+.selectdiv{
+    border:1px solid blue;
+}
+body {
+    font-size: 9pt !important;
+}
+
+section.wrapper {
+    width: 100%;
+}
+
+.product-image-slider{
+    height: 350px;
+    overflow: hidden;
+}
+.slider-nav-thumbnails{
+    height: 400px;
+    overflow-y: scroll;
+}
+.item-thumb{
+    cursor: pointer;
+}
+.ngx-gallery-image-size-cover{
+    background-size: contain !important;
+}

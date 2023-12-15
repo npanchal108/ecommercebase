@@ -1,0 +1,210 @@
+
+
+
+
+<div class="sidebar-border mb-0" *ngIf="!iskyraden && isShowCategory && webtype != '1' && (isaccesswithlogin=='1' || isLoggedIn)">
+    <div class="sidebar-head">
+        <h6 class="color-gray-900" (click)="Sliding()">{{categorylabel}}</h6>
+    </div>
+    <div class="sidebar-content" id="catMenu" [ngClass]="{'displynone': setopenviewcategory=='0','displyblock': setopenviewcategory=='1'}">
+        <ul class="list-nav-arrow">
+            <li class='sub-menu' *ngFor="let menu of parentMenu">
+                <!-- [routerLink]="['/categories',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="menu.parent_node == '' && menu.parent!=0" -->
+                <!-- (mouseover)="GetforChilds(menu)" -->
+                <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="setmenuoff(menu)" *ngIf="menu.parent_node == '' && menu.parent!=0">
+                  {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+               </a>
+               
+                <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="settreenodeforsa(menu)" [routerLink]="['/category',menu.tree_node.toLowerCase()]" *ngIf="iskyraden && menu.parent_node == '' && menu.parent==0">
+                     {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+               </a> 
+               <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="settreenodeforsa(menu)" [routerLink]="['/category',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="!iskyraden && menu.parent_node == '' && menu.parent==0">
+                {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+          </a> 
+               <!-- collapse show [ngClass]="{'show' : menu.setflag1==true}" -->
+                <ul class="ml-10" id="menu1{{menu.tree_node}}" style="display: none;">
+                    <ng-container *ngFor="let mm of childMenu">
+                        <li (mouseover)="GetforChilds(mm)" *ngIf="mm.parent_node == menu.tree_node">
+
+                            <a [routerLink]="['/categories',mm.tree_node.toLowerCase()]" *ngIf="iskyraden && mm.parent!=0">{{mm.name}}</a>
+                            <a [routerLink]="['/categories',mm.tree_node.toLowerCase(),mm.name.toLowerCase()]" *ngIf="!iskyraden && mm.parent!=0">{{mm.name}}</a>
+                            <a (click)="settreenodeforsa(mm.tree_node)" [routerLink]="['/category',mm.tree_node.toLowerCase()]" *ngIf="iskyraden && mm.parent==0">{{mm.name}}</a>
+                            <a (click)="settreenodeforsa(mm.tree_node)" [routerLink]="['/category',mm.tree_node.toLowerCase(),mm.name.toLowerCase()]" *ngIf="!iskyraden && mm.parent==0">{{mm.name}}</a>
+
+
+
+                        </li>
+                    </ng-container>
+                </ul>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+
+<div class="sidebar-border mb-0" *ngIf="iskyraden && isShowCategory && webtype != '1' && (isaccesswithlogin=='1' || isLoggedIn)">
+    <div class="sidebar-head">
+        <h6 class="color-gray-900" (click)="Sliding()">{{categorylabel}}</h6>
+    </div>
+    <div class="sidebar-content" id="catMenu" [ngClass]="{'displynone': setopenviewcategory=='0','displyblock': setopenviewcategory=='1'}">
+        <ul class="list-nav-arrow">
+            <ng-container *ngFor="let menu of parentMenu">
+                
+            <li class='sub-menu' *ngIf="menu.tree_node.toLowerCase()!='brands'">
+                <!-- [routerLink]="['/categories',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="menu.parent_node == '' && menu.parent!=0" -->
+                <!-- (mouseover)="GetforChilds(menu)" -->
+                <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="setmenuoff(menu)" [routerLink]="['/categories',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="!iskyraden && menu.parent_node == '' && menu.parent!=0">
+                  {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+               </a>
+               <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="setmenuoff(menu)" [routerLink]="['/categories',menu.tree_node.toLowerCase()]" *ngIf="iskyraden && menu.parent_node == '' && menu.parent!=0">
+                {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+             </a>
+               
+                <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="settreenodeforsa(menu)" [routerLink]="['/category',menu.tree_node.toLowerCase()]" *ngIf="iskyraden && menu.parent_node == '' && menu.parent==0">
+                     {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+               </a> 
+               <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="settreenodeforsa(menu)" [routerLink]="['/category',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="!iskyraden && menu.parent_node == '' && menu.parent==0">
+                {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+          </a> 
+               <!-- collapse show [ngClass]="{'show' : menu.setflag1==true}" -->
+                <ul class="ml-10" id="menu1{{menu.tree_node}}" style="display: none;">
+                    <ng-container *ngFor="let mm of childMenu">
+                        <li (mouseover)="GetforChilds(mm)" *ngIf="mm.parent_node == menu.tree_node">
+
+                            <a [routerLink]="['/categories',mm.tree_node.toLowerCase()]" *ngIf="iskyraden && mm.parent!=0">{{mm.name}}</a>
+                            <a [routerLink]="['/categories',mm.tree_node.toLowerCase(),mm.name.toLowerCase()]" *ngIf="!iskyraden && mm.parent!=0">{{mm.name}}</a>
+                            <a (click)="settreenodeforsa(mm.tree_node)" [routerLink]="['/category',mm.tree_node.toLowerCase()]" *ngIf="iskyraden && mm.parent==0">{{mm.name}}</a>
+                            <a (click)="settreenodeforsa(mm.tree_node)" [routerLink]="['/category',mm.tree_node.toLowerCase(),mm.name.toLowerCase()]" *ngIf="!iskyraden && mm.parent==0">{{mm.name}}</a>
+
+
+
+                        </li>
+                    </ng-container>
+                </ul>
+            </li>
+        </ng-container>
+        </ul>
+
+    </div>
+</div>
+
+<div class="sidebar-border mb-0" *ngIf="iskyraden && isShowCategory && webtype != '1' && (isaccesswithlogin=='1' || isLoggedIn)">
+    <!-- <div class="sidebar-head">
+        <h6 class="color-gray-900" (click)="Sliding()">{{categorylabel}}</h6>
+    </div> -->
+    <div class="sidebar-content" id="catMenu" [ngClass]="{'displynone': setopenviewcategory=='0','displyblock': setopenviewcategory=='1'}">
+        <ul class="list-nav-arrow">
+            <ng-container *ngFor="let menu of parentMenu">
+                
+            <li class='sub-menu' *ngIf="menu.tree_node.toLowerCase()=='brands'">
+                <!-- [routerLink]="['/categories',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="menu.parent_node == '' && menu.parent!=0" -->
+                <!-- (mouseover)="GetforChilds(menu)" -->
+                <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="setmenuoff(menu)" *ngIf="menu.parent_node == '' && menu.parent!=0">
+                  {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+               </a>
+               
+                <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="settreenodeforsa(menu)" [routerLink]="['/category',menu.tree_node.toLowerCase()]" *ngIf="iskyraden && menu.parent_node == '' && menu.parent==0">
+                     {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+               </a> 
+               <a id="{{menu.name}}" class="sidebar-li-bg" (mouseover)="GetforChilds(menu)" (click)="settreenodeforsa(menu)" [routerLink]="['/category',menu.tree_node.toLowerCase(),menu.name.toLowerCase()]" *ngIf="!iskyraden && menu.parent_node == '' && menu.parent==0">
+                {{menu.name}} <div *ngIf="menu.parent>0" class='fa fa-caret-down right'></div>
+          </a> 
+               <!-- collapse show [ngClass]="{'show' : menu.setflag1==true}" -->
+                <ul class="ml-10" id="menu1{{menu.tree_node}}" style="display: none;">
+                    <ng-container *ngFor="let mm of childMenu">
+                        <li (mouseover)="GetforChilds(mm)" *ngIf="mm.parent_node == menu.tree_node">
+
+                            <a [routerLink]="['/categories',mm.tree_node.toLowerCase()]" *ngIf="iskyraden && mm.parent!=0">{{mm.name}}</a>
+                            <a [routerLink]="['/categories',mm.tree_node.toLowerCase(),mm.name.toLowerCase()]" *ngIf="!iskyraden && mm.parent!=0">{{mm.name}}</a>
+                            <a (click)="settreenodeforsa(mm.tree_node)" [routerLink]="['/category',mm.tree_node.toLowerCase()]" *ngIf="iskyraden && mm.parent==0">{{mm.name}}</a>
+                            <a (click)="settreenodeforsa(mm.tree_node)" [routerLink]="['/category',mm.tree_node.toLowerCase(),mm.name.toLowerCase()]" *ngIf="!iskyraden && mm.parent==0">{{mm.name}}</a>
+
+
+
+                        </li>
+                    </ng-container>
+                </ul>
+            </li>
+        </ng-container>
+        </ul>
+
+    </div>
+</div>
+
+
+
+
+<div class="sidebar-border mb-0" *ngIf="!isShowCategory && webtype != '1' && (isaccesswithlogin=='1' || isLoggedIn)">
+    <div class="sidebar-head" (click)="Sliding()">
+        <h6 class="color-gray-900">{{productlabel}}</h6>
+    </div>
+    <div class="sidebar-content" id="brandMenu" role="navigation" [ngClass]="{'displynone': setopenviewcategory=='0','displyblock': setopenviewcategory=='1'}">
+        <ul class="list-nav-arrow">
+            <li class='sub-menu' id="{{menu.product_line}}" *ngFor="let menu of parentMenu">
+
+                <a id="{{menu.product_line}}" class="sidebar-li-bg" (click)="onBrandSelect(menu)" *ngIf="menu.maj_class == ''">
+               {{menu.PLDescr}} <div class='fa fa-caret-down right'></div>
+            </a>
+                <a id="{{menu.product_line}}" class="sidebar-li-bg" (click)="onBrandSelectLanding(menu)" *ngIf="menu.maj_class != ''">
+               {{menu.MCDescr}} <div class='fa fa-caret-down right'></div>
+            </a>
+                <ul class="ml-10" *ngIf="checkmenuforchildbrand(menu.maj_class)==true">
+                    <ng-container *ngFor="let mm of childMenu">
+                        <li *ngIf="mm.maj_class == menu.maj_class"><a (click)="onBrandSelect(mm)">{{mm.PLDescr}}</a>
+
+                        </li>
+                    </ng-container>
+
+                </ul>
+            </li>
+
+        </ul>
+
+    </div>
+</div>
+<div class="sidebar-border mb-0" *ngIf="safilterslistparent!=undefined && safilterslistparent!=null && safilterslistparent.length>0 && showsafilter=='1' && showsafilter1=='1'">
+    <div class="sidebar-head" (click)="getsetopenview(setopenview)">
+        <h6 class="color-gray-900">{{SaFilterLable}}</h6>
+    </div>
+    <div class="align-flex">
+        <div class="single-cat" *ngFor="let tags of selecctedsatags">
+            <!-- <label (click)="addremovesatags(tags)" class="cpointer"> {{tags | split :';'}} <span>x</span></label> -->
+        </div>
+        <div class="single-cat" *ngIf="selecctedsatags.length>0">
+            <label (click)="removeallsatags()" class="cpointer" style="color:tomato;"> Clear All <span>x</span></label>
+        </div>
+    </div>
+    <div class="sidebar-content" id="Filters" role="navigation" [ngClass]="{'displynone': setopenview=='0','displyblock': setopenview=='1'}">
+        <ul class="list-nav-arrow">
+            <li class='sub-menu' *ngFor="let menu of safilterslistparent;let l=index;">
+                <a (click)="togglemenubar(l)" class="sidebar-li-bg">
+               {{menu.sa_lables}}
+               <div class='fa fa-caret-down right'></div>
+            </a>
+                <!-- <ul class="ml-10" id="Filt{{l}}">
+               <li *ngFor="let menu1 of menu.mitemlist">
+                  <div class="custom-checkbox" *ngIf="menu1.sa_lables==menu.sa_lables">
+                     <input type="checkbox" id="{{menu1.code}}" [checked]="selecctedsatags.indexOf(menu1.code) > -1"
+                        name="{{menu1.code}}" value="{{menu1.code}}" (change)="addremovesatags(menu1.code)" />
+                     <label for="{{menu1.code}}">{{menu1.code_lables}} </label>
+                  </div>
+               </li>
+            </ul> -->
+                <ul class="list-checkbox" id="Filt{{l}}">
+                    <li class="p-0" *ngFor="let menu1 of menu.mitemlist">
+                        <label class="cb-container mb-0" *ngIf="menu1.sa_lables==menu.sa_lables">
+                     <input type="checkbox" id="{{menu1.code}}" [checked]="selecctedsatags.indexOf(menu1.code) > -1"
+                        name="{{menu1.code}}" value="{{menu1.code}}" (change)="addremovesatags(menu1.code)">
+                     <span class="text-small">{{menu1.code_lables}} </span>
+                     <span class="checkmark"></span>
+                  </label>
+                    </li>
+
+                </ul>
+            </li>
+
+        </ul>
+
+    </div>
+</div>

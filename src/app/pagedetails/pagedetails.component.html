@@ -1,0 +1,83 @@
+<main class="main" *ngIf="pagedetails!=undefined && pagedetails!=null">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div breadcrumbs-div-socialmedia" id="breadcumss">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                    <li><a class="font-xs color-gray-500" href="{{pagedetails.ptype}}">{{pagedetails.ptype}}</a></li>
+                    <li><a class="font-xs color-gray-500"
+                            href="{{pagedetails.ptype}}/{{pagedetails.PageName}}">{{pagedetails.PageTitle}}</a></li>
+                </ul>
+            </div>
+            <div class="social-icon-share" *ngIf="pagedetails.ptype=='blogs'">
+                <a class="social-icon-blog" [href]="getlinkedinShareLink(pagedetails.PageName.toLowerCase())"
+                    target="_blank">
+                    <img src="assets/imgs/linkedin-white.svg" style="filter: brightness(0) invert(1);" />
+                </a>
+                <a class="social-icon-blog" target="_blank" [href]="getFacebookShareLink(pagedetails.PageName.toLowerCase())">
+                    <img src="assets/imgs/icons/fb.svg" style="filter: brightness(0) invert(1);" />
+                </a>
+                <a class="social-icon-blog" target="_blank"
+                [href]="getInstaShareLink(pagedetails.PageName.toLowerCase())">
+                    <img src="assets/imgs/icons/ins.svg" style="filter: brightness(0) invert(1);" />
+                </a>
+                <a class="social-icon-blog" target="_blank"
+                [href]="getTwitterShareLink(pagedetails.PageName.toLowerCase())">
+                    <img src="assets/imgs/twitter-2.svg" style="filter: brightness(0) invert(1);" />
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div [ngClass]="{'col-md-12': pagedetails.ptype!='blogs','col-md-9': pagedetails.ptype=='blogs'}">
+            <div [ngClass]="{'customepage1': pagedetails.ptype!='blogs','customepage-content': pagedetails.ptype=='blogs'}"
+                *ngIf="pagedetails!=undefined && pagedetails!=null" id="page{{pagedetails.PageID}}"
+                [innerHTML]="pagedetails.PageContent | safe: 'html'">
+            </div>
+        </div>
+        <div class="col-md-3" *ngIf="pagedetails.ptype=='blogs'">
+            <div class="customepage-content">
+                <ng-container *ngFor="let product of dynamicpagelist">
+                    <div class="row recent-content-grid text-center" style="cursor: pointer;" [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                        <div class="col-lg-12">
+                            <img src="assets/images/Product.png" class="w-100 pimage itemimg" alt="{{product.PageTitle}}"
+                                *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                            <img src="{{product.imageurl}}" class="w-100 pimage itemimg" alt="{{product.PageTitle}}"
+                                *ngIf="product.imageurl != undefined && product.imageurl!=null">
+                        </div>
+                        <div class="col-lg-12">
+                            <p class="ellipsis">
+                                {{product.PageDescription}}
+                            </p>
+                            <div class="blog-date text-center mb-10 mt-10">
+                                <h6 class="color-gray-500 font-sm">Posted by : {{product.PageKeywords}}
+                                </h6>
+                            </div>
+                            <div class="social-icon-share justify-content-center">
+                                <a class="social-icon-blog" target="_blank" [href]="getlinkedinShareLink(product.PageName.toLowerCase())">
+                                    <img src="assets/imgs/linkedin-white.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                </a>
+                                <a class="social-icon-blog" target="_blank" [href]="getFacebookShareLink(product.PageName.toLowerCase())">
+                                    <img src="assets/imgs/icons/fb.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                </a>
+                                <a class="social-icon-blog" target="_blank" [href]="getInstaShareLink(product.PageName.toLowerCase())">
+                                    <img src="assets/imgs/icons/ins.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                </a>
+                                <!-- <a class="social-icon-blog" target="_blank" href="https://www.twitter.com">
+                                    <img src="assets/imgs/icons/printest.svg" />
+                                </a> -->
+                                <a class="social-icon-blog" target="_blank" [href]="getTwitterShareLink(product.PageName.toLowerCase())">
+                                    <img src="assets/imgs/twitter-2.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                </a>
+                            </div>
+                            <div class="blog-date">
+                                <h6 class="color-gray-500 font-sm">{{product.CreatedDate | date: 'MMM-dd-yyyy'}}
+                                </h6>
+                            </div>
+                        </div>
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</main>

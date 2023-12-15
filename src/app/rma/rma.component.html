@@ -1,0 +1,420 @@
+<!-- <div class="container outer-top-xs">
+  <!-- <div class="contact-page"> 
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+        <app-side-menu></app-side-menu>
+       
+      </div>
+      <div class="col-md-9"> -->
+        <h1 class="displaynone">{{RMALable}}} </h1>
+<div class="shopping-cart shop-cart rfq-table" *ngIf="showdiv=='1'">
+  <h2 class="shop-title" style="padding: 0;">{{RMALable}} </h2>
+    <button type="button" class="btn-upper btn btn-primary checkout-page-button" 
+    (click)="createnewlist()">Create a New List</button>
+   <table id="table1" class="table table-striped" style="margin-top: 20px;">
+    
+  <tbody>
+    <tr title="{{wish.WishlistName}}" (click)="navigatetowishdetails(wish.WishlistID)" class="cpointer" *ngFor="let wish of wishlist">
+      <td colspan="2" class="pad10" data-title="ITEM">
+      {{wish.WishlistName}}  
+      </td>
+      
+    </tr>
+  </tbody>
+  </table>
+  <!-- <div *ngIf="msgonrfq!=null && msgonrfq!=undefined && msgonrfq!=''" [innerHTML]="msgonrfq | safe: 'html'"></div>   -->
+  </div>
+
+
+  <div class="wish-rfq-page"> 
+      <div class="table-responsive table-mobile" *ngIf="showdiv=='2'">
+          <h3 style="padding: 0 10px;">Request For {{RMALable}}</h3>
+          <div class="rmamodule">
+            <div class="col-sm-12 col-md-2">
+              <a  (click)="DeletewishlistByID(currentwishlist.WishlistID)" title="Delete RFQ List" class="icon cartdelete">
+                <i class="fa fa-trash-o" style="font-size: 20px;"></i>
+              </a>
+            </div>
+            <div class="col-sm-12 col-md-7">
+              <h3 class="wishlist-h3">        
+                <!-- <click-to-edit value="{{currentwishlist.WishlistName}}" title="Edit RFQ List Name" (onSave)="Addwishlistheader($event)" class="clicktoedit"></click-to-edit> -->
+                <!-- <input  class="form-control" type="text" name="WishlistName" 
+                    [ngModelOptions]="{standalone:true}"
+                            [(ngModel)]="currentwishlist.WishlistName" 
+                            (focusout)="Addwishlistheader(currentwishlist.WishlistName)"
+                            (keyup.enter)="Addwishlistheader(currentwishlist.WishlistName)"> -->
+  
+                            <div style="margin-top: 10px;">
+                              <label class="cpointer" (click)="Clicktoedit(product,i)" *ngIf="!currentwishlist.canEditCode"><span *ngIf="currentwishlist.WishlistName==undefined || currentwishlist.WishlistName==null || currentwishlist.WishlistName==''">Add Name</span> <span *ngIf="currentwishlist.WishlistName!=undefined && currentwishlist.WishlistName!=null && currentwishlist.WishlistName!=''">{{currentwishlist.WishlistName}}</span> </label>
+                              <input  [ngStyle]="{'display': currentwishlist.canEditCode ? 'block' : 'none' }" #WishlistName id="WishlistName" name="WishlistName"  [ngModelOptions]="{standalone:true}"  (focusout)="Addwishlistheader(currentwishlist.WishlistName)" (keyup.enter)="Addwishlistheader(currentwishlist.WishlistName)"  placeholder="Add Name" [(ngModel)]="currentwishlist.WishlistName" type="text" /> 
+                               &nbsp;<i (click)="Clicktoeditwishlist(currentwishlist)" title="Edit Name" *ngIf="currentwishlist.canEditCode==undefined || currentwishlist.canEditCode == false" style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i>
+                            </div>      
+              </h3>
+            </div>
+            <div class="col-sm-12 col-md-3">
+              <div class="alignright">
+                <button type="button" class="btn btn-upper btn-success pull-left outer-right-xs" (click)="goback()">Back</button>
+              </div>
+            </div>
+          </div>
+          <!-- <table id="table1" class="table table-striped wishlist-table">
+          <tbody>
+            <tr>
+              <td data-title="Remove"><a  (click)="DeletewishlistByID(currentwishlist.WishlistID)" title="Delete RFQ List" class="icon cartdelete">
+                <i class="fa fa-trash-o" style="font-size: 20px;"></i>
+              </a></td>
+              <td class="padding-left-0" colspan="3">
+                
+            
+            </td>
+              
+              <td class="hidden-xs"></td>
+              
+              <td class="hidden-xs"></td>
+            </tr>
+            <tr>
+              <td class="padding-left-0"><button type="button" class="btn btn-upper btn-success pull-left outer-right-xs" (click)="goback()">Back</button></td>
+            </tr>
+          </tbody>
+          </table> -->
+        
+          <div class="shopping-cart-table mb0">
+            <div class="table-mobile">
+              <div class="rfq-search-block">
+                <div class="row">
+                  <div class="shopping-cart Pcarth" *ngIf="isEmpty">
+                    <label class="cartlable">
+                      Your {{RMALable}} List is empty
+                    </label>
+                  </div> 
+                </div>
+                <div class="row">
+                  <div class="col-sm-12 col-md-12">
+                    <select class="form-control unicase-form-control text-input" [disabled]="logintype=='3'" id="ship_to" [(ngModel)]='ship_to' #shipTo="ngModel" (change)="shipAddressChange($event.target.value)"
+                      required name="shipTo">
+                      <option  value="0">Select Shipping Address</option>                            
+                      <option value="-1" *ngIf="isShowFreefrom">Free Form</option>
+                      <option value="same" *ngIf="billAdr!=undefined && billAdr!=null">Same - {{billAdr.name}} - {{billAdd1}} </option>
+                      <option *ngFor="let ship of shipAdr" [value]="ship.ship_id">{{ship.ship_id}} - {{ship.name}} - {{ship.aaa}}</option>
+                    </select>
+                    <div *ngIf="ship_to == 0 && isFormSubmitted">
+                      <div class="chermsg">
+                        Ship to is required.
+                      </div>
+                    </div>
+                    <div *ngIf="showShipAdd" class="mt20">
+                      <div class="row">
+                        <div class="col-md-2">
+                          <label>ID</label>
+                        </div>
+                        <div class="col-md-2">
+                          <span>{{shipId}}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <label>Name</label>
+                        </div>
+                        <div class="col-md-8">
+                          <span>{{shipName}}</span>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-2">
+                          <label>Address</label>
+                        </div>
+                        <div class="col-md-10">
+                          <span>{{shipAddr1}} <br /> {{shipCity}}, {{shipState}} {{shipZIP}} </span>
+                        </div>
+                      </div>
+                    
+                      <div class="row">
+                        <div class="col-md-2"></div>
+                        <div class="col-md-10">
+                          <span>{{shipCountry}}</span>
+                        </div>
+                      </div>
+                    </div>
+                    <br />
+                    <div *ngIf="isAddShip">
+                      
+                      <div class="form-group">
+                        <input type="checkbox" id="chkResidential" name="chkResidential" [ngModelOptions]="{standalone:true}" [(ngModel)]="shipping.Residential">
+                        <span class="shipcheck">Residential</span>
+                      </div>
+                      <div class="form-group">
+                        <label class="info-title">Ship to Name
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input" [ngModelOptions]="{standalone:true}" [maxlength]="35"  #ShipName="ngModel" id="shippingShipName" [(ngModel)]="shipping.ShipName"
+                          name="ShipName">
+                      </div>
+                      <div class="form-group">  
+                        <label class="info-title">Ship to Attn
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input" [ngModelOptions]="{standalone:true}" [maxlength]="35"  #ShipAttn="ngModel" id="shippingShipAttn" [(ngModel)]="shipping.ShipAttn"
+                          name="ShipAttn">
+                      </div>
+                      <div class="row">
+                        <div class="col-md-12" *ngIf="isaddressparse=='1'">
+                          <div class="form-group">
+                            <label class="info-title">Please Copy your address here</label>
+                            <a class="btn btn-success btnparse" (click)="addreparser()">Parse</a>   
+                            <textarea class="form-control unicase-form-control text-input" id="addressparser"  
+                            [maxlength]="32000"  [(ngModel)]='shipping.addressparser' (change)="addreparser()" [ngModelOptions]="{standalone:true}"></textarea>
+                          </div>
+                        </div>
+                        
+                      </div>
+                      <div class="form-group">
+                        <label class="info-title">Address 1
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input" id="Address1" [ngModelOptions]="{standalone:true}" [maxlength]=addr1val  #Addr1="ngModel" id="shippingAddr1" [(ngModel)]="shipping.Addr1" name="Addr1">
+                      </div>
+                      <div class="form-group">
+                        <label class="info-title">Address 2
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input"  [ngModelOptions]="{standalone:true}" [maxlength]=addr2val  #Addr2="ngModel" [(ngModel)]="shipping.Addr2" name="Addr2">
+                      </div>
+                      <div class="form-group">
+                        <label class="info-title">Country
+                        </label>
+                        <select [ngModelOptions]="{standalone:true}" [(ngModel)]='shipping.selectedCountry' 
+                        class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid height40" [ngModelOptions]="{standalone:true}" (change)="shipCountryChange()">
+                          <option *ngFor="let country of countryList" [value]="country.country_code">
+                            {{country.country_descr}}
+                          </option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="info-title">State
+                        </label>
+                        <select *ngIf="isstateshow==true" class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid height40"  [ngModelOptions]="{standalone:true}"
+                          [(ngModel)]='shipping.selectedState' id="State">
+                          <option value="0">Select State</option>
+                          <option *ngFor="let state of stateList" [value]="state.state">
+                            {{state.descr}}
+                          </option>
+                        </select>
+                        <input *ngIf="isstateshow==false" type="text" class="form-control unicase-form-control text-input" id="state" #state="ngModel" [(ngModel)]="shipping.selectedState"  [ngModelOptions]="{standalone:true}" name="State">
+                      </div>
+                      <div class="form-group">
+                        <label class="info-title">City
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input" id="City" [maxlength]=cityval  #City="ngModel" [(ngModel)]="shipping.City"  [ngModelOptions]="{standalone:true}" name="City">
+                      </div>
+                      <div class="form-group" *ngIf="shipProvince">
+                        <label class="info-title">Province
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input"  #Province="ngModel" [(ngModel)]="shipping.Province"  [ngModelOptions]="{standalone:true}" name="Province">
+                      </div>  
+                      <div class="form-group">
+                        <label class="info-title">Postal Code
+                        </label>
+                        <input type="text" class="form-control unicase-form-control" id="PostalCode" [maxlength]="20"  #PostalCode="ngModel" id="shippingPostalCode" [(ngModel)]="shipping.PostalCode"  [ngModelOptions]="{standalone:true}" name="PostalCode">
+                      </div>
+
+                    </div>
+
+                  </div>
+                  <div class="col-md-3" *ngIf="isShowShipTo=='1'">
+                    <a class="btn btn-upper btn-primary pull-right outer-right-xs" (click)="onCreateShipTo(currentwishlist.WishlistID)">Add</a>
+                    
+                  </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">           
+                  <div class="form-group" *ngIf="isShowContact">
+                    <label class="info-title">Contact
+                        <span *ngIf="isContactRequired">*</span>
+                    </label>
+                    <input type="text" class="form-control unicase-form-control text-input" id="contactPerson"  [(ngModel)]='Contact'  [ngModelOptions]="{standalone:true}" #contact="ngModel"
+                      name="contact">
+                      <div *ngIf="isContactVal" class="chermsg">
+                        Contact is required.
+                      </div>
+                  </div>
+                    </div>
+                    <div class="col-md-6">           
+                      <div class="form-group" *ngIf="isShowEmail">
+                        <label class="info-title">Email Address
+                            <span *ngIf="isEmailRequired">*</span>
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input" id="emailAddress"  [(ngModel)]='Email'  [ngModelOptions]="{standalone:true}" #email="ngModel"
+                          name="email" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$">
+                        <div *ngIf="(email.invalid && isFormSubmitted) || isEmailVal">
+                          <div *ngIf="isEmailVal" class="chermsg">
+                            Email is required.
+                          </div>
+                          <div *ngIf="email.errors && email.errors.pattern" class="chermsg">
+                            Email is invalid
+                          </div>
+                        </div>
+                      </div>
+                    </div>  
+                  </div> 
+                  <div class="row">
+                    <div class="col-md-12">           
+                      <div class="form-group" *ngIf="isShowNote">
+                          <label class="info-title">{{OrderNoteLable}}
+                              <span *ngIf="isNoteRequired">*</span>
+                          </label>
+                          <textarea class="form-control unicase-form-control text-input" id="orderNote"  [(ngModel)]='notes' [ngModelOptions]="{standalone:true}"></textarea>
+                          <div *ngIf="isNoteVal" class="chermsg">
+                              Note is required
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                  <!-- <div class="row">
+                    <div class="col-md-12">           
+                      <div class="form-group" >
+                          <label class="info-title">Key Code
+                              <span >*</span>
+                          </label>
+                          <input type="text" class="form-control unicase-form-control text-input" id="KeyCode1" [(ngModel)]='KeyCode1' />                          
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-12">           
+                    <div class="form-group" >
+                        <label class="info-title">Expiration Date
+                            <span >*</span>
+                        </label>
+                        <input type="text" class="form-control unicase-form-control text-input" id="ExpirationDate"  [(ngModel)]='ExpirationDate' />                       
+                      </div>
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">           
+                  <div class="form-group" >
+                      <label class="info-title">Lot Number
+                          <span >*</span>
+                      </label>
+                      <input type="text" class="form-control unicase-form-control text-input" id="LotNumber"  [(ngModel)]='LotNumber' />                     
+                    </div>
+                </div>
+            </div> -->
+
+                 
+                  
+              </div>
+              <div class="row rfqlist-table">
+                <div class="col-md-12">  
+                <div class="table-repsonsive table-rfq table-mobile">         
+                  <table class="table">
+                    <thead>
+                      <tr>
+                        <th class="cart-romove item width-5per">Remove</th>
+                        <th class="cart-description item">Image</th>
+                        <th class="cart-product-name item">Product Name</th>
+                        <th class="cart-qty item">Quantity</th>
+                        <th class="cart-qty item">Unit</th>
+                        <th class="cart-total last-item taright" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">Price per</th>
+                        <th class="cart-total last-item taright" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">Total Price</th>
+                      </tr>
+                    </thead>
+                    <tfoot>
+                      <tr>                  
+                          <td colspan="4" class="verticaltop padding-left-0">
+                            <button type="button" class="btn btn-primary" *ngIf="currentproductlist!=undefined && currentproductlist.length>0"  (click)="ClearCart()">Clear Cart</button>
+                          </td>
+                          
+                          <td class="hidden-xs" *ngIf="isShowItemNote"></td>
+                          <td class="td-full cartstotal padding-left-0" colspan="3">
+                            <div class="cart-shopping-total cart-grand-total" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'"> Sub Total<span class="inner-left-md">${{cartTotal | million}}</span> </div> </td>               
+                      </tr>
+                      <tr>     
+                          <td class="hidden-xs" colspan="2">
+                            <button type="button" class="btn btn-upper btn-success pull-left outer-right-xs" (click)="goback()">Back</button>
+                            </td>             
+                            <td class="hidden-xs" colspan="2" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">
+
+                            </td>
+                            <td class="hidden-xs" *ngIf="isShowItemNote"></td>
+                        <td  colspan="3" class="padding-left-0"><button type="button" 
+                          class="btn btn-upper btn-success pull-right outer-right-xs" *ngIf="currentproductlist!=undefined && currentproductlist.length>0 && submitshow==true" 
+                          (click)="finalizeOrder()">Submit Quote</button></td>
+                      </tr>
+                    </tfoot>
+                    <tbody>
+                      <tr *ngFor="let product of currentproductlist;  let i = index" class="verticaltop">
+                        <td class="romove-item" data-title="Remove">
+                          <a  (click)='DeleteProducttowishlist(currentwishlist.WishlistID,product.WishlistitemID)' title="cancel" class="icon cartdelete">
+                              
+                            <i class="fa fa-trash-o"></i>
+                          </a>
+                        </td>
+                        <td class="cart-image cpointer" data-title="Image">                    
+                          <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                            <img src="assets/images/png" alt="{{product.itemname+''+product.descrstring+''+product.freeform}}" *ngIf="product.image == 'NotFound'" class="cart5050px">
+                            <img src="{{product.image}}" alt="{{product.itemname+''+product.descrstring+''+product.freeform}}" *ngIf="product.image != undefined" class="cart5050px">                    
+                          </a>
+                        </td>
+                        <td class="cart-product-name-info cpointer" data-title="Product Name">                      
+                          <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">                          <label id="rfqitemname">item#: {{product.itemname}}  <br /></label></a>
+                          <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                          <h4 class='cart-product-description'>
+                              
+                              <div *ngIf="(isprofiledesc=='0' || isprofiledesc=='2') && product.descrstring!=undefined && product.descrstring!=null && product.descrstring!=''"> <div *ngFor="let dsr of product.descrarray"> {{dsr}} <br /> </div></div>
+                              <div *ngIf="(isprofiledesc=='1' || isprofiledesc=='2') && product.freeform!=undefined && product.freeform!=null && product.freeform!=''"> {{product.freeform}} <br /> </div>
+                          </h4>                  
+                        </a>
+                      
+                            <div style="margin-top: 10px;" *ngIf="isShowItemNote==true">
+                              <!-- <label *ngIf="!product.canEditCode"><span *ngIf="product.Note==undefined || product.Note==null || product.Note==''">Add Note</span> <span *ngIf="product.Note!=undefined && product.Note!=null && product.Note!=''">{{product.Note}}</span> </label> -->
+                              <!-- <input  [ngStyle]="{'display': product.canEditCode ? 'block' : 'none' }" #Product{{i}} id="Product{{i}}" name="Product{{i}}"  [ngModelOptions]="{standalone:true}"  (focusout)="addNote(product)" (keyup.enter)="addNote(product)"  placeholder="Add Note" [(ngModel)]="product.Note" type="text" />  -->
+                               <!-- &nbsp;<i (click)="Clicktoedit(product,i)" title="Edit Note" *ngIf="product.canEditCode==undefined || product.canEditCode == false" style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i> -->
+                               <input type="text" style="margin: 3px;width: 100%;" id="keycode{{i}}" placeholder="Key Code" name="keycode" #keycode="ngModel" [(ngModel)]="product.keycode"><br />
+                               <input type="text" style="margin: 3px;width: 100%;" id="expdate{{i}}" placeholder="Expiration Date" name="expdate" #expdate="ngModel" [(ngModel)]="product.expdate"><br />
+                               <input type="text" style="margin: 3px; width: 100%;" id="lotno{{i}}" placeholder="Lot Number" name="lotno" #lotno="ngModel" [(ngModel)]="product.lotno">
+                            </div>
+                        </td>
+                        <td class="cart-product-quantity" data-title="Quantity">
+                          <div class="quant-input">
+                            <input type="text" value="1">                      
+                            <input class="cartwidth100" type="number" name="Qty" #Qty="ngModel" [(ngModel)]="product.quantity"  [minlength]="1" [attr.min]="1" [attr.max]="9999" [maxlength]="4" (change)="onUnitChange()">
+                          </div>
+                        </td>
+                        <td class="cart-product-quantity" data-title="Unit">                   
+                          <div class="quant-input">
+                            <select id="unitMeasure" class="cartdowp" [ngModelOptions]="{standalone:true}" [(ngModel)]="product.unitMeasure"
+                            name="unitMeasure" (change)="onUnitChange($event.target.value, product)">
+                            <option [ngValue]="k.Label" *ngFor="let k of product.unitlist">
+                              {{k.LabelText}}
+                            </option>
+                          </select>
+                          </div>
+                        </td>
+                        <td class="cart-product-grand-total" data-title="Price per" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">
+                          <span class="cart-grand-total-price taright">${{product.Price | million}}</span>
+                        </td>
+                        <td class="cart-product-grand-total" data-title="Total Price" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">
+                          <span class="cart-grand-total-price taright">${{product.TotalPrice | million}}</span>
+                          
+                        </td>
+                      </tr>
+
+                      <tr *ngIf="FastAddCart==1 && (webtype=='5' || webtype=='6')">                      
+                        <td class="td-full hidden-xs"> </td>
+                        <td class="hidden-xs"></td>
+                        <td class="td-full padding-left-0"> <input type="text" placeholder="Add Item" style="width: 100%;" name="newitem" #Qty="ngModel" [(ngModel)]="newitem"></td>
+                        <td class="hidden-xs"></td>
+                        <td class="td-full padding-left-0"><button type="button" class="btn btn-primary" (click)="AddNewItem1()">Add New Item</button></td>
+                        <td class="hidden-xs" *ngIf="Displaypriceinrfq=='1'"></td>
+                        <td class="hidden-xs" *ngIf="Displaypriceinrfq=='1'"> </td>
+                        
+                      </tr>
+                    </tbody>
+                  </table> 
+              </div>       
+              </div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="col-md-8">
+          </div>  -->
+      </div>  
+  </div>  
+      
+      

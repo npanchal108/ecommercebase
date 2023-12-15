@@ -1,0 +1,19 @@
+<!-- <h1 mat-dialog-title>Select Address</h1> -->
+<div mat-dialog-content>
+    <h4 style="margin-bottom: 20px;">Validate Address </h4>
+    <div class="card" *ngFor="let user of data.userList; let i = index">
+        <div class="card-inner" (click)="showSelectedAddress(user.AddressLine1,user.AddressLine2,user.City,user.PostalCode)">
+            <input [id]="i" type="radio" name="selectedAddress" (change)="showSelectedAddress(user.AddressLine1,user.AddressLine2,user.City,user.PostalCode)" [(ngModel)]="selectedpostalcode" [value]="user.PostalCode">
+            <label [for]="i">{{ user.AddressLine1 }}
+            <span *ngIf="user.AddressLine2 !== ''">, {{ user.AddressLine2 }}</span>
+            {{ user.Country }}
+            {{ user.State }}
+            {{ user.City }}
+            {{ user.PostalCode }}</label>
+        </div>
+    </div>
+</div>
+
+<mat-dialog-actions align="end">
+    <button class="btn btn-buy" cdkFocusInitial (click)="closeDialog()">Select Address</button>
+</mat-dialog-actions>

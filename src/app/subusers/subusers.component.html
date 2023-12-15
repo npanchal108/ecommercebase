@@ -1,0 +1,268 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="dashboard">My Account</a></li>
+                <li><a class="font-xs color-gray-500" href="subusers">Subuser Accounts</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- <div class="container">
+   <div class="contact-page">
+     <div class="row">
+       <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+         <app-side-menu></app-side-menu>
+       </div> -->
+<!-- <h1 class="displaynone">User Setup</h1> -->
+<div class="contact-page contact-form lrpadding15 padding-lr-80" *ngIf="isShowForm==false">
+    <div class="head-main bd-gray-200 mt-20">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="head-text mt-60 color-gray-900">User Setup</h1>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-6">
+                <h4 class="mt-5 mb-5" *ngIf="isrfqshow=='1'">User Account Setup</h4>
+                <h6>Manage Sub Users</h6>
+            </div>
+            <div class="col-md-6 col-lg-6 text-end">
+                <div class="d-inline-block">
+                    <button type="button" (click)="createEditUser()" class="btn btn-buy w-auto">Add
+                        New User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive table-mobile">
+        <table class="rwd-table mb-20">
+            <thead class="text-info">
+                <tr>
+                    <th class="font-md-bold text-white">UserID</th>
+                    <th class="font-md-bold text-white">Name</th>
+                    <th class="font-md-bold text-white">Email</th>
+                    <th class="font-md-bold text-white">Active</th>
+                    <th class="font-md-bold text-white text-center">Action</th>
+                </tr>
+            </thead>
+            <tr *ngFor="let user of cuUserList">
+                <td data-title="UserID">{{user.userid}}</td>
+                <td data-title="Name">{{user.firstname}} {{user.lastname}}</td>
+                <td data-title="Email">{{user.email}}</td>
+                <td data-title="IsActive">{{user.active}}</td>
+                <td data-title="Action" class="text-center">
+                    <button type="button" (click)="onManageUser(user)" class="btn btn-buy w-auto">Edit</button>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</div>
+<div class="head-main bd-gray-200 mt-20 padding-lr-80">
+    <form class="contact-page lrpadding15 padding-lr-80" *ngIf="isShowForm" #userForm="ngForm" (ngSubmit)="onSubmit(userForm)">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="head-text mt-60 color-gray-900">User Account Setup</h1>
+                <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+            </div>
+        </div>
+
+
+
+        <div class="row mt-30">
+
+            <!-- <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">User ID</label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content mb-0">
+                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="20" #UserID="ngModel" id="userUserID" [(ngModel)]="user.userid" name="UserID" [disabled]=isedit [ngModelOptions]="{standalone:true}" required>
+                        <label class="did-floating-label">User ID <span>*</span></label>
+                        <span [hidden]="UserID.valid || (UserID.pristine && !userForm.submitted)" class="text-danger">
+              UserID is required
+            </span>
+                    </div>
+                </div>
+            </div> -->
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">First Name</label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <input type="text" class="did-floating-input brder-color-grey" #first_name="ngModel" id="userfirst_name" [(ngModel)]="user.firstname" [ngModelOptions]="{standalone:true}" name="first_name">
+                        <label class="did-floating-label">First Name <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Last Name </label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <input type="text" class="did-floating-input brder-color-grey" #first_name="ngModel" id="userlast_name" [(ngModel)]="user.lastname" [ngModelOptions]="{standalone:true}" name="last_name">
+                        <label class="did-floating-label">Last Name <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Phone No</label>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #postal_code="ngModel" [(ngModel)]="user.postal_code"
+              [ngModelOptions]="{standalone:true}" name="postal_code"> -->
+                        <input type="text" class="did-floating-input brder-color-grey" #phone="ngModel" [(ngModel)]="user.phone" [ngModelOptions]="{standalone:true}" name="phone" id="phone">
+                        <label class="did-floating-label">Phone No</label>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Password </label><span class="displaynone">*</span>
+                    <!-- <input type="password" class="did-floating-input brder-color-grey" #Password="ngModel"
+              id="Password" [(ngModel)]="user.Password" [ngModelOptions]="{standalone:true}" name="Password"> -->
+                    <div class="did-floating-label-content mb-0">
+                        <table id="passwordtable" class="w-100 text-center">
+                            <tr>
+                                <td>
+                                    <div class="did-floating-label-content">
+                                        <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey" #Password="ngModel" id="Password" [(ngModel)]="user.password" [ngModelOptions]="{standalone:true}" name="Password">
+                                        <label class="did-floating-label">Password <span>*</span></label>
+                                    </div>
+                                </td>
+                                <div class="bg-19 pwd-eye-icon">
+                                    <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                                </div>
+                            </tr>
+
+                        </table>
+
+                        <span [hidden]="Password.valid || (Password.pristine && !userForm.submitted)" class="text-danger">
+                            Password is required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Confirm Password </label><span class="displaynone">*</span>
+                    <!-- <input type="password" class="did-floating-input brder-color-grey" #ConfirmPassword="ngModel"
+              [(ngModel)]="user.ConfirmPassword" [ngModelOptions]="{standalone:true}" name="ConfirmPassword"> -->
+                    <div class="did-floating-label-content mb-0">
+                        <table id="passwordtable" class="w-100 text-center">
+                            <tr>
+                                <td>
+                                    <div class="did-floating-label-content">
+                                        <input [type]="hide1 ? 'password' : 'text'" class="did-floating-input brder-color-grey" #ConfirmPassword="ngModel" [(ngModel)]="user.ConfirmPassword" [ngModelOptions]="{standalone:true}" name="ConfirmPassword">
+                                        <label class="did-floating-label">Confirm Password <span>*</span></label>
+
+                                    </div>
+                                </td>
+                                <div class="bg-19 pwd-eye-icon">
+                                    <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                                </div>
+                            </tr>
+
+                        </table>
+
+                        <span [hidden]="ConfirmPassword.valid || (ConfirmPassword.pristine && !userForm.submitted)" class="text-danger">
+                            Confirm password is required
+                        </span>
+                        <span *ngIf="confirmPass" class="text-danger">
+                            Password mismatch
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Email Address </label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <input type="text" class="did-floating-input brder-color-grey" #EmailAddress="ngModel" [(ngModel)]="user.email" id="EmailAddress" [ngModelOptions]="{standalone:true}" name="EmailAddress" required>
+                        <label class="did-floating-label">Email Address <span>*</span></label>
+                        <span [hidden]="EmailAddress.valid || (EmailAddress.pristine && !userForm.submitted)" class="text-danger">
+                            Email address is required
+                        </span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4 mbottom30" *ngIf="user.manager==true">
+                <div class="form-group padtb20">
+                    <div *ngIf="showOldPermission">
+                        <label class="mb-5 font-sm color-gray-500">Ordering: &nbsp;</label><span>*</span>
+                        <label *ngFor="let permission of permissionList1">
+                            <input type="radio" name="{{permission.PermissionCode}}" [(ngModel)]="AllowO"
+                                value="{{permission.PermissionCode}}" />
+                            <span>{{permission.Description}}</span>&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <br />
+                    <ng-multiselect-dropdown id="usershipid" *ngIf="addrLst!=undefined && addrLst!=null && addrLst.length>0" [settings]="dropdownSettings" [ngModelOptions]="{standalone:true}" [placeholder]="'Select Ship to'" [data]="addrLst" [(ngModel)]="selectedship" (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="col-md-4 mbottom30" *ngIf="user.manager==false">
+                <div class="form-group padtb20">
+                    <div *ngIf="showOldPermission">
+                        <label class="mb-5 font-sm color-gray-500">Ordering: &nbsp;</label><span class="displaynone">*</span>
+                        <label *ngFor="let permission of permissionList1">
+                            <input type="radio" class="mr-10" name="{{permission.PermissionCode}}" [(ngModel)]="AllowO"
+                                value="{{permission.PermissionCode}}" />
+                            <span class="color-gray-500">{{permission.Description}}</span>&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <br>
+                    <ng-multiselect-dropdown [settings]="dropdownSettings1" [ngModelOptions]="{standalone:true}" [placeholder]="'Select customer'" [data]="customerlist" [(ngModel)]="selectedcustomers" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="col-md-6" *ngIf="showOldPermission">
+                <label class="mb-5 font-sm color-gray-500">Permissions</label>
+                <div class="d-flex flex-wrap">
+                    <span class="color-gray-500 col-12 col-md-6 col-lg-6" *ngFor="let permission of permissionList">
+                        <br>
+                        <div class="col-md-12 d-flex">
+                            <input type="checkbox" class="checkagree" id="{{permission.PermissionCode}}"
+                                [checked]="selectedPermission.indexOf(permission.PermissionCode) > -1"
+                                name="{{permission.PermissionCode}}" value="{{permission.PermissionCode}}"
+                                (change)="updatePermission($event)" />
+                            <span class="ml-10 mr-10">{{permission.Description}}</span>
+                </div>
+                </span>
+            </div>
+        </div>
+        <div class="col-12 col-md-2" *ngIf="showOldPermission">
+            <div class="form-group">
+                <label class="mb-0 font-sm color-gray-500">Active &nbsp;&nbsp; </label>
+                <input type="checkbox" class="checkagree" name="chkActive" #chkActive="ngModel" [ngModelOptions]="{standalone:true}" [(ngModel)]="user.active" />
+                <!-- <label class="mb-5 font-sm color-gray-500" *ngIf="ismanageron=='1' || ismanageron==1">Manager
+          </label>
+                    <input type="checkbox" class="checkagree" name="chkmanager" *ngIf="ismanageron=='1' || ismanageron==1" #chkmanager="ngModel" [ngModelOptions]="{standalone:true}" [(ngModel)]="user.manager" /> -->
+            </div>
+        </div>
+</div>
+<div class="col-md-4" *ngIf="isError">
+    <div class="form-group">
+        <label class="text-danger"> Invalid username or password</label>
+    </div>
+</div>
+<div class="col-md-12 d-flex justify-content-between mt-25">
+    <button type="submit" class="font-md-bold btn btn-buy w-auto mb-5 checkout-page-button">Submit</button>
+    <button type="button" (click)="ngOnInit()" class="font-md-bold btn btn-buy w-auto mb-5 checkout-page-button">Back</button>
+</div>
+</form>
+</div>
+<!-- </div>
+  </div>
+  </div> -->

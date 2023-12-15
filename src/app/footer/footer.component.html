@@ -1,0 +1,419 @@
+<footer class="footer bg-footer-homepage5">
+    <div class="footer-1">
+      <div class="container">
+        <div class="row border-bottom mb-15">
+          <div class="col-lg-4 mb-30">
+            <h4 class="mb-30 color-gray-1000">Contact</h4>
+            <div class="font-md mb-10 color-gray-1000" id="address1" *ngIf="addressshow=='1'" [routerLink]="['/contact']">
+              <ng-container *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cAddress==null 
+                  || Secondcontact.cAddress==undefined || Secondcontact.cAddress==''">
+                <strong class="font-md-bold" id="ad1">Address: </strong> {{address[2]}} {{address[3]}}, {{contactDtl.state}},
+                {{contactDtl.postal_code}}, {{contactDtl.country_code}}
+              </ng-container>
+              <ng-container *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cAddress!=null 
+                && Secondcontact.cAddress!=undefined && Secondcontact.cAddress!=''">
+                <strong class="font-md-bold" id="ad1">Address: </strong>
+                 {{Secondcontact.cAddress}}
+                <!-- <ng-container [innerHTML]="Secondcontact.cAddress | safe: 'html'"> </ng-container> -->
+              </ng-container>
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footerphone">
+              <ng-container *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cPhone==null 
+                  || Secondcontact.cPhone==undefined || Secondcontact.cPhone==''">
+                <strong class="font-md-bold">Phone: </strong><a href="tel:{{contactDtl.phone}}">
+                  {{contactDtl.phone | phone:'US' }}
+                </a>
+              </ng-container>
+              <ng-container *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cPhone!=null 
+                  && Secondcontact.cPhone!=undefined && Secondcontact.cPhone!=''">
+                <strong class="font-md-bold">Phone: </strong><a href="tel:{{Secondcontact.cPhone}}">
+                  {{Secondcontact.cPhone | phone:'US' }}
+                </a>
+              </ng-container>
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footeremail">
+              <ng-container *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cEmail==null 
+                  || Secondcontact.cEmail==undefined || Secondcontact.cEmail==''">
+                <strong class="font-md-bold">E-mail: </strong>
+                <a href="{{contactDtl.co_email}}" class="__cf_email__"
+                 >{{contactDtl.co_email}}</a>
+              </ng-container>
+              <ng-container *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cEmail!=null 
+                  && Secondcontact.cEmail!=undefined && Secondcontact.cEmail!=''">
+                <strong class="font-md-bold">E-mail: </strong>
+                <a href="{{Secondcontact.cEmail}}" class="__cf_email__">{{Secondcontact.cEmail}}</a>
+              </ng-container>
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footerweb">
+              <ng-container *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cWebsite==null 
+                  || Secondcontact.cWebsite==undefined || Secondcontact.cWebsite==''">
+                <strong class="font-md-bold">Web: </strong>
+                <a href="http://{{contactDtl.co_web}}" class="__cf_email__">{{contactDtl.co_web}}</a>
+              </ng-container>
+              <ng-container *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cWebsite!=null 
+                  && Secondcontact.cWebsite!=undefined && Secondcontact.cWebsite!=''">
+  
+                <strong class="font-md-bold">Web: </strong>
+                <a href="http://{{Secondcontact.cWebsite}}" class="__cf_email__">{{Secondcontact.cWebsite}}</a>
+              </ng-container>
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="co_fax">
+              <ng-container *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cFax==null 
+                  || Secondcontact.cFax==undefined || Secondcontact.cFax==''">
+                <strong class="font-md-bold">Fax: </strong><a href="tel:{{contactDtl.fax}}">
+                  {{contactDtl.fax | phone:'US' }}
+                </a>
+              </ng-container>
+              <ng-container *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cFax!=null 
+                  && Secondcontact.cFax!=undefined && Secondcontact.cFax!=''">
+                <strong class="font-md-bold">Fax: </strong><a href="tel:{{Secondcontact.cFax}}">
+                  {{Secondcontact.cFax | phone:'US' }}
+                </a>
+              </ng-container>
+            </div>
+  
+          </div>
+          <div class="col-lg-4 mb-30" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined">
+            <h4 class="mb-30 color-gray-1000">Contact</h4>
+            <div class="font-md mb-10 color-gray-1000" id="address1" *ngIf="addressshow=='1'" [routerLink]="['/contact']">
+              <ng-container *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined">
+                <strong class="font-md-bold">Address: </strong> {{secondaddressobjet.address[0]}}
+                {{secondaddressobjet.address[1]}}, {{secondaddressobjet.address[2]}} {{secondaddressobjet.address[3]}},
+                {{secondaddressobjet.state}}, {{secondaddressobjet.postal_code}},
+                {{secondaddressobjet.country_code}}
+              </ng-container>
+  
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footer1phone">
+              <ng-container *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.phone!=null 
+                && secondaddressobjet.phone!=undefined && secondaddressobjet.phone!=''">
+                <strong class="font-md-bold">Phone: </strong><a href="tel:{{secondaddressobjet.phone}}">
+                  {{secondaddressobjet.phone | phone:'US' }}
+                </a>
+              </ng-container>
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footer2phone">
+              <ng-container *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.phone1!=null 
+                && secondaddressobjet.phone1!=undefined && secondaddressobjet.phone1!=''">
+                <strong class="font-md-bold">Phone: </strong><a href="tel:{{secondaddressobjet.phone1}}">
+                  {{secondaddressobjet.phone1 | phone:'US' }}
+                </a>
+              </ng-container>
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footer1email">
+              <ng-container *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.email!=null 
+                && secondaddressobjet.email!=undefined && secondaddressobjet.email!=''">
+                <strong class="font-md-bold">E-mail: </strong>
+                <a href="{{secondaddressobjet.email}}" class="__cf_email__">{{secondaddressobjet.email}}</a>
+              </ng-container>
+  
+            </div>
+            <div class="font-md mb-10 color-gray-1000" id="footer2email">
+              <ng-container *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.email1!=null 
+                && secondaddressobjet.email1!=undefined && secondaddressobjet.email1!=''">
+                <strong class="font-md-bold">E-mail: </strong>
+                <a href="{{secondaddressobjet.email1}}" class="__cf_email__">{{secondaddressobjet.email1}}</a>
+              </ng-container>
+  
+            </div>
+  
+  
+          </div>
+          <div class="col-lg-4 mb-30">
+            <h4 class="mb-30 color-gray-1000">Customer Service</h4>
+            <ul class="menu-footer">
+              <ng-container *ngFor="let hlink of headerlinks">
+                <li *ngIf="hlink.parent_seq==null">
+                  <a [routerLink]="[hlink.linkurl.toLowerCase()]"
+                    *ngIf="hlink.popover && hlink.linkurl.indexOf('http')==-1" target="_blank">{{hlink.linkname}} </a>
+                  <a href="{{hlink.linkurl.toLowerCase()}}" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')>-1"
+                    target="_blank">{{hlink.linkname}} </a>
+                  <a [routerLink]="[hlink.linkurl.toLowerCase()]"
+                    *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')==-1">{{hlink.linkname}}</a>
+                  <a href="{{hlink.linkurl.toLowerCase()}}"
+                    *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')>-1">{{hlink.linkname}}</a>
+                </li>
+              </ng-container>
+              <li>
+                <a [routerLink]="['/library']">Library</a>
+              </li> 
+            </ul>
+          </div>
+          <!-- <div class="col-lg-3 mb-30">
+            <h4 class="mb-30 color-gray-1000">Library</h4>
+            <ul class="menu-footer">
+              <li>
+                <a [routerLink]="/library" target="_blank">Library</a>
+              </li>
+            </ul>
+          </div> -->
+          <div class="col-lg-3 mb-30" *ngIf="homebannerList!=undefined && homebannerList!=null && homebannerList.length>0">
+            <div class="col-xs-12 col-sm-12 col-md-12" *ngFor="let ban1 of homebannerList">
+              <a href="{{ban1.targeturl}}" target="_blank">
+                <img src="{{ban1.ImageUrl}}" alt="{{ban1.Title +''+ ban1.Description}}"
+                  style="height: 100%;width: 100%;padding-top:15px;padding-bottom:15px;" />
+              </a>
+            </div>
+          </div>
+          <div class="col-lg-4 mb-30 footer-center text-center">
+            <h4 class="mb-30 color-gray-1000">Connect With Us</h4>
+            <div>
+              <p class="font-md text-white">{{headermsg}}
+              </p>
+              <div class="mt-20">
+                <!-- <a class="mr-10" href="#">
+                  <img src="{{logourl}}" class="img-fluid" width="40%" alt="Ecommerce"></a> -->
+                <a [routerLink]="[logourl]" class="mr-10" *ngIf="logourl!=undefined && logourl.indexOf('http')==-1">
+                  <img src="{{logoimageurl}}" alt="{{webname}}" class="img-fluid" width="40%">
+                </a>
+                <a href="{{logourl}}" class="mr-10" *ngIf="logourl!=undefined && logourl.indexOf('http')>-1">
+                  <img src="{{logoimageurl}}" alt="{{webname}}" class="img-fluid" width="40%">
+                </a>
+              </div>
+              <div class="mt-30">
+                <a  class="icon-socials icon-facebook" target="_blank" href="{{flink}}"
+                  *ngIf="!iskyraden && flink!=undefined && flink!=null && flink!=''"></a>
+                <a class="icon-socials icon-instagram" target="_blank" href="{{glink}}"
+                  *ngIf="!iskyraden && glink!=undefined && glink!=null && glink!=''"></a>
+                <a class="icon-socials icon-twitter" href="{{tlink}}" target="_blank"
+                  *ngIf="!iskyraden && tlink!=undefined && tlink!=null && tlink!=''"></a>
+                <a class="icon-socials icon-linkedin" target="_blank" href="{{llink}}"
+                  *ngIf="!iskyraden && llink!=undefined && llink!=null && llink!=''"></a>
+                  <a  *ngIf="iskyraden" target="_blank" href="{{llink}}"><img src="assets/imgs/linkedin-white.svg" style="height:38px;width:38px;filter: brightness(0) invert(1);margin-right:16px;"></a>
+                  <a  *ngIf="iskyraden && llink!=undefined && llink!=null && llink!=''" target="_blank" href="https://www.youtube.com/channel/UCEg2bkJeTip8FIsT0DgT3zw"><img src="assets/imgs/youtube-white.svg" style="height:38px;width:38px;filter: brightness(0) invert(1);margin-right:16px;"></a>
+                <!-- <a  *ngIf="iskyraden" target="_blank" href="https://www.youtube.com/channel/UCEg2bkJeTip8FIsT0DgT3zw"><img src="assets/imgs/twitter-2.svg"></a> -->
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="copy-text-payment align-flex text-center">
+              <div class="col-md-12">
+                <p class="text-white">© 2023 {{webname}} | <a href="/sitemap" class="text-white">Sitemap </a>| <span
+                    class="font-sm-bold">{{headermsg}}</span></p>
+              </div>
+              <!-- <div class="col-md-6">
+                <div class="payment-icon">
+                  <a class="text-white" href="#"><i class="fa fa-cc-visa" aria-hidden="true"></i></a>
+                  <a class="text-white" href=""><i class="fa fa-cc-paypal" aria-hidden="true"></i></a>
+                  <a class="text-white" href=""><i class="fa fa-amazon" aria-hidden="true"></i></a>
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- <footer id="footer" class="footer color-bg">
+    <div class="footer-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div class="module-heading">
+              <h4 class="module-title">Contact Us</h4>            
+            </div>
+            <div class="module-body">
+              <ul class="toggle-footer">
+                <li class="media" id="address1" *ngIf="addressshow=='1'">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>                
+                  <div class="media-body" *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cAddress==null 
+                  || Secondcontact.cAddress==undefined || Secondcontact.cAddress==''">
+                    <a [routerLink]="['/contact']">  <p *ngIf="address!=undefined && address!=null">{{address[0]}} {{address[1]}}, <br> </p>            
+                      <p *ngIf="address!=undefined && address!=null">{{address[2]}} {{address[3]}}, {{contactDtl.state}}, {{contactDtl.postal_code}}<br> </p>
+                      <p>{{contactDtl.country_code}}</p></a>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cAddress!=null 
+                  && Secondcontact.cAddress!=undefined && Secondcontact.cAddress!=''">
+                    <a [routerLink]="['/contact']">  <p  [innerHTML]="Secondcontact.cAddress | safe: 'html'">   </p>            </a>                    
+                  </div>              
+                </li>
+                <li class="media" id="footerphone">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-phone fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cPhone==null 
+                  || Secondcontact.cPhone==undefined || Secondcontact.cPhone==''">
+                    <a *ngIf="contactDtl!=undefined && contactDtl!=null && contactDtl.phone!=undefined && contactDtl.phone!=null" href="tel:{{contactDtl.phone}}"> <p>{{contactDtl.phone | phone:'US' }}
+                    </p></a>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cPhone!=null 
+                  && Secondcontact.cPhone!=undefined && Secondcontact.cPhone!=''">
+                    <a href="tel:{{Secondcontact.cPhone}}"> <p>{{Secondcontact.cPhone | phone:'US' }}
+                    </p></a>
+                  </div>
+                </li>
+                <li class="media" id="footeremail">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cEmail==null 
+                  || Secondcontact.cEmail==undefined || Secondcontact.cEmail==''">
+                    <span *ngIf="contactDtl!=undefined && contactDtl!=null">
+                      <a href="mailto:{{contactDtl.co_email}}"> {{contactDtl.co_email}}</a>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cEmail!=null 
+                  && Secondcontact.cEmail!=undefined && Secondcontact.cEmail!=''">
+                    <span>
+                      <a href="mailto:{{Secondcontact.cEmail}}"> {{Secondcontact.cEmail}}</a>
+                    </span>
+                  </div>
+                </li>
+                <li class="media" id="co_web">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-globe fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cWebsite==null 
+                  || Secondcontact.cWebsite==undefined || Secondcontact.cWebsite==''">
+                    <span *ngIf="contactDtl!=undefined && contactDtl!=null">
+                      <a target="_blank" href="http://{{contactDtl.co_web}}"> {{contactDtl.co_web}}</a>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cWebsite!=null 
+                  && Secondcontact.cWebsite!=undefined && Secondcontact.cWebsite!=''">
+                    <span>
+                      <a target="_blank" href="http://{{Secondcontact.cWebsite}}"> {{Secondcontact.cWebsite}}</a>
+                    </span>
+                  </div>
+                </li>
+                <li class="media" id="co_fax">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-fax fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact==null || Secondcontact==undefined || Secondcontact.cFax==null 
+                  || Secondcontact.cFax==undefined || Secondcontact.cFax==''">
+                    <span *ngIf="contactDtl!=undefined && contactDtl!=null">
+                      <a href="tel:{{contactDtl.fax}}"> {{contactDtl.fax | phone:'US'}}</a>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cFax!=null 
+                  && Secondcontact.cFax!=undefined && Secondcontact.cFax!=''">
+                    <span>
+                      <a href="tel:{{Secondcontact.cFax}}"> {{Secondcontact.cFax | phone:'US'}}</a>
+                    </span>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+  
+          <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined">
+            <div class="module-heading">
+              <h4 class="module-title">Contact Us</h4>
+            </div>
+            <div class="module-body">
+              <ul class="toggle-footer">
+                <li class="media" *ngIf="addressshow=='1'">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-map-marker fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>                
+                  <div class="media-body" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined">
+                    <a [routerLink]="['/contact']">  <p>{{secondaddressobjet.address[0]}} {{secondaddressobjet.address[1]}}, <br> </p>            
+                      <p>{{secondaddressobjet.address[2]}} {{secondaddressobjet.address[3]}}, {{secondaddressobjet.state}}, {{secondaddressobjet.postal_code}}<br> </p>
+                      <p>{{secondaddressobjet.country_code}}</p></a>
+                  </div>
+                  
+                </li>
+                <li class="media" id="footer1phone">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-phone fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.phone!=null 
+                  && secondaddressobjet.phone!=undefined && secondaddressobjet.phone!=''">
+                    <a *ngIf="secondaddressobjet.phone!=undefined && secondaddressobjet.phone!=null && secondaddressobjet.phone!=''" href="tel:{{secondaddressobjet.phone}}"> <p>{{secondaddressobjet.phone | phone:'US' }}
+                    </p></a>
+                  </div>
+                  <div class="media-body" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.phone1!=null 
+                  && secondaddressobjet.phone1!=undefined && secondaddressobjet.phone1!=''">
+                    <a href="tel:{{secondaddressobjet.phone1}}"> <p>{{secondaddressobjet.phone1 | phone:'US' }}
+                    </p></a>
+                  </div>
+                </li>
+                <li class="media" id="footer1email">
+                  <div class="pull-left">
+                    <span class="icon fa-stack fa-lg">
+                      <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.email!=null 
+                  && secondaddressobjet.email!=undefined && secondaddressobjet.email!=''">
+                    <span *ngIf="secondaddressobjet!=undefined && secondaddressobjet!=null">
+                      <a href="mailto:{{secondaddressobjet.email}}"> {{secondaddressobjet.email}}</a>
+                    </span>
+                  </div>
+                  <div class="media-body" *ngIf="secondaddressobjet!=null && secondaddressobjet!=undefined && secondaddressobjet.email1!=null 
+                  && secondaddressobjet.email1!=undefined && secondaddressobjet.email1!=''">
+                    <span>
+                      <a href="mailto:{{secondaddressobjet.email1}}"> {{secondaddressobjet.email1}}</a>
+                    </span>
+                  </div>
+                </li>
+                
+              </ul>
+            </div>
+          </div>
+  
+          <div class="col-xs-12 col-sm-6 col-md-3" *ngIf="webtype != '1'">
+            <div class="module-heading">
+              <h4 class="module-title">Customer Service</h4>
+            </div>
+            <div class="module-body">
+              <ul class='list-unstyled'>
+                  <li *ngFor="let hlink of headerlinks">
+                    <a [routerLink]="[hlink.linkurl.toLowerCase()]" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')==-1" target="_blank">{{hlink.linkname}} </a>
+                    <a href="{{hlink.linkurl.toLowerCase()}}" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')>-1" target="_blank">{{hlink.linkname}} </a>
+                    <a [routerLink]="[hlink.linkurl.toLowerCase()]" *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')==-1">{{hlink.linkname}}</a>
+                    <a href="{{hlink.linkurl.toLowerCase()}}" *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')>-1">{{hlink.linkname}}</a>
+                    </li>    
+                </ul>
+              
+            </div>
+            <br />
+            <div class="container" style="padding: 0px;margin: 0px;">
+              <div class="col-xs-12 col-sm-6 no-padding social" style="padding: 0px;margin: 0px;">
+                <ul class="link">
+                  <li class="fb pull-left" *ngIf="flink!=undefined && flink!=null && flink!=''">
+                    <a target="_blank" rel="nofollow" href="{{flink}}" title="Facebook"></a>
+                  </li>
+                  <li class="tw pull-left" *ngIf="tlink!=undefined && tlink!=null && tlink!=''">
+                    <a target="_blank" rel="nofollow" href="{{tlink}}" title="Twitter"></a>
+                  </li>
+                  <li class="linkedin pull-left" *ngIf="llink!=undefined && llink!=null && llink!=''">
+                    <a target="_blank" rel="nofollow" href="{{llink}}" title="Linkedin"></a>
+                  </li> 
+        <li class="googleplus pull-left" *ngIf="glink!=undefined && glink!=null && glink!=''">
+                    <a target="_blank" rel="nofollow" href="{{glink}}" title="Google"></a>
+                  </li> 
+                </ul>
+              </div>
+              
+            </div>
+          </div>
+  
+          <div class="col-xs-12 col-sm-6 col-md-3" *ngFor="let ban1 of homebannerList">
+  <a href="{{ban1.targeturl}}" target="_blank">
+  <img src="{{ban1.ImageUrl}}" alt="{{ban1.Title +''+ ban1.Description}}" style="height: 100%;width: 100%;padding-top:15px;padding-bottom:15px;" />
+  </a>
+          </div>        
+        </div>
+      </div>
+    </div>  
+  </footer> -->

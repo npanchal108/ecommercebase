@@ -1,0 +1,130 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                <li><a class="font-xs color-gray-500" href="sales-login">Sales Login</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="section-box shop-template mt-60 padding-lr-80">
+    <!-- <div class="container">
+  <div class="contact-page sales-login">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+        <app-side-menu></app-side-menu>
+      </div>       -->
+    <div class="col-md-5 m-auto">
+        <form class="mt-30 form-white-full sales-login" *ngIf="IsLoginShow=='1'" #loginForm="ngForm" (ngSubmit)="onSubmit()">
+            <!-- col-md-offset-3 -->
+            <!-- <div class="container"> -->
+            <div class="head-main bd-gray-200 mb-15">
+                <div class="row">
+                    <div class="col-md-12">
+                        <h1 class="head-text">Sales Login</h1>
+                        <!-- <h3> Sales Login</h3> -->
+                        <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+            </div>
+            <!-- <div *ngIf="isError" class="red-text center error-message">
+                <i class="material-icons">error</i> {{Errormsg}}
+              </div> -->
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">{{usernamelable}}
+              <span>*</span></label>
+                    <div class="did-floating-label-content mb-0">
+                        <input type="text" class="did-floating-input brder-color-grey mb-25" #Username="ngModel" id="username" [(ngModel)]="user.Username" name="Email">
+                        <label class="did-floating-label">{{usernamelable}} <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Password
+              <span>* (Case Sensitive)</span></label>
+                    <!-- <input type="password" class="form-control unicase-form-control text-input" #Password="ngModel" id="password" [(ngModel)]="user.Password"
+                  name="Password"> -->
+                    <div class="did-floating-label-content mb-0">
+                        <table id="passwordtable" width="100%">
+                            <tr>
+                                <td>
+                                    <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey mt-0" #Password="ngModel" id="password" [(ngModel)]="user.Password" name="Password">
+                                </td>
+                                <td class="bg-19" style="vertical-align: middle;text-align: center;">
+                                    <i class="fa fa-eye" style="font-size: 16px;" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" style="font-size: 16px;" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        </table>
+                        <label class="did-floating-label">Password <span>* (Case Sensitive)</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 text-end">
+                <div class="form-group">
+                    <a class="cursorp" (click)="Gotologin()">Forgot Password?</a>
+                </div>
+            </div>
+            <div class="col-md-12" *ngIf="isError">
+                <div class="form-group">
+                    <label class="text-danger"> {{Errormsg}}</label>
+                </div>
+            </div>
+            <div class="row">
+            <div class="col-md-6" *ngIf="iscaptcha=='1'">
+                <div class="form-group">
+                    <re-captcha name="resolved" (resolved)="resolved($event)" required siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+                    <!--live -->
+                    <!-- <re-captcha name="resolved" (resolved)="resolved($event)" required siteKey="6LfA-14UAAAAAPAhAS0ULME3IatKB0Y9jwFvTK2u"></re-captcha> -->
+                    <!-- //localhost -->
+                </div>
+            </div>
+
+            <div class="col-md-6 align-flex justify-content-end">
+                <button type="submit" class="font-md-bold btn btn-buy w-auto mb-5 place">Login</button>
+            </div>
+        </div>
+            <!-- </div> -->
+        </form>
+    </div>
+    <div class="col-md-5 contact-form" *ngIf="IsLoginShow!='1'">
+        <div class="head-main bd-gray-200 mb-15 mt-30">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="head-text">Forgot Password</h1>
+                    <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="isError" class="red-text center error-message">
+            <i class="material-icons">error</i> {{Errormsg}}
+        </div>
+        <div class="col-md-12">
+            <div class="form-group">
+                <label class="mb-5 font-sm color-gray-700">{{usernamelable}} <span>*</span>
+        </label>
+                <div class="did-floating-label-content mb-0">
+                    <input type="text" class="did-floating-input brder-color-grey" id="userid1" [(ngModel)]="UserID" name="UserID">
+                    <label class="did-floating-label">{{usernamelable}} <span>*</span></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group mt-25">
+            <div class="align-flex">
+                <button type="button" (click)="MailPassword()" class="font-md-bold btn btn-buy w-auto mb-5">Send
+          Password To Mail</button>
+                <button type="button" (click)="Gotologin()" class="font-md-bold btn btn-buy w-auto mb-5">Go To
+          Login</button>
+
+            </div>
+        </div>
+    </div>
+    <!-- </div>
+  </div>
+</div> -->
+</section>

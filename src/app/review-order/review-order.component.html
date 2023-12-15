@@ -1,0 +1,563 @@
+<div class="head-main bd-gray-200 color-gray-900 mt-20">
+    <div class="row padding-lr-80">
+        <div class="col-md-6">
+            <h1 class="head-text">Review Order</h1>
+        </div>
+    </div>
+</div>
+<!-- <div class="body-content">
+  <div class="container">
+    <div class="checkout-box ">
+      <div class="row"> -->
+<!-- <div class="padding-lr-80 text-center" *ngIf="isSubmitted">
+    <i class="fa fa-check-circle fa-4x" style="color: green"></i>
+    <h2 style="font-weight:bold; display:inline-block; width:100%;">THANK YOU</h2>
+    <h4>Order submitted successfully.</h4>
+    <h4>Transaction ID:
+        <span style="color: rgb(245, 94, 37)">{{orderno}}</span>
+    </h4>
+    <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="backToPendingOrder()" style="margin-top: 20px;">Pending
+    Orders</a>
+</div> -->
+<div class="padding-lr-80" *ngIf="isSubmitted">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="alert alert-success" style="margin: 15px 0px;">
+                <div class="alert-icon text-center">
+                    <i class="fa fa-check-square-o fa-3x" aria-hidden="true"></i>
+                </div>
+                <div class="alert-message text-center" style="font-size: 22px;line-height: normal;">
+                    <strong>Thank You !</strong><br /> Order submitted successfully.<br /> Transaction ID: <span _ngcontent-serverapp-c60="" style="color: rgb(245, 94, 37);font-weight: bold;"> {{orderno}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 text-end">
+            <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="backToPendingOrder()" style="margin-top: 20px;">Pending
+                Orders</a>
+        </div>
+    </div>
+</div>
+
+<div class="padding-lr-80" *ngIf="!isError">
+    <div *ngIf="!isSubmitted" class="align-flex mb-10">
+        <a *ngIf="showBack" class="font-md-bold btn btn-buy w-auto mb-5" style="margin-right:10px;" (click)="backToReview()">Back</a>
+        <a class="font-md-bold btn btn-buy w-auto mb-5" *ngIf="submitbuttondisable==false && showBack==false" style="margin-right:10px;" (click)="backToCheckOut()">Modify</a>
+        <a *ngIf="submitbuttondisable==false" class="font-md-bold btn btn-buy w-auto mb-5" (click)="submitfinalordercall()" style="margin-right: 10px;margin-bottom: 20px;">Submit</a>
+
+
+    </div>
+    <button *ngIf="PrintOrderReview=='1'" style="margin-top: 15px;" class="font-md-bold btn btn-buy w-auto mb-5" (click)="print()">print</button>
+    <div id="print-section" class="row">
+        <div id="firstdiv">
+            <div class="row mb-20">
+                <div class="col-sm-12 col-md-8 col-lg-8">
+                    <div class="card-grid-style-3 align-flex align-items-start h-auto">
+                        <div class="col-12 col-md-5">
+                            <div class="card-grid-inner bg-none" id="billtoid">
+                                <div class="row bg-white top-lr-radius">
+                                    <h4 class="top-lr-radius bg-2 p-1">Bill To</h4>
+                                    <table style="width:100%;" class="table-align pad-8 align-flex align-items-start">
+                                        <div class="col-md-12">
+                                            <tr>
+                                                <td>
+                                                    <span>Name :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{billAdr.name}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Address :</span>
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="billAdd1 != ''">
+                                                        <label>{{billAdd1}}</label>
+                                                    </div>
+                                                    <div *ngIf="billAdd2 != ''">
+                                                        <label>{{billAdd2}}</label>
+                                                    </div>
+                                                    <div *ngIf="billCity != ''">
+                                                        <label>{{billCity}}, {{billAdr.state == null ? "" : billAdr.state.trim()}}
+                                                        {{billAdr.postal_code}}</label>
+                                                    </div>
+                                                    <label>{{billAdr.country_code == null ? "" : billAdr.country_code.trim()}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Phone No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{billAdr.phone | phone:'US'}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Fax No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{billAdr.fax | phone:'US'}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>ID :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.ship_id}}</label>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-7">
+                            <div class="card-grid-inner bg-none" id="shiptoid">
+                                <div class="row bg-white top-lr-radius">
+                                    <h4 class="top-lr-radius bg-2 p-1">Ship To :</h4>
+                                    <table style="width:100%;" class="table-align pad-8 align-flex align-items-start">
+                                        <div class="col-md-12">
+                                            <tr>
+                                                <td>
+                                                    <span>Name :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{head.shipName}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Address :</span>
+                                                </td>
+                                                <td>
+                                                    <div *ngIf="billAdd1 != ''">
+                                                        <label>{{shipAddr1}},{{shipAddr2}}</label>
+                                                    </div>
+                                                    <div *ngIf="billAdd2 != ''">
+                                                        <label>{{shipAddr2}}</label>
+                                                    </div>
+                                                    <div *ngIf="billCity != ''">
+                                                        <label>{{shipCity}}, {{shipState}} {{shipZIP}}</label>
+                                                    </div>
+                                                    <label>{{shipCountry}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="PunchOutType == 'KINTER'">
+                                                <td>
+                                                    <span>Address :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{PunchOutShipTo}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Phone No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{head.shipphone | phone:'US'}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Fax No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{head.shipfax | phone:'US'}}</label>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-md-12">
+                            <div class="panel-body table-panel" id="itemtable">
+                                <div class="table-responsive table-mobile overflow-hidden">
+                                    <table class="rwd-table mb-20" id="rvtable">
+                                        <tr>
+                                            <th class="cart-description item">Image</th>
+                                            <th class="cart-product-name item">Product Name</th>
+                                            <th class="cart-qty item" *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                                Department</th>
+                                            <th class="cart-qty item">Quantity</th>
+                                            <th class="cart-qty item">Unit </th>
+
+                                            <th class="cart-total last-item" *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'">Price</th>
+                                            <th class="cart-total last-item" *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'" style="text-align: right;">Total
+                                            </th>
+                                        </tr>
+                                        <tr *ngFor="let product of finalObj.lines;  let i = index">
+                                            <td class="cart-image cpointer" style="" data-th="Image">
+                                                <a [routerLink]="['/productdetail',product.item.toLowerCase(), product.links]" class="cpointer">
+                                                    <img *ngIf="!isPunchOut" style="height: 50px;" src="{{product.image}}" alt="{{product.item+''+product.descr1+''+product.freeform}}" style="height:50px;width: 50px;">
+                                                    <img src="{{product.image}}" alt="{{product.itemname +'' + product.freeform+'' + product.descrstring}}" *ngIf="isPunchOut" class="cart5050px">
+                                                </a>
+                                            </td>
+                                            <td class="cart-product-name-info" style="" data-th="Product Name" width="500">
+                                                <a [routerLink]="['/productdetail',product.item.toLowerCase(), product.links]" class="cpointer p-0">
+                                                    <h4 class='cart-product-description cpointer'>
+                                                        {{itlable}} {{product.item}}
+                                                    </h4>
+                                                    <div class="reviews cpointer">
+                                                        <div *ngIf="(isprofiledesc=='0' || isprofiledesc=='2') && product.descr1!=undefined && product.descr1!=null">
+                                                            <div class="reviews color-brand-3" *ngFor="let dd of product.descr1;let j=index">
+                                                                <div *ngIf="j<2"> {{dd}} <br /></div>
+                                                            </div>
+                                                        </div>
+                                                        <div *ngIf="(isprofiledesc=='1' || isprofiledesc=='2')">{{product.freeform}}</div>
+                                                    </div>
+                                                </a>
+                                                <div *ngIf="isShowItemNote=='1'">
+                                                    {{product.Note}}
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-quantity" style="" data-th="Dept" *ngIf="isPunchOut && product.deptname!=undefined && product.deptname!=null && product.deptname!=''">
+                                                <div class="quant-input">
+                                                    <label style="color: #777;font-size: 14px;">{{product.deptname}}</label>
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-quantity" data-th="Quantity">
+                                                <div class="quant-input">
+                                                    {{product.quantity}}
+                                                </div>
+                                            </td>
+                                            <td class="cart-product-quantity" style="" data-th="Unit">
+                                                <div class="quant-input">
+                                                    <label style="color: #777;font-size: 14px;">{{getumdescbyumcode(product.um_o)}}</label>
+                                                </div>
+                                            </td>
+
+
+                                            <td class="cart-product-grand-total" *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'" style="" data-th="Price">
+                                                <span class="cart-grand-total-price">${{product.price_per | million }}</span>
+                                            </td>
+                                            <td class="cart-product-grand-total" *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'" style="" data-th="Total">
+                                                <span class="cart-grand-total-price"> ${{product.quantity * product.price_per | million
+                                  }}</span>
+                                            </td>
+                                        </tr>
+
+                                    </table>
+                                    <div class="col-md-6 offset-md-6 bg-white mb-15 top-lr-radius p-4">
+
+                                        <div class="mb-15" *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'">
+                                            <div class="hidden-xs" *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="hidden-xs font-lg-bold">
+                                                    <h6>Sub Total</h6>
+                                                </div>
+                                                <div data-th="Sub Total" style="text-align: right;">
+                                                    <span style="font-weight: bold;" class="inner-left-md font-lg-bold"><h6>${{subTotal | million}}</h6></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- <ng-container *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'">
+                                            <div *ngFor="let tot of aftertotcodes;  let i = index">
+                                                <div class="hidden-xs" *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                                </div>
+                                                <div class="d-flex justify-content-between">
+                                                    <div class="hidden-xs" *ngIf="tot.amt!=undefined && tot.amt!=0 && tot.name.toLowerCase().indexOf('freight') > -1">Shipping </div>
+                                                    <div class="hidden-xs" *ngIf="tot.amt!=undefined && tot.amt!=0 && tot.name.toLowerCase().indexOf('freight') == -1"> {{tot.name}}</div>
+                                                    <div data-th="Freight" *ngIf="tot.amt!=undefined && tot.amt!=0" style="text-align: right;">
+                                                        <span style="font-weight: bold;" class="inner-left-md">${{tot.amt | million}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-container> -->
+                                        <div class="mb-15" *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'">
+                                            <div class="hidden-xs" *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                            </div>
+                                            <div class="d-flex justify-content-between" *ngFor="let tot of aftertotcodes;  let i = index">
+                                                <div class="hidden-xs">
+                                                    <!-- <h6>Tax</h6> -->
+                                                    <h6  *ngIf="tot.amt!=undefined && tot.amt!=0 && tot.name.toLowerCase().indexOf('freight') > -1">Shipping </h6>
+                                                    <h6 *ngIf="tot.amt!=undefined && tot.amt!=0 && tot.name.toLowerCase().indexOf('freight') == -1"> {{tot.name}}</h6>
+                                                </div>
+                                                <div data-th="Shipping" style="text-align: right;">
+                                                    <span style="font-weight: bold;" class="inner-left-md"><h6>${{tot.amt | million}}</h6></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-15" *ngIf="tax!=undefined && tax!=0 && priceshowcust=='1' && (israteshowforcu==undefined|| israteshowforcu==true)">
+                                            <div class="hidden-xs" *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="hidden-xs">
+                                                    <h6>Tax</h6>
+                                                </div>
+                                                <div data-th="Tax" style="text-align: right;">
+                                                    <span style="font-weight: bold;" class="inner-left-md"><h6>${{tax | million}}</h6></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="mb-15" *ngIf="priceshowcust=='1' && (israteshowforcu==undefined|| israteshowforcu==true)">
+                                            <div class="hidden-xs" *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <div class="hidden-xs font-lg-bold">Total</div>
+                                                <div data-th="Total" style="text-align: right;">
+                                                    <span style="font-weight: bold;" class="inner-left-md font-lg-bold">${{total | million}}</span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="mb-15" *ngIf="checkoutmsg!=undefined && checkoutmsg!=''">
+                                            <div id="ckmsg" [innerHTML]="checkoutmsg | safe: 'html'"></div>
+                                        </div>
+                                        <div class="mb-15" *ngIf="termsandcondition!=undefined && termsandcondition!='' && termsandcondition=='1'">
+                                            <input type="checkbox" name="term" id="termsandcondition" *ngIf="termsrequired=='1'" [ngModelOptions]="{standalone:true}" [(ngModel)]="terms" />
+                                            <a href="{{urltermsandcondition}}" class="ml-10" target="_blank">{{termslable}}</a>
+                                        </div>
+
+
+                                    </div>
+
+                                </div>
+                                <!-- <div class="align-flex align-items-end">
+                          <div class="col-md-6"></div>
+                
+                          <div class="col-md-6 bg-white mb-15 top-lr-radius"
+                            *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'">
+                            <div class="col-md-12 border-bottom mb-10"
+                              *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                              <div class="align-flex p-3">
+                                <h6>Sub Total</h6>
+                                <h6>${{subTotal | million}}</h6>
+                              </div>
+                            </div>
+                            <ng-container *ngIf="(israteshowforcu==undefined|| israteshowforcu==true) && priceshowcust=='1'">
+                              <div
+                                *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                <div class="col-md-12 border-bottom mb-10">
+                                  <div class="align-flex p-3">
+                                    <div *ngIf="tot.amt!=undefined && tot.amt!=0">{{totCode.name}}</div>
+                                    <div data-th="Code" colspan="2" style="text-align: right;"
+                                      *ngIf="tot.amt!=undefined && tot.amt!=0">
+                                      <span style="font-weight: bold;">${{tot.amt | million}}</span>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-container>
+                            <div
+                              *ngIf="tax!=undefined && tax!=0 && priceshowcust=='1' && (israteshowforcu==undefined|| israteshowforcu==true)">
+                              <div class="col-md-12 border-bottom mb-10"
+                                *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                <div class="align-flex p-3">
+                                  <h6>TAX</h6>
+                                  <div>
+                                    <span class="font-md-bold color-gray-500">TAX</span>
+                                    <span *ngIf="type==1" style="font-weight: bold;">${{tax | million}}</span>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="col-md-12 border-bottom mb-10"
+                              *ngIf="priceshowcust=='1' && (israteshowforcu==undefined|| israteshowforcu==true)">
+                              <div class="align-flex p-3"
+                                *ngIf="isPunchOut && finalObj.lines[0].deptname!=undefined && finalObj.lines[0].deptname!=null && finalObj.lines[0].deptname!=''">
+                                <h6>Total</h6>
+                                <div data-th="Tax" style="text-align: right;" colspan="2">
+                                  <span class="font-md-bold color-gray-500">${{total | million}}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4 col-lg-4">
+                    <div class="card-grid-style-3 align-flex align-items-start h-auto">
+                        <div class="col-md-12">
+                            <div class="card-grid-inner bg-none" *ngIf="PunchOutType != 'preiser' && PunchOutType != 'ecommerce'" id="seconddiv">
+                                <div class="row bg-white top-lr-radius">
+                                    <h4 class="top-lr-radius bg-2 p-1">Order Details</h4>
+                                    <table style="width:100%;" class="table-align pad-8 align-flex align-items-start">
+                                        <div class="col-md-12">
+                                            <tr *ngIf="isShowWantedDate=='1'">
+                                                <td>
+                                                    <span>{{wanterdatelable}} :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.wanted_date | date: 'MMM-dd-yyyy'}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="isShowCanecelDate=='1'">
+                                                <td class="w-50">
+                                                    <span>Cancel Date :</span>
+                                                </td>
+                                                <td>
+                                                    <label> {{finalObj.head.cancel_date | date: 'MMM-dd-yyyy'}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="isShowPONumber=='1'">
+                                                <td>
+                                                    <span>PO Number :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.cu_po}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>{{JobReleaselable}}</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.job_rel}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="isShowNote=='1'">
+                                                <td>
+                                                    <span>{{OrderNoteLable}}</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.notes}}</label>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <tr>
+                                                <td>
+                                                    <span>Phone No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.cell_phone | phone:'US'}}</label>
+                                                </td>
+                                            </tr>
+
+                                            <tr *ngIf="isShowEmail=='1'">
+                                                <td>
+                                                    <span>Email ID :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.email}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="isShowContact=='1'">
+                                                <td>
+                                                    <span>Contact No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.orderby_phone}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="Enter_by=='1'">
+                                                <td>
+                                                    <span>{{Enter_by_Lable}}</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.enter_by}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    <span>Phone No :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{billAdr.phone | phone:'US'}}</label>
+                                                </td>
+                                            </tr>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <tr *ngIf="isShowPayType=='1'">
+                                                <td>
+                                                    <span>Payment Type :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{paymenttermdesc}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="isShowShipVia=='1'">
+                                                <td>
+                                                    <span>Ship Via :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{shipviadesc}}</label>
+                                                </td>
+                                            </tr>
+                                            <tr *ngIf="isShowAccount=='1'">
+                                                <td>
+                                                    <span>Shipment Account :</span>
+                                                </td>
+                                                <td>
+                                                    <label>{{finalObj.head.ship_via_acct}}</label>
+                                                </td>
+                                            </tr>
+                                        </div>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="row" *ngIf="PunchOutType == 'KINTER'">
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="addressalign">
+                                    <div class="col-md-4">
+                                        <label>Address : </label>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <span>{{PunchOutShipTo}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- <div class="col-md-12 border-bottom mb-10" *ngIf="checkoutmsg!=undefined && checkoutmsg!=''">
+    <div class="align-flex p-3">
+      <div id="ckmsg" [innerHTML]="checkoutmsg | safe: 'html'"></div>
+    </div>
+  </div> 
+  <div class="col-md-12" *ngIf="termsandcondition!=undefined && termsandcondition!='' && termsandcondition=='1'">
+    <div class="p-3">
+      <input class="checkagree" type="checkbox" name="term" id="termsandcondition" *ngIf="termsrequired=='1'"
+        [ngModelOptions]="{standalone:true}" [(ngModel)]="terms" />
+      <a href="{{urltermsandcondition}}" target="_blank">{{termslable}}</a>
+    </div>
+  </div>-->
+    <div *ngIf="!isSubmitted" class="align-flex mb-60">
+        <a *ngIf="showBack" class="font-md-bold btn btn-buy w-auto mb-5" style="margin-right:10px;" (click)="backToReview()">Back</a>
+        <a class="font-md-bold btn btn-buy w-auto mb-5" *ngIf="submitbuttondisable==false && showBack==false" style="margin-right:10px;" (click)="backToCheckOut()">Modify</a>
+        <a *ngIf="submitbuttondisable==false" class="font-md-bold btn btn-buy w-auto mb-5" (click)="submitfinalordercall()" style="margin-right: 10px;margin-bottom: 20px;">Submit</a>
+
+
+    </div>
+</div>
+<div *ngIf="isError" style="text-align: center;margin-top: 50px;">
+    <label style="font-size: 14px;padding: 15px;background: maroon;color: white;">Error occured while processing
+    your payment. Please try again later.{{orderno}} </label>
+    <br>
+    <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="gotohome()" style="margin-top: 20px;">Back</a>
+</div>
+<!-- </div>
+    </div>
+  </div>
+</div> -->
+
+<form id="cxml_form" *ngIf="PunchOutType!='preiser'" method="POST" action="{{PunchOutRetURL}}" enctype="application/x-www-form-urlencoded" #testForm>
+    <input type="hidden" name="cXML-urlencoded" value="{{southernOrderPostModel}}">
+    <!-- <input type="submit" value="Submit" (click)="postForm()" />  -->
+</form>
+<form id="cxml_form" method="POST" *ngIf="PunchOutType=='preiser'" name="orderForm" action="{{referer}}" enctype="application/x-www-form-urlencoded" #testForm>
+    <input type="hidden" name="oracleCart" value="{{southernOrderPostModel}}">
+    <!-- <input type="submit" value="Submit" (click)="postForm()" />  -->
+</form>
+
+<!-- <form ngNoForm [action]='{{PunchOutRetURL}}' method='POST' #testForm>
+	<input type="hidden" name="cXML-urlencoded" value="{{southernOrderPostModel}}">
+</form> -->

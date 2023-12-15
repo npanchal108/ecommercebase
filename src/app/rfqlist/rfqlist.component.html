@@ -1,0 +1,543 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="dashboard">My Account</a></li>
+                <li><a class="font-xs color-gray-500" href="rfqlist">RFQ List</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="padding-lr-80">
+    <div class="box-cart-left mb-15 mt-60 margin-lr-80" *ngIf="showdiv=='1'">
+        <div class="align-flex">
+            <h1 class="font-md-bold mb-10">RFQ List</h1>
+            <a href="#" class="btn btn-buy w-auto" (click)="createnewlist(0)">Create a New List</a>
+        </div>
+        <table id="table1" class="rfq-list table table-striped" style="margin-top: 20px;">
+            <tbody>
+                <tr title="{{wish.WishlistName}}" class="font-md color-gray-500 cpointer" *ngFor="let wish of wishlist">
+                    <td colspan="2" class="pad10" data-th="ITEM" (click)="navigatetowishdetails(wish.WishlistID)" style="vertical-align: middle;">
+                        {{wish.WishlistName}}
+                    </td>
+                    <td class="text-end" (click)="navigatetowishdetails(wish.WishlistID)">
+                        <img src="assets/imgs/icons/file-view.png" width="25" height="25" alt="">
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <div *ngIf="msgonrfq!=null && msgonrfq!=undefined && msgonrfq!=''" [innerHTML]="msgonrfq | safe: 'html'"></div>
+    </div>
+</div>
+
+
+
+<div class="row mt-30 padding-lr-80 bd-gray-200" *ngIf="showdiv=='2'">
+    <div class="head-main mb-15 pb-0">
+        <div class="row align-items-center bd-gray-200 mb-15">
+            <div class="col-lg-6 col-md-6">
+                <h1 class="head-text mt-60 color-gray-900">RFQ List</h1>
+            </div>
+            <div class="col-lg-6 col-md-6 text-end">
+                <a (click)="goback()" class="btn btn-buy w-auto">Back</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+        <div class="row">
+            <div class="col-md-8 col-lg-8 mb-15">
+                <div class="box-cart-left align-flex justify-content-start">
+                    <div>
+                        <h5 class="font-lg-bold">RFQ List Name &nbsp; &nbsp; </h5>
+                    </div>
+                    <div class="align-flex">
+                        <label class="cpointer font-md-bold" (click)="Clicktoedit(product,i)" *ngIf="!currentwishlist.canEditCode"><span
+                                *ngIf="currentwishlist.WishlistName==undefined || currentwishlist.WishlistName==null || currentwishlist.WishlistName==''">Add
+                                Name</span> <span
+                                *ngIf="currentwishlist.WishlistName!=undefined && currentwishlist.WishlistName!=null && currentwishlist.WishlistName!=''">{{currentwishlist.WishlistName}}</span>
+                        </label>
+                        <input [ngStyle]="{'display': currentwishlist.canEditCode ? 'block' : 'none' }" #WishlistName id="WishlistName" name="WishlistName" [ngModelOptions]="{standalone:true}" (focusout)="Addwishlistheader(currentwishlist.WishlistName)" (keyup.enter)="Addwishlistheader(currentwishlist.WishlistName)"
+                            [(ngModel)]="currentwishlist.WishlistName" type="text" /> &nbsp;
+                        <!-- <a (click)="DeletewishlistByID(currentwishlist.WishlistID)" title="Delete RFQ List" class="icon cartdelete btn btn-buy float-right w-auto">
+                            Delete 
+                    </a> -->
+                        <i (click)="Clicktoeditwishlist(currentwishlist)" title="Edit Name" *ngIf="currentwishlist.canEditCode==undefined || currentwishlist.canEditCode == false" style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i> &nbsp;
+                        &nbsp;
+                        <a (click)="DeletewishlistByID(currentwishlist.WishlistID)" title="Delete RFQ List" class="btn btn-delete btn-delete-auto"></a>
+                    </div>
+                </div>
+                <div class="product-wishlist product-wishlist table-responsive" *ngif="currentproductlist!=undefined && currentproductlist!=null && currentproductlist.length>0">
+                    <table class="rwd-table mb-20">
+                        <tbody>
+                            <tr>
+                                <th class="font-md-bold text-white">Image</th>
+                                <th class="font-md-bold text-white">Description</th>
+                                <th class="font-md-bold text-white">Quantity</th>
+                                <th class="font-md-bold text-white">Unit</th>
+                                <th class="font-md-bold text-white" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">Price
+                                    Per
+                                </th>
+                                <th class="font-md-bold text-white" *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">Total
+                                </th>
+                                <th class="font-md-bold text-white">Remove</th>
+                                <!-- <th class="font-md-bold text-white text-center">Remove</th> -->
+                            </tr>
+                            <tr *ngFor="let product of currentproductlist;  let i = index">
+                                <td class="collen-none">
+                                    <!-- <table>
+                                        <tr class="bg-none border-none">
+                                            <td class="d-flex-td-respo" data-th="Image" style="padding:0px"> -->
+                                                <div class="product-image">
+                                                    <a
+                                                        [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                                                        <img src="assets/images/png"
+                                                            alt="{{product.itemname+''+product.descrstring+''+product.freeform}}"
+                                                            *ngIf="product.image == 'NotFound'" class="cart5050px">
+                                                        <img src="{{product.image}}"
+                                                            alt="{{product.itemname+''+product.descrstring+''+product.freeform}}"
+                                                            *ngIf="product.image != undefined" class="cart5050px">
+                                                    </a>
+        
+                                                </div>
+                                            <!-- </td>
+                                        </tr>
+                                        <tr class="border-none">
+                                            <td class="d-flex-td-respo" data-th="Remove" style="padding:0px">
+                                                <div class="product-image">
+                                                    <a class="btn btn-delete"
+                                                        style="background-color: transparent !important;background-position: 10%;"
+                                                        (click)='DeleteProducttowishlist(currentwishlist.WishlistID,product.WishlistitemID)'></a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                    </table> -->
+                                </td>
+                                <td class="d-flex-td-respo" data-th="Description">
+                                    <h6 class="">
+        
+                                        <a
+                                            [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                                            <label class="cart-product-description color-brand-3 font-weight-normal"
+                                                style="margin-bottom: 8px;" id="rfqitemname">item#: {{product.itemname}}
+                                                <br /></label>
+                                        </a>
+                                        <a
+                                            [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                                            <h6 class='cart-product-description color-brand-3 font-weight-normal'
+                                                style="margin-bottom: 8px;">
+                                                <div
+                                                    *ngIf="(isprofiledesc=='0' || isprofiledesc=='2') && product.descrstring!=undefined && product.descrstring!=null && product.descrstring!=''">
+                                                    <div *ngFor="let dsr of product.descrarray"> {{dsr}} <br /> </div>
+                                                </div>
+                                                <div
+                                                    *ngIf="(isprofiledesc=='1' || isprofiledesc=='2') && product.freeform!=undefined && product.freeform!=null && product.freeform!=''">
+                                                    {{product.freeform}} <br /> </div>
+                                            </h6>
+                                        </a>
+        
+                                        <div class="mb-15" style="margin-top: 15px;" *ngIf="isShowItemNote==true">
+                                            <label class="cpointer" (click)="Clicktoedit(product,i)"
+                                                *ngIf="!product.canEditCode"><span
+                                                    *ngIf="product.Note==undefined || product.Note==null || product.Note==''">Add
+                                                    Note</span>
+                                                <span
+                                                    *ngIf="product.Note!=undefined && product.Note!=null && product.Note!=''">{{product.Note}}</span>
+                                            </label>
+                                            <input class="did-floating-input"
+                                                [ngStyle]="{'display': product.canEditCode ? 'block' : 'none' }" #Product{{i}}
+                                                id="Product{{i}}" name="Product{{i}}" [ngModelOptions]="{standalone:true}"
+                                                (focusout)="addNote(product)" (keyup.enter)="addNote(product)"
+                                                [(ngModel)]="product.Note" type="text" /> &nbsp;
+                                            <i (click)="Clicktoedit(product,i)" title="Edit Note"
+                                                *ngIf="product.canEditCode==undefined || product.canEditCode == false"
+                                                style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i>
+                                        </div>
+                                    </h6>
+                                </td>
+                                <td class="d-flex-td-respo" data-th="Quantity" style="vertical-align: top;">
+                                    <div class="box-quantity mb-15">
+                                        <div class="did-floating-label-content mb-0">
+                                            <div class="increment-wrapper d-flex align-items-center">
+                                                <button class="button dec mx-1" (click)="onminus(product)">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                </button>
+                                                <input class="did-floating-input brder-color-grey mt-0"
+                                                    aria-label="Quantity input" autocomplete="off" name="quantity-field"
+                                                    type="tel" title="Qty" maxlength="5" value="1" #Qty="ngModel"
+                                                    [(ngModel)]="product.quantity" [minlength]="1" [attr.min]="1"
+                                                    [attr.max]="9999" [maxlength]="4" (change)="onUnitChange()">
+                                                <label class="did-floating-label">Qty</label>
+                                                <button class="button inc mx-1" (click)="onplus(product)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="d-flex-td-respo" data-th="Unit" style="vertical-align: top;">
+                                    <div class="width-150 mb-15">
+                                        <select id="unitMeasure" class="did-floating-select mt-0"
+                                            [ngModelOptions]="{standalone:true}" [(ngModel)]="product.unitMeasure"
+                                            name="unitMeasure" (change)="onUnitChange($event.target.value, product)">
+                                            <option [ngValue]="k.Label" *ngFor="let k of product.unitlist">
+                                                {{k.LabelText}}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </td>
+                                <td class="d-flex-td-respo" data-th="Price Per" style="vertical-align: top;"
+                                    *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">
+                                    <h4 class="font-base color-brand-3">${{product.Price | million}}</h4>
+                                </td>
+                                <td class="d-flex-td-respo" data-th="Total" style="vertical-align: top;"
+                                    *ngIf="Displaypriceinrfq=='1' && priceshowcust=='1'">
+                                    <h4 class="font-base color-brand-3">${{product.TotalPrice | million}}</h4>
+                                </td>
+                                <td class="d-flex-td-respo" data-th="Remove" style="vertical-align: top;">
+                                    <a class="btn btn-delete btn-delete-auto" style="background-color: transparent !important;background-position: 10%;" (click)='DeleteProducttowishlist(currentwishlist.WishlistID,product.WishlistitemID)'></a>
+                                </td>
+                                <!-- <td data-th="Remove" style="vertical-align: top;">                            
+                                </td> -->
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="box-cart-left mt-15">
+                    <h5 class="font-md-bold mb-10">Add New Product</h5>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row align-items-center">
+                                <div class="col-md-7">
+                                    <div class="form-group mb-0">
+                                        <div class="did-floating-label-content mt-15">
+                                            <input class="did-floating-input brder-color-grey mt-0" [(ngModel)]="newitem"
+                                                [typeahead]="dataSource" id="NewItem" #NewItem name="NewItem"
+                                                [typeaheadScrollable]="true" (keypress)="searchallnew(newitem)"
+                                                [typeaheadAsync]="true" [typeaheadSelectFirstItem]="false"
+                                                (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                                                (keyup.enter)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="10"
+                                                [typeaheadOptionField]="itemname" [ngModelOptions]="{standalone:true}"
+                                                [typeaheadIsFirstItemActive]="false"
+                                                [typeaheadItemTemplate]="customItemTemplate" style="display: block !important;">
+                                            <ng-template #customItemTemplate let-model="item" class="itemmenu"
+                                                let-index="index">
+                                                <a (click)='typeaheadOnSelect(model)' class="menuhover cpointer"
+                                                    style="text-wrap: wrap;">
+                                                    <div style="float: left;">
+                                                        <img src="{{model.image}}" alt="{{model.itemname}}"
+                                                            style="width: 35px;" />
+                                                    </div>
+                                                    <div style="margin-left: 50px;">
+                                                        <label>{{model.itemname}}</label><br>
+                                                        <span>{{model.description1 | keys}}</span>
+                                                    </div>
+        
+                                                </a>
+                                            </ng-template>
+                                            <label class="did-floating-label">Add New Product</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5">
+                                    <div class="form-group mb-0 text-end">
+                                        <a (click)="AddNewItem1()" class="btn btn-buy w-auto">Add New Product</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 col-lg-4 mb-15">
+                <div class="box-cart-left mt-15">
+                    <div>
+                        <div class="row align-items-center">
+                            <div class="text-end">
+                                <a class="btn btn-buy w-auto" (click)="openShippingAddressPopup('modify')" *ngIf="ship_to != '0'">Modify</a>
+                                &nbsp;
+                                <a class="btn btn-buy w-auto" (click)="onCreateShipTo(currentwishlist.WishlistID)">Add New Ship To</a>
+                            </div>
+                            <div class="form-group mb-0">
+                                <!-- <label class="mb-5 font-sm color-gray-700">Select Page</label> -->
+                                <div class="did-floating-label-content mt-30">
+                                    <select class="did-floating-select" [disabled]="logintype=='3'" id="ship_to"
+                                        [(ngModel)]='ship_to' #shipTo="ngModel"
+                                        (change)="shipAddressChange($event.target.value)" required name="shipTo"
+                                        style="line-height: 2.5;text-align: left;">
+                                        <option value="0">Select Shipping Address</option>
+                                        <option value="-1" *ngIf="isShowFreefrom">Free Form</option>
+                                        <option value="same" *ngIf="billAdr!=undefined && billAdr!=null && !iskrayden">
+                                            Same -
+                                            {{billAdr.name}} -
+                                            {{billAdd1}}
+                                        </option>
+                                        <option *ngFor="let ship of shipAdr" [value]="ship.ship_id">{{ship.ship_id}} -
+                                            {{ship.name}} -
+                                            {{ship.aaa}}</option>
+                                    </select>
+                                    <label class="did-floating-label">Select Shipping Address</label>
+                                    <div *ngIf="ship_to == 0 && isFormSubmitted">
+                                        <div class="chermsg">
+                                            Ship to is required.
+                                        </div>
+                                    </div>
+                                    <div *ngIf="showShipAdd" class="mt-15">
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>ID</label>
+                                            </div>
+                                            <div class="col-md-2">
+                                                <span>{{shipId}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Name</label>
+                                            </div>
+                                            <div class="col-md-8">
+                                                <span>{{shipName}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label>Address</label>
+                                            </div>
+                                            <div class="col-md-10">
+                                                <span>{{shipAddr1}} <br /> {{shipCity}}, {{shipState}} {{shipZIP}}
+                                                </span>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-md-2"></div>
+                                            <div class="col-md-10">
+                                                <span>{{shipCountry}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <br />
+                                    <div *ngIf="isAddShip">
+
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <input type="checkbox" id="chkResidential" name="chkResidential"
+                                                    [ngModelOptions]="{standalone:true}"
+                                                    [(ngModel)]="shipping.Residential">
+                                                <!-- <span class="shipcheck">Residential</span> -->
+                                                <label id="bg-transp" class="mb-5 font-sm">Residential</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Ship to Name
+                                                </label>
+                                                <input type="text" class="did-floating-input brder-color-grey text-left"
+                                                    [ngModelOptions]="{standalone:true}" [maxlength]="35"
+                                                    #ShipName="ngModel" id="shippingShipName"
+                                                    [(ngModel)]="shipping.ShipName" name="ShipName">
+                                                <label class="did-floating-label">Ship to Name</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Ship to Attn
+                                                </label>
+                                                <input type="text" class="did-floating-input brder-color-grey text-left"
+                                                    [ngModelOptions]="{standalone:true}" [maxlength]="35"
+                                                    #ShipAttn="ngModel" id="shippingShipAttn"
+                                                    [(ngModel)]="shipping.ShipAttn" name="ShipAttn">
+                                                <label class="did-floating-label">Ship to Attn</label>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8" *ngIf="isaddressparse=='1'">
+                                                <div class="form-group">
+
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <label class="mb-5 font-sm color-gray-700">Please Copy your
+                                                            address here</label>
+
+                                                        <textarea class="did-floating-input brder-color-grey text-left"
+                                                            id="addressparser" [maxlength]="32000"
+                                                            [(ngModel)]='shipping.addressparser'
+                                                            (change)="addreparser()"
+                                                            [ngModelOptions]="{standalone:true}"></textarea>
+                                                        <label class="did-floating-label">Please Copy your address
+                                                            here</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4" *ngIf="isaddressparse=='1'">
+                                                <a class="btn btn-success btnparse" (click)="addreparser()">Parse</a>
+                                            </div>
+
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Address 1</label>
+                                                <input type="text" class="did-floating-input brder-color-grey text-left"
+                                                    id="Address1" [ngModelOptions]="{standalone:true}"
+                                                    [maxlength]=addr1val #Addr1="ngModel" id="shippingAddr1"
+                                                    [(ngModel)]="shipping.Addr1" name="Addr1">
+                                                <label class="did-floating-label">Address 1</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Address 2 </label>
+                                                <input type="text" class="did-floating-input brder-color-grey text-left"
+                                                    [ngModelOptions]="{standalone:true}" [maxlength]=addr2val
+                                                    #Addr2="ngModel" [(ngModel)]="shipping.Addr2" name="Addr2">
+                                                <label class="did-floating-label">Address 2</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Country
+                                                </label>
+                                                <select [ngModelOptions]="{standalone:true}"
+                                                    [(ngModel)]='shipping.selectedCountry'
+                                                    class="did-floating-input brder-color-grey text-left"
+                                                    [ngModelOptions]="{standalone:true}" (change)="shipCountryChange()">
+                                                    <option *ngFor="let country of countryList"
+                                                        [value]="country.country_code">
+                                                        {{country.country_descr}}
+                                                    </option>
+                                                </select>
+                                                <label class="did-floating-label">Country</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">State
+                                                </label>
+                                                <select *ngIf="isstateshow==true"
+                                                    class="did-floating-input brder-color-grey text-left"
+                                                    [ngModelOptions]="{standalone:true}"
+                                                    [(ngModel)]='shipping.selectedState' id="State">
+                                                    <option value="0">Select State</option>
+                                                    <option *ngFor="let state of stateList" [value]="state.state">
+                                                        {{state.descr}}
+                                                    </option>
+                                                </select>
+                                                <input *ngIf="isstateshow==false" type="text"
+                                                    class="did-floating-input brder-color-grey text-left" id="state"
+                                                    #state="ngModel" [(ngModel)]="shipping.selectedState"
+                                                    [ngModelOptions]="{standalone:true}" name="State">
+                                                <label class="did-floating-label">State</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">City
+                                                </label>
+                                                <input type="text" class="did-floating-input brder-color-grey text-left"
+                                                    id="City" [maxlength]=cityval #City="ngModel"
+                                                    [(ngModel)]="shipping.City" [ngModelOptions]="{standalone:true}"
+                                                    name="City">
+                                                <label class="did-floating-label">City</label>
+                                            </div>
+                                        </div>
+                                        <div class="form-group" *ngIf="shipProvince">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Province
+                                                </label>
+                                                <input type="text" class="did-floating-input brder-color-grey text-left"
+                                                    #Province="ngModel" [(ngModel)]="shipping.Province"
+                                                    [ngModelOptions]="{standalone:true}" name="Province">
+                                                <label class="did-floating-label">Province</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="did-floating-label-content mb-0">
+                                                <label class="mb-5 font-sm color-gray-700">Postal Code
+                                                </label>
+                                                <input (blur)="togglePostalCodeFlag()" type="text"
+                                                    class="did-floating-input brder-color-grey text-left"
+                                                    id="PostalCode" [maxlength]="20" #PostalCode="ngModel"
+                                                    id="shippingPostalCode" [(ngModel)]="shipping.PostalCode"
+                                                    [ngModelOptions]="{standalone:true}" name="PostalCode">
+                                                <label class="did-floating-label">Postal Code</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-15 mb-30" *ngIf="isShowContact">
+                        <div class="did-floating-label-content mb-0">
+                            <label class="mb-5 font-sm color-gray-700">Contact Number
+                                <span *ngIf="isContactRequired">*</span>
+                            </label>
+                            <input type="text" class="did-floating-input brder-color-grey text-left" type="text"
+                                id="contactPerson" [(ngModel)]='Contact' [ngModelOptions]="{standalone:true}"
+                                #contact="ngModel" name="contact" required style="text-align: left;">
+                            <label class="did-floating-label">Contact Number <span
+                                    *ngIf="isContactRequired">*</span></label>
+                            <div *ngIf="isContactVal" class="chermsg">
+                                Contact is required.
+                            </div>
+                            <div class="invalid-feedback">Please write Contact Number</div>
+                        </div>
+                    </div>
+                    <div class="form-group mt-15 mb-30" *ngIf="isShowEmail">
+                        <div class="did-floating-label-content mb-0">
+                            <label class="mb-5 font-sm color-gray-700">Email Address
+                                <span *ngIf="isEmailRequired">*</span>
+                            </label>
+                            <input type="text" class="did-floating-input brder-color-grey text-left"
+                                id="emailAddress" [(ngModel)]='Email' [ngModelOptions]="{standalone:true}"
+                                #email="ngModel" name="email"
+                                pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$" required
+                                style="text-align: left;">
+                            <label class="did-floating-label">Email Address <span
+                                    *ngIf="isEmailRequired">*</span></label>
+                            <div *ngIf="(email.invalid && isFormSubmitted) || isEmailVal">
+                                <div *ngIf="isEmailVal" class="chermsg">
+                                    Email is required.
+                                </div>
+                                <div *ngIf="email.errors && email.errors.pattern" class="chermsg">
+                                    Email is invalid
+                                </div>
+                            </div>
+                            <div class="invalid-feedback">Please write Email Address</div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-0" *ngIf="isShowNote">
+                        <label class="mb-5 font-sm color-gray-700">{{OrderNoteLable}}
+                            <span *ngIf="isNoteRequired">*</span>
+                        </label>
+                        <div class="did-floating-label-content mb-0">
+                            <textarea class="form-control unicase-form-control text-input" id="orderNote"
+                                [(ngModel)]='notes' [ngModelOptions]="{standalone:true}"></textarea>
+                            <label id="note" class="did-floating-label">{{OrderNoteLable}} <span
+                                    *ngIf="isNoteRequired">*</span></label>
+                            <div *ngIf="isNoteVal" class="chermsg">
+                                Note is required
+                            </div>
+                        </div>
+                    </div>
+                    <div class="align-flex justify-content-center mt-15" *ngIf="isShowShipTo=='1'">
+                        <button type="button" class="btn btn-buy w-auto outer-right-xs"
+                                *ngIf="currentproductlist!=undefined && currentproductlist.length>0 && submitshow==true"
+                                (click)="finalizeOrder()">Submit Quote</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<style>
+.btn.btn-delete-auto {
+    min-width: auto !important;
+}
+</style>

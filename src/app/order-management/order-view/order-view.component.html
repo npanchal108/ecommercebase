@@ -1,0 +1,635 @@
+<div class="head-main bd-gray-200 mt-20">
+    <div class="row padding-lr-80">
+        <div class="col-md-6">
+            <h1 class="head-text">Order View</h1>
+        </div>
+        <div class="col-md-6 text-end">
+            <a id='dwnldLnk' *ngIf="priceshowcust=='1'" target="_blank" download="{{printFileName}}" style="display:none;"></a>
+            <a id='dwnldLnk1' target="_blank" download="{{printFileName}}" style="display:none;"></a>
+            <!-- <div class="col-md-12"> -->
+            <div class="col-sm-12 col-md-12">
+                <a class="btn btn-buy w-auto ml-10" id="cto" *ngIf="(rec_type=='Q' || rec_type=='q') && !isPunchOut" href="mailto:{{mailtoemailfromorder}}?subject=Convert Quote No {{order}} into Order.">Convert To
+                    Order</a>
+                <a class="btn btn-buy w-auto ml-10" id="oprintd" *ngIf="type!=2 && type!=1 && document=='1'" (click)="printNew()">{{documentlable}}</a>
+                <a class="btn btn-buy w-auto ml-10" id="oprinti" *ngIf="type!=1 && priceshowcust=='1' && printinvoice=='1'" (click)="print()">{{printinvoicelable}}</a>
+                <a class="btn btn-buy w-auto ml-10" id="oatcp" *ngIf="reorderfromorder=='1' && isPunchOut" (click)="addToCartMultiple()">add to cart</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row padding-lr-80">
+    <!-- <div class="container"> -->
+    <div class="col-lg-12">
+        <div class="card-grid-style-3">
+            <div class="card-grid-inner bg-none">
+                <div class="row bg-white top-lr-radius">
+                    <h4 class="top-lr-radius bg-2 p-1">Customer Info</h4>
+                    <table style="width:100%;" class="table-align align-flex align-items-start" *ngIf="customer!=null">
+                        <div class="col-md-6">
+                            <tr id="ocustomer">
+                                <td class="col1td">
+                                    <span>Customer</span>
+                                </td>
+                                <td class="col2td">
+                                    <label *ngIf="type==1">{{customer.customer}}</label>
+                                    <label *ngIf="type!=1">{{customer.customer}}</label>
+                                </td>
+                            </tr>
+                            <tr id="oadr">
+                                <td class="col1td">
+                                    <span>Address</span>
+                                </td>
+                                <td class="col2td" colspan="2" valign="top">
+                                    <!-- <table class="col3td">
+                      <tr>
+                        <td style="vertical-align: top;">
+                          <label>Address</label>
+                        </td>
+                        <td> -->
+                                    <label *ngIf="customer.adr!=null">
+                                            <!-- {{caddress}} <br /> {{customer.state}} {{customer.postal_code}}
+                        {{customer.country_code}} -->
+                                            {{customer.name}}
+                                            <div *ngFor="let cadr of customer.adr">
+                                                <div *ngIf="cadr!=undefined && cadr!=''">{{cadr}}</div>
+                                            </div>
+                                            <div> {{customer.state}} {{customer.postal_code}}</div>
+                                            {{customer.country_code}}
+                                        </label>
+                                    <!-- </td>
+                      </tr>
+                    </table> -->
+                                </td>
+                            </tr>
+                        </div>
+                        <div class="col-md-6">
+                            <tr id="ocphone">
+                                <td class="col1td">
+                                    <span>Phone</span>
+                                </td>
+                                <td class="col2td" *ngIf="customer!=null">
+                                    <label *ngIf="type==1">{{customer.phone | phone:'US' }}</label>
+                                    <label *ngIf="type!=1">{{customer.phone | phone:'US' }}</label>
+                                </td>
+                            </tr>
+                            <tr id="ocfax">
+                                <td class="col1td">
+                                    <span>Fax</span>
+                                </td>
+                                <td class="col2td" *ngIf="customer!=null">
+                                    <label *ngIf="type==1">{{customer.fax | phone:'US' }}</label>
+                                    <label *ngIf="type!=1">{{customer.fax | phone:'US' }}</label>
+                                </td>
+                            </tr>
+                        </div>
+                    </table>
+                </div>
+            </div>
+
+
+            <div class="align-flex align-items-start mb-15">
+                <div class="col-md-12">
+                    <div class="card-grid-inner bg-none">
+                        <div class="row bg-white top-lr-radius">
+                            <h4 class="top-lr-radius bg-2 p-1" *ngIf="type!=3 && rec_type!='Q'">Order Details </h4>
+                            <h4 class="top-lr-radius bg-2 p-1" *ngIf="type!=3 && rec_type=='Q'">Quotes Details </h4>
+                            <h4 class="top-lr-radius bg-2 p-1" *ngIf="type==3">Invoice Details</h4>
+                            <table id="table11" class="table-align align-flex align-items-start" style="width:100%;" *ngIf="orderHead!=null">
+                                <div class="col-md-6">
+                                    <tr id="oorder">
+                                        <td>
+                                            <span *ngIf="type!=3 && rec_type!='Q'">Order #</span>
+                                            <span *ngIf="type!=3 && rec_type=='Q'">Quote #</span>
+                                            <span *ngIf="type==3">Invoice #</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.order_ext}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_order}} <span
+                                                        *ngIf="type==3">-
+                                                        {{orderHead.oe_head_invc_seq}}</span> </label>
+                                        </td>
+                                    </tr>
+                                    <tr id="oodate">
+                                        <td>
+
+                                            <span *ngIf="rec_type!='Q'">Order Date</span>
+                                            <span *ngIf="rec_type=='Q'">Quote Date</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.ord_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_ord_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="oIdate">
+                                        <td>
+                                            <span>Invoice Date</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.invc_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_invc_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="oddate">
+                                        <td>
+                                            <span>Due Date</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.due_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_due_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="owdate">
+                                        <td>
+                                            <span>{{wanterdatelable}}</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.wanted_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_wanted_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="ocpo">
+                                        <td>
+                                            <span>Customer PO</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.cu_po}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_cu_po}}</label>
+                                        </td>
+                                    </tr>
+                                </div>
+                                <div class="col-md-6">
+                                    <tr id="oeby">
+                                        <td>
+                                            <span>Entered By</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.enter_by}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_enter_by}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="OrderBy=='1'" id="ooby">
+                                        <td>
+                                            <span>Ordered By</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.order_by}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_order_by}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="Salesman=='1'" id="osales">
+                                        <td>
+                                            <span>Salesman</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.salesman1}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_salesman1}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr *ngIf="showjobref=='1'" id="ojob_rel">
+                                        <td>
+                                            <span>Job/Ref#</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.job_rel}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_job_rel}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="oterms_code">
+                                        <td>
+                                            <span>Terms</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.terms_code}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_terms_code}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="oemail">
+                                        <td>
+                                            <span>Email</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.email_address}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_email}}</label>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="card-grid-inner bg-none">
+                        <div class="row bg-white top-lr-radius">
+                            <h4 class="top-lr-radius bg-2 p-1">Shipping Info</h4>
+                            <table style="width:100%;" class="table-align align-flex align-items-start">
+                                <div class="col-md-6">
+                                    <tr id="oship_id">
+                                        <td>
+                                            <span>Ship Id</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1 && orderHead.ship_id!=null">{{orderHead.ship_id}}</label>
+                                            <label *ngIf="type!=1 && orderHead.oe_head_ship_id!=null">{{orderHead.oe_head_ship_id}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="osphone">
+                                        <td>
+                                            <span>Phone</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1 && shiptoadd!=null">{{shiptoadd.phone | phone:'US'
+                                                    }}</label>
+                                            <label *ngIf="type==1 && orderHead.s_phone!=null">{{orderHead.s_phone |
+                                                    phone:'US'
+                                                    }}</label>
+                                            <label *ngIf="type!=1 && orderHead.oe_head_s_phone!=null">{{orderHead.oe_head_s_phone
+                                                    |
+                                                    phone:'US' }}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="osfax">
+                                        <td>
+                                            <span>Fax</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1 && orderHead.ship_id==null">{{orderHead.s_fax |
+                                                    phone:'US'
+                                                    }}</label>
+                                            <label *ngIf="type==1 && shiptoadd!=null">{{shiptoadd.fax | phone:'US'
+                                                    }}</label>
+                                            <label *ngIf="type!=1 && orderHead.oe_head_s_fax!=null">{{orderHead.oe_head_s_fax
+                                                    |
+                                                    phone:'US' }}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="osadr">
+                                        <td style="vertical-align: top;"><span>Address:</span></td>
+                                        <td *ngIf="orderHead!=null">
+                                            <div class="font-bold" *ngIf="type==1 && (orderHead.ec_oehead_s_adr!=undefined || orderHead.s_adr!=undefined)">
+                                                <div *ngIf="orderHead.s_name!=undefined && orderHead.s_name!=''">
+                                                    {{orderHead.s_name}}</div>
+                                                <div *ngFor="let ships of shipaddress">
+                                                    <div *ngIf="ships!=undefined && ships!=''">{{ships}}</div>
+                                                </div>
+                                                <div> {{orderHead.s_st}} {{orderHead.s_postal_code}}</div>
+                                                {{orderHead.s_country_code}}
+                                            </div>
+                                            <div class="font-bold" *ngIf="type==1 && shiptoadd!=null">
+                                                <div *ngIf="shiptoadd.name!=undefined && shiptoadd.name!=''">
+                                                    {{shiptoadd.name}}</div>
+                                                <div *ngFor="let ships of shipaddress">
+                                                    <div *ngIf="ships!=undefined && ships!=''">{{ships}}</div>
+                                                </div>
+                                                <div> {{shiptoadd.state}} {{shiptoadd.postal_code}}</div>
+                                                {{shiptoadd.country_code}}
+
+                                            </div>
+                                            <div class="font-bold" *ngIf="type!=1 && orderHead.oe_head_adr!=null">
+                                                <div *ngIf="orderHead.oe_head_name!=undefined && orderHead.oe_head_name!=''">
+                                                    {{orderHead.oe_head_name}}</div>
+                                                <div *ngFor="let ships of shipaddress">
+                                                    <div *ngIf="ships!=undefined && ships!=''">{{ships}}</div>
+                                                </div>
+                                                <div> {{orderHead.oe_head_state}} {{orderHead.oe_head_postal_code}}
+                                                </div>
+                                                {{orderHead.oe_head_country_code}}
+                                            </div>
+
+
+                                        </td>
+                                    </tr>
+
+                                </div>
+                                <div class="col-md-6">
+                                    <tr id="osvia">
+                                        <td>
+                                            <span>Ship Via</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1 && orderHead!=null">{{orderHead.ship_via_code}}</label>
+                                            <!-- <label *ngIf="type==1 && shiptoadd!=null">{{shiptoadd.ship_via_code}} {{shiptoadd}}</label> -->
+                                            <label *ngIf="type!=1 && orderHead.oe_head_ship_via_code!=null">{{orderHead.oe_head_ship_via_code}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="osacc">
+                                        <td>
+                                            <span>Account</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1 && orderHead.ship_via_acct!=null">{{orderHead.ship_via_acct}}</label>
+                                            <label *ngIf="type==1 && shiptoadd!=null">{{shiptoadd.ship_via_acct}}</label>
+                                            <label *ngIf="type!=1 && orderHead.oe_head_ship_via_acct!=null">{{orderHead.oe_head_ship_via_acct}}</label>
+                                        </td>
+                                    </tr>
+                                    <tr id="osdate">
+                                        <td>
+                                            <span>Ship Date</span>
+                                        </td>
+                                        <td>
+                                            <label *ngIf="type==1">{{orderHead.ship_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                            <label *ngIf="type!=1">{{orderHead.oe_head_ship_date | date:
+                                                    'MMM-dd-yyyy'}}</label>
+                                        </td>
+                                    </tr>
+                                </div>
+                                <div class="col-md-6"></div>
+                                <div class="">
+                                    <tr>
+                                        <td colspan="2" class="text-center" style="padding:6px 15px">
+                                            <a class="btn btn-cart w-auto" *ngIf="type!=1 && !isPunchOut && rec_type!='Q'" (click)="getTrackingNo()">Get
+                                                    Tracking
+                                                    Number</a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="2">
+                                            <div *ngFor="let trackingNo of trackingNoList" style="text-align: center;">
+                                                <label style="font-size: 16px; font-weight: bold;margin-top:15px;">
+                                                    <!-- {{trackingNo.tracking_no}} -->
+                                                    <a  href="http://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=en_US&Requester=UPSHome&trackNums={{trackingNo.tracking_no}}&track.x=Track" target="_blank" *ngIf="type==1 && orderHead.ship_via_code.indexOf('UPS') != -1">{{trackingNo.tracking_no}} </a>   
+               <a href="https://www.fedex.com/fedextrack/?trknbr={{trackingNo.tracking_no}}" target="_blank" *ngIf=" type==1 && orderHead.ship_via_code.indexOf('FED') != -1">{{trackingNo.tracking_no}} </a>   
+                <a  href="http://wwwapps.ups.com/WebTracking/track?HTMLVersion=5.0&loc=en_US&Requester=UPSHome&trackNums={{trackingNo.tracking_no}}&track.x=Track" target="_blank" *ngIf="type!=1 && orderHead.oe_head_ship_via_code.indexOf('UPS') != -1">{{trackingNo.tracking_no}} </a>   
+               <a href="https://www.fedex.com/fedextrack/?trknbr={{trackingNo.tracking_no}}" target="_blank" *ngIf=" type!=1 && orderHead.oe_head_ship_via_code.indexOf('FED') != -1">{{trackingNo.tracking_no}} </a>   
+                                                </label><br>
+                                            </div>
+                                            <div *ngIf="isTrackingEmpty" style="margin-top: 15px;float: center;font-size: 12px;">
+                                                No tracking number available.
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </div>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card-grid-inner bg-none" id="onote">
+                <div class="col-md-12" *ngIf="(orderHead.notes!=undefined && orderHead.notes!='') || (headernotes!=undefined && headernotes.length>0)">
+                    <table class="table table-striped">
+                        <tr>
+                            <td class="bg-2">
+                                <h4 class="mt-5 mb-5 bg-2 p-1" *ngIf="type!=3 && rec_type!='Q'">{{OrderNoteLable}}
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4 class="mt-5 mb-5 bg-2 p-1" *ngIf="type!=3 && rec_type!='Q'">{{orderHead.notes}}
+                                </h4>
+                            </td>
+                        </tr>
+                        <tr *ngFor="let note1 of headernotes">
+                            <td>
+                                <h6 class="mt-5 mb-5 bg-2 p-1" *ngIf="type!=3 && rec_type!='Q'">{{note1.note}}</h6>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 table-panel table-order-view">
+                    <div class="table-responsive table-mobile">
+                        <table style="width: 100%;" class="rwd-table mb-20">
+                            <thead>
+                                <tr>
+                                    <th scope="col">
+                                        Line No
+                                    </th>
+                                    <th scope="col">
+                                        ITEM
+                                    </th>
+                                    <th scope="col">
+                                        DESCRIPTION
+                                    </th>
+                                    <th scope="col" *ngIf="type!=3" style="text-align: center;">
+                                        Qty
+                                    </th>
+                                    <th scope="col" style="padding:5px;width: 10%;text-align: center;">
+                                        UNIT
+                                    </th>
+                                    <th scope="col" *ngIf="type!=1" style="text-align: center;">
+                                        SHIP
+                                    </th>
+                                    <th class="text-center" scope="col" *ngIf="type!=1 && type!=3" style="text-align: center;">
+                                        BACK
+                                    </th>
+                                    <th class="text-center" *ngIf="(priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q'))" scope="col">
+                                        PRICE
+                                    </th>
+                                    <th class="text-center" *ngIf="(priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q'))" scope="col">
+                                        Per
+                                    </th>
+                                    <th class="text-center" *ngIf="(priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q'))" scope="col">
+                                        EXTENSION
+                                    </th>
+                                </tr>
+                            </thead>
+
+                            <tr *ngFor="let order of orderDetail;let i = index">
+                                <td *ngIf="type!=1" data-th="Line No">
+                                    {{order.oe_line_line}}
+                                </td>
+                                <td *ngIf="type==1" data-th="Line No">
+                                    {{order.line}}
+                                </td>
+                                <td *ngIf="type==1" data-th="ITEM">
+                                    {{order.item}}
+                                </td>
+                                <td *ngIf="type!=1" data-th="ITEM">
+                                    {{order.oe_line_item}}
+                                </td>
+                                <td class="d-flex" *ngIf="type==1" data-th="DESCRIPTION">
+                                    <div>{{order.descr}} <br />{{order.notes}}</div>
+                                </td>
+                                <td class="d-flex" *ngIf="type!=1" data-th="DESCRIPTION">
+                                    <div>{{order.oe_line_descr[0]}}</div>
+                                </td>
+                                <td *ngIf="type==1" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="Qty">
+                                    {{order.qty_ord}}
+                                </td>
+                                <td *ngIf="type!=1 && type!=3" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="Qty">
+                                    {{order.oe_line_q_ord_d}}
+                                </td>
+                                <td *ngIf="type==1" class="text-center text-td-left-pd" data-th="UNIT">
+                                    {{getumdescbyumcode(order.um_o)}}
+                                </td>
+                                <td *ngIf="type!=1" data-th="UNIT" class="text-td-left-pd" style="text-align: center;">
+                                    {{getumdescbyumcode(order.oe_line_um_o)}}
+                                </td>
+                                <!-- <td *ngIf="type==1" style="padding:10px;">
+              {{order.ec_oeline_q_ord_d | number : '1.2-2'}}
+            </td> -->
+                                <td *ngIf="type!=1" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="SHIP">
+                                    {{order.oe_line_q_itd_d}}
+                                </td>
+                                <!-- <td *ngIf="type==1" style="padding:10px;">
+              {{order.ec_oeline_qty_ord | number : '1.2-2'}}
+            </td> -->
+                                <td *ngIf="type!=1 && type!=3" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="BACK">
+                                    {{order.oe_line_q_bo_d}}
+                                </td>
+
+                                <td *ngIf="type==1 && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="PRICE">
+                                    ${{order.unit_price | million}}
+                                </td>
+                                <td *ngIf="type!=1 && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="PRICE">
+                                    ${{order.oe_line_price | million}}
+                                </td>
+                                <td *ngIf="type==1 && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="Per">
+                                    {{order.um_price}}
+                                </td>
+                                <td *ngIf="type!=1 && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="Per">
+                                    {{order.oe_line_price_per}}
+                                </td>
+
+
+                                <td *ngIf="type==1 && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="EXTENSION">
+                                    ${{order.itemtotal | million}}
+                                </td>
+                                <!-- <td *ngIf="type!=1 && type!=3" style="padding:10px;text-align: center;" data-th="EXTENSION">
+              ${{order.oe_line_q_itd_d * order.oe_line_price  | million}}
+            </td> -->
+                                <td *ngIf="type!=1 && orderHead.oe_head_rec_type!='I' && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="EXTENSION">
+                                    ${{order.oe_line_o_ext | million}}
+                                </td>
+                                <td *ngIf="type!=1 && orderHead.oe_head_rec_type=='I' && ((priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) || (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q')))" style="padding:5px;text-align: center;" class="text-td-left-pd" data-th="EXTENSION">
+                                    ${{order.oe_line_c_ext | million}}
+                                </td>
+
+                            </tr>
+
+
+                        </table>
+                    </div>
+                    <div class="align-flex align-items-end">
+                        <div class="col-12 col-md-6">
+                            <!-- <a id="oagain" class="btn btn-buy w-auto mb-5"
+                                    *ngIf="reorderfromorder=='1' && !isPunchOut" (click)="addToCartMultiple()"
+                                    style="margin-center: 17px;margin-top: 15px;">Add to Cart/ Order again</a> -->
+                        </div>
+
+                        <div class="col-12 col-md-6 bg-white mb-15 top-lr-radius" *ngIf="(priceshowcust=='1' && (rec_type=='o' || rec_type=='O')) ||
+                                (Displaypriceinrfq=='1' && (rec_type=='Q' || rec_type=='q'))">
+                            <div class="col-md-12 border-bottom mb-10" *ngIf="(orderHead.oe_head_curx_o_tot_gross!=undefined && orderHead.oe_head_curx_o_tot_gross!=null && orderHead.oe_head_curx_o_tot_gross>0)
+                                                || (orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[7]!=undefined && orderHead.misc_dec[7]!=null && orderHead.misc_dec[7]!='')">
+                                <div class="align-flex p-3">
+                                    <h6>Sub Total</h6>
+                                    <h6 data-th="Sub Total" style="text-align: center;" colspan="2">
+                                        <span *ngIf="type!=1 && orderHead.oe_head_rec_type!='I'" class="font-md-bold">${{orderHead.oe_head_curx_o_tot_gross
+                                                |
+                                                million}}</span>
+                                        <span *ngIf="type!=1 && orderHead.oe_head_rec_type=='I'" class="font-md-bold">${{orderHead.oe_head_curx_c_tot_gross
+                                                |
+                                                million}}</span>
+                                        <span *ngIf="type==1 && orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[7]!=undefined && orderHead.misc_dec[7]!=null && orderHead.misc_dec[7]!=''" class="font-md-bold">${{orderHead.misc_dec[7] |
+                                                million}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <ng-container *ngFor="let totCode of aftertotcodes;let i = index">
+                                <div *ngIf="totCode.amt!=undefined && totCode.amt!=null && totCode.amt>0">
+                                    <div class="col-md-12 border-bottom mb-10">
+                                        <div class="align-flex p-3">
+                                            <div *ngIf="totCode != ''">
+                                                <h6>{{totCode.name}}</h6>
+                                            </div>
+                                            <h6 data-th="Code" colspan="2" style="text-align: center;" *ngIf="totCode != ''">
+                                                <span style="font-weight: bold;">${{totCode.amt | million}}</span>
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </ng-container>
+                            <div *ngIf="(orderHead.oe_head_curx_o_tot_tax_amt !=undefined && orderHead.oe_head_curx_o_tot_tax_amt!=null && orderHead.oe_head_curx_o_tot_tax_amt>0)
+                                                || (orderHead.tax_amount !=undefined && orderHead.tax_amount!=null && orderHead.tax_amount>0)">
+                                <div class="col-md-12 border-bottom mb-10">
+                                    <div class="align-flex p-3">
+                                        <h6>TAX</h6>
+                                        <h6>
+                                            <span *ngIf="type!=1" class="">${{orderHead.oe_head_curx_o_tot_tax_amt
+                                                    |
+                                                    million}}</span>
+                                            <span *ngIf="type==1" style="font-weight: bold;">${{orderHead.tax_amount
+                                                    |
+                                                    million}}</span>
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12 border-bottom mb-10" *ngIf="type!=1 && orderHead.oe_head_curx_o_disc_amt!=undefined && orderHead.oe_head_curx_o_disc_amt!=null && orderHead.oe_head_curx_o_disc_amt>0">
+                                <div class="align-flex p-3">
+                                    <h6>Discount</h6>
+                                    <h6 data-th="Tax" style="text-align: center;" colspan="2">
+                                        <span *ngIf="type!=1" class="">${{orderHead.oe_head_curx_o_disc_amt
+                                                |
+                                                million}}</span>
+                                        <span *ngIf="type==1" class="">${{orderHead.oe_head_curx_o_disc_amt
+                                                |
+                                                million}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div class="col-md-12 border-bottom mb-10" *ngIf="type!=1 && orderHead.oe_head_curx_o_deposit!=undefined && orderHead.oe_head_curx_o_deposit!=null && orderHead.oe_head_curx_o_deposit>0">
+                                <div class="align-flex p-3">
+                                    <h6>Payment</h6>
+                                    <h6 data-th="Tax" style="text-align: center;" colspan="2">
+                                        <span *ngIf="type!=1" class="font-md-bold">${{orderHead.oe_head_curx_o_deposit
+                                                | million}}</span>
+                                        <span *ngIf="type==1" class="font-md-bold">${{orderHead.oe_head_curx_o_deposit
+                                                | million}}</span>
+                                    </h6>
+                                </div>
+                            </div>
+                            <div *ngIf="(orderHead.oe_head_curx_o_tot_net_ar !=undefined && orderHead.oe_head_curx_o_tot_net_ar!=null && orderHead.oe_head_curx_o_tot_net_ar>0)
+                                || (orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[8]!=undefined && orderHead.misc_dec[8]!=null && orderHead.misc_dec[8]!='')">
+                                <div class="col-md-12 border-bottom mb-10">
+                                    <div class="align-flex p-3">
+                                        <h5>Total</h5>
+                                        <h5>
+                                            <span *ngIf="type!=1 && orderHead.oe_head_rec_type!='I'" class="">${{orderHead.oe_head_curx_o_tot_net_ar | million}}</span>
+                                            <span *ngIf="type!=1 && orderHead.oe_head_rec_type=='I'" style="font-weight: bold;">${{orderHead.oe_head_curx_c_tot_net_ar | million}}</span>
+                                            <span *ngIf="type==1 && orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[8]!=undefined && orderHead.misc_dec[8]!=null && orderHead.misc_dec[8]!=''" style="font-weight: bold;">${{orderHead.misc_dec[8] | million}}</span>
+                                        </h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="col-md-12"
+                                    *ngIf="(orderHead.oe_head_curx_o_tot_net_ar !=undefined && orderHead.oe_head_curx_o_tot_net_ar!=null && orderHead.oe_head_curx_o_tot_net_ar>0)
+                                                || (orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[8]!=undefined && orderHead.misc_dec[8]!=null && orderHead.misc_dec[8]!='')">
+                                                <h5>Total</h5>
+                                    <h5 class="align-flex p-3 justify-content-end">
+                                        <span *ngIf="type!=1 && orderHead.oe_head_rec_type!='I'"
+                                            class="font-md-bold">${{orderHead.oe_head_curx_o_tot_net_ar |
+                                            million}}</span>
+                                        <span *ngIf="type!=1 && orderHead.oe_head_rec_type=='I'"
+                                            class="font-md-bold">${{orderHead.oe_head_curx_c_tot_net_ar |
+                                            million}}</span>
+                                        <span
+                                            *ngIf="type==1 && orderHead.misc_dec!=undefined && orderHead.misc_dec!=null && orderHead.misc_dec[8]!=undefined && orderHead.misc_dec[8]!=null && orderHead.misc_dec[8]!=''"
+                                            class="font-md-bold">${{orderHead.misc_dec[8] |
+                                            million}}</span>
+                                    </h5>
+                                </div> -->
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+    <!-- </div> -->

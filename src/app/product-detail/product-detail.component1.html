@@ -1,0 +1,1010 @@
+<div class="body-content outer-top-xs">
+  <div class='container'>
+    <div class='row single-product'>
+      <div class='col-md-3 sidebar'>
+        <app-side-menu></app-side-menu>
+      </div>
+      <div class='col-md-9'>
+        <a id='dwnldLnk' target="_blank" style="display:none;"></a>
+        <div class="wow fadeInUp popup_main" *ngIf="iswish==true">
+          <div class="popup_inner wishdivprimary">
+            <h2>{{wishlistlable}}</h2>
+            <div (click)="AddtowishList(wish.WishlistID)" class="cpointer wishinnerdiv" *ngFor="let wish of userwishlist">
+              <h4>{{wish.WishlistName}} </h4>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn-upper btn btn-primary checkout-page-button margin10px"
+                (click)="createnewlist()">Create a New List</button>
+              <button type="button" class="btn-upper btn btn-primary checkout-page-button margin10px"
+                (click)="closewishbox()">close</button>
+            </div>
+          </div>
+        </div>
+        <div class="wow fadeInUp popup_main" *ngIf="isrfq==true">
+          <div class="popup_inner wishdivprimary">
+            <h2>RFQ List</h2>
+            <div (click)="AddrfqList(wish.WishlistID)" class="cpointer wishinnerdiv" *ngFor="let wish of userrfqlist">
+              <h4>{{wish.WishlistName}} </h4>
+            </div>
+            <div class="btn-group">
+              <button type="button" class="btn-upper btn btn-primary checkout-page-button"
+                (click)="createnewrfqlist()">Create a New List</button>
+              <button type="button" class="btn-upper btn btn-primary checkout-page-button"
+                (click)="closerfqbox()">close</button>
+            </div>
+          </div>
+        </div>
+        <div class="detail-block">
+          <div class="col col-sm-12 detail-block-bradcrumb" *ngIf="breadcumin=='1'">
+            <ul class="breadcrub">
+              <li *ngIf="titleheader1!=null">
+                <label *ngFor="let titl1 of titleheader1; let last = last;"> 
+                  <a *ngIf="titl1.name!=''" class="beadlink" [routerLink]="[titl1.urls.toLowerCase()]">
+                  <span *ngIf="titl1.name!=''"
+                    (click)="catclick(titl1.treeNode,titl1.indexs)" style="cursor: pointer;"> {{titl1.name}} </span>
+                  </a>
+                  <!-- <span *ngIf="titl1.name!='' && last"> {{titl1.name}} </span> -->
+                </label>
+              </li>
+              <li>
+              </li>
+            </ul>
+            <h1 id="titlehead" *ngIf="titleheader1!=undefined && titleheader1!=null && titleheader1.length>0">{{titleheader1[titleheader1.length-1].name}}</h1>
+          </div>
+          <div class="padding-block">
+            <div class="row  wow fadeInUp" style="margin-top: 10px;">
+              <div class="col-xs-12 col-sm-6 col-md-5" *ngIf="galleryImages!=undefined && galleryImages.length>0">
+                <div class="gallery-holder">
+                  <div *ngIf="showSlider">
+                    <ngx-gallery [options]="galleryOptions" [images]="galleryImages" class="ngx-gallery"></ngx-gallery>
+                  </div>
+                </div>
+              </div>
+              <div class='col-sm-6 col-md-7 product-info-block' *ngIf="item1!=undefined && item1!=null">
+                <div class="product-info" style="text-transform: uppercase;">
+                  <button (click)="downloadPDF()" id="DownloadPDF" *ngIf="isLoggedIn==true" class="btn btn-primary"
+                    style="float: right;cursor: pointer">Download</button>
+                  <h1 class="name" id="iname" *ngIf="Label1=='item'"> {{item1.itemname}}</h1>
+                  <h1 class="name" id="iname"
+                    *ngIf="Label1=='prodline' && Productlineshow=='1' && item1.prodlinename!=null && item1.prodlinename!=undefined && item1.prodlinename!=''">
+                    Product: {{item1.prodlinename}}</h1>
+                  <h1 class="name" id="iname"
+                    *ngIf="Label1=='UPC' && item1.upc!=undefined && item1.upc!='' && item1.upc!=null && showups=='1'">
+                    UPC: {{item1.upc}}
+                    <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(item1.upc)"></i>
+                  </h1>
+                  <h1 class="name" id="iname"
+                    *ngIf="Label1=='vendor' && isvendor=='1' && item1.vendorname!=undefined && item1.vendorname!='' && item1.vendorname!=null">
+                    Vendor:{{item1.vendorname}}</h1>
+                  <h1 class="name" id="iname"
+                    *ngIf="Label1=='manufacturer' && isMenufacturer == '1' && item1.manufacturer!=undefined && item1.manufacturer!='' && item1.manufacturer!=null">
+                    Manufacturer: {{item1.manufacturer}}</h1>
+                  <h1 class="name" id="iname" *ngIf="Label1=='desc'">
+                    <div *ngIf="item1!=null && item1.descrarray!=undefined && isprofiledesc!='1'">
+                      <div class="description-container" *ngFor="let pdesc of item1.descrarray;let l=index;">
+                        <div *ngIf="pdesc!=''"> {{pdesc}}</div>
+                      </div>
+                    </div>
+                    <div *ngIf="isprofiledesc=='1'"> {{item1.freeform}} </div>
+                  </h1>
+                  <div class="tag sale" *ngIf="origin=='SP'">
+                    <span id="sale">sale</span>
+                  </div>
+                  <div class="rating-reviews m-t-20">
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <p *ngIf="Label2=='item'">{{item.itemname}} </p>
+                        <p
+                          *ngIf="Label2=='prodline' && Productlineshow=='1' && item1.prodlinename!=null && item1.prodlinename!=undefined && item1.prodlinename!=''">
+                          Product: {{item.prodlinename}} </p>
+                        <p
+                          *ngIf="Label2=='UPC' && item1.upc!=undefined && item1.upc!='' && item1.upc!=null && showups=='1'">
+                          UPC: {{item.upc}}
+                          <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(item.upc)"></i>
+                        </p>
+                        <p
+                          *ngIf="Label2=='vendor' && isvendor=='1' && item1.vendorname!=undefined && item1.vendorname!='' && item1.vendorname!=null">
+                          Vendor: {{item.vendorname}} </p>
+                        <p
+                          *ngIf="Label2=='manufacturer' && isMenufacturer == '1' && item1.manufacturer!=undefined && item1.manufacturer!='' && item1.manufacturer!=null">
+                          Manufacturer: {{item.manufacturer}} </p>
+                        <div *ngIf="item1!=null && item1.descrarray!=undefined && isprofiledesc!='1' && Label2=='desc'">
+                          <div class="description-container" *ngFor="let pdesc of item1.descrarray;let l=index;">
+                            <div *ngIf="pdesc!=''"> {{pdesc}}</div>
+                          </div>
+                        </div>
+                        <div *ngIf="isprofiledesc=='1' && Label2=='desc'"> {{item1.freeform}} </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <p *ngIf="Label3=='item'">{{item.itemname}} </p>
+                        <p
+                          *ngIf="Label3=='prodline' && Productlineshow=='1' && item1.prodlinename!=null && item1.prodlinename!=undefined && item1.prodlinename!=''">
+                          Product: {{item.prodlinename}} </p>
+                        <p
+                          *ngIf="Label3=='UPC' && item1.upc!=undefined && item1.upc!='' && item1.upc!=null && showups=='1'">
+                          UPC: {{item.upc}}
+                          <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(item.upc)"></i>
+                        </p>
+                        <p
+                          *ngIf="Label3=='vendor' && isvendor=='1' && item1.vendorname!=undefined && item1.vendorname!='' && item1.vendorname!=null">
+                          Vendor:{{item.vendorname}} </p>
+                        <p
+                          *ngIf="Label3=='manufacturer' && isMenufacturer == '1' && item1.manufacturer!=undefined && item1.manufacturer!='' && item1.manufacturer!=null">
+                          Manufacturer: {{item.manufacturer}} </p>
+                        <div *ngIf="item1!=null && item1.descrarray!=undefined && isprofiledesc!='1' && Label3=='desc'">
+                          <div class="description-container" *ngFor="let pdesc of item1.descrarray;let l=index;">
+                            <div *ngIf="pdesc!=''"> {{pdesc}}</div>
+                          </div>
+                        </div>
+                        <div *ngIf="isprofiledesc=='1' && Label3=='desc'"> {{item1.freeform}} </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+
+                        <p *ngIf="Label4=='item'">{{item.itemname}} </p>
+                        <p
+                          *ngIf="Label4=='prodline' && Productlineshow=='1' && item1.prodlinename!=null && item1.prodlinename!=undefined && item1.prodlinename!=''">
+                          Product: {{item.prodlinename}} </p>
+                        <p
+                          *ngIf="Label4=='UPC' && item1.upc!=undefined && item1.upc!='' && item1.upc!=null && showups=='1'">
+                          UPC: {{item.upc}}
+                          <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(item.upc)"></i>
+                        </p>
+                        <p
+                          *ngIf="Label4=='vendor' && isvendor=='1' && item1.vendorname!=undefined && item1.vendorname!='' && item1.vendorname!=null">
+                          Vendor: {{item.vendorname}} </p>
+                        <p
+                          *ngIf="Label4=='manufacturer' && isMenufacturer == '1' && item1.manufacturer!=undefined && item1.manufacturer!='' && item1.manufacturer!=null">
+                          Manufacturer: {{item.manufacturer}} </p>
+                        <div *ngIf="item1!=null && item1.descrarray!=undefined && isprofiledesc!='1' && Label4=='desc'">
+                          <div class="description-container" *ngFor="let pdesc of item1.descrarray;let l=index;">
+                            <div *ngIf="pdesc!=''"> {{pdesc}}</div>
+                          </div>
+                        </div>
+                        <div *ngIf="isprofiledesc=='1' && Label4=='desc'"> {{item1.freeform}} </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <p *ngIf="Label5=='item'">{{item.itemname}} </p>
+                        <p
+                          *ngIf="Label5=='prodline' && Productlineshow=='1' && item1.prodlinename!=null && item1.prodlinename!=undefined && item1.prodlinename!=''">
+                          Product: {{item.prodlinename}} </p>
+                        <p
+                          *ngIf="Label5=='UPC' && item1.upc!=undefined && item1.upc!='' && item1.upc!=null && showups=='1'">
+                          UPC: {{item.upc}}
+                          <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(item.upc)"></i>
+                        </p>
+                        <p
+                          *ngIf="Label5=='vendor' && isvendor=='1' && item1.vendorname!=undefined && item1.vendorname!='' && item1.vendorname!=null">
+                          Vendor: {{item.vendorname}} </p>
+                        <p
+                          *ngIf="Label5=='manufacturer' && isMenufacturer == '1' && item1.manufacturer!=undefined && item1.manufacturer!='' && item1.manufacturer!=null">
+                          Manufacturer: {{item.manufacturer}} </p>
+                        <div *ngIf="item1!=null && item1.descrarray!=undefined && isprofiledesc!='1' && Label5=='desc'">
+                          <div class="description-container" *ngFor="let pdesc of item1.descrarray;let l=index;">
+                            <div *ngIf="pdesc!=''"> {{pdesc}}</div>
+                          </div>
+                        </div>
+                        <div *ngIf="isprofiledesc=='1' && Label5=='desc'"> {{item1.freeform}} </div>
+                      </div>
+                    </div>
+                  </div>
+                  <p *ngIf="Label6=='item'">{{item.itemname}} </p>
+                  <p
+                    *ngIf="Label6=='prodline' && Productlineshow=='1' && item1.prodlinename!=null && item1.prodlinename!=undefined && item1.prodlinename!=''">
+                    Product: {{item.prodlinename}} </p>
+                  <p *ngIf="Label6=='UPC' && item1.upc!=undefined && item1.upc!='' && item1.upc!=null && showups=='1'">
+                    UPC: {{item.upc}}
+                    <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(item.upc)"></i>
+                  </p>
+                  <p
+                    *ngIf="Label6=='vendor' && isvendor=='1' && item1.vendorname!=undefined && item1.vendorname!='' && item1.vendorname!=null">
+                    Vendor: {{item.vendorname}} </p>
+                  <p
+                    *ngIf="Label6=='manufacturer' && isMenufacturer == '1' && item1.manufacturer!=undefined && item1.manufacturer!='' && item1.manufacturer!=null">
+                    Manufacturer: {{item.manufacturer}} </p>
+                  <div *ngIf="item1!=null && item1.descrarray!=undefined && isprofiledesc!='1' && Label6=='desc'">
+                    <div class="description-container" *ngFor="let pdesc of item1.descrarray;let l=index;">
+                      <div *ngIf="pdesc!=''"> {{pdesc}}</div>
+                    </div>
+                  </div>
+                  <div *ngIf="isprofiledesc=='1' && Label6=='desc'"> {{item1.freeform}} </div>
+
+                  <div
+                    *ngIf="(isLoggedIn==true || priceshow=='1') && item1.Pricebreaks!=null && item1.Pricebreaks!=undefined && item1.Pricebreaks!='' && isshowpricebreaks=='1' && israteshowforcu==true && priceshowcust=='1'">
+                    <h4 *ngIf="isshowpriceifone=='0' || item1.Pricebreaks.length>1">
+                      <b>Price by Quantity</b>
+                    </h4>
+                    <table style="width:100%;" *ngIf="isshowpriceifone=='0' || item1.Pricebreaks.length>1">
+                      <tr *ngFor="let prc of item1.Pricebreaks">
+                        <td style="padding:5px;text-align:right;">{{prc.label}}</td>
+                        <td style="padding:5px;">${{prc.amount | million}} {{prc.break_unit}} <span *ngIf="prc.par>0">
+                            SAVE {{prc.par | number:'1.0-0'}} % </span></td>
+                      </tr>
+                    </table>
+                  </div>
+
+                  <div class="price-container info-container m-t-20">
+                    <div class="row">
+
+                      <div class="col-sm-12" *ngIf="isLoggedIn">
+                        <div class="price-box"
+                          *ngIf="withloginprice=='1' && withloginpricelist=='1' && israteshowforcu==true && priceshowcust=='1'">
+                          <span class="price" *ngIf="item1!=undefined && item1.list_price!=undefined"
+                            style="font-size: 22px;line-height: 35px;">
+                            ${{item1.list_price | million}} {{item1.list_price_per}}
+                            <br />
+                          </span>
+                        </div>
+                        <div class="price-box"
+                          *ngIf="withloginprice=='1' && withloginpricelist!='1' && israteshowforcu==true && priceshowcust=='1'">
+                          <span class="price" style="font-size: 22px;line-height: 15px;"
+                            *ngFor="let obpr of objPriceArr;let first = first;">
+                            <div *ngIf="obpr.price!='0' && isumdescr=='0'"> ${{obpr.extension | million}}
+                              /{{obpr.qty_unit}} ({{obpr.qunits}})
+                              <!-- ({{obpr.extension/obpr.price | number : 0}})-->
+                            </div>
+                            <div *ngIf="obpr.price!='0' && isumdescr=='1'"> ${{obpr.extension | million}}
+                              /{{obpr.descr}}
+                              ({{obpr.qunits}})
+                              <!--({{obpr.extension/obpr.price | number : 0}})-->
+                            </div>
+                            <div
+                              *ngIf="(obpr.price=='0' && Addtocart==true && first) || (obpr.price=='0' && Addtocart==false && PriceOrLable=='1' && first)">
+                              {{pricemsg}}</div>
+                            <div *ngIf="obpr.price=='0' && Addtocart==false && PriceOrLable=='2' && first">
+                              {{ProfilePriceLable}}
+                            </div>
+                            <br />
+                          </span>
+                        </div>
+                        <div (click)="logClick()" class="price-box" *ngIf="withloginprice!='1'">
+                          <span class="price" style="font-size: 22px;line-height: 35px;">{{pricemsg}} </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="!isLoggedIn">
+                        <div class="price-box"
+                          *ngIf="priceshow=='1' && listprice=='1' && israteshowforcu==true && priceshowcust=='1'">
+                          <span class="price" *ngIf="item1!=undefined && item1.list_price!=undefined"
+                            style="font-size: 22px;line-height: 35px;">
+                            <div *ngIf="item1.list_price!='0'"> ${{item1.list_price | million}} {{item1.list_price_per}}
+                            </div>
+                            <div
+                              *ngIf="(item1.list_price=='0' && Addtocart==true) || (item1.list_price=='0' && Addtocart==false && PriceOrLable=='1')">
+                              {{pricemsgwithoutlogin}}</div>
+                            <div *ngIf="item1.list_price=='0' && Addtocart==false && PriceOrLable=='2'">
+                              {{ProfilePriceLable}}</div>
+                            <br />
+                          </span>
+                        </div>
+                        <div class="price-box"
+                          *ngIf="priceshow=='1' && listprice!='1' && israteshowforcu==true && priceshowcust=='1'">
+                          <span class="price" style="font-size: 22px;line-height: 15px;"
+                            *ngFor="let obpr of objPriceArr">
+                            <div *ngIf="obpr.price!='0'"> ${{obpr.extension | million}} <span *ngIf="isumdescr=='0'">
+                                {{obpr.qty_unit}}</span>
+                              <span *ngIf="isumdescr=='1'"> {{obpr.descr}}</span>
+                            </div>
+                            <div
+                              *ngIf="(obpr.price=='0' && Addtocart==true) || (obpr.price=='0' && Addtocart==false && PriceOrLable=='1')">
+                              {{pricemsgwithoutlogin}}</div>
+                            <div *ngIf="obpr.price=='0' && Addtocart==false && PriceOrLable=='2'"> {{ProfilePriceLable}}
+                            </div>
+                            <br />
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="isLoggedIn==true && DisplayListPriceInProductDetails=='1'">
+                        <div class="price-box">
+                          <span class="price" style="font-size: 13px;line-height: 35px;"> {{DisplayListPriceLable}}:
+                            <strong>${{item1.list_price | million}} </strong>
+                          </span>
+
+                        </div>
+                      </div>
+                      <div class="col-sm-12"
+                        *ngIf="isLoggedIn==false && DisplayListPriceInProductDetailswithoutLogin=='1' && DisplayListPriceInProductDetails=='1'">
+                        <div class="price-box">
+                          <span class="price" style="font-size: 13px;line-height: 35px;"> {{DisplayListPriceLable}}:
+                            <strong>${{item1.list_price | million}} </strong>
+                          </span>
+                        </div>
+                      </div>
+
+
+                      <div class="col-sm-12" *ngIf="ListPriceShow=='1'">
+                        <div class="price-box">
+                          <span class="price colorset" style="font-size: 13px;line-height: 35px;"> Price Per Each:
+                            <strong class="colorset"
+                              *ngIf="item1.ListPriceShow!=undefined && item1.ListPriceShow!=null && item1.ListPriceShow!=''">${{item1.ListPriceShow | million}}
+                            </strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="IsProfileShow=='1'">
+                        <div class="price-box">
+                          <span class="price" style="font-size: 13px;line-height: 35px;"> {{ProfileLable}}
+                            <strong
+                              *ngIf="item.profilelabel!=undefined && item.profilelabel!=null && item.profilelabel!=''">{{item.profilelabel}}
+                            </strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-sm-12" *ngIf="IsRetailPrice=='1'">
+                        <div class="price-box">
+                          <span class="price" style="font-size: 13px;line-height: 35px;"> {{RetailPriceLabel}}
+                            <strong
+                              *ngIf="item.retail_price!=undefined && item.retail_price!=null && item.retail_price!=''">${{item.retail_price | million}}
+                            </strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="Multiplewarehouseforavaibility==undefined || Multiplewarehouseforavaibility==null || Multiplewarehouseforavaibility==''">
+                        <div class="col-sm-12" *ngIf="item1!=undefined && item1.drop_ship==true">
+                          <div class="price-box">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"> Availability:
+                              <strong>{{drop_shiplable}}</strong>
+                            </span>
+                          </div>
+                        </div>
+                        <div class="col-sm-12" *ngIf="isLoggedIn && item1!=undefined && item1.drop_ship==false">
+                          <div class="price-box" *ngIf="withloginavailshow=='1' && withloginavailqty=='1'">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withloginavaillist=='1' && item1.available!='0' && item1.um_displayQty!=undefined">
+                              Availability:
+                              <strong>{{item1.available / item1.um_displayQty | floor}} {{item1.um_display}} </strong>
+                            </span>
+                            <span class="price" style="font-size: 13px;line-height: 35px;" *ngIf="withloginavaillist!='1' && item.available1!='0' 
+                        && item1.um_displayQty!=undefined"> Availability:
+                              <strong>{{item.available1 / item1.um_displayQty | floor}} {{item1.um_display}} </strong>
+                            </span>
+                          </div>
+                          <div class="price-box" *ngIf="withloginavailshow=='1' && withloginavailqty!='1'">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withloginavaillist=='1' && item1.available!='0' && item1!=undefined">
+                              Availability: <strong>{{stocklable}}</strong></span>
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withloginavaillist!='1' && item.available1!='0' && item!=undefined">
+                              Availability: <strong>{{stocklable}}</strong></span>
+                          </div>
+                          <div class="price-box">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="(withloginavailshow=='1' && withloginavaillist=='1' && item1.available=='0') || (withloginavailshow=='1' && withloginavaillist!='1' && item1.available1=='0')">
+                              Availability: <strong>{{qtymsg}}</strong></span>
+                          </div>
+                          <br />
+                          <div class="price-box" id="divavg" *ngIf="(avg_lead_time=='1' && item1.available=='0' && item1.avg_lead_time>0) || (avg_lead_time=='1' && item1.available1=='0' && item1.avg_lead_time>0)">                            
+                            <span class="price" id="avgspan">
+                               {{avg_lead_time_lable}} <strong *ngIf="avg_lead_time_value=='1'">{{item1.avg_lead_time}}</strong></span>
+                          </div>
+                        </div>
+                        <div class="col-sm-12" *ngIf="!isLoggedIn && item1!=undefined && item1.drop_ship==false">
+                          <div class="price-box" *ngIf="annavail=='1' && showstock=='1'">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withoutloginavaillist=='1' && item1.available!='0' && item1.um_displayQty!=undefined">
+                              Availability:
+                              <strong>{{item1.available / item1.um_displayQty | floor}} {{item1.um_display}} </strong>
+                            </span>
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withoutloginavaillist!='1' && item.available1!='0' && item1.um_displayQty!=undefined">
+                              Availability:
+                              <strong>{{item.available1 / item1.um_displayQty | floor}} {{item1.um_display}} </strong>
+                            </span>
+                          </div>
+                          <div class="price-box" *ngIf="annavail=='1' && showstock!='1'">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withoutloginavaillist=='1' && item1.available!='0'">
+                              Availability: <strong> {{stocklable}}</strong></span>
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="withoutloginavaillist!='1' && item.available1!='0'">
+                              Availability:<strong> {{stocklable}}</strong></span>
+                          </div>
+                          <div class="price-box">
+                            <span class="price" style="font-size: 13px;line-height: 35px;"
+                              *ngIf="(annavail=='1' && withoutloginavaillist=='1' && item1.available=='0') || (annavail=='1' && withoutloginavaillist!='1' && item1.available1=='0')">
+                              Availability: <strong> {{qtymsgwithoutlogin}}</strong></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        *ngIf="Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+                        <b *ngFor="let avails of item.productavails;">Availability: {{avails.available}} Warehouse:
+                          {{avails.warehouse}} <br /></b>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row list-item product__small__list"
+                    *ngIf="childproducts!=undefined && childproducts!=null && childproducts.length>0 && multiviewtype=='1'">
+                    <div style="width: 100%;margin-bottom: 15px;" *ngIf="showProductDDL=='1'"> 
+                      <select id="ddlProduct" (change)="ddlSelectEvent()"
+                              style="height: 35px;border-color: #ccc;position: relative;width: 50%;" 
+                              [(ngModel)]="itemnameddl" name="ddlProduct"> 
+                              <option [ngValue]="prod.itemname" *ngFor="let prod of childproducts">
+                                <span>{{prod.itemname}}</span> 
+                              </option>
+                            </select>
+                    </div>
+                    <div style="width: 100%;" *ngIf="showColorPellet=='1'">
+                    <div *ngFor="let prod of childproducts;let i = index">
+                      <div class="roundDiv cpointer" (click)="SelectItem(prod, i)"
+                        [ngClass]="{'selectdiv': itemselect==prod.itemname}">
+                        <img src="assets/images/Product.png" style="width: 20px;height: 20px;border-radius: 10px;" alt="{{prod.itemname+''+prod.itemdesc+''+prod.freeform}}" *ngIf="prod.image == 'NotFound' || prod.image==null">
+                        <img src="{{prod.image}}" alt="{{prod.itemname+''+prod.itemdesc+''+prod.freeform}}"
+                          style="width: 20px;height: 20px;border-radius: 10px;" *ngIf="prod.image != undefined && prod.image!=null">
+                        <!-- <h5>{{prod.itemname}}</h5> -->
+                      </div>
+                    </div>
+                  </div>
+                  </div>
+                  <div class="row list-item tag-product"
+                    *ngIf="childproducts!=undefined && childproducts!=null && childproducts.length>0 && multiviewtype=='3'">
+                    <div class="tag-pro-inner" *ngFor="let prod of childproducts;let i = index">
+                      <div class="item-list-3 cpointer" (click)="SelectItem(prod, i)"
+                        [ngClass]="{'selectdiv': itemselect==prod.itemname}">
+
+                        <h5>{{prod.itemname}}</h5>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="quantity-container info-container"
+                    *ngIf="(itemselect==undefined && (childproducts==undefined || childproducts.length==0)) || (itemselect!=undefined && childproducts!=undefined)">
+                    <div class="row qty-pro-details" *ngIf="isshowsinglecart==true">
+                      <span class="label">Qty :</span>
+                      <div class="cart-quantity">
+                        <div class="quant-input">
+                          <input id="txtQuantity" type="number" name="Quantity" #quantity="ngModel"
+                            [(ngModel)]="item.quantity" min=1 max="9999" minLength="1" maxLength="4"
+                            (change)="Onqtychange()" (keypress)="onKeyPress($event)" style="border-color: #ccc;">
+                        </div>
+                      </div>
+                      <div class="cart-quantity">
+                        <div class="quant-input">
+                          <select id="unitMeasure" [disabled]="UMdropdown=='1'"
+                            style="height: 35px;border-color: #ccc;position: relative;" #unitMeasure="ngModel"
+                            [(ngModel)]="item.unitMeasure" name="unitMeasure"
+                            (change)="onUnitChange($event.target.value)">
+                            <option [ngValue]="k" *ngFor="let k of item.unitList">
+                              {{k}}
+                            </option>
+                          </select>
+                        </div>
+                      </div>
+
+
+                      <div class="btns-blocks" style="padding: 0px;">
+                        <button class="btn btn-primary icon" style="font-size: x-large;"
+                          *ngIf="fllagtochild==false && Addtocart==true" type="button"
+                          (click)="onAddToCart(item,item.unitMeasure)">
+                          <i class="fa fa-shopping-cart" title="Add to Cart"></i>
+                        </button>
+                        <button class="btn btn-primary icon"
+                          *ngIf="iswishshow=='1' && fllagtochild==false && Addtocart==true" style="font-size: x-large;"
+                          type="button" (click)="AddtoList(item)">
+                          <i class="fa fa-list-alt" aria-hidden="true" title="Add to {{wishlistlable}}"></i>
+                        </button>
+                        <button class="btn btn-primary icon" *ngIf="isrfqshow=='1'" style="font-size: x-large;"
+                          type="button" (click)="AddtorfqList(item)">
+                          <i class="fa fa-list-ul" aria-hidden="true" title="Add to quote"></i>
+                        </button>
+                        <button class="btn btn-primary icon" *ngIf="!isLoggedIn" style="font-size: x-large;"
+                        type="button" (click)="LoginForAddtoQuote()">
+                        <i class="fa fa-list-ul" aria-hidden="true" title="Login For Add to Quote"></i>
+                      </button>
+                      </div>
+                    </div>
+                    <div (click)="checkvalues()" id="cvalue" style="display: none;">Check value</div>
+                    <div *ngIf="SelectedPartNumber!=null && SelectedPartNumber!=undefined">Selected Part Number:
+                      {{SelectedPartNumber}}</div>
+                  </div>
+                  <div class="row" *ngIf="item.qty_warn!=undefined && item.qty_warn != '0' && Multiply=='1'">
+                    <div class="col-sm-12">
+                      <label>Please enter quantity in multiple of {{item.qty_warn/item1.um_displayQty}} of
+                        {{item1.um_display}} </label>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="width: 100%;background-color: white;display: table;">
+            <div class="row tablesraw"
+              *ngIf="childproducts!=undefined && childproducts!=null && childproducts.length>0 && multiviewtype=='2'">
+              <table>
+                <tr>
+                  <th class="thclass">Image</th>
+                  <th class="thclass">Name</th>
+                  <th class="thclass">Price</th>
+                  <th class="thclass">Add Qty</th>
+                </tr>
+
+                <tr *ngFor="let prod of childproducts;let i = index">
+                  <td> <img src="assets/images/Product.png" style="width: 50px;height: 50px;"
+                      alt="{{prod.itemname+''+prod.itemdesc+''+prod.freeform}}"
+                      *ngIf="prod.image == 'NotFound' || prod.image==null">
+                    <img src="{{prod.image}}" style="width: 50px;height: 50px;"
+                      alt="{{prod.itemname+''+prod.itemdesc+''+prod.freeform}}"
+                      *ngIf="prod.image != undefined && prod.image!=null">
+                  </td>
+                  <td style="cursor: pointer;" (click)="SelectItem(prod, i)">
+                    <b> {{prod.itemname}}</b> <br>
+                    <div *ngIf="isprofiledesc!='1'">
+                      <div *ngFor="let dsr of prod.itemdesc"> {{dsr}} </div>
+                    </div>
+                    <div *ngIf="isprofiledesc=='1'"> {{prod.freeform}} <br /> </div>
+                  </td>
+
+                  <td> <span *ngIf="(isLoggedIn==true && withloginprice == '1' && withloginpricelist != '1') 
+                    || (isLoggedIn==false && priceshow == '1' && listprice != '1')">
+                      ${{prod.price | million}} </span>
+                    <span *ngIf="(isLoggedIn==true && withloginpricelist == '1' && withloginprice == '1') 
+                    || (isLoggedIn==false && priceshow == '1' && listprice == '1')">
+                      ${{prod.list_price | million}} </span> /{{prod.um_display}} ({{prod.u_qty}})
+                    <div
+                      *ngIf="(isLoggedIn==true || priceshow=='1') && prod.Pricebreaks!=null && prod.Pricebreaks!=undefined && prod.Pricebreaks!='' && isshowpricebreaks=='1' && israteshowforcu==true && priceshowcust=='1'">
+                      <table class="pricetable" *ngIf="isshowpriceifone=='0' || prod.Pricebreaks.length>1">
+                        <tr *ngFor="let prc of prod.Pricebreaks">
+                          <td style="padding:5px;">{{prc.label}}</td>
+                          <td style="padding:5px;">${{prc.amount | million}} {{prc.break_unit}} <span *ngIf="prc.par>0">
+                              SAVE {{prc.par | number:'1.0-0'}} % </span></td>
+                        </tr>
+                      </table>
+                    </div>
+                  </td>
+                  <td>
+                    <input type="text" class="form-control unicase-form-control text-input" name="Reorder" id={{i}}
+                      [(ngModel)]='prod.quantity' (keydown)="onKeydownq($event,prod,i)"
+                      style="width: 100px;height: 35px;margin-bottom: 10px;">
+                  </td>
+                </tr>
+                <tr>
+                  <td colspan="4" style="text-align: right;">
+                    <button class="btn btn-primary icon" *ngIf="Addtocart==true" style="font-size: x-large;"
+                      type="button" (click)="addToCartMultipleq()">
+                      <i class="fa fa-shopping-cart" title="Add to Cart"></i>
+                    </button>
+                    <button class="btn btn-primary icon" *ngIf="iswishshow=='1'" style="font-size: x-large;"
+                      type="button" (click)="Addtowishlistbulk()">
+                      <i class="fa fa-list-alt" aria-hidden="true" title="Add to {{wishlistlable}}"></i>
+                    </button>
+                    <button class="btn btn-primary icon" *ngIf="isrfqshow=='1'" style="font-size: x-large;"
+                      type="button" (click)="Addtorfqlistbulk()">
+                      <i class="fa fa-list-ul" aria-hidden="true" title="Add to quote"></i>
+                    </button>
+                    <button class="btn btn-primary icon" *ngIf="!isLoggedIn" style="font-size: x-large;"
+                        type="button" (click)="LoginForAddtoQuote()">
+                        <i class="fa fa-list-ul" aria-hidden="true" title="Login For Add to Quote"></i>
+                      </button>
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+          <div class="padding-block" *ngIf="ItemDisclamier!=undefined && ItemDisclamier!=null && ItemDisclamier!=''">
+            <div id="ItemDisclamier" [innerHTML]="ItemDisclamier | safe: 'html'"></div>
+          </div>
+          <div class="description-container description-container-bottom  m-t-20"
+            *ngIf="orderdic1!=undefined && orderdic1.length>0">
+            <div style="display: table;width: 100%;" *ngFor="let ord of orderdic1 | orderBy: ddt">
+              <div *ngIf="ord.name=='sa'">
+
+                <div
+                  *ngIf="item1!=null && isSAitem=='1' && item1!=undefined && isfeature==true && (webtype=='5' || webtype=='6') && item1.sa_group_label!=undefined && item1.sa_group_label!=null && item1.sa_group_label.length>0"
+                  class="Features-dv-blk">
+                  <h4 class="h4">
+                    <b>{{featureTitle}}</b>
+                  </h4>
+                  <div class="padding-block">
+                    <table style="width:100%">
+                      <tr *ngFor="let label1 of item1.sa_group_label">
+                        <td style="padding:5px;width:20%;"> {{label1.lbl}}</td>
+                        <td style="padding:5px;width:5%;"> :</td>
+                        <td style="padding:5px;width:75%;"> {{label1.txt}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+              <div *ngIf="ord.name=='profile'">
+                <div *ngIf="profileinfo!=null && profileinfo!='' && isitemprofile=='1'" class="profile-d-blk">
+                  <h4 class="h4">
+                    <b>{{profileTitle}}</b>
+                  </h4>
+                  <div class="padding-block">
+                    <table style="width:100%">
+                      <tr *ngFor="let pro1 of profileinfo">
+                        <td style="padding:5px;width:20%;">{{pro1.Label}}</td>
+                        <td style="padding:5px;width:5%;"> :</td>
+                        <td style="padding:5px;width:75%;">{{pro1.text}}</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="ord.name=='note' && isnotedisplay=='1'">
+                <div *ngIf="sysnote!=null && sysnote!=undefined && sysnote.length>0" class="overview-note">
+                  <h4 class="h4">
+                    <b>{{overviewTitle}}</b>
+                  </h4>
+                  <div class="padding-block">
+                    <div *ngFor="let nt of sysnote">
+                      <div style="margin-top:10px;" *ngIf="nt!=null && nt!=undefined  && nt!='undefined'"
+                        [innerHTML]="nt | safe: 'html'" class="list-d"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div *ngIf="ord.name=='3d'">
+                <div *ngIf="show3D" class="overview-note">
+                  <h4 class="h4">
+                    <b>{{D3Title}}</b>
+                  </h4>
+                  <div class="padding-block">
+                    <div>
+                      <!-- <iframe style="height: 1150px; width: 100%; border: none;float: left !important;" [src]="getIframeYouTubeUrl(urlp)"></iframe> -->
+                      <!-- <div *ngIf="threedhtml!=null && threedhtml!=undefined  && threedhtml!='undefined'" [innerHTML]="threedhtml | safe: 'html'"></div> -->
+
+                      <html>
+
+                      <head>
+                      </head>
+
+                      <body id="ProductPage">
+                        <article class="Container">
+                          <section class="wrapper">
+                            <div class="productDataWrapper">
+                              <div class="MetaData"></div>
+                              <div class="dataContainer">
+                                <div class="mainSection">
+                                  <div id="threedxProductTabs">
+                                    <ul class="threedxProductTabsList">
+                                      <li class="tab" id="Preview_tab">
+                                        <span title="3D Preview">3D</span>
+                                      </li>
+                                      <li class="tab" id="Drawings_tab">
+                                        <span title="Helper drawings">Drawings</span>
+                                      </li>
+                                      <li class="tab" id="Info_tab">
+                                        <span title="Product image and description">Product Detail</span>
+                                      </li>
+                                      <li class="tab" id="Documents_tab" style="display:none;">
+                                        <span title="Documents">Documents</span>
+                                      </li>
+
+                                    </ul>
+
+                                    <div class="tab_content" id="Preview_tab_content">
+                                      <div class="previewContainer">
+                                        <div class="threedxPreviewDiv">
+                                          <div id="AMCViewer" class="Preview_Frame">
+                                            <iframe
+                                              src="https://viewer.3dexchange.net/?message=Waiting for configuration..."
+                                              style="width:100%;height:100%;"></iframe>
+                                          </div>
+                                          <div class="Preview_buttons">
+                                            <div alt="Update Preview" id="updatePreviewBtn" title="Update Preview"><span
+                                                class="glyphicon glyphicon-repeat" aria-hidden="true"></span></div>
+                                            <div alt="Turn OFF Preview Update" title="Turn OFF Preview Update"
+                                              id="autoUpdatePreviewOn" style="display:none;"><span
+                                                class="glyphicon glyphicon-eye-open" aria-hidden="true"></span></div>
+                                            <div alt="Turn ON Preview Update" title="Turn ON Preview Update"
+                                              id="autoUpdatePreviewOff" style="display:none;"><span
+                                                class="glyphicon glyphicon-eye-close" aria-hidden="true"></span></div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+
+                                    <div class="tab_content" id="Info_tab_content">
+                                      <div class="moreInformation"></div>
+                                    </div>
+
+                                    <div class="tab_content" id="Drawings_tab_content">
+                                      <div class="threedx_ProductMetadata_drawings">
+                                        <p>Helper Drawing(s)</p>
+                                        <ul class="ProductDrawings"></ul>
+                                      </div>
+                                    </div>
+
+                                    <div class="tab_content" id="Documents_tab_content">
+                                      <div class="threedx_ProductMetadata_documents">
+                                        <p>Additional Documentation</p>
+                                        <ul class="ProductDocuments"></ul>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+
+                                <div class="cons" id="cons">
+                                  <div class="downloader">
+                                    <div id="downloaderHeader">CAD Model Download</div>
+                                    <div class="downloadContainer">
+                                      <p class="noCADText" style="display:none;">No CAD Available</p>
+                                      <form action="" method="" class="downloadForm" id="DownloadForm">
+                                        <input type="hidden" name="pn" id="pn">
+                                        <div class="form-item split">
+                                          <div class="form-item">
+                                            <select name="formats" id="CADFormats" required>
+                                              <option value="">-- Select Format --</option>
+                                            </select>
+                                          </div>
+                                          <div class="form-item">
+                                            <button type="submit" name="download" id="downloadBtn"
+                                              value="download">Download</button>
+                                            <button type="button" name="register" (click)="register()" id="register"
+                                              value="register">Register</button>
+                                          </div>
+                                        </div>
+                                      </form>
+                                    </div>
+                                  </div>
+                                  <div class="threedxBomWrapper"></div>
+                                  <button id="getPartNumber" disabled>Get Part Number</button>
+                                </div>
+                              </div>
+                              <div class="threedxConfigurationContainer"></div>
+                            </div>
+                          </section>
+                        </article>
+
+                        <div id="downloading">
+                          <img src="https://defu9f4k3otpo.cloudfront.net/loading2.gif" alt="Downloading"
+                            title="Downloading">
+                          <span>Processing your download request</span>
+                        </div>
+
+                        <div id="downloadError">
+                          <span>Unable to Download CAD: <a href="mailto:support@3dx-media.com" target="_blank">Contact
+                              Support</a></span>
+                          <a href="#" class="close" style="position:absolute;top:8px;right:10px;">x</a>
+                        </div>
+                      </body>
+
+                      </html>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br />
+
+            <br>
+          </div>
+        </div>
+
+        <!-- search-result-container -->
+        <div class="description-container-bottom" style="margin-top: 15px;"
+          *ngIf="IsRelatedProduct=='1' && RelatedProductList!=undefined && RelatedProductList.length>0">
+          <div class="more-info-tab clearfix">
+            <br>
+          </div>
+          <!-- <h3 class="new-product-title" style="margin: 0px !important;padding: 15px !important;background: white;">{{RelatedProductLable}}</h3> -->
+
+
+
+          <div id="myTabContent" class="tab-content category-list">
+            <h4 class="h4">
+              <b>{{RelatedProductLable}}</b>
+            </h4>
+            <div class="tab-pane active" id="grid-container">
+              <div class="category-product product-details-category">
+                <div class="row">
+                  <div class="col-sm-6 col-md-4 wow fadeInUp" *ngIf="isEmpty">
+                    <label>No items are available</label>
+                  </div>
+                  <div class="wow fadeInUp wishdivprimary" *ngIf="iswish==true">
+                    <h2>{{wishlistlable}}</h2>
+                    <div (click)="AddtowishListNew(wish.WishlistID)" class="cpointer wishinnerdiv"
+                      *ngFor="let wish of userwishlist">
+                      <h4>{{wish.WishlistName}} </h4>
+                    </div>
+                    <div class="btn-group">
+                      <button type="button" class="btn-upper btn btn-primary checkout-page-button margin10px"
+                        (click)="createnewlist()">Create a New List</button>
+                      <button type="button" class="btn-upper btn btn-primary checkout-page-button margin10px"
+                        (click)="closewishbox()">close</button>
+                    </div>
+                  </div>
+                  <div class="wow fadeInUp wishdivprimary" *ngIf="isrfq==true">
+                    <h2>RFQ List</h2>
+                    <div (click)="AddtonewrfqListNew(wish.WishlistID)" class="cpointer wishinnerdiv"
+                      *ngFor="let wish of userrfqlist">
+                      <h4>{{wish.WishlistName}} </h4>
+                    </div>
+                    <div class="btn-group">
+                      <button type="button" class="btn-upper btn btn-primary checkout-page-button"
+                        (click)="createnewrfqlist()">Create a New List</button>
+                      <button type="button" class="btn-upper btn btn-primary checkout-page-button"
+                        (click)="closerfqbox()">close</button>
+                    </div>
+                  </div>
+                  <div class="col-md-12">
+                    <ngx-slick-carousel *ngIf="RelatedProductList!=undefined && RelatedProductList.length>0"
+                      class="carousel product-details-slider home-owl-carousel custom-carousel"
+                      #slickModal="slick-carousel" [config]="slideConfig" (init)="slickInit($event)"
+                      (breakpoint)="breakpoint($event)" (afterChange)="afterChange($event)"
+                      (beforeChange)="beforeChange($event)">
+                      <div ngxSlickItem *ngFor="let product of RelatedProductList; let index=index" class="slide">
+                        <div class="products">
+                          <div class="product">
+                            <div class="product-image">
+                              <div class="image">
+                                <a target="_blank" [routerLink]="['/productdetail', product.itemname.toLowerCase(),product.links.toLowerCase()]" class="cpointer" (click)="Setitemname(product)">
+                                  <img src="assets/images/Product.png" class="pimage"
+                                    alt="{{product.itemname+''+product.itemdesc+''+product.freeform}}"
+                                    *ngIf="product.image == 'NotFound' || product.image==null">
+                                  <img src="{{product.image}}" alt="{{product.descrstring}}" class="pimage"
+                                    alt="{{product.itemname+''+product.itemdesc+''+product.freeform}}"
+                                    *ngIf="product.image != undefined && product.image!=null">
+                                  <div
+                                    *ngIf="isLoggedIn==true && withloginprice=='1' && israteshowforcu==true && priceshowcust=='1'"
+                                    class="price-blk">
+                                    <b
+                                      *ngIf="withloginprice=='1' && withloginpricelist=='1' && product.list_price!='0'">
+                                      ${{product.list_price | million}} {{product.um_display}} </b>
+                                    <b *ngIf="withloginprice=='1' && withloginpricelist!='1' && product.price!='0'">
+                                      ${{product.price | million}} {{product.um_display}} </b>
+                                    <b
+                                      *ngIf="(withloginprice=='1' && withloginpricelist=='1' && product.list_price=='0' && product.Addtocart==true) 
+                                    || (withloginprice=='1' && withloginpricelist!='1' && product.price=='0' && product.Addtocart==true)
+                                    || (withloginprice=='1' && withloginpricelist=='1' && product.list_price=='0' && product.Addtocart==false && PriceOrLable=='1')
+                                    || (withloginprice=='1' && withloginpricelist!='1' && product.price=='0' && product.Addtocart==false && PriceOrLable=='1') ">{{pricemsg}}</b>
+                                    <b
+                                      *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}</b>
+                                  </div>
+                                  <div
+                                    *ngIf="isLoggedIn==false && priceshow=='1' && israteshowforcu==true && priceshowcust=='1'"
+                                    class="price-blk">
+                                    <b *ngIf="priceshow=='1' && listprice=='1' && product.list_price!='0'">
+                                      ${{product.list_price | million}} {{product.um_display}} </b>
+                                    <b *ngIf="priceshow=='1' && listprice!='1' && product.price!='0'">
+                                      ${{product.price | million}} {{product.um_display}} </b>
+                                    <b
+                                      *ngIf="(priceshow=='1' && listprice=='1' && product.list_price=='0' && product.Addtocart==true) 
+                                    || (priceshow=='1' && listprice!='1' && product.price=='0' && product.Addtocart==true)
+                                    || (priceshow=='1' && listprice=='1' && product.list_price=='0' && product.Addtocart==false && PriceOrLable=='1')
+                                    || (priceshow=='1' && listprice!='1' && product.price=='0' && product.Addtocart==false && PriceOrLable=='1')">{{pricemsgwithoutlogin}}</b>
+                                    <b
+                                      *ngIf="product.list_price=='0' && product.price=='0' && product.Addtocart==false && PriceOrLable=='2'">{{ProfilePriceLable}}</b>
+                                  </div>
+                                </a>
+                              </div>
+                              <div class="tag sale" *ngIf="product.origin=='SP'">
+                                <span>sale</span>
+                              </div>
+                            </div>
+                            <div class="product-info text-left">
+                              <a target="_blank" [routerLink]="['/productdetail', product.itemname.toLowerCase(),product.links.toLowerCase()]" class="cpointer" (click)="Setitemname(product)">
+                                <h3 class="name">
+                                  {{itlable}}: {{product.itemname}}
+                                </h3>
+                                <span *ngIf="vendorinproductlist=='1'">{{product.vendorname}}</span>
+                                <h5 *ngIf="isprofiledesc!='1' && product.descrarray!=undefined">
+                                  <div *ngFor="let pdesc of product.descrarray;let l=index;"
+                                    style="text-transform: uppercase;">
+                                    <div *ngIf="pdesc!=null && pdesc!=''&& pdesc!=undefined">{{pdesc}} <br /></div>
+                                  </div>
+                                </h5>
+                                <h5 *ngIf="isprofiledesc=='1'"> {{product.freeform}} </h5>
+                                <div class="description" *ngIf="Productlineshow=='1'">
+                                  {{product.prodline}}
+                                </div>
+                                <div class="description"
+                                  *ngIf="product.upc!='' && product.upc!=undefined && showups=='1'">
+                                  UPC: {{product.upc}}
+                                  <i class="fa fa-copy" style="cursor: pointer;" (click)="copyMessage(product.upc)"></i>
+                                </div>
+                                <div
+                                  *ngIf="Multiplewarehouseforavaibility==undefined || Multiplewarehouseforavaibility==null || Multiplewarehouseforavaibility==''">
+                                  <div *ngIf="product.drop_ship==true">
+                                    <b>Availability: {{drop_shiplable}}</b>
+                                  </div>
+                                  <div
+                                    *ngIf="isLoggedIn==true && product.IsBaseProduct==false && product.drop_ship==false">
+                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty=='1'">
+                                      <b *ngIf="withloginavaillist=='1' && product.available!='0'"> Availability:
+                                        {{product.available / product.um_displayQty | floor}} {{product.um_display}}
+                                      </b>
+                                      <b *ngIf="withloginavaillist!='1' && product.available1!='0'"> Availability:
+                                        {{product.available1 / product.um_displayQty | floor}} {{product.um_display}}
+                                      </b>
+                                    </div>
+                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty!='1'">
+                                      <b *ngIf="withloginavaillist=='1' && product.available!='0'"> Availability:
+                                        {{stocklable}}</b>
+                                      <b *ngIf="withloginavaillist!='1' && product.available1!='0'"> Availability:
+                                        {{stocklable}} </b>
+                                    </div>
+                                    <div
+                                      *ngIf="(withloginavailshow=='1' && withloginavaillist=='1' && product.available=='0') 
+                                    || (withloginavailshow=='1' && withloginavaillist!='1' && product.available1=='0')">
+                                      <b>Availability: {{qtymsg}}</b>
+                                    </div>
+
+                                    <div id="avgdiv1"
+                                      *ngIf="(avg_lead_time=='1' && product.available1=='0' && product.avg_lead_time>0) || (avg_lead_time=='1' && product.available=='0' && product.avg_lead_time>0)">
+                                      <span class="price" id="avgspan1">
+                                        {{avg_lead_time_lable}} <strong *ngIf="avg_lead_time_value=='1'">{{item1.avg_lead_time}}</strong></span>
+                                    </div>
+
+                                  </div>
+                                  <div
+                                    *ngIf="isLoggedIn==false && product.IsBaseProduct==false && product.drop_ship==false">
+                                    <div *ngIf="annavail=='1' && showstock=='1'">
+                                      <b *ngIf="withoutloginavaillist=='1' && product.available!='0'"> Availability:
+                                        {{product.available / product.um_displayQty | floor}} {{product.um_display}}
+                                      </b>
+                                      <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'"> Availability:
+                                        {{product.available1 / product.um_displayQty | floor}} {{product.um_display}}
+
+                                      </b>
+                                    </div>
+                                    <div *ngIf="annavail=='1' && showstock!='1'">
+                                      <b *ngIf="withoutloginavaillist=='1' && product.available!='0'"> Availability:
+                                        {{stocklable}} </b>
+                                      <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'"> Availability:
+                                        {{stocklable}}</b>
+                                    </div>
+                                    <div *ngIf="(annavail=='1' && withoutloginavaillist=='1' && product.available=='0') 
+                                 || (annavail=='1' && withoutloginavaillist!='1' && product.available1=='0')">
+                                      <b>Availability: {{qtymsgwithoutlogin}}</b>
+                                    </div>
+                                  </div>
+                                </div>
+                                <div
+                                  *ngIf="Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+                                  <b *ngFor="let avails of product.productavails;">Availability: {{avails.available}}
+                                    Warehouse: {{avails.warehouse}} <br /></b>
+                                </div>
+                              </a>
+                            </div>
+
+                            <div class="cart clearfix animate-effect"
+                              *ngIf="(product.IsGrouped==true && baseitemAdd=='1') || (product.IsGrouped==false && product.IsBaseProduct==false)">
+                              <div class="action">
+                                <ul class="list-unstyled">
+                                  <li class="add-cart-button btn-group">
+                                    <button class="btn btn-primary icon"
+                                      *ngIf="iscartthere=='1' && product.Addtocart==true" style="font-size: x-large;"
+                                      type="button" (click)="onAddToCartNew(product)">
+                                      <i class="fa fa-shopping-cart" title="Add to Cart"></i>
+                                    </button>
+                                    <button class="btn btn-primary icon"
+                                      *ngIf="iswishshow=='1' && isLoggedIn && isWishthere=='1' && product.Addtocart==true"
+                                      style="font-size: x-large;" type="button" (click)="AddtoList(product)">
+                                      <i class="fa fa-list-alt" aria-hidden="true" title="Add to {{wishlistlable}}"></i>
+                                    </button>
+                                    <button class="btn btn-primary icon"
+                                      *ngIf="isrfqshow=='1' && isLoggedIn && isrfqthere=='1'"
+                                      style="font-size: x-large;" type="button" (click)="AddtorfqList(product)">
+                                      <i class="fa fa-list-ul" aria-hidden="true" title="Add to quote"></i>
+                                    </button>
+                                    <button class="btn btn-primary icon" *ngIf="!isLoggedIn" style="font-size: x-large;"
+                                      type="button" (click)="LoginForAddtoQuote()">
+                                      <i class="fa fa-list-ul" aria-hidden="true" title="Login For Add to Quote"></i>
+                                    </button>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </ngx-slick-carousel>
+                  </div>
+          
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>

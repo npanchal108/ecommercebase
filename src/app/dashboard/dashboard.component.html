@@ -1,0 +1,361 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                <li><a class="font-xs color-gray-500" href="dashboard">My Account</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row" *ngIf="bannerindashboard=='1' && homebannerList!=undefined && homebannerList.length>0">
+    <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel" *ngIf="homebannerList!=undefined && homebannerList.length>0">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+        </div>
+        <div class="carousel-inner">
+            <ng-container *ngFor="let slide of homebannerList; let index=index">
+                <div class="carousel-item" [ngClass]="{'active': index==0}">
+                    <img src="{{slide.ImageUrl}}" class="d-block w-100" alt="{{slide.Title +''+ slide.Description}}">
+                    <div class="carousel-caption d-none d-md-block">
+                        <h5 class="slide-title">{{slide.Title}}</h5>
+                        <p class="slide-descr">{{slide.Description}}</p>
+                        <a class="btn btn-learn" href="{{slide.targeturl}}">Learn More</a>
+                    </div>
+                </div>
+            </ng-container>
+
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+   
+   <span class="material-symbols-outlined">
+   arrow_back_ios
+   </span>
+   <span class="visually-hidden">Previous</span>
+</button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+   
+   <span class="material-symbols-outlined">
+   arrow_forward_ios
+   </span>
+   <span class="visually-hidden">Next</span>
+</button>
+    </div>
+</div>
+<div class="lrpadding15 contact-page row homebanner-holder mt-60 padding-lr-80 justify-content-center">
+    <!-- <ngx-slick-carousel *ngIf="bannerindashboard=='1' && homebannerList!=undefined && homebannerList.length>0" class="carousel home-banner" #slickModal="slick-carousel" [config]="slideConfig">
+        <div ngxSlickItem *ngFor="let slide of homebannerList; let index=index" class="slide">
+            <a *ngIf="slide.targeturl!=undefined && slide.targeturl!=null && slide.targeturl!=''" target="_blank" href="{{slide.targeturl}}">
+                <img src="{{slide.ImageUrl}}" alt="{{slide.Title +''+ slide.Description}}" width="100%">
+            </a>
+            <img *ngIf="slide.targeturl==undefined || slide.targeturl==null || slide.targeturl==''" src="{{slide.ImageUrl}}" alt="{{slide.Title +''+ slide.Description}}" width="100%">
+            <div class="carousel-caption">
+                <span class="big-text">{{slide.Title}}</span>
+                <div class="excerpt"> <span>{{slide.Description}}</span> </div>
+                <div class="excerpt"> <a *ngIf="slide.targeturl!=undefined && slide.targeturl!=null && slide.targeturl!=''" target="_blank" href="{{slide.targeturl}}"><button type="submit"
+                            class="btn-upper btn btn-primary checkout-page-button"
+                            *ngIf="slide.linkname!=undefined && slide.linkname!=null && slide.linkname!=''">{{slide.linkname}}</button></a>
+                </div>
+            </div>
+        </div>
+    </ngx-slick-carousel> -->
+    <br />
+    <div class="col-xs-12 col-sm-12 col-md-12" *ngIf="UserType!=4">
+
+        <div class="head-title">
+            <h1 class="d-none">Dashboard</h1>
+            <h2>Dashboard</h2>
+        </div>
+
+        <div id="custlist" class="" *ngIf="customerlist!=undefined && customerlist!=null && customerlist.length>1">
+            <h4>CHOOSE A CUSTOMER</h4>
+            <ngx-select-dropdown [config]="config" [options]="customerlist" [multiple]="false" (change)="customerChange($event.value)" [(ngModel)]="customer"></ngx-select-dropdown>
+            <!-- <select class="form-control unicase-form-control text-input" [(ngModel)]='customer' [ngModelOptions]="{standalone:true}"
+              (change)="customerChange($event.target.value)">
+               <option value=undefined>Select Customer</option>
+              <option *ngFor="let c1 of customerlist" [value]="c1.customer1">{{c1.customer1}} - {{c1.name}} </option>
+            </select> -->
+            <!-- <ng-multiselect-dropdown *ngIf="customerlist!=undefined && customerlist!=null && customerlist.length>0"         
+              [ngModelOptions]="{standalone:true}" 
+[placeholder]="'Select Customer'"
+[data]="customerlist"
+[(ngModel)]="customer"
+[settings]="dropdownSettings1"
+(onSelect)="customerChange($event.target.value)">
+</ng-multiselect-dropdown>  -->
+            <br />
+            <div *ngIf="custdetails!=null">
+                <div class="panel panel-default checkout-step-02">
+                    <div class="panel-heading fs16">
+                        <h4 class="unicase-checkout-title">
+                            <a data-toggle="collapse" class="collapsed" data-parent="#accordion" href="#collapseTwo">
+                                <h4 class="mb-15">{{custdetails.name}}</h4>
+                            </a>
+                        </h4>
+                    </div>
+                </div>
+                <div id="collapseTwo" class="panel-collapse collapse">
+                    <h3>Billing Address </h3>
+                    <span>{{custdetails.adr}},
+                        <br />{{custdetails.state}}, {{custdetails.postal_code}} {{custdetails.country_code}}
+                        <br /> {{custdetails.phone}} </span>
+                    <br />
+                    <br />
+                    <h3>Available Contacts</h3>
+                    <table class="width80per">
+                        <tr *ngFor="let con1 of contactDetails">
+                            <td>{{con1.name}}</td>
+                            <td>{{con1.titled}}</td>
+                            <td>{{con1.phone}}</td>
+                            <td>{{con1.phone_ext}}</td>
+                            <td>{{con1.email}}</td>
+                        </tr>
+                    </table>
+                    <br />
+                    <h3>Profile Details</h3>
+                    <table class="width50per">
+                        <tr *ngFor="let pro1 of profileinfo">
+                            <td>{{pro1.Label}}</td>
+                            <td>{{pro1.text}}</td>
+                        </tr>
+                    </table>
+                    <br />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row dash-block" *ngIf="UserType!=4">
+
+        <div (click)="redirectCategory()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" id="categorydashboard" *ngIf="webtype!='1' && isShowCategory=='1'">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-list-alt fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/categories.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Browse {{categorylabel}} </span>
+            </div>
+        </div>
+
+        <div (click)="gotoProduct()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" id="brandsdashboard" *ngIf="webtype!='1' && isShowCategory!='1'">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-search fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/categories.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Browse {{productlabel}} </span>
+            </div>
+        </div>
+
+        <div (click)="gotoAdvancesearch()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" id="advancedSearchdashboard" *ngIf="webtype!='1'">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-search fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/advanced-search.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Advanced Search </span>
+            </div>
+        </div>
+
+
+        <div (click)="gotocart()" id="SeeMyShoppingCartdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="webtype!='1'">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-shopping-cart fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/shopping-online-cart.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">See My Shopping Cart</span>
+            </div>
+        </div>
+        <div (click)="Changepwd()" id="ChangePassworddashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-key fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/password.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Change Password</span>
+            </div>
+        </div>
+
+        <div (click)="pendingOrder()" id="PendingOrdersdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowPendingOrders && isShowPendingOrdersConf">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-clipboard fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/pending-orders.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan" *ngIf="isrfqshow=='1'">Pending Orders & Quotes</span>
+                <span class="dashspan" *ngIf="isrfqshow!='1'">Pending Orders</span>
+            </div>
+        </div>
+        <div (click)="openshipments()" id="openshipmentsdb" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowopenshipment && isShowopenshipmentConf">
+            <div class="dashbutton">
+                <!-- <i class="fa fa-file-o fa-3x" aria-hidden="true"></i> -->
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/open-shipment.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Open Shipments</span>
+            </div>
+        </div>
+        <div (click)="backorders()" id="BackOrderItemsdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowBackOrders && isShowBackOrdersConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/back-order.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">{{backorderlable}}</span>
+            </div>
+        </div>
+        <!-- <div (click)="backorders1()" id="BackOrderItemsdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowBackOrders && isShowBackOrdersConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/back-order.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Expected Shipment</span>
+            </div>
+        </div> -->
+        <div (click)="Helpdeskclick()" id="HelpDeskdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowHelpDeskConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <i class="fa fa-file-o fa-3x" aria-hidden="true"></i>
+                </div>
+                <span class="dashspan">Help Desk</span>
+            </div>
+        </div>
+
+
+        <div (click)="invoices()" id="OpenInvoicesdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowOpenInvoice && isShowOpenInvoiceConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <!-- <i class="fa fa-file-text-o fa-3x" aria-hidden="true"></i> -->
+                    <img src="assets/imgs/icons/open-invoice.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Open Invoices</span>
+            </div>
+        </div>
+        <div (click)="orderhistory()" id="OrderHistorydashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowOrderHistory && isShowOrderHistoryConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/order-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Order History</span>
+            </div>
+        </div>
+        <div (click)="ContractList()" id="customerproductdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowContractList && isShowContractListConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/customer-product.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">{{customerlable}}</span>
+            </div>
+        </div>
+
+
+        <div (click)="purchasehistory()" id="PurchaseHistorydashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="isShowPurchaseHistory && isShowPurchaseHistoryConf">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/purchase-history.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">{{puchasehistorylable}}</span>
+            </div>
+        </div>
+        <div (click)="reviewOrder()" id="ReviewUsersOrdersdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="(UserType=='1' || ismanager=='True' || ismanager=='true' || ismanager==true) && webtype!='1' && ismulti=='1'">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/review-user-order.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Review Users Orders</span>
+            </div>
+        </div>
+
+        <div (click)="gotowish()" id="WishListdashboard" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15" *ngIf="(webtype=='5' || webtype=='6') && iswishshow=='1'">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/wishlist.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">{{wishlistlable}}</span>
+            </div>
+        </div>
+        <div *ngIf="(webtype=='5' || webtype=='6') && isrfqshow=='1'" id="RFQListdashboard" (click)="gotorfq()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/request-for-quote.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">RFQ List</span>
+            </div>
+        </div>
+        <div *ngIf="(webtype=='5' || webtype=='6') && IsRMA=='1'" id="rmadashboard" (click)="gotorma()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <i class="fa fa-list-ul fa-3x" aria-hidden="true"></i>
+                </div>
+                <span class="dashspan">{{RMALable}}</span>
+            </div>
+        </div>
+
+
+        <div *ngIf="(webtype=='5' || webtype=='6') && (UserType!='2' && isShowuserSupport) && ismulti=='1'" id="UserAccountSetupdashboard" (click)="gotouser()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/user-account-setup.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">User Account Setup</span>
+            </div>
+        </div>
+
+        <div *ngIf="UserType=='2' && (subuser=='' || subuser==null) && salesmansubuser=='1'" id="salesmansubuser" (click)="gotoSubuserAccounts()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/user-account-setup.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">Subuser Accounts</span>
+            </div>
+        </div>
+
+        <div id="UserProfiledashboard" (click)="gotouserprofile()" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <div class="dashbutton">
+                <div class="dash-icon">
+                    <img src="assets/imgs/icons/user-profile.png" width="65" height="65" alt="">
+                </div>
+                <span class="dashspan">User Profile</span>
+            </div>
+        </div>
+
+        <div *ngFor="let hlink of dashboardlinks" class="col-12 col-xs-6 col-sm-6 col-md-4 col-lg-3 col-xxl-2 mb-15">
+            <a [routerLink]="[hlink.linkurl.toLowerCase()]" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')==-1" target="_blank">
+                <div class="dashbutton">
+                    <i class="fa fa-file-text fa-3x" aria-hidden="true"></i>
+                    <span class="dashspan">{{hlink.linkname}} </span>
+                </div>
+            </a>
+            <a href="{{hlink.linkurl}}" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')>-1" target="_blank">
+                <div class="dashbutton">
+                    <i class="fa fa-file-text fa-3x" aria-hidden="true"></i>
+                    <span class="dashspan">{{hlink.linkname}} </span>
+                </div>
+            </a>
+            <a [routerLink]="[hlink.linkurl.toLowerCase()]" *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')==-1">
+                <div class="dashbutton">
+                    <i class="fa fa-file-text fa-3x" aria-hidden="true"></i>
+                    <span class="dashspan">{{hlink.linkname}} </span>
+                </div>
+            </a>
+            <a href="{{hlink.linkurl}}" *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')>-1">
+                <div class="dashbutton">
+                    <i class="fa fa-file-text fa-3x" aria-hidden="true"></i>
+                    <span class="dashspan">{{hlink.linkname}} </span>
+                </div>
+            </a>
+
+
+
+
+
+
+
+
+        </div>
+
+    </div>
+</div>
+<!-- </div>
+</div> -->

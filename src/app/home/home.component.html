@@ -1,0 +1,588 @@
+<main class="main" *ngIf="iskyraden">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" routerLink="/home">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="carouselExampleCaptions" class="carousel slide home-page-slider" data-bs-ride="carousel" *ngIf="homebannerList!=undefined && homebannerList.length>0">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <ng-container *ngFor="let slide of homebannerList; let index=index">
+                    <div class="carousel-item" [ngClass]="{'active': index==0}">
+                        <img src="{{slide.ImageUrl}}" class="d-block w-100" alt="{{slide.Title +''+ slide.Description}}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="slide-title">{{slide.Title}}</h5>
+                            <p class="slide-descr">{{slide.Description}}</p>
+                            <a class="btn btn-learn" href="{{slide.targeturl}}">{{slide.linkname}}</a>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+       
+       <span class="material-symbols-outlined">
+       arrow_back_ios
+       </span>
+       <span class="visually-hidden">Previous</span>
+    </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+       
+       <span class="material-symbols-outlined">
+       arrow_forward_ios
+       </span>
+       <span class="visually-hidden">Next</span>
+    </button>
+        </div>
+
+        <section class="section-box mt-10" *ngIf="dynamicpagelist1!=undefined && dynamicpagelist1.length>0 && iskyraden">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="head-main">
+                            <h3 class="mb-5">Our Partner Suppliers</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-10">
+                    <ul class="list-9-col">
+                        <li class="wow animate__ animate__fadeIn animated" data-wow-delay=".0s " style="visibility: visible; animation-delay: 0s; animation-name: fadeIn;" *ngFor="let product of dynamicpagelist1; let index=index">
+                            <div class="box-category hover-up">
+                                <div class="image">
+                                    <a [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+
+                                        <img src="assets/images/Product.png" alt="{{product.PageTitle}}" *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                                        <img src="{{product.imageurl}}" alt="{{product.PageTitle}}" *ngIf="product.imageurl != undefined && product.imageurl!=null">
+                                    </a>
+                                </div>
+                                <div class="text-info">
+                                    <a class="font-lg color-brand-3 font-bold" [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">{{product.PageTitle}}</a>
+
+                                </div>
+                            </div>
+                        </li>
+
+                    </ul>
+                    <div class="view-more-our-lines text-center">
+                        <a routerLink="/our-lines" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!--  <section class="section-box pt-30 padding-lr-80" *ngIf="dynamicpagelist1!=undefined && dynamicpagelist1.length>0">
+
+            <div class="head-main bd-gray-200">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="mb-5">{{HomePageBrandsLable}}</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="head-img-card align-flex">
+                            <div class="col-md-3" *ngFor="let product of dynamicpagelist1; let index=index">
+                                <div class="card">
+                                    <div class="img-hover-zoom img-hover-zoom--zoom-n-rotate">
+                                        
+                                        <a class="cpointer" [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                            
+                                            <img data-match-height="groupName" src="assets/images/Product.png" class="img-hover-zoom card-img-top" alt="{{product.PageTitle}}" *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                           <img data-match-height="groupName " src="{{product.imageurl}}" class="img-hover-zoom card-img-top" alt="{{product.PageTitle}}" *ngIf="product.imageurl != undefined && product.imageurl!=null">
+                                        </a>
+                                        
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <a class="card-title-text" [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                            {{product.PageTitle}}
+                          </a>
+                                        
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <a class="card-title-text" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                          {{category.descr}}
+                        </a>
+                                        <a class="card-title-text" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                          {{category.descr}}
+                        </a>
+                                    </div> 
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section>-->
+
+
+        <!-- <section class="section-box pt-30 padding-lr-80" *ngIf="productList!=undefined && productList.length>0 && iscat==1">
+
+            <div class="head-main bd-gray-200">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="mb-5">{{HomePageBrandsLable}}</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="head-img-card align-flex">
+                            <div class="col-md-3" *ngFor="let category of productList; let index=index">
+                                <div class="card">
+                                    <div class="img-hover-zoom img-hover-zoom--zoom-n-rotate">
+                                        
+                                        <a class="cpointer" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                                            <img src="{{category.image}}" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image != undefined && category.image!=null" class="img-hover-zoom card-img-top">
+                                            <img src="assets/images/Product.png" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image == 'NotFound' || category.image==null" class="img-hover-zoom card-img-top">
+                                        </a>
+                                        <a class="cpointer" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                                            <img src="{{category.image}}" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image != undefined && category.image!=null" class="img-hover-zoom card-img-top">
+                                            <img src="assets/images/Product.png" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image == 'NotFound' || category.image==null" class="img-hover-zoom card-img-top">
+                                        </a>
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <a class="card-title-text" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                            items: {{category.Counts}}
+                          </a>
+                                        <a class="card-title-text" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                            items: {{category.Counts}}
+                          </a>
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <a class="card-title-text" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                          {{category.descr}}
+                        </a>
+                                        <a class="card-title-text" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                          {{category.descr}}
+                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section> -->
+        <!-- <section class="section-box pt-30 padding-lr-80" *ngIf="menuList!=undefined && menuList.length>0">
+            
+            <div class="head-main bd-gray-200 mt-60">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="mb-5">{{catergoryLable}}</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10">
+                <ul class="list-9-col">
+                    <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s" *ngFor="let category of menuList; let index=index">
+                        <div class="box-category hover-up" data-match-height="groupName" (click)="catclick(category.tree_node,category.name)">
+                            <div class="image">
+                                <a (click)="catclick(category.tree_node,category.name)">
+                                    <img src="{{category.image}}" alt="{{category.name +' '+ category.descr}}" *ngIf="category.image != undefined && category.image!=null">
+                                    <img src="assets/images/Product.png" alt="{{category.name +' '+ category.descr}}" *ngIf="category.image == 'NotFound' || category.image==null">
+                                </a>
+                            </div>
+                            <div class="text-info">
+                                <a class="font-sm color-gray-900 font-bold" (click)="catclick(category.tree_node,category.name)">{{category.name}}</a>
+                                <p class="font-xs color-gray-500">{{category.Counts}} items </p>
+                            </div>
+                        </div>
+                    </li>
+                   
+                   
+                </ul>
+                <div class="view-more-our-lines text-center">
+                  <a href="/categories" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+              </div>
+            </div>
+            
+        </section> -->
+
+        <section class="section-box mt-10">
+            <div class="container">
+                <div class="row" *ngIf="iskyraden">
+                    <div class="col-12">
+                        <div class="head-main">
+                            <h3 class="mb-5">ABOUT KRAYDEN</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" *ngIf="iskyraden">
+                    <div class="col-12">
+
+                        <!-- <div class="banner-big banner-big-3 bg-black p-5 mb-60" style="background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),url(../../assets/imgs/kreden-img/resin-designs-left.png); background-size: cover;background-repeat: no-repeat;">
+                            <h2 class="text-white text-uppercase w-75 text-shadow">An Industry Leader Since 1989</h2>
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-7">
+                                    <p class="font-lg w-75 text-white">
+                                        Since 1989,Krayden has been the leading distributer of adhesives, sealants, encapsulates, coatings, solder, tapes, release agents, lubricants and dispensing equipment from premier global manufacturers including Dow Corning, Henkel, Hunstman, Loctite,LORD,
+                                        Humiseal, Alpha Solder, Molykote, and many others. We distribute the highest quality manufacturers of engineered materials, and have the ability to customize its inventory based on customer's requirements, and prides
+                                        itself on having technical knowledge of its product lines.
+                                    </p>
+                                </div>
+                            </div>
+
+                        </div> -->
+                        <img class="w-100 mb-25" src="assets/imgs/kreden-img/About-Krayden-Banner_V4.jpg " alt="about us" >
+                    </div>
+                </div>
+                <div class="row justify-content-center" id="hv1" style="cursor: pointer;" routerLink="/library">
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12 mr-25" id="hv2">
+                        <div class="card-staff hover-up bg-card-video text-center mr-15" id="hv3">
+                            <div class="image-staff">
+                                <img src="assets/imgs/kreden-img/electronics-med-video.jpg " alt="Image " />
+                            </div>
+                            <div class="info-staff">
+                                <h5>Video Library</h5>
+                                <p class="font-md color-gray-500 mb-15 height-40">Get all the featured videos!</p>
+                                <a routerLink="/library" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card-staff hover-up bg-card-video">
+                        <div class="image-staff">
+                            <img src="assets/imgs/kreden-img/technical-resources.png " alt="Image " />
+                        </div>
+                        <div class="info-staff">
+                            <h5>Technical Resources</h5>
+                            <p class="font-md color-gray-500 mb-15">Find TDS, Manufacturer Info</p>
+                            <a href="# " class="text-underline color-brand-3">View More</a>
+                        </div>
+                    </div>
+                </div> -->
+                    <!-- <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                    <div class="card-staff hover-up bg-card-video">
+                        <div class="image-staff">
+                            <img src="assets/imgs/kreden-img/quality.png" alt="Image " />
+                        </div>
+                        <div class="info-staff">
+                            <h5>Quality</h5>
+                            <p class="font-md color-gray-500 mb-15">Lorem ipsum dolor sit amet.</p>
+                            <a href="# " class="text-underline color-brand-3">View More</a>
+                        </div>
+                    </div>
+                </div> -->
+                    <div class="col-lg-3 col-md-4 col-sm-6 col-12" style="cursor: pointer;" id="hs1" routerLink="/services">
+                        <div class="card-staff hover-up bg-card-video text-center" id="hs2">
+                            <div class="image-staff">
+                                <img src="assets/imgs/kreden-img/krayden-custom-service-banner-text.jpg" alt="Image " />
+                            </div>
+                            <div class="info-staff">
+                                <h5>Services</h5>
+                                <p class="font-md color-gray-500 mb-15 height-40">Services to help develop your project.</p>
+                                <a routerLink="/services" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- <div class="head-main bd-gray-200">
+               <div class="row">
+                   <div class="col-lg-12">
+                       <h3 class="mb-5">{{HomePageBrandsLable}}</h3>
+                       
+                   </div>
+               </div>
+           </div>
+             <div class="row mb-50 justify-content-center">
+                 <div class="col-lg-3 col-md-4 col-sm-6 col-12" *ngFor="let category of productList; let index=index">
+                  <a class="cpointer" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                     <div class="card-staff hover-up bg-card-video">
+                         <div class="image-staff">
+                           <img src="{{category.image}}" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image != undefined && category.image!=null">
+                           <img src="assets/images/Product.png" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image == 'NotFound' || category.image==null">
+                         </div>
+                         <div class="info-staff">
+                             <h5>{{category.descr}}</h5>
+                             <p class="font-md color-gray-500 mb-15">{{category.Counts}} items </p>
+                             <a [routerLink]="['/products', category.product_line.toLowerCase()]" class="text-underline color-brand-3">View More</a>
+                         </div>
+                     </div>
+                  </a>
+                  <a class="cpointer" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                     <div class="card-staff hover-up bg-card-video">
+                        <div class="image-staff">
+                           <img src="{{category.image}}" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image != undefined && category.image!=null">
+                           <img src="assets/images/Product.png" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image == 'NotFound' || category.image==null">
+                        </div>
+                        <div class="info-staff">
+                            <h5>{{category.descr}}</h5>
+                            <p class="font-md color-gray-500 mb-15">{{category.Counts}} items </p>
+                            <a [routerLink]="['/product', category.maj_class.toLowerCase()]" class="text-underline color-brand-3">View More</a>
+                        </div>
+                    </div>
+                  </a>
+                 </div>
+                 <div class="view-more-our-lines text-center">
+                  <a href="/product" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+              </div>  
+             </div> -->
+
+            </div>
+        </section>
+
+
+        <section class="section-box mb-50">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <div class="head-main mb-0">
+                            <h3 class="mb-5">Blogs</h3>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- <div class="col-lg-3 col-md-4 col-sm-6 mb-40" *ngFor="let product of dynamicpagelist; let index=index">
+                        <div class="card-grid-style-1 blog-date-bottm">
+                            <div class="image-box">
+                                <a [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                    <img data-match-height="groupName" src="assets/images/Product.png" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                                    <img data-match-height="groupName " src="{{product.imageurl}}" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl != undefined && product.imageurl!=null">
+                                </a>
+                            </div>
+                            <a class="color-brand-3" [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                <h5>{{product.PageTitle}}</h5>
+                            </a>
+                            <div class="mt-20 blog-date" [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                <span class="color-gray-500 font-xs mr-30">{{product.CreatedDate | date: 'MMM-dd-yyyy'}}</span>
+                            </div>
+                        </div>
+                    </div> -->
+                    <ul class="list-grid-col mt-60 mb-60">
+                        <li class="" *ngFor="let product of dynamicpagelist; let index=index">
+                            <div class="card-grid-style-3 card-style-full-image" id="{{product.PageID}}">
+                                <div class="card-grid-inner text-center">
+                                    <a [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                        <div class="image-box itembox img-blog-align">
+    
+                                            <img src="assets/images/Product.png" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                                            <img src="{{product.imageurl}}" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl != undefined && product.imageurl!=null">
+    
+                                        </div>
+    
+                                        <div class="info-right blog-cont">
+    
+                                            <h3 class="color-brand-3 font-md-bold ellipsis">
+                                                {{product.PageTitle}}
+                                            </h3>
+                                            <div class="blog-date text-center mb-10 mt-10">
+                                                <h6 class="color-gray-500 font-sm">Posted by : {{product.PageKeywords}}
+                                                </h6>
+                                            </div>
+                                            <h4 class="color-brand-3 font-xs-bold ellipsis">
+                                                {{product.PageDescription}}
+                                            </h4>
+    
+                                            
+                                            
+    
+                                        </div>
+                                    </a>
+                                    <div class="social-icon-share">
+                                        <a class="social-icon-blog" target="_blank" [href]="getlinkedinShareLink(product.PageName.toLowerCase())">
+                                            <img src="assets/imgs/linkedin-white.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                        </a>
+                                        <a class="social-icon-blog" target="_blank" [href]="getFacebookShareLink(product.PageName.toLowerCase())">
+                                            <img src="assets/imgs/icons/fb.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                        </a>
+                                        <a class="social-icon-blog" target="_blank" [href]="getInstaShareLink(product.PageName.toLowerCase())">
+                                            <img src="assets/imgs/icons/ins.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                        </a>
+                                        <!-- <a class="social-icon-blog" target="_blank" href="https://www.twitter.com">
+                                            <img src="assets/imgs/icons/printest.svg" />
+                                        </a> -->
+                                        <a class="social-icon-blog" target="_blank" [href]="getTwitterShareLink(product.PageName.toLowerCase())">
+                                            <img src="assets/imgs/twitter-2.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                        </a>
+                                    </div>
+    
+                                    <div class="blog-date">
+                                        <h6 class="color-gray-500 font-sm">{{product.CreatedDate | date: 'MMM-dd-yyyy'}}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <div class="view-more-our-lines text-center">
+                        <a routerLink="/blogs" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+    </div>
+</main>
+
+<main class="main" *ngIf="!iskyraden">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" routerLink="/home">Home</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div id="carouselExampleCaptions" class="carousel slide home-page-slider" data-bs-ride="carousel" *ngIf="homebannerList!=undefined && homebannerList.length>0">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+                <ng-container *ngFor="let slide of homebannerList; let index=index">
+                    <div class="carousel-item" [ngClass]="{'active': index==0}">
+                        <img src="{{slide.ImageUrl}}" class="d-block w-100" alt="{{slide.Title +''+ slide.Description}}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5 class="slide-title">{{slide.Title}}</h5>
+                            <p class="slide-descr">{{slide.Description}}</p>
+                            <a class="btn btn-learn" href="{{slide.targeturl}}">{{slide.linkname}}</a>
+                        </div>
+                    </div>
+                </ng-container>
+
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+       
+       <span class="material-symbols-outlined">
+       arrow_back_ios
+       </span>
+       <span class="visually-hidden">Previous</span>
+    </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+       
+       <span class="material-symbols-outlined">
+       arrow_forward_ios
+       </span>
+       <span class="visually-hidden">Next</span>
+    </button>
+        </div>
+
+       
+
+          <section class="section-box pt-30 padding-lr-80" *ngIf="productList!=undefined && productList.length>0 && iscat==1">
+
+            <div class="head-main bd-gray-200">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="mb-5">{{HomePageBrandsLable}}</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="head-img-card align-flex">
+                            <div class="col-md-3" *ngFor="let category of productList; let index=index">
+                                <div class="card">
+                                    <div class="img-hover-zoom img-hover-zoom--zoom-n-rotate">
+                                        
+                                        <a class="cpointer" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                                            <img src="{{category.image}}" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image != undefined && category.image!=null" class="img-hover-zoom card-img-top">
+                                            <img src="assets/images/Product.png" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image == 'NotFound' || category.image==null" class="img-hover-zoom card-img-top">
+                                        </a>
+                                        <a class="cpointer" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                                            <img src="{{category.image}}" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image != undefined && category.image!=null" class="img-hover-zoom card-img-top">
+                                            <img src="assets/images/Product.png" alt="{{category.descr +''+ category.web_descr}}" *ngIf="category.image == 'NotFound' || category.image==null" class="img-hover-zoom card-img-top">
+                                        </a>
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <a class="card-title-text" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                            items: {{category.Counts}}
+                          </a>
+                                        <a class="card-title-text" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                            items: {{category.Counts}}
+                          </a>
+                                    </div>
+                                    <div class="card-body p-0">
+
+                                        <a class="card-title-text" *ngIf="category.maj_class!='' && category.maj_class!=undefined" (click)="getBrandListWithCount(category.maj_class)" [routerLink]="['/product', category.maj_class.toLowerCase()]">
+                          {{category.descr}}
+                        </a>
+                                        <a class="card-title-text" *ngIf="category.maj_class=='' || category.maj_class==undefined" (click)="setprodline(category.product_line)" [routerLink]="['/products', category.product_line.toLowerCase()]">
+                          {{category.descr}}
+                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </section> 
+         <section class="section-box pt-30 padding-lr-80" *ngIf="menuList!=undefined && menuList.length>0">
+            
+            <div class="head-main bd-gray-200 mt-60">
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h3 class="mb-5">{{catergoryLable}}</h3>
+                        
+                    </div>
+                </div>
+            </div>
+            <div class="mt-10">
+                <ul class="list-9-col">
+                    <li class="wow animate__animated animate__fadeIn" data-wow-delay=".0s" *ngFor="let category of menuList; let index=index">
+                        <div class="box-category hover-up" data-match-height="groupName" (click)="catclick(category.tree_node,category.name)">
+                            <div class="image">
+                                <a (click)="catclick(category.tree_node,category.name)">
+                                    <img src="{{category.image}}" alt="{{category.name +' '+ category.descr}}" *ngIf="category.image != undefined && category.image!=null">
+                                    <img src="assets/images/Product.png" alt="{{category.name +' '+ category.descr}}" *ngIf="category.image == 'NotFound' || category.image==null">
+                                </a>
+                            </div>
+                            <div class="text-info">
+                                <a class="font-sm color-gray-900 font-bold" (click)="catclick(category.tree_node,category.name)">{{category.name}}</a>
+                                <p class="font-xs color-gray-500">{{category.Counts}} items </p>
+                            </div>
+                        </div>
+                    </li>
+                   
+                   
+                </ul>
+                <div class="view-more-our-lines text-center">
+                  <a href="/categories" class="font-md-bold btn btn-buy w-auto mb-5">View More</a>
+              </div>
+            </div>
+            
+        </section> 
+       
+
+
+    </div>
+</main>

@@ -1,0 +1,518 @@
+<main class="main">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                    <li><a class="font-xs color-gray-500" href="viewcart">Cart</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="section-box shop-template mt-60">
+        <div class="container">
+            <div class="row mt-30">
+                <div class="col-md-8">
+                    <h1 class="head-text color-gray-900 mb-20">Shopping Cart</h1>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="add-to-cart">
+                        <!-- <button class="btn btn-buy w-auto mb-10" (click)="openpopup()">Add New Item</button> -->
+
+                        <!-- modal -->
+                        <div class="modal-overlay" [ngClass]="{'active': addcartpop=='1'}">
+                            <div class="modal" [ngClass]="{'active': addcartpop=='1'}">
+                                <div class="modal-content">
+                                    <a class="btn-close close-modal" type="button" data-bs-dismiss="modal" (click)="openpopup()" aria-label="Close"></a>
+                                    <div class="box-cart-left" *ngIf="FastAddCart==1 && (webtype=='5' || webtype=='6')">
+                                        <h5 class="font-md-bold mb-10 text-start">Add Item Number *</h5>
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-8">
+                                                <div class="form-group">
+                                                    <div class="did-floating-label-content mb-0">
+
+                                                        <input [(ngModel)]="AddNewItem" [typeahead]="dataSource" id="NewItem" #NewItem name="NewItem" class="did-floating-input brder-color-grey" [typeaheadScrollable]="true" (keypress)="searchallnew(AddNewItem)" [typeaheadAsync]="true" [typeaheadSelectFirstItem]="false"
+                                                            (typeaheadOnSelect)="typeaheadOnSelect($event)" (keyup.enter)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="10" [typeaheadOptionField]="itemname" [ngModelOptions]="{standalone:true}" [typeaheadIsFirstItemActive]="false"
+                                                            [typeaheadItemTemplate]="customItemTemplate" value=" ">
+                                                        <ng-template #customItemTemplate let-model="item" class="itemmenu" let-index="index">
+                                                            <a (click)='typeaheadOnSelect(model)' class="menuhover cpointer color-brand-3">
+                                                                <div style="float: left;">
+                                                                    <img src="{{model.image}}" alt="{{model.itemname}}" style="width: 35px;" />
+                                                                </div>
+                                                                <div class="search-data-align" style="margin-left: 50px;">
+                                                                    <label>{{model.itemname}}</label><br>
+                                                                    <span>{{model.description1 | keys}}</span>
+                                                                </div>
+                                                            </a>
+                                                        </ng-template>
+                                                        <label class="did-floating-label">Add Item Number *</label>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-lg-4 text-end">
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input class="did-floating-input brder-color-grey mt-0" type="number" name="AddNewQty" [(ngModel)]="AddNewQty" (keydown)="onKeydown($event)" minlength="1" maxlength="8">
+                                                    <label class="did-floating-label">Qty</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 text-end">
+                                                <a class="btn btn-buy w-auto mb-10" (click)="AddNewProducts()">Add </a>
+                                            </div>
+                                        </div>
+                                        <span style="color: red;float: left;">* Enter Valid SKU#.</span>
+                                    </div>
+                                    
+                                </div>
+                                <!-- content -->
+                                
+                            </div>
+                            <!-- modal -->
+                            
+                        </div>
+                        <!-- overlay -->
+                        
+                    </div>
+                    
+                </div>
+                <div class="shopping-cart Pcarth" *ngIf="isEmpty">
+                    <label class="cartlable"> Your shopping cart is empty </label>
+                </div>
+                <div class="box-carts" *ngIf="!isEmpty">
+                    <div class="row">
+
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 mb-15">
+                            <a class="btn btn-buy w-auto" [routerLink]="['/categories']">Continue Shopping</a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && isLoggedIn && flagtosubmit==true" (click)="checkout()"><a class="btn btn-buy w-auto mb-10" (click)="checkout()">Proceed to
+                       Checkout</a>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && !isLoggedIn && isGuestLogin=='1' && guestcheckout=='1'" (click)="checkout()"><a class="btn btn-buy w-auto mb-10">PROCEED TO
+                       CHECKOUT AS GUEST</a></div>
+                        <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && !isLoggedIn && isGuestLogin=='1' && guestcheckout=='0'" >
+                        </div> -->
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && !isLoggedIn && isGuestLogin=='1' && guestcheckout=='0'" >
+                            <a (click)="gotologin()" class="btn btn-buy w-auto mb-10">Procced to Checkout</a>
+                            <!-- <br />
+                            <br />
+                            <a (click)="gotoregister()" class="btn btn-buy w-auto mb-10">REGISTER TO PURCHASE</a> -->
+                            
+                            
+                        </div>
+                        <br />
+                    </div>
+                    <div class="row mb-50 justify-content-end">
+                        <div *ngIf="punchOutType == 'Southern'" style="text-align: right;"><label>Editing Quote:
+                         <span>{{PunchOutQuote}}</span></label></div>
+                        <div *ngIf="punchOutType == 'Southern'" style="text-align: center;color: red;margin-bottom: 10px;">
+                            Any item with price of $0.00 the customer shall contact Southern Fasteners and Supply for current pricing
+                        </div>
+                        <div *ngIf="punchOutType == 'Southern'">
+                            Add items to this order by entering the quantity and item number into the boxes on the empty line below. Click on the add button or press the "Enter" key to apply the item. You may modify the quantity on an item by entering a new value into the quanity
+                            box for that item and pressing the "Enter" key. To remove an item, enter a zero quantity for that item and press the "Enter" key.
+                        </div>
+                        <button type="button" *ngIf="linebyline=='1' || copypaste=='1' || fileupload=='1'" class="btn btn-upper btn-success ml10" (click)="gotoquickorder()">Quick Add</button>
+
+                        <div class="col-lg-12 col-md-12 p-l-r-0">
+
+                            <div class="product-wishlist table-responsive">
+                                <table class="rwd-table mb-20">
+                                    <tbody>
+                                        <tr>
+                                            <th class="font-md-bold text-white">Image</th>
+                                            <th class="font-md-bold text-white">Description</th>
+
+                                            <th class="cart-qty item" *ngIf="isPunchOut && customedropdown!=undefined && customedropdown!=null && customedropdown.length>0">
+                                                Department</th>
+                                            <th class="font-md-bold text-white">Quantity</th>
+                                            <th class="font-md-bold text-white">Unit</th>
+                                            <th class="font-md-bold text-white text-end">Price Per</th>
+                                            <th class="font-md-bold text-white text-end">Total</th>
+                                            <th class="font-md-bold text-white text-center">Remove</th>
+                                        </tr>
+                                        <tr *ngFor="let product of cartProducts;  let i = index">
+                                            <td class="d-flex-td-respo" data-th="Image">
+                                                <div class="product-image">
+                                                    <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                                                        <img src="assets/images/png" alt="{{product.itemname +'' + product.freeform+'' + product.descrstring}}" *ngIf="product.image == 'NotFound'" class="cart5050px">
+                                                        <img src="{{product.image}}" alt="{{product.itemname +''+ product.freeform +''+ product.descrstring}}" *ngIf="product.image != undefined" class="cart5050px">
+                                                    </a>
+                                                </div>
+                                            </td>
+                                            <td class="d-flex-td-respo" data-th="Description" style="vertical-align: top;">
+                                                <div class="product-info pl-td-0">
+                                                    <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]">
+                                                        <h4 class="cart-product-description color-brand-3 mt-0">
+                                                            {{product.itemname}}
+                                                        </h4>
+                                                        <div *ngIf="isprofiledesc=='0' || isprofiledesc=='2'">
+                                                            <div class="reviews color-brand-3" *ngFor="let dd of product.descrarray;let j=index">
+                                                                <div *ngIf="j<2"> {{dd}} <br /></div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="reviews color-brand-3" *ngIf="isprofiledesc=='1' || isprofiledesc=='2'">
+                                                            <div> {{product.freeform}} <br /></div>
+                                                        </div>
+                                                        <br />
+                                                        <div *ngIf="showavaibilityincart=='1'">
+                                                            <div *ngIf="Multiplewarehouseforavaibility==undefined || Multiplewarehouseforavaibility==null || Multiplewarehouseforavaibility==''">
+
+                                                                <div *ngIf="product.drop_ship==true && product.IsBaseProduct==false">
+                                                                    <b>{{avaibilitylable}} {{drop_shiplable}}</b>
+                                                                </div>
+                                                                <div *ngIf="isLoggedIn==true && product.IsBaseProduct==false && product.drop_ship==false">
+
+                                                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty=='1'">
+
+                                                                        <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{product.available / product.um_displayQty |
+                                                          floor}}
+                                                          {{getumdescbyumcode(product.um_display)}} </b>
+                                                                        <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{product.available1 / product.um_displayQty |
+                                                          floor}}
+                                                          {{getumdescbyumcode(product.um_display)}} </b>
+                                                                    </div>
+                                                                    <div *ngIf="withloginavailshow=='1' && withloginavailqty!='1'">
+                                                                        <b *ngIf="withloginavaillist=='1' && product.available!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{stocklable}}</b>
+                                                                        <b *ngIf="withloginavaillist!='1' && product.available1!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{stocklable}} </b>
+                                                                    </div>
+                                                                    <div *ngIf="(withloginavailshow=='1' && withloginavaillist=='1' && product.available=='0') 
+                   || (withloginavailshow=='1' && withloginavaillist!='1' && product.available1=='0')">
+                                                                        <b>{{avaibilitylable}} {{qtymsg}}</b>
+                                                                    </div>
+                                                                    <div id="avgdiv" *ngIf="(avg_lead_time=='1'  && product.available=='0' && product.avg_lead_time>0) 
+                   || (avg_lead_time=='1'  && product.available1=='0' && product.avg_lead_time>0)">
+                                                                        <span id="avglable">{{avg_lead_time_lable}} <strong
+                                                             *ngIf="avg_lead_time_value=='1'">{{product.avg_lead_time}}</strong>
+                                                       </span>
+                                                                    </div>
+                                                                </div>
+                                                                <div *ngIf="isLoggedIn==false && product.IsBaseProduct==false && product.drop_ship==false">
+                                                                    <div *ngIf="annavail=='1' && annastock=='1'">
+                                                                        <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{product.available / product.um_displayQty |
+                                                          floor}}
+                                                          {{getumdescbyumcode(product.um_display)}} </b>
+                                                                        <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{product.available1 / product.um_displayQty |
+                                                          floor}}
+                                                          {{getumdescbyumcode(product.um_display)}}
+    
+                                                       </b>
+                                                                    </div>
+                                                                    <div *ngIf="annavail=='1' && annastock!='1'">
+                                                                        <b *ngIf="withoutloginavaillist=='1' && product.available!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{stocklable}} </b>
+                                                                        <b *ngIf="withoutloginavaillist!='1' && product.available1!='0'">
+                                                          {{avaibilitylable}}
+                                                          {{stocklable}}</b>
+                                                                    </div>
+                                                                    <div *ngIf="(annavail=='1' && withoutloginavaillist=='1' && product.available=='0') 
+                   || (annavail=='1' && withoutloginavaillist!='1' && product.available1=='0')">
+                                                                        <b>{{avaibilitylable}} {{qtymsgwithoutlogin}}</b>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                            <div *ngIf="multiplewarehouseinone=='0' && product.IsBaseProduct==false && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                                <b *ngFor="let avails of product.productavails;"> <span
+                                                       *ngIf="(isLoggedIn==false && annastock=='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty=='1' && avails.available>0)">{{avaibilitylable}}
+                                                       {{avails.available}}
+                                                       <br />Warehouse:
+                                                       {{getwarehousenamebycode(avails.warehouse)}} </span>
+                                                    <span
+                                                       *ngIf="(isLoggedIn==false && annastock!='1' && avails.available>0) || (isLoggedIn==true && withloginavailqty!='1' && avails.available>0)">{{avaibilitylable}}
+                                                       {{stocklable}}
+                                                       <br />Warehouse:
+                                                       {{getwarehousenamebycode(avails.warehouse)}} </span>
+                                                    <span
+                                                       *ngIf="(isLoggedIn==false  && avails.available==0) || (isLoggedIn==true  && avails.available==0)">{{avaibilitylable}}
+                                                       <span *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                       <span *ngIf="isLoggedIn==true">{{qtymsg}}</span>
+                                                       <br />Warehouse:
+                                                       {{getwarehousenamebycode(avails.warehouse)}} </span>
+                                                    <br /></b>
+                                                            </div>
+                                                            <div *ngIf="multiplewarehouseinone=='1' && Multiplewarehouseforavaibility!=undefined && Multiplewarehouseforavaibility!=null && Multiplewarehouseforavaibility!=''">
+
+                                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                       *ngIf="(isLoggedIn==false && annastock=='1' && product.available>0) || (isLoggedIn==true && withloginavailqty=='1' && product.available>0)">
+    
+                                                       {{avaibilitylable}} {{product.available}} </span> </b>
+                                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                       *ngIf="(isLoggedIn==false && annastock!='1' && product.available>0) || (isLoggedIn==true && withloginavailqty!='1' && product.available>0)">
+                                                       {{avaibilitylable}} {{stocklable}}</span> </b>
+                                                                <b *ngIf="multiplewarehouseinone=='1'"> <span
+                                                       *ngIf="(isLoggedIn==false && product.available==0) || (isLoggedIn==true && product.available==0)">
+                                                       {{avaibilitylable}} <span
+                                                          *ngIf="isLoggedIn==false">{{qtymsgwithoutlogin}}</span>
+                                                       <span *ngIf="isLoggedIn==true">{{qtymsg}}</span></span>
+                                                 </b>
+                                                            </div>
+                                                        </div>
+                                                    </a>
+                                                    <!-- <div class="unit-price w-100 mt-5 mb-5">
+                                           <select class="did-floating-select mt-0" id="unitMeasure"
+                                              [ngModelOptions]="{standalone:true}" [(ngModel)]="product.unitMeasure"
+                                              name="unitMeasure" (change)="onUnitChange($event.target.value, product)"
+                                              [disabled]="UMdropdown=='1'">
+                                              <option [ngValue]="k.Label" *ngFor="let k of product.unitlist">
+                                                 {{k.ltext}}
+                                              </option>
+                                           </select>
+                                        </div>
+                                        <div class="box-quantity mt-5 mb-5">
+                                           <div class="did-floating-label-content mb-0">
+                                              <div class="increment-wrapper d-flex justify-content-between">
+                                                 <input class="did-floating-input" aria-label="Quantity input"
+                                                    autocomplete="off" name="quantity-field" title="Qty"
+                                                     type="number" name="Qty" #Qty="ngModel"
+                                                    [(ngModel)]="product.Quantity" min=1 [minlength]="1" [attr.min]="1"
+                                                    [attr.max]="99999999" [maxlength]="8"
+                                                    (change)="onUnitChange('',product)">
+                                                 <button class="button inc" (click)="addqty(product)">
+                                                    <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                                 <button class="button dec" (click)="minusqty(product)">
+                                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                                 </button>
+                                                 <label class="did-floating-label">Qty</label>
+                                              </div>
+                                           </div>
+                                        </div> -->
+                                                    <div *ngIf="isShowItemNote==true">
+                                                        <label class="cpointer" (click)="Clicktoedit(product,i)" *ngIf="!product.canEditCode"><span
+                                                 *ngIf="product.Note==undefined || product.Note==null || product.Note==''">Add
+                                                 Note</span> <span
+                                                 *ngIf="product.Note!=undefined && product.Note!=null && product.Note!=''">{{product.Note}}</span>
+                                           </label>
+                                                        <input class="add-edit" [ngStyle]="{'display': product.canEditCode ? 'block' : 'none' }" maxlength="30" #Product{{i}} id="Product{{i}}" name="Product{{i}}" [ngModelOptions]="{standalone:true}" (focusout)="addNote(product)" (keyup.enter)="addNote(product)"
+                                                            placeholder="Add Note" [(ngModel)]="product.Note" type="text" /> &nbsp;
+                                                        <i (click)="Clicktoedit(product,i)" title="Edit Note" *ngIf="product.canEditCode==undefined || product.canEditCode == false" style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i>
+                                                    </div>
+                                                </div>
+
+                                            </td>
+
+                                            <td class="cart-product-quantity d-flex-td-respo" data-th="Department" *ngIf="isPunchOut && customedropdown!=undefined && customedropdown!=null && customedropdown.length>0">
+                                                <div class="quant-input">
+                                                    <select id="dept" class="did-floating-select mt-0" [ngModelOptions]="{standalone:true}" [(ngModel)]="product.dept" name="dept">
+                                           <option value=undefined>Select Department</option>
+                                           <option [ngValue]="k.Value" *ngFor="let k of customedropdown">
+                                              {{k.Name}}
+                                           </option>
+                                        </select>
+                                                </div>
+                                            </td>
+
+                                            <td class="d-flex-td-respo" data-th="Quantity">
+
+                                                <div class="box-quantity incr-decr-align" id="left-align">
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <div class="increment-wrapper d-flex">
+
+                                                            <button class="button dec" (click)="minusqty(product)">
+                                                                <i class="fa fa-minus" aria-hidden="true"></i>
+                                                             </button>
+                                                            <input class="did-floating-input" aria-label="Quantity input" autocomplete="off" name="quantity-field" title="Qty" type="number" name="Qty" #Qty="ngModel" [(ngModel)]="product.Quantity" min=1 [minlength]="1" [attr.min]="1" [attr.max]="99999999" [maxlength]="8"
+                                                                (change)="onUnitChange('',product)">
+                                                            <label class="did-floating-label" style="left: 40px;">Qty</label>
+                                                            <button class="button inc" (click)="addqty(product)">
+                                                                <i class="fa fa-plus" aria-hidden="true"></i></button>
+
+                                                        </div>
+                                                        <!-- <div class="increment-wrapper d-flex justify-content-between"
+                                              style="width:100px;margin-top:10px;">
+                                              <button class="button inc" (click)="addqty(product)">
+                                                 <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                              <button class="button dec" (click)="minusqty(product)">
+                                                 <i class="fa fa-minus" aria-hidden="true"></i>
+                                              </button>
+                                           </div> -->
+
+                                                    </div>
+
+                                                </div>
+
+                                            </td>
+                                            <td class="d-flex-td-respo" data-th="Unit Price">
+                                                <div class="did-floating-label-content mb-0">
+                                                    <select class="did-floating-select mt-0 width-90px" id="unitMeasure" [ngModelOptions]="{standalone:true}" [(ngModel)]="product.unitMeasure" name="unitMeasure" (change)="onUnitChange($event.target.value, product)" [disabled]="UMdropdown=='1'">
+                                           <option [ngValue]="k.Label" *ngFor="let k of product.unitlist">
+                                              {{k.ltext}}
+                                           </option>
+                                        </select>
+                                                    <label class="did-floating-label">unit</label>
+                                                </div>
+                                            </td>
+                                            <td class="d-flex-td-respo" data-th="Price Per" *ngIf="israteshowforcu==true && priceshowcust=='1'">
+                                                <h4 class="font-base color-brand-3 text-end">${{product.PricePer | million}}</h4>
+                                            </td>
+                                            <td class="d-flex-td-respo" data-th="Total" *ngIf="israteshowforcu==true && priceshowcust=='1'">
+                                                <h4 class="font-base color-brand-3 text-end">${{product.Price | million}}</h4>
+                                            </td>
+                                            <td class="d-flex-td-respo" data-th="Remove" class="text-center" style="vertical-align: top;">
+                                                <a class="btn btn-delete" (click)='deleteProduct(product)'></a>
+                                            </td>
+                                        </tr>
+                                        <tr style="background-color: transparent;">
+                                            <td class="data-none" colspan="4">
+                                                <a class="btn btn-secondary" (click)="ClearCart()" style="float: left;">Clear</a>
+                                                <!-- <div class="did-floating-label-content mb-0">
+    
+                                        <input [(ngModel)]="AddNewItem" [typeahead]="dataSource" id="NewItem" #NewItem
+                                           name="NewItem" class="did-floating-input brder-color-grey"
+                                           [typeaheadScrollable]="true" (keypress)="searchallnew(AddNewItem)"
+                                           [typeaheadAsync]="true" [typeaheadSelectFirstItem]="false"
+                                           (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                                           (keyup.enter)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="10"
+                                           [typeaheadOptionField]="itemname" [ngModelOptions]="{standalone:true}"
+                                           [typeaheadIsFirstItemActive]="false" [typeaheadItemTemplate]="customItemTemplate"
+                                           value=" ">
+                                        <ng-template #customItemTemplate let-model="item" class="itemmenu"
+                                           let-index="index">
+                                           <a (click)='typeaheadOnSelect(model)' class="menuhover cpointer">
+                                              <div style="float: left;">
+                                                 <img src="{{model.image}}" alt="{{model.itemname}}" style="width: 35px;" />
+                                              </div>
+                                              <div style="margin-left: 50px;">
+                                                 <label>{{model.itemname}}</label><br>
+                                                 <span>{{model.description1 | keys}}</span>
+                                              </div>
+                                           </a>
+                                        </ng-template>
+                                        <label class="did-floating-label">Add Item Number</label>
+                                     </div>                                  -->
+                                            </td>
+                                            <!-- <td class="td-none" colspan="1"> -->
+                                            <!-- <div class="did-floating-label-content mb-0">
+                                        <input class="did-floating-input brder-color-grey mt-0" type="number"
+                                           name="AddNewQty" [(ngModel)]="AddNewQty" (keydown)="onKeydown($event)"
+                                           minlength="1" maxlength="8">
+                                        <label class="did-floating-label">Qty</label>
+                                     </div>                                  -->
+                                            <!-- </td> -->
+                                            <!-- <td class="td-none" colspan="1" style="vertical-align: top;"> -->
+                                            <!-- <a class="btn btn-buy w-auto mb-10 mt-10" (click)="AddNewProducts()">Add </a> -->
+                                            <!-- </td> -->
+                                            <td class="mobile-total-td cart-product-description color-brand-3" style="text-align: right;vertical-align: middle;">
+                                                <h4 class="color-brand-1">Total</h4>
+                                            </td>
+                                            <td class="mobile-total-td" style="text-align: right !important;vertical-align: middle;">
+                                                <h4 class="color-brand-1">${{gettotalcart() | million}}</h4>
+                                            </td>
+                                            <td class="mobile-total">
+                                                <h4 class="color-brand-1">Total &nbsp; &nbsp; : <span><h4 class="color-brand-1">${{gettotalcart() | million}}</h4></span></h4>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="container pl-10 pr-10">
+                                <div class="row mb-20">
+                                    <div class="box-cart-left px-3 py-2" *ngIf="FastAddCart==1 && (webtype=='5' || webtype=='6')">
+                                        <!-- <h5 class="font-md-bold mb-10 text-start">Add Item Number</h5> -->
+                                        <div class="row align-items-center">
+                                            <div class="col-lg-6">
+                                                <div class="form-group">
+                                                    <div class="did-floating-label-content mb-0">
+
+                                                        <input [(ngModel)]="AddNewItem" [typeahead]="dataSource" id="NewItem" #NewItem name="NewItem" class="did-floating-input brder-color-grey" [typeaheadScrollable]="true" (keypress)="searchallnew(AddNewItem)" [typeaheadAsync]="true" [typeaheadSelectFirstItem]="false"
+                                                            (typeaheadOnSelect)="typeaheadOnSelect($event)" (keyup.enter)="typeaheadOnSelect($event)" [typeaheadOptionsLimit]="10" [typeaheadOptionField]="itemname" [ngModelOptions]="{standalone:true}" [typeaheadIsFirstItemActive]="false"
+                                                            [typeaheadItemTemplate]="customItemTemplate" value=" ">
+                                                        <ng-template #customItemTemplate let-model="item" class="itemmenu" let-index="index">
+                                                            <a (click)='typeaheadOnSelect(model)' class="menuhover cpointer color-brand-3">
+                                                                <div style="float: left;">
+                                                                    <img src="{{model.image}}" alt="{{model.itemname}}" style="width: 35px;" />
+                                                                </div>
+                                                                <div class="search-data-align" style="margin-left: 50px;">
+                                                                    <label>{{model.itemname}}</label><br>
+                                                                    <span>{{model.description1 | keys}}</span>
+                                                                </div>
+                                                            </a>
+                                                        </ng-template>
+                                                        <label class="did-floating-label">Add Item Number *</label>
+                                                    </div>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input class="did-floating-input brder-color-grey mt-0" type="number" name="AddNewQty" [(ngModel)]="AddNewQty" (keydown)="onKeydown($event)" minlength="1" maxlength="8">
+                                                    <label class="did-floating-label">Qty</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-2 text-end">
+                                                <a class="btn btn-buy w-auto" (click)="AddNewProducts()">Add </a>
+                                            </div>
+                                        </div>
+                                        <span style="color: red;">* Enter Valid SKU#.</span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6">
+                                    <a class="btn btn-buy w-auto" [routerLink]="['/categories']">Continue Shopping</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && isLoggedIn && flagtosubmit==true" (click)="checkout()"><a class="btn btn-buy w-auto mb-10" (click)="checkout()">Proceed to
+                               Checkout</a>
+                                </div>
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && !isLoggedIn && isGuestLogin=='1' && guestcheckout=='1'" (click)="checkout()"><a class="btn btn-buy w-auto mb-10">PROCEED TO
+                               CHECKOUT AS GUEST</a></div>
+                                <!-- <div class="col-lg-3 col-md-3 col-sm-3 col-3 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && !isLoggedIn && isGuestLogin=='1' && guestcheckout=='0'" >
+                                </div> -->
+                                <div class="col-lg-6 col-md-6 col-sm-6 col-6 text-md-end" *ngIf="cartProducts!=undefined && cartProducts.length>0 && !isLoggedIn && isGuestLogin=='1' && guestcheckout=='0'" >
+                                    <a (click)="gotologin()" class="btn btn-buy w-auto mb-10">Procced to Checkout</a>
+                                    <!-- <br />
+                                    <br />
+                                    <a (click)="gotoregister()" class="btn btn-buy w-auto mb-10">REGISTER TO PURCHASE</a> -->
+                                    
+                                    
+                                </div>
+                            </div>
+
+
+                        </div>
+                        <div class="row mb-40" *ngIf="Cartpagemessage!=undefined && Cartpagemessage!=null && Cartpagemessage!=''">
+                            <div class="col-md-12">
+                                <div id="Cartpagemessage" [innerHTML]="Cartpagemessage | safe: 'html'"></div>
+                            </div>
+                        </div>
+
+                        <!--  -->
+
+
+
+                        <!--  -->
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<script>
+    var elements = $('.modal-overlay, .modal');
+
+    $('button').click(function() {
+        elements.addClass('active');
+    });
+
+    $('.close-modal').click(function() {
+        elements.removeClass('active');
+    });
+</script>

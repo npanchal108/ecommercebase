@@ -1,0 +1,511 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="dashboard">My Account</a></li>
+                <li><a class="font-xs color-gray-500" href="user">User Setup</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!-- <div class="container">
+   <div class="contact-page">
+     <div class="row">
+       <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+         <app-side-menu></app-side-menu>
+       </div> -->
+<!-- <h1 class="displaynone">User Setup</h1> -->
+<div class="contact-page contact-form lrpadding15 padding-lr-80" *ngIf="isShowForm==false">
+    <div class="head-main bd-gray-200 mt-20">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="head-text color-gray-900">User Setup</h1>
+            </div>
+        </div>
+        <div class="row align-items-center">
+            <div class="col-md-6 col-lg-6">
+                <h4 class="mt-5 mb-5" *ngIf="isrfqshow=='1'">User Account Setup</h4>
+                <h6>Manage Sub Users</h6>
+            </div>
+            <div class="col-md-6 col-lg-6 text-end">
+                <div class="d-inline-block">
+                    <button type="button" (click)="createEditUser()" class="btn btn-buy w-auto mb-15">Add
+                        New User</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive table-mobile">
+        <table class="rwd-table mb-20">
+            <thead class="text-info">
+                <tr>
+                    <th class="font-md-bold text-white" *ngIf="!iskyraden">UserID</th>
+                    <th class="font-md-bold text-white">Name</th>
+                    <th class="font-md-bold text-white">Email</th>
+                    <th class="font-md-bold text-white">Active</th>
+                    <th class="font-md-bold text-white text-center">Action</th>
+                </tr>
+            </thead>
+            <tr
+                *ngFor="let user of cuUserList | paginate : { itemsPerPage:10, currentPage:page,totalItems:totalPage, id:'first' }">
+                <td data-th="UserID" *ngIf="!iskyraden">{{user.userId}}</td>
+                <td data-th="Name">{{user.name}}</td>
+                <td data-th="Email">{{user.email}}</td>
+                <td data-th="IsActive">{{user.active}}</td>
+                <td data-th="Action" class="text-center">
+                    <button type="button" (click)="onManageUser(user)" class="btn btn-buy w-auto">Edit</button>
+                </td>
+            </tr>
+        </table>
+        <hr>
+        <div class="text-center">
+            <pagination-controls (pageChange)="page = getUserList($event)" id="first">
+            </pagination-controls>
+        </div>
+    </div>
+</div>
+<div class="head-main bd-gray-200 mt-20 padding-lr-80">
+    <form class="contact-page lrpadding15 padding-lr-80" *ngIf="isShowForm" #userForm="ngForm"
+        (ngSubmit)="onSubmit(userForm)">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="head-text color-gray-900">User Account Setup</h1>
+                <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+            </div>
+        </div>
+
+
+
+        <div class="row mt-30">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Name</label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content mb-0">
+                        <input type="text" class="did-floating-input brder-color-grey" #Name="ngModel" id="userName"
+                            [(ngModel)]="user.Name" name="Name" [ngModelOptions]="{standalone:true}" required>
+                        <label class="did-floating-label">Name <span>*</span></label>
+                        <span [hidden]="Name.valid || (Name.pristine && !userForm.submitted)" class="text-danger">
+                            Name is required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="!iskyraden">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">User ID</label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content mb-0">
+                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="20"
+                            #UserID="ngModel" id="userUserID" [(ngModel)]="user.UserID" name="UserID" [disabled]=isedit
+                            [ngModelOptions]="{standalone:true}" required>
+                        <label class="did-floating-label">User ID <span>*</span></label>
+                        <span [hidden]="UserID.valid || (UserID.pristine && !userForm.submitted)" class="text-danger">
+                            UserID is required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Title</label>
+                    <div class="did-floating-label-content mb-0">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #Titled="ngModel" [(ngModel)]="user.Titled"
+              [ngModelOptions]="{standalone:true}" name="Titled">               -->
+                        <input type="text" class="did-floating-input brder-color-grey" #Titled="ngModel"
+                            [(ngModel)]="user.Titled" [ngModelOptions]="{standalone:true}" name="Titled">
+                        <label class="did-floating-label">Title</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">First Name</label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #first_name="ngModel" [(ngModel)]="user.first_name"
+              [ngModelOptions]="{standalone:true}" name="first_name">               -->
+                        <input type="text" class="did-floating-input brder-color-grey" #first_name="ngModel"
+                            id="userfirst_name" [(ngModel)]="user.first_name" [ngModelOptions]="{standalone:true}"
+                            name="first_name">
+                        <label class="did-floating-label">First Name <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Last Name </label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #first_name="ngModel" [(ngModel)]="user.last_name"
+              [ngModelOptions]="{standalone:true}" name="last_name">               -->
+                        <input type="text" class="did-floating-input brder-color-grey" #first_name="ngModel"
+                            id="userlast_name" [(ngModel)]="user.last_name" [ngModelOptions]="{standalone:true}"
+                            name="last_name">
+                        <label class="did-floating-label">Last Name <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="col-md-4" *ngIf="isaddressparse=='1'">
+        <div class="form-group">
+          <label class="mb-5 font-sm color-gray-700">Please Copy your address here</label>
+          <a class="btn btn-success btnparse" (click)="addreparser()">Parse</a>
+          <textarea class="did-floating-input brder-color-grey" id="addressparser" [maxlength]="32000"
+            [(ngModel)]='user.addressparser' (change)="addreparser()" [ngModelOptions]="{standalone:true}"></textarea>
+        </div>
+      </div> -->
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Address1 </label><span class="displaynone">*</span>
+                    <!-- <textarea type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #adr="ngModel" [(ngModel)]="user.adr"
+              [ngModelOptions]="{standalone:true}" name="adr"></textarea>               -->
+                    <div class="did-floating-label-content">
+                        <input type="text" class="did-floating-input brder-color-grey" #adr1="ngModel" id="adr1"
+                            [(ngModel)]="user.adr1" [ngModelOptions]="{standalone:true}" name="adr1">
+                        <!-- <textarea type="text" *ngIf="isedit==false" class="did-floating-input brder-color-grey" #adr="ngModel" [(ngModel)]="user.adr"
+              [ngModelOptions]="{standalone:true}" id="Address" name="adr"></inpu>               -->
+                        <label class="did-floating-label">Address 1 <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Address2</label>
+                    <div class="did-floating-label-content">
+                        <input type="text" class="did-floating-input brder-color-grey" #adr2="ngModel" id="adr2"
+                            [(ngModel)]="user.adr2" [ngModelOptions]="{standalone:true}" name="adr2">
+                        <label class="did-floating-label">Address 2</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">City </label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #city="ngModel" [(ngModel)]="user.city"
+              [ngModelOptions]="{standalone:true}" name="city">               -->
+                        <input type="text" class="did-floating-input brder-color-grey" #city="ngModel"
+                            [(ngModel)]="user.city" [ngModelOptions]="{standalone:true}" id="City" name="city">
+                        <label class="did-floating-label">City <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">State</label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <!-- <select disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey ng-untouched ng-pristine ng-valid h40" (change)="onStateChange($event.target.value)"
+              [ngModelOptions]="{standalone:true}"  [(ngModel)]='user.state'>
+              <option value="0">Select State</option>
+              <option *ngFor="let state of stateList" [value]="state.state">
+                {{state.descr}}
+              </option>
+              </select> -->
+                        <select *ngIf="isstateshow==true"
+                            class="did-floating-input brder-color-grey ng-untouched ng-pristine ng-valid h40"
+                            (change)="onStateChange($event.target.value)" [ngModelOptions]="{standalone:true}"
+                            [(ngModel)]='user.state' id="State">
+                            <option value="0">Select State</option>
+                            <option *ngFor="let state of stateList" [value]="state.state">
+                                {{state.descr}}
+                            </option>
+                        </select>
+                        <input *ngIf="isstateshow==false" type="text" class="did-floating-input brder-color-grey"
+                            #city="ngModel" [(ngModel)]="user.state" [ngModelOptions]="{standalone:true}" id="State"
+                            name="State">
+                        <label class="did-floating-label">State <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Country </label><span class="displaynone">*</span>
+                    <!-- <select disabled *ngIf="isedit==true" [ngModelOptions]="{standalone:true}" [(ngModel)]='user.county_code' class="did-floating-input brder-color-grey ng-untouched ng-pristine ng-valid h40"
+              (change)="onCountryChange($event.target.value)">
+              <option *ngFor="let country of countryList" [value]="country.country_code">
+                {{country.country_descr}}
+              </option>
+              </select> -->
+                    <div class="did-floating-label-content">
+                        <select [ngModelOptions]="{standalone:true}" [(ngModel)]='user.county_code'
+                            class="did-floating-input brder-color-grey ng-untouched ng-pristine ng-valid h40"
+                            (change)="onCountryChange($event.target.value)">
+                            <option *ngFor="let country of countryList" [value]="country.country_code">
+                                {{country.country_descr}}
+                            </option>
+                        </select>
+                        <label class="did-floating-label">Country <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Postal Code </label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #postal_code="ngModel" [(ngModel)]="user.postal_code"
+              [ngModelOptions]="{standalone:true}" name="postal_code"> -->
+                        <input (blur)="togglePostalCodeFlag()" type="text" class="did-floating-input brder-color-grey" #postal_code="ngModel"
+                            [(ngModel)]="user.postal_code" [ngModelOptions]="{standalone:true}" name="postal_code"
+                            id="postal_code">
+                        <label class="did-floating-label">Postal Code <span>*</span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Phone No</label>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #postal_code="ngModel" [(ngModel)]="user.postal_code"
+              [ngModelOptions]="{standalone:true}" name="postal_code"> -->
+                        <input type="text" class="did-floating-input brder-color-grey" #phone="ngModel"
+                            [(ngModel)]="user.phone" [ngModelOptions]="{standalone:true}" name="phone" id="phone">
+                        <label class="did-floating-label">Phone No</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Phone Ext </label>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #postal_code="ngModel" [(ngModel)]="user.postal_code"
+              [ngModelOptions]="{standalone:true}" name="postal_code"> -->
+                        <input type="text" class="did-floating-input brder-color-grey" #phone_ext="ngModel"
+                            [(ngModel)]="user.phone_ext" [ngModelOptions]="{standalone:true}" name="phone_ext"
+                            id="phone_ext">
+                        <label class="did-floating-label">Phone Ext</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Cell </label>
+                    <div class="did-floating-label-content">
+                        <!-- <input type="text" disabled *ngIf="isedit==true" class="did-floating-input brder-color-grey" #postal_code="ngModel" [(ngModel)]="user.postal_code"
+              [ngModelOptions]="{standalone:true}" name="postal_code"> -->
+                        <input type="text" class="did-floating-input brder-color-grey" #cell="ngModel"
+                            [(ngModel)]="user.cell" [ngModelOptions]="{standalone:true}" name="cell" id="cell">
+                        <label class="did-floating-label">Cell</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Password </label><span class="displaynone">*</span>
+                    <!-- <input type="password" class="did-floating-input brder-color-grey" #Password="ngModel"
+              id="Password" [(ngModel)]="user.Password" [ngModelOptions]="{standalone:true}" name="Password"> -->
+                    <div class="did-floating-label-content mb-0">
+                        <table id="passwordtable" class="w-100 text-center">
+                            <tr>
+                                <td>
+                                    <div class="did-floating-label-content">
+                                        <input [type]="hide ? 'password' : 'text'"
+                                            class="did-floating-input brder-color-grey" #Password="ngModel"
+                                            id="Password" [(ngModel)]="user.Password"
+                                            [ngModelOptions]="{standalone:true}" name="Password">
+                                        <label class="did-floating-label">Password <span>*</span></label>
+                                    </div>
+                                </td>
+                                <div class="bg-19 pwd-eye-icon">
+                                    <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide"
+                                        aria-hidden="true"></i>
+                                </div>
+                            </tr>
+
+                        </table>
+                        <!-- <table id="passwordtable">
+            <tr>
+              <td>
+                <div class="did-floating-label-content">
+                <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey"
+                  #Password="ngModel" id="Password" [(ngModel)]="user.Password" [ngModelOptions]="{standalone:true}"
+                  name="Password">
+                  <label class="did-floating-label">Password <span>*</span></label>
+                </div>
+              </td>
+              <td class="bg-19" style="vertical-align: middle;">
+                <i class="fa fa-eye" style="font-size: 16px;" (click)="hide = !hide" *ngIf="!hide"
+                  aria-hidden="true"></i>
+                <i class="fa fa-eye-slash" style="font-size: 16px;" (click)="hide = !hide" *ngIf="hide"
+                  aria-hidden="true"></i>
+              </td>
+            </tr>
+          </table> -->
+                        <span [hidden]="Password.valid || (Password.pristine && !userForm.submitted)"
+                            class="text-danger">
+                            Password is required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Confirm Password </label><span
+                        class="displaynone">*</span>
+                    <!-- <input type="password" class="did-floating-input brder-color-grey" #ConfirmPassword="ngModel"
+              [(ngModel)]="user.ConfirmPassword" [ngModelOptions]="{standalone:true}" name="ConfirmPassword"> -->
+                    <div class="did-floating-label-content mb-0">
+                        <table id="passwordtable" class="w-100 text-center">
+                            <tr>
+                                <td>
+                                    <div class="did-floating-label-content">
+                                        <input [type]="hide1 ? 'password' : 'text'"
+                                            class="did-floating-input brder-color-grey" #ConfirmPassword="ngModel"
+                                            [(ngModel)]="user.ConfirmPassword" [ngModelOptions]="{standalone:true}"
+                                            name="ConfirmPassword">
+                                        <label class="did-floating-label">Confirm Password <span>*</span></label>
+
+                                    </div>
+                                </td>
+                                <div class="bg-19 pwd-eye-icon">
+                                    <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide"
+                                        aria-hidden="true"></i>
+                                </div>
+                            </tr>
+
+                        </table>
+                        <!-- <table id="passwordtable">
+            <tr>
+              <td>
+                <div class="did-floating-label-content">
+                <input [type]="hide1 ? 'password' : 'text'" class="did-floating-input brder-color-grey"
+                  #ConfirmPassword="ngModel" [(ngModel)]="user.ConfirmPassword" [ngModelOptions]="{standalone:true}"
+                  name="ConfirmPassword">
+                  <label class="did-floating-label">Confirm Password <span>*</span></label>
+                </div>
+              </td>
+              <td>
+                <i class="fa fa-eye" style="font-size: 16px;" (click)="hide1 = !hide1" *ngIf="!hide1"
+                  aria-hidden="true"></i>
+                <i class="fa fa-eye-slash" style="font-size: 16px;" (click)="hide1 = !hide1" *ngIf="hide1"
+                  aria-hidden="true"></i>
+              </td>
+            </tr>
+          </table> -->
+                        <span [hidden]="ConfirmPassword.valid || (ConfirmPassword.pristine && !userForm.submitted)"
+                            class="text-danger">
+                            Confirm password is required
+                        </span>
+                        <span *ngIf="confirmPass" class="text-danger">
+                            Password mismatch
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label class="mb-5 font-sm color-gray-700">Email Address </label><span class="displaynone">*</span>
+                    <div class="did-floating-label-content">
+                        <input type="text" class="did-floating-input brder-color-grey" #EmailAddress="ngModel"
+                            [(ngModel)]="user.EmailAddress" id="EmailAddress" [ngModelOptions]="{standalone:true}"
+                            name="EmailAddress" required>
+                        <label class="did-floating-label">Email Address <span>*</span></label>
+                        <span [hidden]="EmailAddress.valid || (EmailAddress.pristine && !userForm.submitted)"
+                            class="text-danger">
+                            Email address is required
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4" *ngIf="showOldPermission">
+                <div class="form-group align-flex justify-content-start mt-15">
+                    <label class="font-sm color-gray-500">Active &nbsp;&nbsp; </label>
+                    <input type="checkbox" class="checkagree" name="chkActive" #chkActive="ngModel"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="user.chkActive" />
+                    <label class="mb-5 font-sm color-gray-500" *ngIf="ismanageron=='1' || ismanageron==1">Manager
+                    </label>
+                    <input type="checkbox" class="checkagree" name="chkmanager"
+                        *ngIf="ismanageron=='1' || ismanageron==1" #chkmanager="ngModel"
+                        [ngModelOptions]="{standalone:true}" [(ngModel)]="user.manager" />
+                </div>
+            </div>
+            <div class="col-md-4 mbottom30" *ngIf="user.manager==true && !iskyraden">
+                <div class="form-group padtb20">
+                    <div *ngIf="showOldPermission">
+                        <label class="mb-5 font-sm color-gray-500">Ordering: &nbsp;</label><span>*</span>
+                        <label *ngFor="let permission of permissionList1">
+                            <input type="radio" name="{{permission.PermissionCode}}" [(ngModel)]="AllowO"
+                                value="{{permission.PermissionCode}}" />
+                            <span>{{permission.Description}}</span>&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <br />
+                    <ng-multiselect-dropdown id="usershipid"
+                        *ngIf="addrLst!=undefined && addrLst!=null && addrLst.length>0" [settings]="dropdownSettings"
+                        [ngModelOptions]="{standalone:true}" [placeholder]="'Select Ship to'" [data]="addrLst"
+                        [(ngModel)]="selectedship" (onSelect)="onItemSelect($event)"
+                        (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="col-md-4 mbottom30" *ngIf="user.manager==false && !iskyraden">
+                <div class="form-group padtb20">
+                    <div *ngIf="showOldPermission">
+                        <label class="mb-5 font-sm color-gray-500">Ordering: &nbsp;</label><span
+                            class="displaynone">*</span>
+                        <label *ngFor="let permission of permissionList1">
+                            <input type="radio" class="mr-10" name="{{permission.PermissionCode}}" [(ngModel)]="AllowO"
+                                value="{{permission.PermissionCode}}" />
+                            <span class="color-gray-500">{{permission.Description}}</span>&nbsp;&nbsp;
+                        </label>
+                    </div>
+                    <br>
+                    <ng-multiselect-dropdown [settings]="dropdownSettings1" [ngModelOptions]="{standalone:true}"
+                        [placeholder]="'Select Ship to'" [data]="addrLst" [(ngModel)]="selectedship"
+                        (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)">
+                    </ng-multiselect-dropdown>
+                </div>
+            </div>
+            <div class="col-md-8" *ngIf="showOldPermission && !iskyraden">
+                <label class="mb-5 font-sm color-gray-500">Permissions</label>
+                <div class="d-flex flex-wrap mb-15">
+                    <span class="color-gray-500 col-12 col-md-6 col-lg-6" *ngFor="let permission of permissionList">
+                        <br>
+                        <div class="col-md-12 d-flex">
+                            <input type="checkbox" class="checkagree" id="{{permission.PermissionCode}}"
+                                [checked]="selectedPermission.indexOf(permission.PermissionCode) > -1"
+                                name="{{permission.PermissionCode}}" value="{{permission.PermissionCode}}"
+                                (change)="updatePermission($event)" />
+                            <span class="ml-10 mr-10">{{permission.Description}}</span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <div class="col-md-8" *ngIf="!showOldPermission">
+                <label class="mb-5 font-sm color-gray-500">Permissions</label>
+                <div class="d-flex flex-wrap">
+                    <span class="color-gray-500 col-12 col-md-6 col-lg-6"
+                        *ngFor="let prof of prof_label_arr; let i = index">
+                        <br>
+                        <div class="col-12 col-md-12">
+                            <input type="checkbox" class="checkagree" id="{{prof.label}}" [checked]="prof.value"
+                                name="{{prof.label}}" value="{{prof.value}}"
+                                (change)="updateProfLabelSelection($event)" />
+                            <span class="ml-10 mr-10">{{prof.label}}</span>
+                        </div>
+                    </span>
+                </div>
+            </div>
+            <!-- <div class="col-md-6">
+        <div class="form-group" style="margin-top:15px">
+          <label class="mb-5 font-sm color-gray-700">Ordering: &nbsp;
+          </label>
+          <label *ngFor="let permission of permissionList1">
+            <input type="radio" name="{{permission.PermissionCode}}"  [(ngModel)]="AllowO" value="{{permission.PermissionCode}}" />
+            <span>{{permission.Description}}</span>&nbsp;&nbsp;
+          </label>              
+        </div>
+        </div> -->
+        </div>
+        <div class="col-md-4" *ngIf="isError">
+            <div class="form-group">
+                <label class="text-danger"> Invalid username or password</label>
+            </div>
+        </div>
+        <div class="col-md-12 d-flex justify-content-between">
+            <button type="submit" class="font-md-bold btn btn-buy w-auto mb-5 checkout-page-button">Submit</button>
+            <button type="button" (click)="ngOnInit()"
+                class="font-md-bold btn btn-buy w-auto mb-5 checkout-page-button">Back</button>
+        </div>
+    </form>
+</div>
+<!-- </div>
+  </div>
+  </div> -->

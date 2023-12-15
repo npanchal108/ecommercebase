@@ -1,0 +1,26 @@
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { NewCustomersComponent } from './new-customers.component';
+import { newcustomersRoutingModule } from './new-customers-routing.module';
+import { FormsModule } from '@angular/forms';
+import { sharedModule } from '../shared.module';
+import { RecaptchaModule } from 'ng-recaptcha';
+
+
+
+
+@NgModule({
+  declarations: [
+    NewCustomersComponent,
+    
+  ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    sharedModule,
+    RecaptchaModule,
+    newcustomersRoutingModule
+  ],
+ 
+})
+export class newcustomersModule { }

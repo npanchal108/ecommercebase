@@ -1,0 +1,120 @@
+<main class="main">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                    <li><a class="font-xs color-gray-500" href="userprofile">User Profile</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <section class="section-box shop-template mt-60">
+        <div class="row padding-lr-80">
+            <div class="head-main bd-gray-200 mt-20">
+                <div class="col-md-12">
+                    <h1 class="head-text color-gray-900 mb-20">User Profile</h1>
+                    <h4 class="mt-5 mb-5">{{custdetails.name}}</h4>
+                </div>
+            </div>
+            <div class="col-md-12">
+
+                <h4 class="mb-30">Billing Address </h4>
+                <div class="row">
+                    <div class="align-flex">
+                        <div class="col-md-4">
+                            <div class="address align-flex mb-25 justify-content-start">
+                                <h6><i class="fa fa-map-marker"></i></h6>
+                                <h6>{{custdetails.adr[0]}}, {{custdetails.adr[1]}} {{custdetails.adr[2]}}{{custdetails.adr[3]}}, {{custdetails.state}}, {{custdetails.postal_code}} {{custdetails.country_code}}
+                                </h6>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="address align-flex mb-25 justify-content-start">
+                                <h6><i class="fa fa-phone"></i></h6>
+                                <a href="tel:{{custdetails.phone}}" class="color-brand-1 font-bold">{{custdetails.phone}}</a>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="address align-flex mb-25 justify-content-start">
+                                <h6><i class="fa fa-envelope"></i></h6>
+                                <a href="mailto:{{custdetails.email_address}}" class="color-brand-1 font-bold">{{custdetails.email_address}}</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <table class="rwd-table mb-20">
+                    <tr>
+                        <td><i class="fa fa-map-marker"></i></td>
+                        <td><span>{{custdetails.adr[0]}}, {{custdetails.adr[1]}}
+                <br />{{custdetails.adr[2]}}{{custdetails.adr[3]}}, {{custdetails.state}}, {{custdetails.postal_code}}
+                {{custdetails.country_code}}
+              </span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-phone"></i></td>
+                        <td><span>{{custdetails.phone}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-envelope"></i></td>
+                        <td><span>{{custdetails.email_address}}</span></td>
+                    </tr>
+                </table> -->
+
+                <h3 *ngIf="shippingadr!=undefined && shippingadr!=null">Shipping Address </h3>
+                <table *ngIf="shippingadr!=undefined && shippingadr!=null" class="rwd-table mb-20">
+                    <tr>
+                        <td></td>
+                        <td>{{shippingadr.name}}</td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-map-marker"></i></td>
+                        <td><span>{{shippingadr.adr[0]}}, {{shippingadr.adr[1]}}
+                <br />{{shippingadr.adr[2]}}{{shippingadr.adr[3]}}, {{shippingadr.state}}, {{shippingadr.postal_code}}
+                {{shippingadr.country_code}}
+              </span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-phone"></i></td>
+                        <td><span>{{shippingadr.phone}}</span></td>
+                    </tr>
+                    <tr>
+                        <td><i class="fa fa-envelope"></i></td>
+                        <td><span>{{shippingadr.email}}</span></td>
+                    </tr>
+                </table>
+
+            </div>
+            <div class="col-md-12">
+                {{SalesUserType}}
+                <div class="table-responsive mtop30" *ngIf="priceshowcust=='1' || SalesUserType=='2'">
+                    <table id="table1" *ngIf="ARTotal!=undefined && ARTotal!=null && IsARTotal=='1'" class="rwd-table mb-20">
+                        <tr *ngIf="totalbalance!=undefined">
+                            <td><label>Total Balance:</label></td>
+                            <td>$ {{totalbalance | million}}</td>
+                        </tr>
+                        <tr *ngIf="ordertotal!=undefined">
+                            <td><label>Total Order Balance:</label></td>
+                            <td>$ {{ordertotal | million}}</td>
+                        </tr>
+                        <tr *ngIf="creditlimit!=undefined && showcreditlimit=='1'">
+                            <td><label> Credit Limit:</label></td>
+                            <td>$ {{creditlimit | million}}</td>
+                        </tr>
+
+                        <tr *ngFor="let art1 of ARTotal.aging_headers;let i = index;first as isFirst;last as isLast">
+                            <td><label> {{art1}}</label></td>
+                            <td>$ {{ARTotal.aging_balances[i]}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+        <!-- </div>
+</div> -->

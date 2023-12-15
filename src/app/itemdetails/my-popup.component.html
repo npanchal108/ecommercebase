@@ -1,0 +1,9 @@
+<div style="padding: 50px;">
+    <a class="btn-close close-modal" type="button" style="font-size: 20px;top:10px;right:10px;position:absolute;" (click)="closePopup()" aria-label="Close"></a>
+    <!-- <button class="btn btn-buy mr-15 w-auto mb-10" (click)="closePopup()">Close</button> -->
+    <iframe *ngIf="data" [src]="getSafeUrl(data)" width="560" height="315"></iframe>
+</div>
+
+<!-- <div>
+    <button class="btn btn-buy mr-15 w-auto mb-10" (click)="closePopup()">Close</button>
+</div> -->

@@ -1,0 +1,97 @@
+<!-- <div class="body-content outer-top-xs">
+  <div class='container'>
+    <div class='row'>
+      <div class="col-xs-12 col-sm-12 col-md-3 sidebar">
+        <app-side-menu></app-side-menu>
+      </div> -->
+      <!-- <div class='col-xs-12 col-sm-12 col-md-12'> -->
+        <div class="clearfix filters-container">
+          <div class="row">
+            <div class="col col-sm-6 col-md-2">
+              <div class="filter-tabs">
+                <ul id="filter-tabs" class="nav nav-tabs nav-tab-box nav-tab-fa-icon">
+                  <li class="active grid-list-m">
+                    <a data-toggle="tab" href="#grid-container">
+                      <i class="icon fa fa-th-large"></i>Grid</a>
+                  </li>
+                  <li class="grid-list-m">
+                    <a data-toggle="tab" href="#list-container">
+                      <i class="icon fa fa-th-list"></i>List</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="search-result-container ">
+          <div id="myTabContent" class="tab-content category-list">
+            <div class="tab-pane" id="grid-container" [ngClass]="{'active': isListView==false}">
+              <div class="category-product">
+                <div class="row">
+
+                  <div class="col-sm-6 col-md-4 wow fadeInUp" *ngFor="let product of productList">
+                    <div class="products">
+
+                      <div class="product">
+                        <div class="product-image">
+                          <div class="image">
+                            <a [routerLink]="['/brands', product.it_maj_class.toLowerCase()]">
+                              <img src="assets/images/Product.png" alt="{{product.it_maj_class}}" height="243" width="235" *ngIf="product.ProdImage == null">
+                              <img src="{{product.ProdImage}}" alt="{{product.it_maj_class}}" height="260" width="235" *ngIf="product.ProdImage != null">
+                              <span class="items-dv">items : {{product.ItemCount}}</span>
+                            </a>
+                          </div>
+                        </div>
+                        <div class="product-info text-center" *ngIf="brandlableshow=='1'">
+                          <h3 class="name">
+                            <a [routerLink]="['/brands', product.it_maj_class.toLowerCase()]">
+                              {{product.it_maj_class}}
+                            </a>
+                          </h3>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane" id="list-container" [ngClass]="{'active': isListView==true}">
+              <div class="category-product">
+                <div class="category-product-inner wow fadeInUp" *ngFor="let product of productList">
+                  <div class="products">
+                    <div class="product-list product">
+                      <div class="row product-list-row">
+                        <div class="col col-sm-4 col-lg-4">
+                          <div class="product-image">
+                            <div class="image">
+                              <a [routerLink]="['/brands', product.it_maj_class.toLowerCase()]">
+                                <img src="assets/images/Product.png" alt="{{product.it_maj_class}}" height="243" width="235" *ngIf="product.ProdImage == 'NotFound' || product.ProdImage==null">
+                                <img src="{{product.ProdImage}}" alt="{{product.it_maj_class}}" height="260" width="235" *ngIf="product.ProdImage != undefined && product.ProdImage!=null">
+                                <span class="items-dv">items : {{product.ItemCount}}</span>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col col-sm-8 col-lg-8" *ngIf="brandlableshow=='1'">
+                          <div class="product-info text-left">
+                            <h3 class="name">
+                              <a [routerLink]="['/brands', product.it_maj_class.toLowerCase()]"> {{product.it_maj_class}}</a>
+                            </h3>
+
+                          </div>
+                        </div>
+                      </div>
+                      <!-- <div class="tag new">
+                        <span>new</span>
+                      </div> -->
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      <!-- </div> -->
+    <!-- </div>
+  </div>
+</div> -->

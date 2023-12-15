@@ -1,0 +1,1118 @@
+<main class="main">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" href="/home">Home</a></li>
+                    <li><a class="font-xs color-gray-500" href="/viewcart">My Cart</a></li>
+                    <li><a class="font-xs color-gray-500" href="/checkout">Checkout</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="section-box shop-template mb-30 mt-60" *ngIf="!isSubmitted">
+        <!-- <div class="container"> -->
+        <div class="row padding-lr-80">
+            <div class="col-md-7 col-lg-7">
+                <div class="box-carts">
+                    <div class="accordion">
+                        <!-- Shipping -->
+                        <input type="radio" checked="checked" name="accordion" id="accordion-1">
+                        <label for="accordion-1">
+                        <h5 class="item-wishlist text-white"><span
+                              class="wishlist-product-num text-dark">1</span>Billing Information</h5>
+                     </label>
+                        <div class="accordion-content align-flex">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Billing Information</h3>
+                                    <!-- <p class="font-md color-gray-500">Billing Shipping Information</p> -->
+                                </div>
+                                <div class="col-lg-12">
+
+                                    <div class="form-register align-flex mt-30">
+                                        <div *ngIf="UserType==4">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Name</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" type="text" [ngModelOptions]="{standalone:true}" id="billAdrname" [maxlength]="35" [(ngModel)]="billAdr.name" name="name">
+                                                        <label id="bg-transp" class="did-floating-label">Name</label>
+
+                                                        <!-- <div class="invalid-feedback">Name cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Phone</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" id="billAdrphone" [maxlength]="35" [(ngModel)]="billAdr.phone">
+                                                        <label id="bg-transp" class="did-floating-label">Phone</label>
+
+                                                        <!-- <div class="invalid-feedback">Last Name cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Email</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" id="billAdremail_address" [maxlength]="35" [(ngModel)]="billAdr.email_address">
+                                                        <label id="bg-transp" class="did-floating-label">Email</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Fax</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" [maxlength]="35" [(ngModel)]="billAdr.fax">
+                                                        <label id="bg-transp" class="did-floating-label">Fax</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" *ngIf="isaddressparse=='1'">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Please Copy
+                                             your address here <a class="font-md-bold btn btn-buy w-auto"
+                                                (click)="billAdraddreparser()">Parse</a></label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <textarea class="did-floating-input brder-color-grey" id="billAdraddreparser" [maxlength]="32000" [(ngModel)]='billAdr.addressparser' (change)="billAdraddreparser()" [ngModelOptions]="{standalone:true}"></textarea>
+                                                        <label id="bg-transp" class="did-floating-label">Address</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address
+                                             1</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" [maxlength]=addr1val [(ngModel)]="billAdr.Addr1" name="Addr1" id="billAdrAddress1">
+                                                        <label id="bg-transp" class="did-floating-label">Address 1</label>
+
+                                                        <!-- <div class="invalid-feedback">Company Name cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address
+                                             2</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [maxlength]=addr2val [ngModelOptions]="{standalone:true}" [(ngModel)]="billAdr.Addr2" name="Addr2" id="billAdrAddress2">
+                                                        <label id="bg-transp" class="did-floating-label">Address 2</label>
+
+                                                        <!-- <div class="invalid-feedback">Phone Number be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Country</label>
+                                                    <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <select [ngModelOptions]="{standalone:true}" [(ngModel)]='billAdr.selectedcountry' class="did-floating-select" (change)="getbillStates(billAdr.selectedcountry)">
+                                                <option *ngFor="let country of billcountryList"
+                                                   [value]="country.country_code">
+                                                   {{country.country_descr}}
+                                                </option>
+                                             </select>
+                                                        <label id="bg-transp" class="did-floating-label">Country</label>
+                                                        <!-- <div class="invalid-feedback">Email-id cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">State</label>
+                                                    <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                                                    <div class="did-floating-label-content mb-0">
+
+                                                        <select *ngIf="billstateshow==true" class="did-floating-select" [ngModelOptions]="{standalone:true}" [(ngModel)]='billAdr.selectedState' id="billAdrState">
+                                                <option value="0">Select State</option>
+                                                <option *ngFor="let state of billstateList" [value]="state.state">
+                                                   {{state.descr}}
+                                                </option>
+                                             </select>
+                                                        <input *ngIf="billstateshow==false" type="text" [ngModelOptions]="{standalone:true}" class="did-floating-input brder-color-grey" [(ngModel)]="billAdr.selectedState" name="State" id="billAdrState">
+                                                        <label id="bg-transp" class="did-floating-label">State</label>
+
+                                                        <!-- <div class="invalid-feedback">Password cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">City</label>
+                                                    <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                                                    <div class="did-floating-label-content mb-0">
+
+                                                        <input type="text" [ngModelOptions]="{standalone:true}" id="billAdrCity" class="did-floating-input brder-color-grey" [maxlength]=cityval [(ngModel)]="billAdr.City" name="City" id="billAdrCity">
+                                                        <label id="bg-transp" class="did-floating-label">City</label>
+
+                                                        <!-- <div class="invalid-feedback">Confirm Password be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Postal
+                                             Code</label>
+                                                    <div class="did-floating-label-content">
+                                                        <input type="text" [ngModelOptions]="{standalone:true}" id="billAdrPostalCode" class="did-floating-input brder-color-grey" [maxlength]="20" [(ngModel)]="billAdr.PostalCode" name="PostalCode" id="billAdrPostalCode">
+                                                        <label id="bg-transp" class="did-floating-label">Postal Code</label>
+
+                                                        <!-- <div class="invalid-feedback">City cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="UserType!=4">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Phone:</label>
+                                                <span>{{billAdr == null ? "" : billAdr.phone | phone:'US' }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="UserType!=4">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Name:</label>
+                                                <span *ngIf="billAdr != undefined && billAdr.name!=undefined">{{billAdr.name}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="UserType!=4">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Fax:</label>
+                                                <span>{{billAdr == null ? "" : billAdr.fax | phone:'US' }}</span>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="UserType!=4">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">BILL TO:</label>
+                                                <span *ngIf="billAdr != undefined && billAdr.adr[0]!=undefined">{{billAdr.adr[0]}},{{billAdr.adr[1]}}</span><br />
+                                                <span *ngIf="billAdr != undefined && (billAdr.adr[2]!=undefined || billAdr.adr[3]!=undefined)">{{billAdr.adr[2]}}{{billAdr.adr[3]}},
+                                          {{billAdr.state == null ? "" : billAdr.state.trim()}} {{billAdr.postal_code}}
+                                          <br />
+                                          {{billAdr.country_code == null ? "" : billAdr.country_code.trim()}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Shipping -->
+                        <input type="radio" name="accordion" id="accordion-2">
+                        <label for="accordion-2">
+                        <h5 class="item-wishlist text-white"><span
+                              class="wishlist-product-num text-dark">2</span>Shipping Information</h5>
+                     </label>
+                        <div class="accordion-content align-flex">
+                            <div class="row">
+                                <div class="align-flex">
+                                    <div class="col-md-6">
+                                        <h3>Shipping Information</h3>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a class="font-md-bold btn btn-buy w-auto mb-0" style="float:right;" (click)="openShippingAddressPopup('add')" *ngIf="UserType!='4' && isShowShipTo=='1'">Add New Ship To</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+
+                                    <div class="form-register align-flex mt-15">
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Select Shipping
+                                          Address</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <select class="did-floating-select" id="headship_to" [(ngModel)]='head.ship_to' [disabled]="logintype=='3'" #shipTo="ngModel" (change)="shipAddressChange($event.target.value)" required name="shipTo">
+                                             <option value="0">Select Shipping Address</option>
+                                             <option value="-1" *ngIf="isShowFreefrom=='1'">Free Form</option>
+                                             <option value="same"
+                                                *ngIf="UserType!='4' && sameship=='1' && billAdd1!=undefined && billAdd1!=null && billAdd1!=''">
+                                                same {{billAdr.name}} {{billAdd1}} </option>
+                                             <option *ngFor="let ship of shipAdr" [value]="ship.ship_id">
+                                                {{ship.ship_id}} {{ship.atn}} {{ship.name}} {{ship.aaa}}</option>
+                                          </select>
+                                                    <label id="bg-transp" class="did-floating-label">Select Shipping
+                                             Address</label>
+
+                                                    <div class="invalid-feedback" *ngIf="head.ship_to == 0 && isFormSubmitted">
+                                                        Select Shipping Address</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+                                            <div class="form-group mb-0" *ngIf="head.ship_to!='-1' && head.ship_to!='same'">
+                                                <a class="font-md-bold btn btn-buy w-auto" (click)="openShippingAddressPopup('modify')" *ngIf="modifyshipto=='1' && head.ship_to!='0'">Modify</a>
+
+                                            </div>
+                                        </div>
+                                        <ng-container *ngIf="showShipAdd">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">ID:</label>
+                                                    <span> {{shipId}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Name:</label>
+                                                    <span> {{shipName}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Attn:</label>
+                                                    <span> {{ShipAttn}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address:</label>
+                                                    <span> {{shipAddr1}} {{shipAddr2}}</span> <br />
+                                                    <span> {{shipCity}}, {{shipState}} {{shipZIP}}<br /> {{shipCountry}}</span>
+                                                </div>
+                                            </div>
+                                        </ng-container>
+
+                                        <ng-container *ngIf="isAddShip">
+                                            <div class="col-12 col-md-6" *ngIf="UserType=='4'">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Same As Billing
+                                             Address</label>
+                                                    <input type="checkbox" class="checkagree" id="sameasbill" name="sameasbill" [ngModelOptions]="{standalone:true}" [(ngModel)]="sameasbill" (change)="sameasbillinginfo()">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm">Same As Billing
+                                                            Address</label>
+                                                </div>
+                                            </div>
+                                            <div [ngClass]="{'col-md-3': blind_ship=='1','col-md-6': blind_ship=='0'}">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Residential</label>
+                                                    <input type="checkbox" class="checkagree" id="chkResidential" name="chkResidential" [ngModelOptions]="{standalone:true}" [(ngModel)]="shipping.Residential">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm">Residential</label>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3" *ngIf="blind_ship=='1'">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Blind
+                                             Ship</label>
+                                                    <input type="checkbox" class="checkagree" [ngModelOptions]="{standalone:true}" [(ngModel)]="shipping.blind_ship" name="blind_ship" [checked]="blind_ship_defaultCheck">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm">Blind
+                                                            Ship</label>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Ship to
+                                             Name</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [maxlength]="35" [ngModelOptions]="{standalone:true}" #ShipName="ngModel" id="shippingShipName" [(ngModel)]="shipping.ShipName" name="ShipName">
+                                                        <label id="bg-transp" class="did-floating-label">Ship to Name</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Attn</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [maxlength]="35" [ngModelOptions]="{standalone:true}" #ShipAttn="ngModel" id="shippingShipAttn" [(ngModel)]="shipping.ShipAttn" name="ShipAttn">
+                                                        <label id="bg-transp" class="did-floating-label">Attn</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Phone</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [maxlength]="35" [ngModelOptions]="{standalone:true}" #Shipphone="ngModel" id="shippingShipphone" [(ngModel)]="shipping.phone" name="Shipphone">
+                                                        <label id="bg-transp" class="did-floating-label">Phone</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12" *ngIf="isaddressparse=='1'">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700 align-flex pr-10">Please Copy
+                                             your address here
+                                             <a class="font-md-bold btn btn-buy w-auto mb-5"
+                                                (click)="shippingaddreparser()">Parse</a>
+                                          </label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <textarea class="did-floating-input brder-color-grey" id="shippingaddreparser" [maxlength]="32000" [(ngModel)]='shipping.addressparser' (change)="shippingaddreparser()" [ngModelOptions]="{standalone:true}"></textarea>
+                                                        <label id="bg-transp" class="did-floating-label">Please Copy your address
+                                                here</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address
+                                             1</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" [maxlength]=addr1val #Addr1="ngModel" [(ngModel)]="shipping.Addr1" name="Addr1" id="shippingAddr1" (change)="calculateShipRate()" (focusout)="calculateShipRate()">
+                                                        <label id="bg-transp" class="did-floating-label">Address 1</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address
+                                             2</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" [maxlength]=addr2val #Addr2="ngModel" [(ngModel)]="shipping.Addr2" name="Addr2" id="shippingAddr2" (change)="calculateShipRate()" (focusout)="calculateShipRate()">
+                                                        <label id="bg-transp" class="did-floating-label">Address 2</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Country</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <select [ngModelOptions]="{standalone:true}" [(ngModel)]='shipping.selectedCountry' class="did-floating-select" (change)="shipCountryChange()">
+                                                <option *ngFor="let country of countryList"
+                                                   [value]="country.country_code">
+                                                   {{country.country_descr}}
+                                                </option>
+                                             </select>
+                                                        <label id="bg-transp" class="did-floating-label">Country</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">State</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <select *ngIf="isstateshow==true" class="did-floating-select" [ngModelOptions]="{standalone:true}" [(ngModel)]='shipping.selectedState' id="shippingselectedState" (change)="calculateShipRate()" (focusout)="calculateShipRate()">
+                                                <option value="0">Select State</option>
+                                                <option *ngFor="let state of stateList" [value]="state.state">
+                                                   {{state.descr}}
+                                                </option>
+                                             </select>
+                                                        <input *ngIf="isstateshow==false" type="text" class="did-floating-input brder-color-grey" #State="ngModel" [(ngModel)]="shipping.selectedState" name="State" [ngModelOptions]="{standalone:true}" id="shippingState" (change)="calculateShipRate()" (focusout)="calculateShipRate()">
+                                                        <label id="bg-transp" class="did-floating-label">State</label>
+
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">City</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [ngModelOptions]="{standalone:true}" [maxlength]=cityval #City="ngModel" [(ngModel)]="shipping.City" name="City" id="shippingCity" (change)="calculateShipRate()" (focusout)="calculateShipRate()">
+                                                        <label id="bg-transp" class="did-floating-label">City</label>
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6" *ngIf="shipProvince">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Province</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [ngModelOptions]="{standalone:true}" #Province="ngModel" [(ngModel)]="shipping.Province" name="Province">
+                                                        <label id="bg-transp" class="did-floating-label">Province</label>
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Postal
+                                             Code</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" (blur)="togglePostalCodeFlag()" class="did-floating-input brder-color-grey" [ngModelOptions]="{standalone:true}" [maxlength]="20" #PostalCode="ngModel" [(ngModel)]="shipping.PostalCode" name="PostalCode" id="shippingPostalCode" (change)="calculateShipRate()"
+                                                            (focusout)="calculateShipRate()">
+                                                        <label id="bg-transp" class="did-floating-label">Postal Code</label>
+                                                        <!-- <div class="invalid-feedback">Address cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </ng-container>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <input type="radio" name="accordion" id="accordion-3">
+                        <label for="accordion-3">
+                        <h5 class="item-wishlist text-white"><span class="wishlist-product-num text-dark">3</span>Order
+                           Details</h5>
+                     </label>
+                        <div class="accordion-content mb-form-register">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <h3>Order Details</h3>
+                                    <!-- <p class="font-md color-gray-500">Payment Information</p> -->
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-register align-flex mt-30">
+                                        <div class="col-12 col-md-6" *ngIf="isShowWantedDate=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">
+                                                    {{wanterdatelable}}
+                                                    <span
+                                             *ngIf="isWantedDateRequired=='1'">*</span></label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+
+                                                    <dp-date-picker [(ngModel)]="head.WantedDate" id="headWantedDate" [config]="config" [ngModelOptions]="{standalone:true}"></dp-date-picker>
+                                                    <label id="bg-transp" class="did-floating-label">{{wanterdatelable}} <span
+                                             *ngIf="isWantedDateRequired=='1'">*</span></label>
+
+                                                    <div class="invalid-feedback" *ngIf="isWantedVal">{{wanterdatelable}} cannot be blank.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="isShowCanecelDate=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Cancel Date </label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************">  class="did-floating-input brder-color-grey"-->
+                                                <div class="did-floating-label-content mb-0">
+
+                                                    <dp-date-picker [(ngModel)]="head.CancelDate" id="headCancelDate" [config]="config" [ngModelOptions]="{standalone:true}"></dp-date-picker>
+                                                    <label id="bg-transp" class="did-floating-label">Cancel Date <span
+                                             *ngIf="isCancelDateRequired=='1'">*</span></label>
+
+                                                    <div class="invalid-feedback" *ngIf="isCancelVal">Cancel Date cannot be blank.
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="isShowJobRelease=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">{{JobReleaselable}} </label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" id="headJobRelease" class="did-floating-input brder-color-grey" [maxlength]="50" [ngModelOptions]="{standalone:true}" [(ngModel)]='head.JobRelease' id="headJobRelease" #jobRelease="ngModel" name="jobRelease">
+                                                    <label id="bg-transp" class="did-floating-label">{{JobReleaselable}} <span
+                                             *ngIf="isJobReleaseRequired=='1'">*</span></label>
+
+                                                    <div class="invalid-feedback" *ngIf="isJobReleaseVal">{{JobReleaselable}} cannot be blank.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="isShowPhone=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Phone </label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" id="headPhone" [ngModelOptions]="{standalone:true}" [(ngModel)]='head.Phone' #phone="ngModel" name="phone">
+                                                    <label id="bg-transp" class="did-floating-label">Phone <span
+                                             *ngIf="isPhoneRequired=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isPhoneVal">Phone cannot be blank.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="isShowShipComplete=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Ship Complete </label>
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="checkbox" class="checkagree" id="headShipComplete" [(ngModel)]='head.ShipComplete' #shipComplete="ngModel" [ngModelOptions]="{standalone:true}" name="ShipComplete">
+                                                    <label id="bg-transp" class="did-floating-label">Ship Complete</label>
+                                                    <div class="invalid-feedback" *ngIf="isShipComVal">Ship Complete cannot be blank.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="isShowPONumber=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">PO Number </label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="30" [ngModelOptions]="{standalone:true}" id="poNumber" (blur)="SpecialCharacters(head.PO)" [(ngModel)]='head.PO' #po="ngModel" name="po">
+                                                    <label id="bg-transp" class="did-floating-label">PO Number <span *ngIf="isPORequired=='1'">*</span></label>
+                                                    <!-- <div class="invalid-feedback" *ngIf="isPhoneVal">PO Number cannot be blank.</div> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="isShowContact=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Contact </label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="30" [ngModelOptions]="{standalone:true}" id="headContact" [(ngModel)]='head.Contact' #contact="ngModel" name="contact">
+                                                    <label id="bg-transp" class="did-floating-label">Contact <span *ngIf="isContactRequired=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isPhoneVal">Contact cannot be blank.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-12 col-md-6" *ngIf="iskyraden">
+                                            <div class="form-group mb-10">
+                                                <span>Upload PO File: </span>
+                                                <input type="file" id="pofile" style="position: relative;opacity: inherit;" (change)="onFileSelected($event)">
+                                                <!-- <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Carrier Name *</label>
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="50" id="shipnote" [(ngModel)]='head.shipnote' [ngModelOptions]="{standalone:true}">
+                                                    <label id="bg-transp" class="did-floating-label">Carrier Name *</label>
+                                                </div> -->
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12 col-md-6" *ngIf="Enter_by=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">{{Enter_by_Lable}} </label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="30" [ngModelOptions]="{standalone:true}" id="headenter_by" [(ngModel)]='head.enter_by' #enter_by="ngModel" name="enter_by">
+                                                    <label id="bg-transp" class="did-floating-label">{{Enter_by_Lable}} <span *ngIf="Enter_by_Required=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isenter_byVal">{{Enter_by_Lable}} cannot be blank.</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="isShowEmail=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Email</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="60" [ngModelOptions]="{standalone:true}" id="headEmail" [(ngModel)]='head.Email' #email="ngModel" name="email">
+                                                    <label id="bg-transp" class="did-floating-label">Email <span *ngIf="isEmailRequired=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isEmailVal">Email cannot be blank.</div>
+                                                    <div class="invalid-feedback" *ngIf="email.errors && email.errors.pattern">Email is invalid</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="isShowPayType=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Payment Type</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <select class="did-floating-select" id="headPaymentType" [(ngModel)]='head.PaymentType' [ngModelOptions]="{standalone:true}" (change)="onPaymentChange($event.target.value)" [disabled]=IsDisablePayment>
+                          <option value="???">Select Payment Type</option>
+                          <option *ngFor="let payment of paymentType" [value]="payment.terms_code">{{payment.descr}}
+                          </option>
+                        </select>
+                                                    <label id="bg-transp" class="did-floating-label">Payment Type <span *ngIf="isPayTypeRequired=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isPayTypeVal">Payment Type cannot be blank.</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="isShowShipVia=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Ship Via</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <select class="did-floating-select" id="headShipFOB" [(ngModel)]='head.ShipFOB' [ngModelOptions]="{standalone:true}" (change)="onShipViaChange($event.target.value)">
+                                          <option value="0">Select Ship via</option>
+                                          <option *ngFor="let ship of shipFOB" [value]="ship.ship_via_code">
+                                            <ng-container *ngIf="!iskyraden">
+                                            {{ship.descr}}
+                                        </ng-container> 
+                                        <ng-container *ngIf="iskyraden">
+                                            {{ship.web_descr}}
+                                        </ng-container> 
+                                            <span *ngIf="ship.frieghtvalue!=undefined && ship.frieghtvalue!=null &&  ship.frieghtvalue!=''"> (${{ship.frieghtvalue}})</span>
+                                          </option>
+                                        </select>
+                                                    <label id="bg-transp" class="did-floating-label">Ship Via <span *ngIf="isShipViaRequired=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isShipViaVal">Ship Via cannot be blank.</div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="isShowAccount=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Shipping Account</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="25" id="shippingAccount" [(ngModel)]='head.Account' [ngModelOptions]="{standalone:true}">
+                                                    <label id="bg-transp" class="did-floating-label">Shipping Account <span *ngIf="isshipviaaccountrequired=='1'">*</span></label>
+                                                    <!-- <div class="invalid-feedback" *ngIf="isEmailVal">Shipping Account cannot be blank.</div> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-12 col-md-6" *ngIf="head.ShipFOB=='MISC' && iskyraden">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Carrier Name *</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+                                                    <input type="text" class="did-floating-input brder-color-grey" [maxlength]="50" id="shipnote" [(ngModel)]='head.shipnote' [ngModelOptions]="{standalone:true}">
+                                                    <label id="bg-transp" class="did-floating-label">Carrier Name *</label>
+                                                    <!-- <div class="invalid-feedback" *ngIf="isEmailVal">Shipping Account cannot be blank.</div> -->
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="col-12 col-md-12" *ngIf="isShowNote=='1'">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">{{OrderNoteLable}}</label>
+                                                <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                <div class="did-floating-label-content mb-0">
+
+                                                    <textarea class="did-floating-input brder-color-grey" id="headnotes" [maxlength]="32000" [(ngModel)]='head.notes' [ngModelOptions]="{standalone:true}"></textarea>
+                                                    <label id="bg-transp" class="did-floating-label">{{OrderNoteLable}} <span *ngIf="isNoteRequired=='1'">*</span></label>
+                                                    <div class="invalid-feedback" *ngIf="isNoteVal">{{OrderNoteLable}} cannot be blank.</div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-10">
+                                                <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">All fields marked with an asterisk (*) must be completed</label>
+                                            </div>
+                                        </div>
+
+
+
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row" *ngIf="showPayment">
+                                <div class="align-flex">
+                                    <div class="col-md-6">
+                                        <h3>Payment Information</h3>
+                                        <!-- <p class="font-md color-gray-500">Payment Information</p> -->
+                                    </div>
+                                    <div class="col-md-6">
+                                        <a class="font-md-bold btn btn-buy w-auto" style="float: right;" *ngIf="iscardfreeform==true && UserType!=4" (click)="openCreditAddressPopup('Add')">Add New Card</a>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="form-register align-flex mt-30">
+                                        <div class="col-md-12">
+                                            <div class="form-group mb-10 align-flex">
+                                                <div class="col-md-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Choose a card</label>
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <select class="did-floating-select" name="head" [(ngModel)]="head.CardNo" id="headCardNo" (change)="cardChanged($event.target.value)">
+                                          <option value="0">Select Card </option>
+                                          <option *ngIf="!iskyraden" value="-1">One time use card (Not Stored) </option>
+                                          <option *ngFor="let card of cardList" [value]="card.Id">{{card.CardName}}</option>
+                                        </select>
+                                                        <label id="bg-transp" class="did-floating-label">Choose a card</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-2 mt-10">
+                                                    <a class="font-md-bold btn btn-buy w-auto" *ngIf="iscardfreeform==true && UserType!=4 && head.CardNo>0" (click)="openCreditAddressPopup(cardText)">{{cardText}}</a>
+                                                    <!-- <a class="font-md-bold btn btn-buy w-auto" *ngIf="iscardfreeform==true && UserType!=4" (click)="onCardAdd()">{{cardText}}</a> -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" *ngIf="head.CardNo!=undefined && head.CardNo!=null && head.CardNo!='0'">
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Credit Card Type  </label>
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <select class="did-floating-select" disabled [(ngModel)]="head.CreditCardType" *ngIf="iscardfreeform==true" [ngModelOptions]="{standalone:true}" [ngModelOptions]="{standalone:true}">
+                                <option value="0" selected>Select card Type </option>
+                                <option *ngFor="let cardtype of cardtypelist" [value]="cardtype.CardTypeCode">
+                                  {{cardtype.CardTypeName}}</option>
+                                  </select>
+
+                                                        <select class="did-floating-select" [(ngModel)]="head.CreditCardType" *ngIf="iscardfreeform==false" [ngModelOptions]="{standalone:true}" [ngModelOptions]="{standalone:true}">
+                                <option value="0" selected>Select card Type </option>
+                                <option *ngFor="let cardtype of cardtypelist" [value]="cardtype.CardTypeCode">
+                                  {{cardtype.CardTypeName}}</option>
+                              </select>
+                                                        <label id="bg-transp" class="did-floating-label">Credit Card Type <span>*</span></label>
+
+                                                        <!-- <div class="invalid-feedback" *ngIf="isCancelVal">Cancel Date cannot be blank. -->
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Card Holder's Name * </label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="40" id="CardHoldersName" [(ngModel)]='head.CardHoldersName' [ngModelOptions]="{standalone: true}" [disabled]="iscardfreeform">
+
+                                                        <label id="bg-transp" class="did-floating-label">Card Holder's Name<span>*</span></label>
+
+                                                        <!-- <div class="invalid-feedback" *ngIf="isJobReleaseVal">Card Number cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Card Number </label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="40" id="CardNumber" [(ngModel)]='head.CardNumber' [ngModelOptions]="{standalone: true}" [disabled]="iscardfreeform">
+
+                                                        <label id="bg-transp" class="did-floating-label">Card Number <span>*</span></label>
+
+                                                        <!-- <div class="invalid-feedback" *ngIf="isJobReleaseVal">Card Number cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Security Code </label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="4" id="SecurityCode" [(ngModel)]="head.SecurityCode" [ngModelOptions]="{standalone: true}" [disabled]="iscardfreeform">
+
+                                                        <label id="bg-transp" class="did-floating-label">Security Code <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isPhoneVal">Security Code cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Expiration Month  </label>
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="ExpirationMonth" [(ngModel)]="head.ExpirationMonth" [ngModelOptions]="{standalone: true}" *ngIf="iscardfreeform==true" disabled>
+                                                        <select class="did-floating-select" id="ExpirationMonth" *ngIf="iscardfreeform==false" [(ngModel)]="head.ExpirationMonth" [ngModelOptions]="{standalone:true}">
+                                          <option [value]="1">January</option>
+                                          <option [value]="2">February</option>
+                                          <option [value]="3">March</option>
+                                          <option [value]="4">April</option>
+                                          <option [value]="5">May</option>
+                                          <option [value]="6">June</option>
+                                          <option [value]="7">July</option>
+                                          <option [value]="8">August</option>
+                                          <option [value]="9">September</option>
+                                          <option [value]="10">October</option>
+                                          <option [value]="11">November</option>
+                                          <option [value]="12">December</option>
+                                        </select>
+                                                        <label id="bg-transp" class="did-floating-label">Expiration Month <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isShipComVal">Expiration Month cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Expiration Year </label>
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="ExpirationYear" [(ngModel)]="head.ExpirationYear" [ngModelOptions]="{standalone: true}" *ngIf="iscardfreeform==true" disabled>
+                                                        <select class="did-floating-select" id="ExpirationYear" *ngIf="iscardfreeform==false" [(ngModel)]="head.ExpirationYear" [ngModelOptions]="{standalone:true}">
+                                          <option *ngFor="let year1 of getyearlist" [value]="year1">{{year1}}</option>
+                                        </select>
+                                                        <label id="bg-transp" class="did-floating-label">Expiration Year <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isPhoneVal">PO Number cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12" *ngIf="(!((iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)) && isaddressparse=='1')">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Please Copy your address here <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="addreparser()">Parse</a> </label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <textarea class="did-floating-input brder-color-grey" id="addressparser" [maxlength]="32000" [(ngModel)]="head.cardaddressparser" (change)="addreparser()" [ngModelOptions]="{standalone:true}"></textarea>
+                                                        <label id="bg-transp" class="did-floating-label">Please Copy your address here</label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isPhoneVal">Contact cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address 1  </label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+
+                                                        <label class="mb-5 font-sm color-gray-700" *ngIf="iscardfreeform==false"> (Same
+                                As Billing Address) <input type="checkbox" class="checkagree"
+                                  *ngIf="iscardfreeform==false" name="chkActive" #chkActive="ngModel"
+                                  (change)="SetCardAddress()" [ngModelOptions]="{standalone:true}"
+                                  [(ngModel)]="isbillingincard" /></label>
+
+                                                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="40" id="cardAddress1" [(ngModel)]="head.cardDetailadr1" [ngModelOptions]="{standalone:true}" [disabled]="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)">
+                                                        <label id="bg-transp" class="did-floating-label">Address 1 <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isenter_byVal">Address 1 cannot be blank.</div> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Address 2</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="40" id="cardAddress2" [(ngModel)]='head.cardDetailadr2' [ngModelOptions]="{standalone:true}" [disabled]="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)">
+                                                        <label id="bg-transp" class="did-floating-label">Address 2</label>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Country</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="headcardDetailselectedCountry" [(ngModel)]='head.cardDetailselectedCountry' [ngModelOptions]="{standalone:true}" *ngIf="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)"
+                                                            disabled>
+                                                        <select [ngModelOptions]="{standalone:true}" id="headcardDetailselectedCountry" *ngIf="iscardfreeform==false && isbillingincard==false" [(ngModel)]='head.cardDetailselectedCountry' class="did-floating-select" (change)="getcardStates($event.target.value)">
+                                          <option *ngFor="let country of cardcountryList" [value]="country.country_code">
+                                            {{country.country_descr}}
+                                          </option>
+                                        </select>
+                                                        <label id="bg-transp" class="did-floating-label">Country <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isPayTypeVal">Payment Type cannot be blank.</div> -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">State</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="headcardDetailselectedState" [(ngModel)]='head.cardDetailselectedState' [ngModelOptions]="{standalone:true}" *ngIf="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)"
+                                                            disabled>
+                                                        <select class="did-floating-select" [ngModelOptions]="{standalone:true}" id="headcardDetailselectedState" *ngIf="iscardfreeform==false && isbillingincard==false && iscardstateshow==true" [(ngModel)]='head.cardDetailselectedState' id="cardState">
+                                <option value="0">Select State</option>
+                                <option *ngFor="let state of cardstateList" [value]="state.state">
+                                  {{state.descr}}
+                                </option>
+                              </select>
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="cardDetailselectedState" [(ngModel)]='head.cardDetailselectedState' [ngModelOptions]="{standalone:true}" *ngIf="iscardfreeform==false && isbillingincard==false && iscardstateshow==false">
+                                                        <label id="bg-transp" class="did-floating-label">State <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isShipViaVal">Ship Via cannot be blank.</div> -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">City</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="headcardDetailcity" [(ngModel)]='head.cardDetailcity' [ngModelOptions]="{standalone:true}" [disabled]="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)">
+                                                        <label id="bg-transp" class="did-floating-label">City <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isEmailVal">Shipping Account cannot be blank.</div> -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Zip</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" id="headcardDetailzip" [maxlength]="20" [(ngModel)]='head.cardDetailzip' [ngModelOptions]="{standalone:true}" [disabled]="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)">
+                                                        <label id="bg-transp" class="did-floating-label">Zip <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isNoteVal">{{OrderNoteLable}} cannot be blank.</div> -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-12 col-md-6">
+                                                <div class="form-group mb-10">
+                                                    <label id="bg-head-transp" class="mb-5 font-sm color-gray-700">Email</label>
+                                                    <!-- <input class="form-control" type="password" placeholder="******************"> -->
+                                                    <div class="did-floating-label-content mb-0">
+                                                        <input type="text" class="did-floating-input brder-color-grey" [maxlength]="60" id="headcardDetailEmail" [(ngModel)]='head.cardDetailEmail' id="CreaditEmail" #CreaditEmail [ngModelOptions]="{standalone:true}" [disabled]="(iscardfreeform==true) || (iscardfreeform==false && isbillingincard==true)">
+                                                        <label id="bg-transp" class="did-floating-label">Email <span>*</span></label>
+                                                        <!-- <div class="invalid-feedback" *ngIf="isNoteVal">{{OrderNoteLable}} cannot be blank.</div> -->
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+
+
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-group mb-10 mb-0">
+                                <div class="row">
+                                    <div class="col-xs-12 col-sm-12 col-md-12 checkout-box d-flex justify-content-between flex-wrap btn-center" *ngIf="!isSubmitted">
+                                        <a [routerLink]="['/categories']" class="font-md-bold btn btn-buy w-auto mb-5">Continue
+                                            Shopping</a>
+                                        <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="createOrder(checkoutForm,false)" *ngIf="isSubmitPermission && flagtosubmit==true">Review & Submit</a>
+                                        <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="createOrder(checkoutForm,true)" *ngIf="isReviewPermission">Review</a>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5 col-lg-5">
+
+                <div class="box-border">
+                    <div class="form-group mb-10 mb-0">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 checkout-box d-flex justify-content-between flex-wrap btn-center" *ngIf="!isSubmitted">
+                                <a [routerLink]="['/categories']" class="font-md-bold btn btn-buy w-auto mb-5">Continue
+                                    Shopping</a>
+                                <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="createOrder(checkoutForm,false)" *ngIf="isSubmitPermission && flagtosubmit==true">Review & Submit</a>
+                                <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="createOrder(checkoutForm,true)" *ngIf="isReviewPermission">Review</a>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="align-flex">
+                        <h5 class="font-md-bold mb-20">Item Details</h5>
+                        <a href="/viewcart">
+                            <h5 class="font-md-bold mb-20">Edit Cart</h5>
+                        </a>
+                    </div>
+                    <div class="listCheckout" *ngIf="cartProducts!=undefined && cartProducts!=null && cartProducts.length>0">
+                        <h5 class="font-md-bold mb-20">Total Items : {{cartProducts.length}}</h5>
+                        <div class="item-wishlist" *ngFor="let product of cartProducts;  let i = index">
+                            <!-- <a (click)='deleteProduct(product)' title="cancel" class="icon chdelete">
+                                <i class="fa fa-trash-o"></i>
+                            </a> -->
+                            <div class="wishlist-product">
+                                <div class="product-wishlist d-block">
+                                    <div class="product-image">
+                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer">
+                                            <img src="assets/images/Product.png" alt="{{product.itemname+'' + product.freeform+'' + product.itemdesc}}" *ngIf="product.image == 'NotFound'">
+                                            <img src="{{product.image}}" alt="{{product.itemname +''+ product.freeform +''+ product.itemdesc}}" *ngIf="product.image != undefined">
+                                        </a>
+
+                                        <!-- <a (click)='deleteProduct(product)' title="cancel" class="icon chdelete">
+                                    <i class="fa fa-trash-o"></i>
+                                  </a> -->
+                                    </div>
+                                    <div class="product-info pl-0 pr-0">
+                                        <a [routerLink]="['/productdetail',product.itemname.toLowerCase(), product.links.toLowerCase()]" class="cpointer">
+                                            <h4 class="color-brand-3 fnt-18">{{itlable}} {{product.itemname}}</h4>
+                                            <h6 class="color-brand-3 fnt-14">
+                                                <ng-container *ngIf="isprofiledesc=='0' || isprofiledesc=='2'">
+                                                    <ng-container *ngFor="let dsr of product.descrarray"> {{dsr}} </ng-container>
+                                                </ng-container>
+                                                <ng-container *ngIf="isprofiledesc=='1' || isprofiledesc=='2'"> {{product.freeform}} </ng-container>
+                                            </h6>
+                                        </a>
+                                        <div style="margin-top: 10px;" *ngIf="isShowItemNote==true">
+                                            <label class="cpointer" (click)="Clicktoedit(product,i)" *ngIf="!product.canEditCode"><span *ngIf="product.Note==undefined || product.Note==null || product.Note==''">Add Note</span> <span *ngIf="product.Note!=undefined && product.Note!=null && product.Note!=''">{{product.Note}}</span> </label>
+                                            <input class="add-edit" [ngStyle]="{'display': product.canEditCode ? 'block' : 'none' }" maxlength="30" #Product{{i}} id="Product{{i}}" name="Product{{i}}" [ngModelOptions]="{standalone:true}" (focusout)="addNote(product)" (keyup.enter)="addNote(product)"
+                                                placeholder="Add Note" [(ngModel)]="product.Note" type="text" /> &nbsp;
+                                            <i (click)="Clicktoedit(product,i)" title="Edit Note" *ngIf="product.canEditCode==undefined || product.canEditCode == false" style="font-size: 18px;cursor: pointer;" class="fa fa-edit"></i>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="wishlist-status">
+                                <h6 class="color-gray-500 fnt-14">{{product.Quantity}} </h6>
+                                <h6 class="color-gray-500 fnt-14">{{getumdescbyumcode(product.unitMeasure)}}</h6>
+                            </div>
+
+                            <div class="wishlist-price">
+                                <h4 class="color-brand-3 font-lg-bold fnt-16 text-end gcolor" *ngIf="israteshowforcu==true && priceshowcust=='1'">${{product.PricePer | million }}</h4>
+                                <h4 class="color-brand-1 font-lg-bold fnt-16" *ngIf="israteshowforcu==true && priceshowcust=='1'">${{product.Price | million}}</h4>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                    <div class="form-group mb-10 mb-0" *ngIf="israteshowforcu==true && priceshowcust=='1'">
+                        <div class="row mb-10 px-2">
+                            <div class="col-lg-6 col-6"><span class="font-md-bold color-brand-3">Sub Total</span></div>
+                            <div class="col-lg-6 col-6 text-end"><span class="font-lg-bold color-brand-3">${{gettotalcart() | million}}</span>
+                            </div>
+                        </div>
+                        <div class="border-bottom mb-10 pb-5 px-2" *ngIf="frieght!=undefined && frieght!=0">
+                            <div class="row">
+                                <div class="col-lg-6 col-6 px-2"><span class="font-md-bold color-brand-3">Shipping</span></div>
+                                <div class="col-lg-6 col-6 text-end px-2"><span class="font-lg-bold color-brand-3">${{frieght | million}}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-10 px-2">
+                            <div class="col-lg-6 col-6"><span class="font-md-bold color-brand-1">Total</span></div>
+                            <div class="col-lg-6 col-6 text-end"><span class="font-lg-bold color-brand-1">${{getfinaltotal() | million}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-10 mb-0" *ngIf="checkoutmsg!=undefined && checkoutmsg!=''">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 checkout-box mt-15 mb-15">
+                                <div id="ckmsg" [innerHTML]="checkoutmsg | safe: 'html'"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group mb-10 mb-0">
+                        <div class="row">
+                            <div class="col-xs-12 col-sm-12 col-md-12 checkout-box d-flex justify-content-between flex-wrap btn-center" *ngIf="!isSubmitted">
+                                <a [routerLink]="['/categories']" class="font-md-bold btn btn-buy w-auto mb-5">Continue
+                                    Shopping</a>
+                                <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="createOrder(checkoutForm,false)" *ngIf="isSubmitPermission && flagtosubmit==true">Review & Submit</a>
+                                <a class="font-md-bold btn btn-buy w-auto mb-5" (click)="createOrder(checkoutForm,true)" *ngIf="isReviewPermission">Review</a>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- </div> -->
+    </section>
+
+    <div *ngIf="isSubmitted" class="chmsgbox" id="ordersub">
+        order submitted for review successfully.
+    </div>
+</main>

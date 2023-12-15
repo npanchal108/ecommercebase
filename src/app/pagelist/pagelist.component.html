@@ -1,0 +1,569 @@
+<main class="main">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                    <li><a class="font-xs color-gray-500" href="{{ptype}}">{{ptype}}</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-box shop-template mt-60">
+
+        <div class="row padding-lr-80">
+            <div class="col-lg-12 order-first order-lg-last">
+
+
+                <div class="box-filters mt-0 pb-5 border-bottom">
+                    <div class="row">
+                        <div class="align-flex">
+
+                            <div class="col-xl-12 col-lg-12 mb-10 text-lg-end text-center">
+
+                                <div class="d-inline-block">
+                                    <span class="font-sm color-gray-500 font-medium">Show</span>
+                                    <div class="dropdown dropdown-sort border-1-right">
+                                        <button class="btn dropdown-toggle font-sm color-gray-900 font-medium" id="dropdownSort2" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static"><span>{{pagesize}}
+                                                items</span></button>
+                                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort2">
+                                            <li><a class="dropdown-item active" (click)="GetNewPageSizeNew(15)">15
+                                                    items</a>
+                                            </li>
+                                            <li><a class="dropdown-item" (click)="GetNewPageSizeNew(30)">30 items</a>
+                                            </li>
+                                            <li><a class="dropdown-item" (click)="GetNewPageSizeNew(45)">45 items</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="d-inline-block">
+                                    <a class="view-type-grid mr-5" [ngClass]="{'active': ListTypeView=='1'}" (click)="setlistview(1)"></a>
+                                    <a class="view-type-list mr-5" [ngClass]="{'active': ListTypeView=='2'}" (click)="setlistview(2)"></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="list-grid-col mt-60 mb-60" *ngIf="ListTypeView=='1'">
+                    <li class="" *ngFor="let product of dynamicpagelist | paginate : { itemsPerPage:pagesize, currentPage:pageNo,totalItems:totalLinePage, id:'second1' }">
+                        <div class="card-grid-style-3 card-style-full-image" id="{{product.PageID}}">
+                            <div class="card-grid-inner text-center">
+                                <a [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                    <div class="image-box itembox img-blog-align">
+
+                                        <img src="assets/images/Product.png" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                                        <img src="{{product.imageurl}}" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl != undefined && product.imageurl!=null">
+
+                                    </div>
+
+                                    <div class="info-right blog-cont">
+
+                                        <h3 class="color-brand-3 font-md-bold ellipsis" id="oltitle" *ngIf="ptype=='our-lines'">
+                                            {{product.PageTitle}}
+                                        </h3>
+                                        <h3 class="color-brand-3 font-md-bold ellipsis" id="oltitle1" *ngIf="ptype!='our-lines'">
+                                            {{product.PageTitle}}
+                                        </h3>
+                                        <div class="blog-date text-center mb-10 mt-10" *ngIf="ptype=='blogs'">
+                                            <h6 class="color-gray-500 font-sm">Posted by : {{product.PageKeywords}}
+                                            </h6>
+                                        </div>
+                                        <h4 class="color-brand-3 font-xs-bold ellipsis">
+                                            {{product.PageDescription}}
+                                        </h4>
+
+                                        
+                                        
+
+                                    </div>
+                                </a>
+                                <div class="social-icon-share" *ngIf="ptype=='blogs'">
+                                    <a class="social-icon-blog" target="_blank" [href]="getlinkedinShareLink(product.PageName.toLowerCase())">
+                                        <img src="assets/imgs/linkedin-white.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                    </a>
+                                    <a class="social-icon-blog" target="_blank" [href]="getFacebookShareLink(product.PageName.toLowerCase())">
+                                        <img src="assets/imgs/icons/fb.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                    </a>
+                                    <a class="social-icon-blog" target="_blank" [href]="getInstaShareLink(product.PageName.toLowerCase())">
+                                        <img src="assets/imgs/icons/ins.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                    </a>
+                                    <!-- <a class="social-icon-blog" target="_blank" href="https://www.twitter.com">
+                                        <img src="assets/imgs/icons/printest.svg" />
+                                    </a> -->
+                                    <a class="social-icon-blog" target="_blank" [href]="getTwitterShareLink(product.PageName.toLowerCase())">
+                                        <img src="assets/imgs/twitter-2.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                    </a>
+                                </div>
+
+                                <div class="blog-date" *ngIf="ptype=='blogs'">
+                                    <h6 class="color-gray-500 font-sm">{{product.CreatedDate | date: 'MMM-dd-yyyy'}}
+                                    </h6>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                </ul>
+                <div class="row mt-60 display-list" *ngIf="ListTypeView=='2'">
+                    <div class="col-lg-12 mb-15" *ngFor="let product of dynamicpagelist | paginate : { itemsPerPage:pagesize, currentPage:pageNo,totalItems:totalLinePage, id:'second1' }">
+                        <div class="card-grid-style-3 card-style-full-image" id="{{product.PageID}}">
+                            <div class="card-grid-inner text-center blog-grid-align">
+                                <div class="image-box itembox">
+                                    <a [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                        <img src="assets/images/Product.png" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl == 'NotFound' || product.imageurl==null">
+                                        <img src="{{product.imageurl}}" class="pimage itemimg" alt="{{product.PageTitle}}" *ngIf="product.imageurl != undefined && product.imageurl!=null">
+                                    </a>
+                                </div>
+
+                                <div class="info-right blog-cont blog-cont-list">
+                                    <a [routerLink]="['/'+product.ptype,product.PageName.toLowerCase()]">
+                                        <h3 class="color-brand-3 font-lg-bold text-left" id="oltitle" *ngIf="ptype=='our-lines'">
+                                            {{product.PageTitle}}
+                                        </h3>
+                                        <h3 class="color-brand-3 font-lg-bold text-left" id="oltitle1" *ngIf="ptype!='our-lines'">
+                                            {{product.PageTitle}}
+                                        </h3>
+                                        <div class="blog-date text-start mb-10 mt-10 pl-16" *ngIf="ptype=='blogs'">
+                                            <h6 class="color-gray-500 font-sm">Posted by : {{product.PageKeywords}}
+                                            </h6>
+                                        </div>
+                                        <h4 class="color-brand-3 font-xs-bold ellipsis-10">
+                                            {{product.PageDescription}}
+                                        </h4>
+
+                                        <div class="social-icon-share social-icon-share-list" *ngIf="ptype=='blogs'">
+                                            <a class="social-icon-blog" target="_blank" [href]="getlinkedinShareLink(product.PageName.toLowerCase())">
+                                                <img src="assets/imgs/linkedin-white.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                            </a>
+                                            <a class="social-icon-blog" target="_blank" [href]="getFacebookShareLink(product.PageName.toLowerCase())">
+                                                <img src="assets/imgs/icons/fb.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                            </a>
+                                            <a class="social-icon-blog" target="_blank" [href]="getInstaShareLink(product.PageName.toLowerCase())">
+                                                <img src="assets/imgs/icons/ins.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                            </a>
+                                            <!-- <a class="social-icon-blog" target="_blank" href="https://www.twitter.com">
+                                                <img src="assets/imgs/icons/printest.svg" />
+                                            </a> -->
+                                            <a class="social-icon-blog" target="_blank" [href]="getTwitterShareLink(product.PageName.toLowerCase())">
+                                                <img src="assets/imgs/twitter-2.svg" style="filter: brightness(0) saturate(100%) invert(34%) sepia(13%) saturate(2199%) hue-rotate(175deg) brightness(90%) contrast(87%);" />
+                                            </a>
+                                        </div>
+
+                                        <div class="blog-date blog-date-list" *ngIf="ptype=='blogs'">
+                                            <h6 class="color-gray-500 font-sm">{{product.CreatedDate | date: 'MMM-dd-yyyy'}}
+                                            </h6>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+
+
+
+
+                <div class="row center">
+                    <div class="col-sm-12 col-md-12" style="text-align: center;">
+                        <pagination-controls (pageChange)="bindProducts($event)" id="second1">
+                        </pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="modal fade" id="ModalQuickview" tabindex="-1" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content apply-job-form">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body p-30">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="gallery-image">
+                                <div class="galleries-2">
+                                    <div class="detail-gallery">
+                                        <div class="product-image-slider-2">
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                            <figure class="border-radius-10"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </figure>
+                                        </div>
+                                    </div>
+                                    <div class="slider-nav-thumbnails-2">
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                        <div>
+                                            <div class="item-thumb"><img src="assets/imgs/prodcut-1.jpeg" alt="product image">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="box-tags">
+                                <div class="d-inline-block mr-25"><span class="font-sm font-medium color-gray-900">Category:</span><a class="link" href="#">Lorem,
+                                        ipsum.</a></div>
+                                <div class="d-inline-block"><span class="font-sm font-medium color-gray-900">Tags:</span><a class="link" href="#">Lorem</a>,<a class="link" href="#">Lorem, ipsum.</a></div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="product-info">
+                                <h4 class="mb-15">Angle Grinder Cordless 1/2 In. Compact Drill/Driver Kit 20V
+                                </h4>
+                                <div class="info-by">
+                                    <span class="bytext color-gray-500 font-xs font-medium">by</span><a class="byAUthor color-gray-900 font-xs font-medium" href="shop-vendor-list.html">
+                                        Company Name</a>
+                                    <div class="rating d-inline-block"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg"
+                                            alt="Ecommerce"><img src="assets/imgs/template/icons/star.svg" alt="Ecommerce"><span class="font-xs color-gray-500 font-medium"> (65
+                                            reviews)</span>
+                                    </div>
+                                </div>
+                                <div class="border-bottom pt-10 mb-20"></div>
+                                <div class="box-product-price">
+                                    <h3 class="color-brand-3 price-main d-inline-block mr-10">$1001.5</h3>
+                                    <span class="color-gray-500 price-line font-xl line-througt">$1052.2</span>
+                                </div>
+                                <div class="product-description mt-10">
+                                    <ul>
+                                        <li class="font-md"><strong>SKU :</strong> DPB12</li>
+                                        <li class="font-md"><strong>Weight :</strong> 1.00 LBS</li>
+                                        <li class="font-md"><strong>Shipping :</strong> Calculated at Checkout</li>
+                                        <li class="font-md"><strong>Custom Field :</strong> Sample C</li>
+                                    </ul>
+                                </div>
+                                <div class="box-product-color mt-10">
+                                    <p class="font-md"><strong>Color :</strong> Light Blue</p>
+                                    <ul class="list-colors">
+                                        <li class="disabled"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Pink">
+                                        </li>
+                                        <li><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Gold"></li>
+                                        <li><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Pink Gold">
+                                        </li>
+                                        <li><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Silver"></li>
+                                        <li class="active"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Pink Gold">
+                                        </li>
+                                        <li class="disabled"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Black">
+                                        </li>
+                                        <li class="disabled"><img src="assets/imgs/prodcut-1.jpeg" alt="Ecommerce" title="Red">
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="box-product-style-size mt-10">
+                                    <div class="row">
+                                        <div class="col-lg-12 mb-10">
+                                            <p class="font-md"><strong>Size :</strong> 100 x 100</p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="buy-product mt-5">
+                                    <p class="font-sm mb-10">Quantity</p>
+                                    <div class="box-quantity">
+                                        <div class="input-quantity">
+                                            <input class="font-xl color-brand-3" type="text" value="1"><span class="minus-cart"></span><span class="plus-cart"></span>
+                                        </div>
+                                    </div>
+                                    <div class="box-quantity mt-3">
+                                        <div class="button-buy"><a class="btn btn-cart" href="cart.html">Add to
+                                                cart</a><a class="btn btn-buy" href="checkout.html">Buy now</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="pt-30 mb-10">
+                            <ul class="nav nav-tabs nav-tabs-product" role="tablist">
+                                <li><a class="active" href="#tab-description" data-bs-toggle="tab" role="tab" aria-controls="tab-description" aria-selected="true">Description</a></li>
+                                <li><a href="#tab-specification" data-bs-toggle="tab" role="tab" aria-controls="tab-specification" aria-selected="true">Specification</a></li>
+                                <li><a href="#tab-additional" data-bs-toggle="tab" role="tab" aria-controls="tab-additional" aria-selected="true">Additional information</a>
+                                </li>
+                                <li><a href="#tab-reviews" data-bs-toggle="tab" role="tab" aria-controls="tab-reviews" aria-selected="true">Reviews (2)</a></li>
+                                <li><a href="#tab-vendor" data-bs-toggle="tab" role="tab" aria-controls="tab-vendor" aria-selected="true">Vendor</a></li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane fade active show" id="tab-description" role="tabpanel" aria-labelledby="tab-description">
+                                    <div class="display-text-short">
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum expedita laboriosam quas enim. Facere accusantium in amet dicta culpa voluptatum ad officia maiores dolorem pariatur voluptas sapiente corrupti laborum
+                                            voluptatem quod, natus quas ipsum aspernatur ipsa officiis tempora harum iste molestias facilis. Magnam nihil labore ipsam neque quaerat exercitationem voluptatum fugit animi magni asperiores corrupti facilis
+                                            quisquam harum repudiandae architecto temporibus minus, dicta, illo facere, reiciendis inventore aut? Quibusdam amet quaerat veniam inventore nam eius, quia ab recusandae ex ad corporis at praesentium dicta
+                                            error consectetur officiis alias expedita, laboriosam voluptates sint debitis dolores velit nobis. Illo accusantium vel harum.
+                                        </p>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum expedita laboriosam quas enim. Facere accusantium in amet dicta culpa voluptatum ad officia maiores dolorem pariatur voluptas sapiente corrupti laborum
+                                            voluptatem quod, natus quas ipsum aspernatur ipsa officiis tempora harum iste molestias facilis. Magnam nihil labore ipsam neque quaerat exercitationem voluptatum fugit animi magni asperiores corrupti facilis
+                                            quisquam harum repudiandae architecto temporibus minus, dicta, illo facere, reiciendis inventore aut? Quibusdam amet quaerat veniam inventore nam eius, quia ab recusandae ex ad corporis at praesentium dicta
+                                            error consectetur officiis alias expedita, laboriosam voluptates sint debitis dolores velit nobis. Illo accusantium vel harum.
+                                        </p>
+                                        <div class="align-flex">
+                                            <p><img src="assets/imgs/prodcut-1.jpeg" alt="Ecom"></p>
+                                            <p><img src="assets/imgs/prodcut-1.jpeg" alt="Ecom"></p>
+                                        </div>
+                                        <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Laborum expedita laboriosam quas enim. Facere accusantium in amet dicta culpa voluptatum ad officia maiores dolorem pariatur voluptas sapiente corrupti laborum
+                                            voluptatem quod, natus quas ipsum aspernatur ipsa officiis tempora harum iste molestias facilis. Magnam nihil labore ipsam neque quaerat exercitationem voluptatum fugit animi magni asperiores corrupti facilis
+                                            quisquam harum repudiandae architecto temporibus minus, dicta, illo facere, reiciendis inventore aut? Quibusdam amet quaerat veniam inventore nam eius, quia ab recusandae ex ad corporis at praesentium dicta
+                                            error consectetur officiis alias expedita, laboriosam voluptates sint debitis dolores velit nobis. Illo accusantium vel harum.
+                                        </p>
+                                    </div>
+                                    <div class="mt-20 text-center"><a class="btn btn-border font-sm-bold pl-80 pr-80 btn-expand-more">More
+                                            Details</a></div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-specification" role="tabpanel" aria-labelledby="tab-specification">
+                                    <h5 class="mb-25">Specification</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Mode</td>
+                                                    <td>#SK10923</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Brand</td>
+                                                    <td>Brand</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Size</td>
+                                                    <td>6.7"</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Finish</td>
+                                                    <td>Light Blue</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Origin of Country</td>
+                                                    <td>United States</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Manufacturer</td>
+                                                    <td>USA</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Released Year</td>
+                                                    <td>2022</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Warranty</td>
+                                                    <td>International</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-additional" role="tabpanel" aria-labelledby="tab-additional">
+                                    <h5 class="mb-25">Additional information</h5>
+                                    <div class="table-responsive">
+                                        <table class="table table-striped">
+                                            <tbody>
+                                                <tr>
+                                                    <td>Weight</td>
+                                                    <td>
+                                                        <p>0.240 kg</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Dimensions</td>
+                                                    <td>
+                                                        <p>0.74 x 7.64 x 16.08 cm</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-reviews" role="tabpanel" aria-labelledby="tab-reviews">
+                                    <div class="comments-area">
+                                        <div class="row">
+                                            <div class="col-lg-8">
+                                                <h4 class="mb-30 title-question">Customer questions &amp; answers</h4>
+                                                <div class="comment-list">
+                                                    <div class="single-comment justify-content-between d-flex mb-30 hover-up">
+                                                        <div class="user justify-content-between d-flex">
+                                                            <div class="thumb text-center"><img src="assets/imgs/author-2.png" alt="Ecom"><a class="font-heading text-brand" href="#">Sienna</a>
+                                                            </div>
+                                                            <div class="desc">
+                                                                <div class="d-flex justify-content-between mb-10">
+                                                                    <div class="d-flex align-items-center"><span class="font-xs color-gray-700">January 24,
+                                                                            2023 at 3:12
+                                                                            pm</span></div>
+                                                                    <div class="product-rate d-inline-block">
+                                                                        <div class="product-rating" style="width: 100%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-10 font-sm color-gray-900">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt?
+                                                                    <a class="reply" href="#"> Reply</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-comment justify-content-between d-flex mb-30 ml-30 hover-up">
+                                                        <div class="user justify-content-between d-flex">
+                                                            <div class="thumb text-center"><img src="assets/imgs/author-3.png" alt="Ecom"><a class="font-heading text-brand" href="#">Brenna</a>
+                                                            </div>
+                                                            <div class="desc">
+                                                                <div class="d-flex justify-content-between mb-10">
+                                                                    <div class="d-flex align-items-center"><span class="font-xs color-gray-700">January 24,
+                                                                            2023 at 3:12
+                                                                            pm</span></div>
+                                                                    <div class="product-rate d-inline-block">
+                                                                        <div class="product-rating" style="width: 80%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-10 font-sm color-gray-900">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt?
+                                                                    <a class="reply" href="#"> Reply</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="single-comment justify-content-between d-flex hover-up">
+                                                        <div class="user justify-content-between d-flex">
+                                                            <div class="thumb text-center"><img src="assets/imgs/author-4.png" alt="Ecom"><a class="font-heading text-brand" href="#">Gemma</a>
+                                                            </div>
+                                                            <div class="desc">
+                                                                <div class="d-flex justify-content-between mb-10">
+                                                                    <div class="d-flex align-items-center"><span class="font-xs color-gray-700">January 24,
+                                                                            2023 at 3:12
+                                                                            pm</span></div>
+                                                                    <div class="product-rate d-inline-block">
+                                                                        <div class="product-rating" style="width: 80%">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <p class="mb-10 font-sm color-gray-900">
+                                                                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Delectus, suscipit exercitationem accusantium obcaecati quos voluptate nesciunt facilis itaque modi commodi dignissimos sequi repudiandae minus ab deleniti totam officia id incidunt?
+                                                                    <a class="reply" href="#"> Reply</a>
+                                                                </p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <h4 class="mb-30 title-question">Customer reviews</h4>
+                                                <div class="d-flex mb-30">
+                                                    <div class="product-rate d-inline-block mr-15">
+                                                        <div class="product-rating" style="width: 90%"></div>
+                                                    </div>
+                                                    <h6>4.8 out of 5</h6>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>5 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">50%
+                                                    </div>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>4 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%
+                                                    </div>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>3 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 45%" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100">45%
+                                                    </div>
+                                                </div>
+                                                <div class="progress">
+                                                    <span>2 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">65%
+                                                    </div>
+                                                </div>
+                                                <div class="progress mb-30">
+                                                    <span>1 star</span>
+                                                    <div class="progress-bar" role="progressbar" style="width: 85%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%
+                                                    </div>
+                                                </div>
+                                                <a class="font-xs text-muted" href="#">How are ratings calculated?</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade" id="tab-vendor" role="tabpanel" aria-labelledby="tab-vendor">
+                                    <div class="vendor-logo d-flex mb-30">
+                                        <img src="assets/imgs/page/product/futur.png" alt="">
+                                        <div class="vendor-name ml-15">
+                                            <h6><a href="shop-vendor-single.html">Futur Tech.</a></h6>
+                                            <div class="product-rate-cover text-end">
+                                                <div class="product-rate d-inline-block">
+                                                    <div class="product-rating" style="width: 90%"></div>
+                                                </div>
+                                                <span class="font-small ml-5 text-muted"> (32 reviews)</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="contact-infor mb-50">
+                                        <li><img src="assets/imgs/page/product/icon-location.svg" alt=""><strong>Address:</strong><span> Lorem ipsum dolor sit, amet
+                                                consectetur
+                                                adipisicing elit. Quos, reprehenderit.</span></li>
+                                        <li><img src="assets/imgs/page/product/icon-contact.svg" alt=""><strong>Contact
+                                                Seller:</strong><span> (+91) - 123-456-7890</span></li>
+                                    </ul>
+                                    <div class="d-flex mb-25">
+                                        <div class="mr-30">
+                                            <p class="color-brand-1 font-xs">Rating</p>
+                                            <h4 class="mb-0">90%</h4>
+                                        </div>
+                                        <div class="mr-30">
+                                            <p class="color-brand-1 font-xs">Ship on time</p>
+                                            <h4 class="mb-0">100%</h4>
+                                        </div>
+                                        <div>
+                                            <p class="color-brand-1 font-xs">Chat response</p>
+                                            <h4 class="mb-0">92%</h4>
+                                        </div>
+                                    </div>
+                                    <p class="font-sm color-gray-500 mb-15">
+                                        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Earum, voluptates blanditiis aut beatae consequatur, deserunt facilis repellat doloremque dolorem neque ducimus molestias sed ab tempore. Consequatur, error laborum enim, cupiditate voluptate adipisci
+                                        voluptatum eos earum architecto suscipit repudiandae vel veritatis beatae consectetur nulla veniam? Dignissimos possimus velit maxime quis quae.
+                                    </p>
+                                    <p class="font-sm color-gray-500">Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempora nulla nihil aperiam, ex nostrum cupiditate commodi quod reiciendis. Minus optio tenetur illo, eius cum iste explicabo architecto doloremque quia possimus.</p>
+                                </div>
+                                <div class="border-bottom pt-30 mb-50"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>

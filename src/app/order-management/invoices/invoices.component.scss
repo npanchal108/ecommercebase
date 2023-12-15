@@ -1,0 +1,16 @@
+#table1{
+    text-transform: uppercase;
+}
+#table2{
+    text-transform: uppercase;
+}
+
+#table1 td:first-child { 
+    text-align: left;
+    font-size: 15px;
+    // padding: 0px !important; 
+}
+#table1 td:last-child { text-align: right;
+    // padding: 0px !important; 
+    font-size: 15px;
+}

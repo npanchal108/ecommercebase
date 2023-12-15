@@ -1,0 +1,636 @@
+<main class="main">
+    <div class="section-box posi-absolute">
+        <div class="breadcrumbs-div">
+            <div class="container-fluid">
+                <ul class="breadcrumb">
+                    <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                    <li><a class="font-xs color-gray-500" href="login">Login</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <section class="section-box shop-template mt-60">
+        <!-- <div class="container"> -->
+        <div class="row mb-100 align-items-baseline padding-lr-80">
+            <div class="col-lg-5">
+                <form class="form-register mt-30 mb-30" #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="IsLoginShow=='1' && logintype=='1'">
+                  <div class="row">
+                    <div class="col-md-12 d-flex p-2">
+                        <label class="headerlable1 mr-10" *ngIf="loginlable!=null && loginlable!=undefined && loginlable!=''">{{loginlable}}</label>
+                        <div class="headermsg1" id="loginmsg" *ngIf="loginmsg!=null && loginmsg!=undefined && loginmsg!=''" [innerHTML]="loginmsg | safe: 'html'"></div>
+                        <!-- <p class="padding-tb-10 text-center text-white">Populate this marketing banner to advertise a special promotion such as: <span class="font-sm-bold">Save 20% this weekend!</span></p> -->
+                    </div>
+                </div>
+                    <div class="head-main bd-gray-200">
+                        <h1 class="head-text pb-2">Member Login</h1>
+                        <p class="pb-2 font-md color-gray-500">Welcome back!</p>
+                        <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                    </div>
+
+                    <div class="form-group pb-2" *ngIf="IsMultiCompanySetting=='1'">
+                        <label class="mb-5 font-sm color-gray-700">Select Company
+              </label><span>*</span>
+                        <!-- <select class="form-control unicase-form-control text-input" [(ngModel)]='company' #shipTo="ngModel" (change)="companychange($event.target.value)" required name="shipTo">
+                <option value="0">Select Company</option>
+                <option *ngFor="let sycp of AllCompaniesList" [value]="sycp.company_sy">{{sycp.name}}</option>
+              </select> -->
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">{{label1}}
+              </label><span class="displaynone">*</span>
+                        <div class="did-floating-label-content mb-0">
+                            <input type="text" class="did-floating-input brder-color-grey" #CustomerId="ngModel" id="userCustomerId"  [(ngModel)]="user.CustomerId" name="CustomerId" [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">{{label1}} <span>*</span></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="(webtype=='5' || webtype=='6') && ismulti=='1'">
+                        <label class="mb-5 font-sm color-gray-700">{{label2}}
+              </label>
+                        <div class="did-floating-label-content mb-0">
+                            <input type="text" class="did-floating-input brder-color-grey" #Username="ngModel" [(ngModel)]="user.Username" name="Username" [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">{{label2}}</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Password</label><span class="displaynone">* (CASE SENSITIVE)</span>
+                        <div class="did-floating-label-content mb-0">
+                            <table id="passwordtable" class="w-100 mt-10 text-center">
+                                <tr>
+                                    <td>
+                                        <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey mt-0" #Password="ngModel" id="userPassword" [(ngModel)]="user.Password" name="Password" [ngModelOptions]="{standalone:true}">
+                                        <label class="did-floating-label">Password <span>* (CASE SENSITIVE)</span></label>
+                                    </td>
+                                    <td class="bg-19" style="vertical-align: middle;">
+                                        <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                        <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                                    </td>
+                                </tr>
+
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="row" id="ForgotPassword3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-end">
+                            <div class="form-group"><a class="font-xs color-gray-500" id="fp1" (click)="Gotologin()">Forgot your
+                  password?</a></div>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="isError==true">
+                        <label class="text-danger"> {{Errormsg}}</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6 align-flex" *ngIf="iscaptcha=='1'">
+                            <re-captcha name="resolved" (resolved)="resolved($event)" required siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+                        </div>
+
+
+
+                        <div class="form-group col-md-6 align-flex justify-content-end">
+                            <!-- <input class="font-md-bold btn btn-buy" type="submit" value="Login"> -->
+
+                            <button type="submit" class="font-md-bold btn btn-buy w-auto mb-5">Login</button>
+                            <!-- <button type="button" *ngIf="isShowRegistration" (click)="register()" class="font-md-bold btn btn-buy w-auto mb-5">Register</button> -->
+                            <button type="button" *ngIf="isfindmyid=='1'" (click)="findmyidshow()" class="font-md-bold btn btn-buy w-auto mb-5">Find My ID</button>
+                        </div>
+                    </div>
+                </form>
+                <form class="form-register mt-30 mb-30" #loginForm="ngForm" (ngSubmit)="onSubmitnew()" *ngIf="IsLoginShow=='1' && logintype=='2'">
+                  <div class="row">
+                    <div class="col-md-12 d-flex p-2">
+                        <label class="headerlable1 mr-10" *ngIf="loginlable!=null && loginlable!=undefined && loginlable!=''">{{loginlable}}</label>
+                        <div class="headermsg1" id="loginmsg" *ngIf="loginmsg!=null && loginmsg!=undefined && loginmsg!=''" [innerHTML]="loginmsg | safe: 'html'"></div>
+                        <!-- <p class="padding-tb-10 text-center text-white">Populate this marketing banner to advertise a special promotion such as: <span class="font-sm-bold">Save 20% this weekend!</span></p> -->
+                    </div>
+                </div>
+                    <div class="col-md-12">
+                        <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                    </div>
+
+                    <div class="form-group" *ngIf="IsMultiCompanySetting=='1'">
+                        <label class="mb-5 font-sm color-gray-700">Select Company
+              </label><span>*</span>
+                        <!-- <select class="form-control unicase-form-control text-input" [(ngModel)]='company' #shipTo="ngModel" (change)="companychange($event.target.value)" required name="shipTo" [ngModelOptions]="{standalone:true}">
+                <option value="0">Select Company</option>
+                <option *ngFor="let sycp of AllCompaniesList" [value]="sycp.company_sy">{{sycp.name}}</option>
+              </select> -->
+                    </div>
+
+
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">{{label1}}
+              </label><span class="displaynone">*</span>
+                        <div class="did-floating-label-content mb-0">
+                            <input type="text" class="did-floating-input brder-color-grey" #CustomerId="ngModel" id="userCustomerId" (blur)="checkemail(user.CustomerId)" [(ngModel)]="user.CustomerId" name="CustomerId" [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">{{label1}} <span>*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="mb-5 font-sm color-gray-700">Password</label><span class="displaynone">* (CASE SENSITIVE)</span>
+                      <div class="did-floating-label-content mb-0">
+                          <table id="passwordtable" class="w-100 mt-10 text-center">
+                              <tr>
+                                  <td>
+                                      <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey mt-0" #Password="ngModel" id="userPassword" [(ngModel)]="user.Password" name="Password" [ngModelOptions]="{standalone:true}">
+                                      <label class="did-floating-label">Password <span>* (CASE SENSITIVE)</span></label>
+                                  </td>
+                                  <td class="bg-19" style="vertical-align: middle;">
+                                      <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                      <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                                  </td>
+                              </tr>
+
+                          </table>
+                      </div>
+
+                  </div>
+                    <!-- <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Password</label><span class="displaynone">* (CASE SENSITIVE)</span>
+                        <div class="did-floating-label-content mb-0">
+                        <table id="passwordtable" class="w-100 mt-10 text-center">
+                            <tr>
+                                <td>
+
+                                    <input [type]="hide ? 'password' : 'text'" class="did-floating-input brder-color-grey mt-0" #Password="ngModel" id="userPassword" [(ngModel)]="user.Password" name="Password" [ngModelOptions]="{standalone:true}">
+                                    <label class="did-floating-label">Password <span>* (CASE SENSITIVE)</span></label>
+                                </td>
+                                <td class="bg-19">
+                                    <i class="fa fa-eye" (click)="hide = !hide" *ngIf="!hide" aria-hidden="true"></i>
+                                    <i class="fa fa-eye-slash" (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+                                </td>
+                            </tr>
+                        </table>
+                      </div>
+                    </div> -->
+                    <div class="row" id="ForgotPassword3">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+
+                            </div>
+                        </div>
+                        <div class="col-lg-6 text-end" id="ForgotPassword1">
+                            <div class="form-group"><a class="font-xs color-gray-500" id="fp1" (click)="Gotologin()">Forgot your
+                  password?</a></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group" *ngIf="isError==true">
+                        <label class="text-danger"> {{Errormsg}}</label>
+                    </div>
+
+
+                    <div class="form-group col-md-12 d-flex justify-content-end" *ngIf="iscaptcha=='1'">
+                        <re-captcha name="resolved" (resolved)="resolved($event)" required siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+                    </div>
+
+                    <div class="form-group text-end">
+                        <!-- <input class="font-md-bold btn btn-buy" type="submit" value="Login"> -->
+                        <button type="submit" class="btn btn-buy w-auto mb-10">Login</button>
+                        <button type="button" *ngIf="isShowRegistration" (click)="register()" id="reg1" class="btn btn-buy mr-15 w-auto mb-10">Register</button>
+                        <button type="button" *ngIf="isfindmyid=='1'" (click)="findmyidshow()" class="btn btn-buy mr-15 w-auto mb-10">Find My Customer ID</button>
+                    </div>
+
+                </form>
+
+
+                <form class="form-register mt-30 mb-30" #findid="ngForm" (ngSubmit)="findmyid()" *ngIf="IsLoginShow=='3'">
+                    <!-- <div class="col-md-12 contact-title">
+                            <h3>Find My Customer ID</h3>
+                        </div> -->
+                    <div class="head-main bd-gray-200">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1 class="head-text">Find My Customer ID</h1>
+                                <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Email
+              </label><span class="displaynone">*</span>
+                        <div class="did-floating-label-content mb-0">
+                            <input type="text" class="did-floating-input brder-color-grey" placeholder="" [(ngModel)]="EmailAddress" name="EmailAddress" [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">Email <span>*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="align-flex">
+                            <button type="submit" *ngIf="isfindmyid=='1'" class="font-md-bold btn btn-buy w-auto mb-5">Search</button>
+                            <button type="button" (click)="Gotologinnew()" class="font-md-bold btn btn-buy w-auto mb-5">Go
+                  To Login</button>
+                        </div>
+                    </div>
+                    <label class="info-title">{{emailmsg}}</label>
+
+                </form>
+
+
+                <div class="form-register mt-30 mb-30" *ngIf="IsLoginShow=='2'">
+                    <div class="col-md-12 head-main bd-gray-200 mb-15">
+                        <h1 class="head-text">Forgot Password</h1>
+                        <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+                    </div>
+                    <div *ngIf="isError" class="red-text center error-message">
+                        <i class="material-icons">error</i> {{Errormsg}}
+                    </div>
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">{{lableforcustomerinforgotpassword}}
+              </label><span class="displaynone">*</span>
+                        <div class="did-floating-label-content mb-0">
+                            <input type="text" class="did-floating-input brder-color-grey" id="CustomerId" [(ngModel)]="CustomerID" (blur)="checkemail(CustomerID)" name="CustomerID" [ngModelOptions]="{standalone:true}">
+                            <label class="did-floating-label">{{lableforcustomerinforgotpassword}} <span>*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group" *ngIf="logintype!=3 && !iskrayden">
+                        <label class="mb-5 font-sm color-gray-700" *ngIf="(webtype=='5' || webtype=='6') && ismulti=='1'">{{lableforcuUserinforgotpassword}}
+              </label><span class="displaynone">*</span>
+                        <div class="did-floating-label-content mb-0">
+                            <input type="text" *ngIf="(webtype=='5' || webtype=='6') && ismulti=='1'" class="did-floating-input brder-color-grey" [(ngModel)]="UserID" name="UserID">
+                            <label class="did-floating-label">{{lableforcuUserinforgotpassword}} <span>*</span></label>
+                        </div>
+                    </div>
+                    <div class="form-group col-md-12 d-flex justify-content-end" *ngIf="iscaptcha=='1'">
+                        <re-captcha name="resolved" (resolved)="resolved($event)" required siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="align-flex">
+                          <button type="button" (click)="Gotologin()" class="font-md-bold btn btn-buy w-auto mb-5">Go
+                            To Login</button>
+                            <button type="button" (click)="MailPassword()" class="font-md-bold btn btn-buy w-auto mb-5">Send
+                  Password to
+                  Email</button>
+                            
+                        </div>
+                    </div>
+
+                    <div id="forgotpwdmsg" *ngIf="forgotpwdmsg!=null && forgotpwdmsg!=undefined && forgotpwdmsg!=''" [innerHTML]="forgotpwdmsg | safe: 'html'"></div>
+
+
+
+                </div>
+
+            </div>
+
+            <div class="offset-lg-1 col-lg-6">
+                <div class="regist-content p-4 bg-19">
+                    <h3>Account Registration</h3>
+                    <p class="font-md color-gray-500 mt-30">Create an account with us and you'll be able to:</p>
+                    <ul>
+                        <li class="list-disc">
+                            <p class="font-md color-gray-500">Check out faster</p>
+                        </li>
+                        <li class="list-disc">
+                            <p class="font-md color-gray-500">Save multiple shipping addresses</p>
+                        </li>
+                        <li class="list-disc">
+                            <p class="font-md color-gray-500">Access your order history</p>
+                        </li>
+                        <li class="list-disc">
+                            <p class="font-md color-gray-500">Track new orders</p>
+                        </li>
+                        <li class="list-disc">
+                            <p class="font-md color-gray-500">Submit Quote Request</p>
+                        </li>
+                    </ul>
+                    
+
+                    <div class="mt-50">
+                        <a [routerLink]="['/registration']" *ngIf="!iskrayden" id="reg2"><input class="font-md-bold btn btn-create-acct" type="button" value="Register an Account"></a>
+                        <a [routerLink]="['/create-account']" *ngIf="iskrayden" id="reg2"><input class="font-md-bold btn btn-create-acct" type="button" value="Register an Account"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- </div> -->
+    </section>
+</main>
+
+<!-- <h1 class="displaynone">Login</h1>
+    <form class="form-white-full col-md-12" #loginForm="ngForm" (ngSubmit)="onSubmit()" *ngIf="IsLoginShow=='1' && logintype=='1'">
+      
+      <div class="col-md-12 contact-form">
+        <div class="col-md-12">
+          <label *ngIf="loginlable!=null && loginlable!=undefined && loginlable!=''">{{loginlable}}</label> 
+            <div *ngIf="loginmsg!=null && loginmsg!=undefined && loginmsg!=''" [innerHTML]="loginmsg | safe: 'html'"></div>
+        </div>
+
+
+        <div class="col-md-12 contact-title">
+          <h3>Login</h3>
+        </div>
+
+        <div class="col-md-12">
+          <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-12" *ngIf="IsMultiCompanySetting=='1'">
+            <div class="form-group">
+              <label class="info-title">Select Company
+              </label><span>*</span>
+              <select class="form-control unicase-form-control text-input" [(ngModel)]='company' #shipTo="ngModel"
+                (change)="companychange($event.target.value)" required name="shipTo">
+                <option value="0">Select Company</option>
+                <option *ngFor="let sycp of AllCompaniesList" [value]="sycp.company_sy">{{sycp.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="info-title">{{label1}}
+              </label><span>*</span>
+              <input type="text" class="form-control unicase-form-control text-input" #CustomerId="ngModel"
+               id="userCustomerId" [(ngModel)]="user.CustomerId" name="CustomerId" [ngModelOptions]="{standalone:true}">
+            </div>
+          </div>
+          <div class="col-md-12 " *ngIf="(webtype=='5' || webtype=='6') && ismulti=='1'">
+            <div class="form-group">
+              <label class="info-title">{{label2}}
+              </label>
+              <input type="text" class="form-control unicase-form-control text-input" #Username="ngModel"
+                [(ngModel)]="user.Username" name="Username" [ngModelOptions]="{standalone:true}">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="info-title">Password</label><span>* (CASE SENSITIVE)</span>
+              <table  id="passwordtable">
+                <tr>
+                  <td>
+                    
+              <input [type]="hide ? 'password' : 'text'" class="form-control unicase-form-control text-input" #Password="ngModel"
+               id="userPassword" [(ngModel)]="user.Password" name="Password" [ngModelOptions]="{standalone:true}">
+              </td>
+              <td>
+                  <i class="fa fa-eye"  (click)="hide = !hide" *ngIf="!hide"  aria-hidden="true"></i>
+                  <i class="fa fa-eye-slash"  (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+              </td>
+              </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="isError==true">
+            <div class="form-group">
+              <label class="text-danger"> {{Errormsg}}</label>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="iscaptcha=='1'">
+            <div class="form-group">
+              <re-captcha name="resolved" (resolved)="resolved($event)" required
+                siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>      
+            </div>
+          </div>
+          <div class="col-md-12" id="ForgotPassword3">
+            <div class="form-group">
+              <a class="cpointer" (click)="Gotologin()">Forgot Password?</a>
+            </div>
+          </div>
+          <div class="col-md-12 outer-bottom-small m-t-20 logn_butn">
+            <button type="submit" class="btn-upper btn btn-primary checkout-page-button fix_btnSM">Login</button>
+            <button type="button" *ngIf="isShowRegistration" (click)="register()" class="btn-upper btn btn-primary checkout-page-button fix_btnSM">Register</button>
+            <button type="button" *ngIf="isfindmyid=='1'" (click)="findmyidshow()" class="btn-upper btn btn-primary checkout-page-button fix_btnLg">Find My Customer ID</button>
+            
+          </div>
+                
+        </div>
+        
+      </div>
+    </form>
+    <form class="form-white-full col-md-12" #loginForm="ngForm" (ngSubmit)="onSubmitnew()" *ngIf="IsLoginShow=='1' && logintype=='2'">
+      <div class="col-md-12 contact-form">
+        <div class="col-md-12">
+          
+          <label *ngIf="loginlable!=null && loginlable!=undefined && loginlable!=''">{{loginlable}}</label> 
+            <div *ngIf="loginmsg!=null && loginmsg!=undefined && loginmsg!=''" [innerHTML]="loginmsg | safe: 'html'"></div>
+        </div>
+
+
+        <div class="col-md-12 contact-title">
+          <h3>Login</h3>
+        </div>
+
+        <div class="col-md-12">
+          <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+        </div>
+
+        <div class="col-md-6">
+          <div class="col-md-12" *ngIf="IsMultiCompanySetting=='1'">
+            <div class="form-group">
+              <label class="info-title">Select Company
+              </label><span>*</span>
+              <select class="form-control unicase-form-control text-input" [(ngModel)]='company' #shipTo="ngModel"
+                (change)="companychange($event.target.value)" required name="shipTo"  [ngModelOptions]="{standalone:true}">
+                <option value="0">Select Company</option>
+                <option *ngFor="let sycp of AllCompaniesList" [value]="sycp.company_sy">{{sycp.name}}</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="info-title">{{label1}}
+              </label><span>*</span>
+              <input type="text" class="form-control unicase-form-control text-input" #CustomerId="ngModel"
+               id="userCustomerId" [(ngModel)]="user.CustomerId" name="CustomerId" [ngModelOptions]="{standalone:true}">
+            </div>
+          </div>
+          
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="info-title">Password</label><span>* (CASE SENSITIVE)</span>
+              <table  id="passwordtable">
+                <tr>
+                  <td>
+                    
+              <input [type]="hide ? 'password' : 'text'" class="form-control unicase-form-control text-input" #Password="ngModel"
+               id="userPassword" [(ngModel)]="user.Password" name="Password" [ngModelOptions]="{standalone:true}">
+              </td>
+              <td>
+                  <i class="fa fa-eye"  (click)="hide = !hide" *ngIf="!hide"  aria-hidden="true"></i>
+                  <i class="fa fa-eye-slash"  (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+              </td>
+              </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="isError==true">
+            <div class="form-group">
+              <label class="text-danger"> {{Errormsg}}</label>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="iscaptcha=='1'">
+            <div class="form-group">
+              <re-captcha name="resolved" (resolved)="resolved($event)" required
+                siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+            </div>
+          </div>
+          <div class="col-md-12" id="ForgotPassword1">
+            <div class="form-group">
+              <a class="cpointer" (click)="Gotologin()">Forgot Password?</a>
+            </div>
+          </div>
+          <div class="col-md-12 outer-bottom-small m-t-20">
+            <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Login</button>
+            <button type="button" *ngIf="isShowRegistration" (click)="register()" class="btn-upper btn btn-primary checkout-page-button">Register</button>
+            <button type="button" *ngIf="isfindmyid=='1'" (click)="findmyidshow()" class="btn-upper btn btn-primary checkout-page-button">Find My Customer ID</button>
+          </div>
+                
+        </div>
+        
+      </div>
+    </form>
+    <form class="form-white-full col-md-12" #findid="ngForm" (ngSubmit)="findmyid()" *ngIf="IsLoginShow=='3'">
+      <div class="col-md-12 contact-form">
+        <div class="col-md-12">
+          <div class="col-md-12 contact-title">
+            <h3>Find My Customer ID</h3>
+          </div>      
+          <div class="form-group">
+            <label class="info-title">Email </label><span>*</span>
+            <input type="text" class="form-control unicase-form-control text-input" placeholder="Enter your email"
+              [(ngModel)]="EmailAddress" name="EmailAddress" [ngModelOptions]="{standalone:true}">
+          </div>
+          <div class="col-md-12 outer-bottom-small m-t-20">
+            <div class="align-flex">
+  <button type="submit" *ngIf="isfindmyid=='1'" class="font-md-bold btn btn-buy w-auto mb-5">Search</button>
+  <button type="button" (click)="Gotologinnew()" class="font-md-bold btn btn-buy w-auto mb-5">Go
+To Login</button>
+</div>
+          </div>
+          <label class="info-title">{{emailmsg}}</label>
+        </div>
+        </div>
+    </form>
+    <form class="form-white-full col-md-12" #loginForm="ngForm" (ngSubmit)="onSubmitship()" *ngIf="IsLoginShow=='1' && logintype=='3'">
+      
+      <div class="col-md-12 contact-form">
+        <div class="col-md-12">
+          <label *ngIf="loginlable!=null && loginlable!=undefined && loginlable!=''">{{loginlable}}</label> 
+            <div *ngIf="loginmsg!=null && loginmsg!=undefined && loginmsg!=''" [innerHTML]="loginmsg | safe: 'html'"></div>
+        </div>
+
+
+        <div class="col-md-12 contact-title">
+          <h3>Login</h3>
+        </div>
+
+        <div class="col-md-12">
+          <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+        </div>
+
+        <div class="col-md-6">
+          
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="info-title">{{label1}}
+              </label><span>*</span>
+              <input type="text" class="form-control unicase-form-control text-input" #CustomerId="ngModel"
+               id="userCustomerId" [(ngModel)]="user.CustomerId" name="CustomerId" [ngModelOptions]="{standalone:true}">
+            </div>
+          </div>
+          
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="info-title">Password</label><span>* (CASE SENSITIVE)</span>
+              <table  id="passwordtable">
+                <tr>
+                  <td>
+                    
+              <input [type]="hide ? 'password' : 'text'" class="form-control unicase-form-control text-input" #Password="ngModel"
+               id="userPassword" [(ngModel)]="user.Password" name="Password" [ngModelOptions]="{standalone:true}">
+              </td>
+              <td>
+                  <i class="fa fa-eye"  (click)="hide = !hide" *ngIf="!hide"  aria-hidden="true"></i>
+                  <i class="fa fa-eye-slash"  (click)="hide = !hide" *ngIf="hide" aria-hidden="true"></i>
+              </td>
+              </tr>
+              </table>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="isError==true">
+            <div class="form-group">
+              <label class="text-danger"> {{Errormsg}}</label>
+            </div>
+          </div>
+          <div class="col-md-12" *ngIf="iscaptcha=='1'">
+            <div class="form-group">
+              <re-captcha name="resolved" (resolved)="resolved($event)" required
+                siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+            </div>
+          </div>
+          <div class="col-md-12" id="ForgotPassword2">
+            <div class="form-group">
+              <a class="cpointer" (click)="Gotologin()">Forgot Password?</a>
+            </div>
+          </div>
+          <div class="col-md-12 outer-bottom-small m-t-20 logn_butn">
+            <button type="submit" class="btn-upper btn btn-primary checkout-page-button fix_btnSM">Login</button>
+          </div>
+                
+        </div>
+        
+      </div>
+    </form>
+  
+    <div class="form-white-full col-md-12" *ngIf="IsLoginShow=='2'">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="row">
+            <div class="col-md-12 contact-title">
+              <h4>Forgot Password</h4>
+            </div>
+            <div class="col-md-12">
+              <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+            </div>
+            
+            <div *ngIf="isError" class="red-text center error-message">
+              <i class="material-icons">error</i> {{Errormsg}}
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="info-title">{{lableforcustomerinforgotpassword}}
+                </label><span>*</span>
+                <input type="text" class="form-control unicase-form-control text-input" id="CustomerId" [(ngModel)]="CustomerID"
+                  name="CustomerID" [ngModelOptions]="{standalone:true}">
+              </div>
+              <div class="form-group" *ngIf="logintype!=3">
+                <label class="info-title"
+                  *ngIf="(webtype=='5' || webtype=='6') && ismulti=='1'">{{lableforcuUserinforgotpassword}}
+                </label>
+                <input type="text" *ngIf="(webtype=='5' || webtype=='6') && ismulti=='1'"
+                  class="form-control unicase-form-control text-input" [(ngModel)]="UserID" name="UserID">
+              </div>
+              <div class="col-md-12" *ngIf="iscaptcha=='1'">
+                <div class="form-group">
+                  <re-captcha name="resolved" (resolved)="resolved($event)" required
+                    siteKey="6Lc2-l4UAAAAAN8mmuWceB_l8vYl7_dC3mpg36bX"></re-captcha>
+                </div>
+              </div>
+              <div class="form-group btnmd">
+                <button type="button" (click)="MailPassword()"
+                  class="btn-upper marginBottom10 btn btn-primary checkout-page-button">Send Password to Email</button>
+                <button type="button" (click)="Gotologin()" class="btn-upper btn btn-primary checkout-page-button">Go
+                  To Login</button>
+              </div>
+            </div>
+          </div>
+          <div *ngIf="forgotpwdmsg!=null && forgotpwdmsg!=undefined && forgotpwdmsg!=''" [innerHTML]="forgotpwdmsg | safe: 'html'"></div>  
+        </div>
+      </div>
+
+
+    </div>
+
+
+
+
+   -->

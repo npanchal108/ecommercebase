@@ -1,0 +1,69 @@
+<div class="col-md-12 contact-form">
+  <h1 class="displaynone">Help-Desk</h1>    
+  <div class="row" style="padding-top: 30px;">
+      <div  class="col-md-6 text-right">
+          <div class="form-group">
+            <select class="form-control unicase-form-control text-input"  [ngModelOptions]="{standalone:true}" [(ngModel)]='stat' (change)="searched()">
+              <option *ngFor="let st of stateoption" [value]="st.value">{{st.lable}}</option>
+              <!-- <option [value]="0">Open</option> -->
+              <!-- <option [value]="1">Close</option>                          -->
+            </select>
+          </div>
+        </div>
+  </div>
+  <div class="table-responsive table-mobile single-box" *ngFor="let order of Helpdesklist | paginate : { itemsPerPage:20, currentPage:page,totalItems:totalPage, id:'second' } ;let i = index">
+    <table id="table1" class="table table-striped">
+      <tr>
+        <td><label>CALL NUMBER</label></td>
+        <td><label>PRIORITY</label></td>
+        <td><label>DATE MODIFIED</label></td>
+        <td><label>REPORTED BY</label></td>
+        <td><label>DATE CREATED</label></td>
+        <td><label>STAT</label></td>
+      </tr>
+      <tr>
+        <td>{{order.call_number}}</td>
+        <td>{{order.priority}}</td>
+        <td>{{order.date_modified | date: 'MMM-dd-yyyy'}}</td>
+        <td>{{order.reported_by}}</td>
+        <td>{{order.date_created | date: 'MMM-dd-yyyy'}}</td>
+        <td><span *ngIf="order.stat=='1'">Close</span><span *ngIf="order.stat=='0'">Open</span></td>
+      </tr>
+      <tr>
+        <td><label>CATEGORY</label></td>
+        <td><label>Call satus</label></td>
+        <td colspan="4"><label>Issue</label></td>
+        
+      </tr>
+      <tr>
+        <td>{{order.Category}}</td>
+        <td>{{order.call_stat}}</td>
+        <td colspan="4">{{order.issue}}</td>        
+      </tr>
+      <tr>
+        <td colspan="6"><label>Problem</label></td>        
+      </tr>
+      <tr>
+        <td colspan="6">{{order.problem}}</td>
+      </tr>
+    </table>
+
+    
+  </div>
+  <div *ngIf="IsShow" class="td-pagination tacenter">
+    <pagination-controls  id="second"
+    (pageChange)="page = getorderlistpage($event)"
+    maxSize="9"
+    directionLinks="true"
+    autoHide="false"
+    previousLabel="Previous"
+    nextLabel="Next"
+    screenReaderPaginationLabel="Pagination"
+    screenReaderPageLabel="page"
+    screenReaderCurrentLabel="You're on page">
+    </pagination-controls>
+  </div>
+
+    
+</div>
+

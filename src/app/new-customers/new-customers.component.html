@@ -1,0 +1,480 @@
+<!-- <div class="container"> -->
+  <div class="contact-page">
+    <div class="row">
+      <!-- <div class="col-xs-12 col-sm-12 col-md-3 sidebar"> -->
+        <!-- <app-side-menu></app-side-menu> -->
+      <!-- </div> -->
+      <div class="col-md-1">&nbsp;</div>
+      <form #newCustomerForm="ngForm" novalidate (ngSubmit)="newCustomerSubmit(newCustomerForm)">
+        <div class="col-md-10 contact-form">          
+          <div class="row">            
+            <div class="col-md-12 contact-title">
+              <h1 class="displaynone">NEW CUSTOMER APPLICATION</h1>
+              <h3 class="text-center"><b><i>NEW CUSTOMER APPLICATION</i></b></h3>
+            </div>
+            <div class="col-md-12">
+              <label class="text-danger">All fields marked with an asterisk (*) must be completed</label>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-12" *ngIf="isaddressparse=='1'">
+              <div class="form-group">
+                <label class="info-title">Please Copy your address here</label>           
+                <a class="btn btn-success btnparse"
+            (click)="addreparser()">Parse</a>   
+                <textarea class="form-control unicase-form-control text-input" id="addressparser"  
+                [maxlength]="32000" name="addressparser" [(ngModel)]='newCustomer.addressparser' (change)="addreparser()" [ngModelOptions]="{standalone:true}"></textarea>
+              </div>
+            </div>
+            
+            <div class="col-md-4 ">
+              <div class="form-group all-border">
+                <label>Business Type *</label>
+                <select class="form-control unicase-form-control top-border text-input ng-untouched ng-pristine ng-valid h40"
+                  name="BusinessType" FormControlName="BusinessType"
+                  #BusinessType="ngModel" required [(ngModel)]="newCustomer.BusinessType" [ngModelOptions]="{standalone:true}">
+                  <option *ngFor="let business of businessTypes" [value]="business.businesstypename">
+                    {{business.businesstypename}}
+                  </option>
+                </select>                  
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group all-border">
+                <label>Customer Preferred Delivery Method *</label>
+                <select
+                  class="form-control unicase-form-control  top-border text-input ng-untouched ng-pristine ng-valid h40"
+                  name="CustomerMethod" #CustomerMethod="ngModel" [(ngModel)]="newCustomer.CustomerMethod" [ngModelOptions]="{standalone:true}">
+                  <option *ngFor="let customer of getCustomer" [value]="customer.methodname">
+                    {{customer.methodname}}
+                  </option>
+                </select>             
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group all-border">
+                <label>Preferred Order Submission Method *</label>
+                <select
+                  class="form-control unicase-form-control  top-border text-input ng-untouched ng-pristine ng-valid h40"
+                  name="PreferredMethod" [ngModelOptions]="{standalone:true}" #PreferredMethod="ngModel" [(ngModel)]="newCustomer.PreferredMethod">
+                  <option *ngFor="let order of getOrders" [value]="order.ordermethodname">{{order.ordermethodname}}
+                  </option>
+                </select>        
+              </div>            
+            </div>
+          </div>
+          <div class="row">
+            <h4 class="text-left">BILL TO ADDRESS:</h4>
+            <div class="col-md-8">
+              <div class="form-group">
+                <label class="info-title" >Company Name *</label>
+                <input type="text" class="form-control unicase-form-control text-input" #CompanyName="ngModel"
+                  [(ngModel)]="newCustomer.CompanyName" name="CompanyName" [ngModelOptions]="{standalone:true}" required>
+                  
+              </div>       
+              <div class="form-group">
+                <label class="" for="email">Address 1 *</label>
+                <textarea type="text" class="form-control unicase-form-control text-input" #Address1="ngModel"
+                  [(ngModel)]="newCustomer.Address1" name="Address1" [ngModelOptions]="{standalone:true}" id="Address1" required></textarea>
+                  
+              </div>
+              <div class="form-group">
+                <label class="" for="email">Address 2</label>
+                <textarea type="text" class="form-control unicase-form-control text-input" #Address2="ngModel"
+                  [(ngModel)]="newCustomer.Address2" name="Address2" [ngModelOptions]="{standalone:true}" id="Address2"></textarea>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group all-border">
+                <label>Do you want automatic item substitutions? (Y/N) *</label>
+                <select
+                  class="form-control unicase-form-control top-border  text-input ng-untouched ng-pristine ng-valid h40"
+                  #substitutions="ngModel" [(ngModel)]="newCustomer.substitutions" [ngModelOptions]="{standalone:true}" name="substitutions">
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>           
+              </div>              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">City *
+                </label>
+                <input type="text" class="form-control unicase-form-control text-input" #City1="ngModel"
+                  [(ngModel)]="newCustomer.City1" name="City1" id="City" [ngModelOptions]="{standalone:true}" required>
+                  
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">State *
+                </label>
+                <select class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid h40"
+                  #State1="ngModel" [(ngModel)]="newCustomer.State1" name="State1" [ngModelOptions]="{standalone:true}" id="State">
+                  <option *ngFor="let state of stateList" [value]="state.state">
+                    {{state.descr}}
+                  </option>
+                </select>                
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Zip *
+                </label>
+                <input type="text" class="form-control unicase-form-control text-input" #Zip1="ngModel"
+                  [(ngModel)]="newCustomer.Zip1" name="Zip1" id="PostalCode" [ngModelOptions]="{standalone:true}" required>                  
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Country *
+                </label>               
+                <select class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid h40"
+                  #Country1="ngModel" [(ngModel)]="newCustomer.Country1" name="Country1" [ngModelOptions]="{standalone:true}">
+                  <option *ngFor="let country of countryList" [value]="country.country_code">
+                    {{country.country_descr}}
+                  </option>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Territory<br>
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Territory="ngModel"
+                  [(ngModel)]="newCustomer.Territory" name="Territory" [ngModelOptions]="{standalone:true}">           
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Phone *
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Phone1="ngModel"
+                  [(ngModel)]="newCustomer.Phone1" name="Phone1" [ngModelOptions]="{standalone:true}" required>                  
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Fax<br>
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Fax1="ngModel"
+                  [(ngModel)]="newCustomer.Fax1" name="Fax1" [ngModelOptions]="{standalone:true}" required>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Email *<br>
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Email1="ngModel"
+                  [(ngModel)]="newCustomer.Email1" name="Email1" [ngModelOptions]="{standalone:true}" required>                  
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <h4 class="text-left">SHIP TO ADDRESS:</h4>
+            <div class="col-md-8">
+              <div class="form-group">
+                <label class="info-title">Name *
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Name1="ngModel"
+                  [(ngModel)]="newCustomer.Name1" name="Name1" [ngModelOptions]="{standalone:true}" required>                  
+              </div>
+              <div class="form-group">
+                <label class="" for="email">Address 1 *</label>
+                <textarea type="text" class="form-control unicase-form-control text-input" #Address3="ngModel"
+                  [(ngModel)]="newCustomer.Address3" name="Address3" [ngModelOptions]="{standalone:true}" required></textarea>                  
+              </div>
+              <div class="form-group">
+                <label class="" for="email">Address 2</label>
+                <textarea type="text" class="form-control unicase-form-control text-input" #Address4="ngModel"
+                  [(ngModel)]="newCustomer.Address4" name="Address4" [ngModelOptions]="{standalone:true}"></textarea>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group all-border">
+                <label class="info-title">Is this a Residential Address (Y/N) *
+                </label>
+                <select
+                  class="form-control unicase-form-control  top-border text-input ng-untouched ng-pristine ng-valid h40"
+                  #Residential1="ngModel" [(ngModel)]="newCustomer.Residential1" name="Residential1" [ngModelOptions]="{standalone:true}">
+                  <option>Yes</option>
+                  <option>No</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">City *
+                </label>
+                <input type="text" class="form-control unicase-form-control" #City2="ngModel"
+                  [(ngModel)]="newCustomer.City2" name="City2" [ngModelOptions]="{standalone:true}" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">State *
+                </label>
+
+                <select class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid h40"
+                  #State2="ngModel" [(ngModel)]="newCustomer.State2" [ngModelOptions]="{standalone:true}" name="State2">
+                  <option *ngFor="let state of stateList" [value]="state.state">
+                    {{state.descr}}
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Country *
+                </label>
+                <select class="form-control unicase-form-control text-input ng-untouched ng-pristine ng-valid h40"
+                  #Country2="ngModel" [(ngModel)]="newCustomer.Country2" [ngModelOptions]="{standalone:true}" name="Country2">
+                  <option *ngFor="let country of countryList" [value]="country.country_code">
+                    {{country.country_descr}}
+                  </option>
+
+                </select>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Territory
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Territory1="ngModel"
+                  [(ngModel)]="newCustomer.Territory1" [ngModelOptions]="{standalone:true}" name="Territory1">             
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
+                <label class="info-title">Zip *
+                </label>
+                <input type="text" class="form-control unicase-form-control" #Zip2="ngModel"
+                  [(ngModel)]="newCustomer.Zip2" name="Zip2" [ngModelOptions]="{standalone:true}" required>
+              </div>
+            </div>
+          </div>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="info-title">Phone *
+                  </label>
+                  <input type="text" class="form-control unicase-form-control" #Phone2="ngModel"
+                    [(ngModel)]="newCustomer.Phone2" name="Phone2" [ngModelOptions]="{standalone:true}" required>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label class="info-title">Fax
+                  </label>
+                  <input type="text" class="form-control unicase-form-control" #Fax2="ngModel"
+                    [(ngModel)]="newCustomer.Fax2" [ngModelOptions]="{standalone:true}" name="Fax2">
+               
+                </div>
+              </div>
+            </div>
+          
+          <div class="row">
+            <div class="col-md-12 ">
+              <h5 class="text-center certificate">Are you Exempt from Sales Tax? If YES, please email a copy of your TAX EXEMPT CERTIFICATE on CUSTOMERSERVICE@MERCHANDISE.COM</h5>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-12 ">
+              <label class="info-title">CHEP Pallet Acct. Number:
+              </label>
+              <input type="text" class="form-control unicase-form-control" #ChepNo="ngModel"
+                [(ngModel)]="newCustomer.ChepNo" [ngModelOptions]="{standalone:true}" name="ChepNo"><span>(if any)</span>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>#</th>
+                    <th>NAME</th>
+                    <th>PHONE # :</th>
+                    <th>EMAIL ADDRESS:</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Owner / Manager</td>
+                    <td><input type="text" class="form-control unicase-form-control" #OwnManger1="ngModel"
+                        [(ngModel)]="newCustomer.OwnManger1" [ngModelOptions]="{standalone:true}" name="OwnManger1"></td>
+                    <td><input type="text" class="form-control unicase-form-control" #OwnManger2="ngModel"
+                        [(ngModel)]="newCustomer.OwnManger2" [ngModelOptions]="{standalone:true}" name="OwnManger2"></td>
+                    <td><input type="text" class="form-control unicase-form-control" #OwnManger3="ngModel"
+                        [(ngModel)]="newCustomer.OwnManger3" [ngModelOptions]="{standalone:true}" name="OwnManger3"></td>
+                  </tr>
+                  <tr>
+                    <td> Buyer Name</td>
+                    <td> <input type="text" class="form-control unicase-form-control" #BuyerName1="ngModel"
+                        [(ngModel)]="newCustomer.BuyerName1" [ngModelOptions]="{standalone:true}" name="BuyerName1"></td>
+                    <td> <input type="text" class="form-control unicase-form-control" #BuyerName2="ngModel"
+                        [(ngModel)]="newCustomer.BuyerName2" [ngModelOptions]="{standalone:true}" name="BuyerName2"></td>
+                    <td> <input type="text" class="form-control unicase-form-control" #BuyerName3="ngModel"
+                        [(ngModel)]="newCustomer.BuyerName3" [ngModelOptions]="{standalone:true}" name="BuyerName3"></td>
+                  </tr>
+                  <tr>
+                    <td>AP Manager Name</td>
+                    <td><input type="text" class="form-control unicase-form-control" #AppManager1="ngModel"
+                        [(ngModel)]="newCustomer.AppManager1" [ngModelOptions]="{standalone:true}" name="AppManager1"></td>
+                    <td><input type="text" class="form-control unicase-form-control" #AppManager2="ngModel"
+                        [(ngModel)]="newCustomer.AppManager2" [ngModelOptions]="{standalone:true}" name="AppManager2"></td>
+                    <td><input type="text" class="form-control unicase-form-control" #AppManager3="ngModel"
+                        [(ngModel)]="newCustomer.AppManager3" [ngModelOptions]="{standalone:true}" name="AppManager3"></td>
+                  </tr>
+                  <tr>
+                    <td>Receiving Dept-Name</td>
+                    <td><input type="text" class="form-control unicase-form-control" #ReceivingName1="ngModel"
+                        [(ngModel)]="newCustomer.ReceivingName1" [ngModelOptions]="{standalone:true}" name="ReceivingName1"></td>
+                    <td><input type="text" class="form-control unicase-form-control" #ReceivingName2="ngModel"
+                        [(ngModel)]="newCustomer.ReceivingName2" [ngModelOptions]="{standalone:true}" name="ReceivingName2"></td>
+                    <td><input type="text" class="form-control unicase-form-control" #ReceivingName3="ngModel"
+                        [(ngModel)]="newCustomer.ReceivingName3" [ngModelOptions]="{standalone:true}" name="ReceivingName3"></td>
+
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <hr>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Bank:
+                </label>
+                <input type="text" class="form-control unicase-form-control" [ngModelOptions]="{standalone:true}" [(ngModel)]="newCustomer.bank" name="bank" required>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Account No.:
+                </label>
+                <input type="text" class="form-control unicase-form-control" [ngModelOptions]="{standalone:true}" [(ngModel)]="newCustomer.acount" name="acount" required>               
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Phone Number:
+                </label>
+                <input type="text" class="form-control unicase-form-control" [ngModelOptions]="{standalone:true}" #Phone3="ngModel"
+                  [(ngModel)]="newCustomer.Phone3" name="Phone3">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Type Account:
+                </label>
+                <input type="text" class="form-control unicase-form-control" [ngModelOptions]="{standalone:true}" #TypeAccount="ngModel"
+                  [(ngModel)]="newCustomer.TypeAccount" name="TypeAccount">
+            
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Contact Person:
+                </label>
+                <input type="text" class="form-control unicase-form-control" [ngModelOptions]="{standalone:true}" #ContactPerson="ngModel"
+                  [(ngModel)]="newCustomer.ContactPerson" name="ContactPerson">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="info-title">Email:
+                </label>
+                <input type="text" class="form-control unicase-form-control" [ngModelOptions]="{standalone:true}" #Email2="ngModel"
+                  [(ngModel)]="newCustomer.Email2" name="Email2">
+           
+              </div>
+            </div>
+          </div>
+          <hr>
+
+          <div class="row">
+            <h4 class="text-center">CREDIT REFERENCES:</h4>
+          </div>
+          <div class="row">
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Creditor's Name</th>
+                  <th>Contact Person</th>
+                  <th>Phone #</th>
+                  <th>Email Address:</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td> <input type="text" class="form-control unicase-form-control" #Creditors_Name="ngModel"
+                      [(ngModel)]="newCustomer.Creditors_Name" [ngModelOptions]="{standalone:true}" name="Creditors_Name"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Contact_Person="ngModel"
+                      [(ngModel)]="newCustomer.Contact_Person" [ngModelOptions]="{standalone:true}" name="Contact_Person"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Phones1="ngModel"
+                      [(ngModel)]="newCustomer.Phones1" [ngModelOptions]="{standalone:true}" name="Phones1"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Email_Address="ngModel"
+                      [(ngModel)]="newCustomer.Email_Address" [ngModelOptions]="{standalone:true}" name="Email_Address"></td>
+                </tr>
+                <tr>
+                  <td> <input type="text" class="form-control unicase-form-control" #Creditors_Name1="ngModel"
+                      [(ngModel)]="newCustomer.Creditors_Name1" [ngModelOptions]="{standalone:true}" name="Creditors_Name1"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Contact_Person1="ngModel"
+                      [(ngModel)]="newCustomer.Contact_Person1" [ngModelOptions]="{standalone:true}" name="Contact_Person1"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Phones2="ngModel"
+                      [(ngModel)]="newCustomer.Phones2" [ngModelOptions]="{standalone:true}" name="Phones2"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Email_Address1="ngModel"
+                      [(ngModel)]="newCustomer.Email_Address1" [ngModelOptions]="{standalone:true}" name="Email_Address1"></td>
+                </tr>
+                <tr>
+                  <td> <input type="text" class="form-control unicase-form-control" #Creditors_Name2="ngModel"
+                      [(ngModel)]="newCustomer.Creditors_Name2" [ngModelOptions]="{standalone:true}" name="Creditors_Name2"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Contact_Person2="ngModel"
+                      [(ngModel)]="newCustomer.Contact_Person2" [ngModelOptions]="{standalone:true}" name="Contact_Person2"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Phones3="ngModel"
+                      [(ngModel)]="newCustomer.Phones3" [ngModelOptions]="{standalone:true}" name="Phones3"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Email_Address2="ngModel"
+                      [(ngModel)]="newCustomer.Email_Address2" [ngModelOptions]="{standalone:true}" name="Email_Address2"></td>
+                </tr>
+                <tr>
+                  <td> <input type="text" class="form-control unicase-form-control" #Creditors_Name3="ngModel"
+                      [(ngModel)]="newCustomer.Creditors_Name3" [ngModelOptions]="{standalone:true}" name="Creditors_Name3"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Contact_Person3="ngModel"
+                      [(ngModel)]="newCustomer.Contact_Person3" [ngModelOptions]="{standalone:true}" name="Contact_Person3"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Phones4="ngModel"
+                      [(ngModel)]="newCustomer.Phones4" [ngModelOptions]="{standalone:true}" name="Phones4"></td>
+                  <td> <input type="text" class="form-control unicase-form-control" #Email_Address3="ngModel"
+                      [(ngModel)]="newCustomer.Email_Address3" [ngModelOptions]="{standalone:true}" name="Email_Address3"></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        
+          <div class="row">
+            <div class="col-md-12 outer-bottom-small m-t-20">
+              <button type="submit" class="btn-upper btn btn-primary checkout-page-button">Submit</button>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="col-md-1">&nbsp;</div>
+    </div>
+  </div>
+<!-- </div> -->

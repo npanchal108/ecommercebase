@@ -1,0 +1,243 @@
+<div class="head-main bd-gray-200 mt-20 padding-lr-80">
+  <div class="row align-items-center padding-lr-80">
+    <div class="col-lg-12">
+      <h1 *ngIf="ctype=='1'" class="head-text color-gray-900">Card Detail</h1>
+      <h1 *ngIf="ctype!='1'" class="head-text color-gray-900">Account Details</h1>
+    </div>
+  </div>
+</div>
+
+<section class="section-box shop-template padding-lr-80">
+  <div class="row mb-100">
+    <div class="col-lg-12">
+      <form action="" role="form" class="requires-validation" novalidate>
+        <div class="form-register align-flex">
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">First Name <span>*</span></label> 
+              <div class="did-floating-label-content mb-0">
+                <input class="did-floating-input brder-color-grey" type="text" id="FirstName" [maxlength]="40"
+                  [(ngModel)]='cardDetail.FirstName' [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label">First Name <span>*</span></label>
+                <div class="invalid-feedback">First Name cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Last Name <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <input class="did-floating-input brder-color-grey" type="text" id="LastName" [maxlength]="40"
+                  [(ngModel)]='cardDetail.LastName' [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label">Last Name <span>*</span></label>
+
+                <div class="invalid-feedback">Last Name cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4" *ngIf="ctype=='1'">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Credit Card Type <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <select class="did-floating-select" id="CardType" [(ngModel)]='cardDetail.CardType'
+                  [ngModelOptions]="{standalone:true}" [ngModelOptions]="{standalone:true}">
+                  <option value="0" selected>Select card Type </option>
+                  <option *ngFor="let cardtype of cardtypelist" [value]="cardtype.CardTypeCode">
+                    {{cardtype.CardTypeName}}</option>
+                </select>
+                <label class="did-floating-label">Credit Card Type <span>*</span></label>
+
+                <div class="invalid-feedback">Credit Card Type cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700" *ngIf="ctype=='1'">Card Number <span
+                *ngIf="ctype=='1'">*</span></label>
+              <label class="mb-5 font-sm color-gray-700" *ngIf="ctype!='1'">Account Number <span
+                *ngIf="ctype!='1'">*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <input class="did-floating-input brder-color-grey" type="text" [maxlength]="20" id="CardNumber"
+                  [(ngModel)]='cardDetail.CardNumber' [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label" *ngIf="ctype=='1'">Card Number <span
+                  *ngIf="ctype=='1'">*</span></label>
+                <label class="did-floating-label" *ngIf="ctype!='1'">Account Number <span
+                  *ngIf="ctype!='1'">*</span></label>
+
+                <div class="invalid-feedback" *ngIf="ctype=='1'">Card Number cannot be blank.</div>
+                <div class="invalid-feedback" *ngIf="ctype!='1'">Account Number cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4" *ngIf="ctype=='1'">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Expiration Month <span>*</span></label> 
+              <div class="did-floating-label-content mb-0">
+                <select class="did-floating-select" id="ExpirationMonth" [(ngModel)]='cardDetail.ExpirationMonth'
+                  [ngModelOptions]="{standalone:true}">
+                  <option [value]="1">January</option>
+                  <option [value]="2">February</option>
+                  <option [value]="3">March</option>
+                  <option [value]="4">April</option>
+                  <option [value]="5">May</option>
+                  <option [value]="6">June</option>
+                  <option [value]="7">July</option>
+                  <option [value]="8">August</option>
+                  <option [value]="9">September</option>
+                  <option [value]="10">October</option>
+                  <option [value]="11">November</option>
+                  <option [value]="12">December</option>
+                </select>
+                <label class="did-floating-label">Expiration Month <span>*</span></label>
+
+                <div class="invalid-feedback">Expiration Month cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4" *ngIf="ctype=='1'">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Expiration Year <span>*</span></label> 
+              <div class="did-floating-label-content mb-0">
+                <select class="did-floating-select" id="ExpirationYear" [(ngModel)]='cardDetail.ExpirationYear'
+                  [ngModelOptions]="{standalone:true}">
+                  <option *ngFor="let year1 of getyearlist" [value]="year1">{{year1}}</option>
+                </select>
+                <label class="did-floating-label">Expiration Year <span>*</span></label>
+
+                <div class="invalid-feedback">Expiration Year cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700" *ngIf="ctype=='1'">Security Code <span>*</span></label>
+              <label class="mb-5 font-sm color-gray-700" *ngIf="ctype!='1'">Routing No <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <input type="password" *ngIf="ctype=='1'" (click)="clearcvv()" [maxlength]="4" class="form-control"
+                  id="SecurityCode" [(ngModel)]='cardDetail.SecurityCode' [ngModelOptions]="{standalone:true}">
+                <input type="text" *ngIf="ctype!='1'" class="form-control" id="SecurityCode"
+                  [(ngModel)]='cardDetail.SecurityCode' [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label" *ngIf="ctype=='1'">Security Code <span>*</span></label>
+                <label class="did-floating-label" *ngIf="ctype!='1'">Routing No <span>*</span></label>
+
+                <div class="invalid-feedback" *ngIf="ctype=='1'">Security Code cannot be blank.</div>
+                <div class="invalid-feedback" *ngIf="ctype!='1'">Routing No.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-12">
+            <h2 class="font-md-bold mb-10">Billing Address</h2>
+         </div>
+         <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label class="mb-5 font-sm color-gray-700">Address 1 <span>*</span></label>
+            <div class="did-floating-label-content mb-0">
+              <input class="did-floating-input brder-color-grey" type="text" id="Address1" [maxlength]=addr1val [(ngModel)]='cardDetail.adr1'
+              [ngModelOptions]="{standalone:true}">
+              <label class="did-floating-label">Address 1 <span>*</span></label>                
+              <div class="invalid-feedback">Address 1 cannot be blank.</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-md-4">
+          <div class="form-group">
+            <label class="mb-5 font-sm color-gray-700">Address 2</label>
+            <div class="did-floating-label-content mb-0">
+              <input class="did-floating-input brder-color-grey" type="text" id="Address2" [maxlength]=addr2val 
+              [(ngModel)]='cardDetail.adr2' [ngModelOptions]="{standalone:true}">
+              <label class="did-floating-label">Address 2</label>                
+              
+            </div>
+          </div>
+        </div>
+
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Country <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <select class="did-floating-select" [ngModelOptions]="{standalone:true}" [(ngModel)]='cardDetail.selectedCountry' (change)="onCountryChange($event.target.value)">
+                  <option *ngFor="let country of countryList" [value]="country.country_code">
+                    {{country.country_descr}}
+                  </option>
+                </select>
+                <label class="did-floating-label">Country <span>*</span></label>
+
+                <div class="invalid-feedback">Country cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">State <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <select class="did-floating-select" *ngIf="isstateshow==true" [ngModelOptions]="{standalone:true}"
+                [(ngModel)]='cardDetail.selectedState' id="State">
+                <option value='0'>Select State</option>
+                <option *ngFor="let state of stateList" [value]="state.state">
+                  {{state.descr}}
+                </option>
+                </select>
+                <input *ngIf="isstateshow==false" class="did-floating-input brder-color-grey" type="text" id="State"  [(ngModel)]='cardDetail.selectedState'
+                [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label">State <span>*</span></label>
+
+                <div class="invalid-feedback">State cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">City <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <input class="did-floating-input brder-color-grey" type="text" id="City" [maxlength]=cityval [(ngModel)]='cardDetail.city'
+                [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label">City <span>*</span></label>
+
+                <div class="invalid-feedback">City cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Zip <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <input (blur)="togglePostalCodeFlag()" class="did-floating-input brder-color-grey" type="text" id="PostalCode" [maxlength]="20" [(ngModel)]='cardDetail.zip' [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label">Zip <span>*</span></label>
+
+                <div class="invalid-feedback">Zip cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-md-4">
+            <div class="form-group">
+              <label class="mb-5 font-sm color-gray-700">Email <span>*</span></label>
+              <div class="did-floating-label-content mb-0">
+                <input class="did-floating-input brder-color-grey" type="text" id="Email" [maxlength]="250" 
+                [(ngModel)]='cardDetail.Email' [ngModelOptions]="{standalone:true}">
+                <label class="did-floating-label">Email <span>*</span></label>
+
+                <div class="invalid-feedback">Email cannot be blank.</div>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-md-12 d-flex justify-content-between">
+            
+        
+        <button type="submit" class="btn btn-buy mr-15 w-auto mb-10" (click)="back()">Back</button>
+        <button type="submit" class="btn btn-buy mr-15 w-auto mb-10" (click)="addCard()">Submit</button>
+        <a class="btn btn-buy mr-15 w-auto mb-10" *ngIf="id!='0'" (click)="DeleteCard()">Delete</a>
+          </div>
+          <div class="col-md-12" *ngIf="isAdded">
+            {{msg}}
+          </div>
+        </div>
+
+
+      </form>
+    </div>
+  </div>
+</section>

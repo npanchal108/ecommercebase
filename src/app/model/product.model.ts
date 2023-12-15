@@ -1,0 +1,20 @@
+export class Product{
+  itemnumber:string | undefined
+  itemname:string | undefined
+  description1:string | undefined
+  description2:string | undefined
+  image:string | undefined
+  um:string | undefined
+  umqty:string | undefined
+  product_line:string | undefined
+  prodline:string | undefined
+  manufacturer:string | undefined
+  vendnum:string | undefined
+  vendorname:string | undefined
+  list_price:number | undefined
+  list_price_per:string | undefined
+  qty_oh:number | undefined
+  qty_cmtd:number | undefined
+  category:string | undefined
+  categoryname:string | undefined
+}

@@ -1,0 +1,72 @@
+<div class="section-box posi-absolute">
+    <div class="breadcrumbs-div">
+        <div class="container-fluid">
+            <ul class="breadcrumb">
+                <li><a class="font-xs color-gray-1000" href="home">Home</a></li>
+                <li><a class="font-xs color-gray-500" href="pending-order-review">Order Review</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<section class="section-box shop-template mt-60">
+    <div class="row padding-lr-80">
+        <div class="head-main bd-gray-200 mt-20">
+            <div class="col-md-12">
+                <h1 class="head-text color-gray-900">Order Review</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="row padding-lr-80">
+        <div class="container p-0">
+            <table class="rwd-table mb-20">
+                <tbody>
+                    <tr>
+                        <th scope="col" class="padleft25">
+                            SHIP VIA CODE
+                        </th>
+                        <th scope="col" class="padleft25">
+                            TERMS CODE
+                        </th>
+                        <th scope="col" class="padleft25">
+                            EMAIL
+                        </th>
+                        <th scope="col" class="padleft25">
+                            CU PO
+                        </th>
+                        <th scope="col" class="padleft25">
+                            ACTION
+                        </th>
+                    </tr>
+                </tbody>
+                <tbody>
+                    <tr *ngFor="let order of orderList">
+                        <td data-th="SHIP VIA CODE" class="pad20">
+                            {{order.order_by}}
+                        </td>
+                        <td data-th="TERMS CODE" class="pad20">
+                            {{order.terms_code}}
+                        </td>
+                        <td data-th="EMAIL" class="pad20">
+                            {{order.email}}
+                        </td>
+                        <td data-th="CU PO" class="pad20">
+                            {{order.cu_po}}
+                        </td>
+                        <td data-th="ACTION" class="pad20">
+                            <a class="btn btn-primary" (click)="reviewOrder(order.orderid)">Review</a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="width-50p margin-0-auto" *ngIf="IsShow">
+                <pagination-controls id="second" (pageChange)="page = getPendingOrders($event)" maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                </pagination-controls>
+            </div>
+        </div>
+    </div>
+    <!-- </div>
+        </div>
+    </div>
+    </div> -->
+</section>

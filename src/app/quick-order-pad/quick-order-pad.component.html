@@ -1,0 +1,313 @@
+<div class="body-content">
+    <!-- <div class="container"> -->
+        <div class="row">
+            <h1 class="margin20">Quick Order Pad</h1>
+            <div class="col-sm-12 col-md-12">
+                <div class="tabbing_quickpad">
+                    <div class="tab_container">
+
+                        <input *ngIf="linebyline=='1'" id="tab1" type="radio" name="tabs" [checked]="linebyline=='1'">
+                        <label *ngIf="linebyline=='1'" for="tab1"><span>Link By Line</span></label>
+
+                        <input *ngIf="copypaste=='1'" id="tab2" type="radio" name="tabs" [checked]="linebyline=='0' && copypaste=='1'">
+                        <label *ngIf="copypaste=='1'" for="tab2"><span>Copy & Paste</span></label>
+
+                        <input *ngIf="fileupload=='1'" id="tab3" type="radio" name="tabs" [checked]="linebyline=='0' && copypaste=='0' && fileupload=='1'">
+                        <label *ngIf="fileupload=='1'" for="tab3"><span>Upload File</span></label>
+
+                        <section id="content1" class="tab-content">
+                            <h3>Already know your Item IDs?</h3>
+                            <p>Use the quick order pad to enter product codes and quantities for each item you want to purchase. Click the "Add Items" button to add the items from the quick order pad, to your shopping cart.</p>
+                            <div class="row">
+                                <div class="data_head">
+                                    <div class="col-sm-7 col-md-7">
+                                        <h4>Item#</h4>
+                                    </div>
+                                    <div class="col-sm-5 col-md-5">
+                                        <h4 class="text-center">Quantity</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row" *ngFor="let pro of productlines;let i = index">
+                                <div class="data_item">
+                                    <div class="col-sm-7 col-md-7">
+                                        <!-- <input type="text" id="fname" name="firstname" placeholder="Insert SKU/Product Name"> -->
+                                        <input [(ngModel)]="pro.product" [typeahead]="dataSource" [typeaheadScrollable]="true" (keypress)="searchallnew(pro.product)" [typeaheadAsync]="true" [typeaheadSelectFirstItem]="false" (typeaheadOnSelect)="typeaheadOnSelect($event,i)" (keyup.enter)="typeaheadOnSelect($event,i)"
+                                            [typeaheadOptionsLimit]="10" [typeaheadOptionField]="itemname" [typeaheadIsFirstItemActive]="false" [typeaheadItemTemplate]="customItemTemplate" placeholder="Search Product..." class="form-control" style="display: block !important;">
+                                        <ng-template #customItemTemplate let-model="item" class="itemmenu" let-index="index">
+                                            <a (click)='typeaheadOnSelect(model,i)' class="menuhover cpointer">
+                                                <div style="float: left;">
+                                                    <img src="{{model.image}}" alt="{{model.itemname}}" style="width: 35px;" />
+                                                </div>
+                                                <div style="margin-left: 50px;">
+                                                    <label>{{model.itemname}}</label><br>
+                                                    <span>{{model.description1 | keys}}</span>
+                                                </div>
+
+                                            </a>
+                                        </ng-template>
+                                    </div>
+                                    <div class="col-sm-5 col-md-5">
+                                        <div class="quantity buttons_added">
+                                            <input type="button" value="-" class="minus" (click)="addminus(i)">
+                                            <input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode="" #Product{{i}} id="qty{{i}}" name="qty{{i}}" [ngModelOptions]="{standalone:true}" [(ngModel)]='pro.qty'>
+                                            <input type="button" value="+" class="plus" (click)="addplus(i)">
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div class="data_item">
+                                  <div class="col-sm-7 col-md-7">                                      
+                                          <input type="text" id="fname" name="firstname" placeholder="Insert SKU/Product Name">
+                                  </div>
+                                  <div class="col-sm-5 col-md-5">
+                                          <div class="quantity buttons_added">
+                                              <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button"
+                                                  value="+" class="plus">
+                                          </div>
+                                  </div>
+                              </div>
+                              <div class="data_item">
+                                  <div class="col-sm-7 col-md-7">
+                                          <input type="text" id="fname" name="firstname" placeholder="Insert SKU/Product Name">
+                                  </div>
+                                  <div class="col-sm-5 col-md-5">
+                                          <div class="quantity buttons_added">
+                                              <input type="button" value="-" class="minus"><input type="number" step="1" min="1" max="" name="quantity" value="1" title="Qty" class="input-text qty text" size="4" pattern="" inputmode=""><input type="button"
+                                                  value="+" class="plus">
+                                          </div>
+                                  </div>
+                              </div> -->
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="marginex20 addColor">
+                                        <h5><a class="cpointer" (click)="addfiverowsin()">Add More Rows</a></h5>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="marginex20">
+                                        <a class="btn btn-upper btn-primary" (click)="addtotable()">Search & Add</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="content2" class="tab-content">
+                            <h3>Want to save time and order faster?</h3>
+                            <p>Simply copy and paste items from your file into the fields below using the following format:</p>
+                            <div class="textarea_inner">
+                                <div class="comment">
+                                    <textarea class="textinput" [(ngModel)]="searchitems" placeholder="SKU12345,10"></textarea>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="marginex20 copyButton">
+                                    <a class="margin10 btn btn-upper btn-dark" (click)="cleartxt()">Clear All</a>
+                                    <a class="margin10 white btn btn-upper btn-primary" (click)="addtosearchtable()">Search & Add</a>
+                                    <!-- <a class="margin10 btn btn-upper btn-primary" (click)="addtofinaltable()">Add To table</a> -->
+                                </div>
+                            </div>
+                        </section>
+
+                        <section id="content3" class="tab-content">
+                            <h3>Already know your Item IDs?</h3>
+                            <p>Use the quick order pad to enter product codes and quantities for each item you want to purchase.</p>
+                            <p>Import CSV [product_code*], [qty*]</p>
+                            <div class="marginex20 addColor">
+                                <h4><a href="assets/Quick_Entry.csv">Download example file</a></h4>
+                            </div>
+                            <p>IMPORT DATA File (csv)</p>
+
+                            <input style="display: block !important;" type="file" #csvReader name="Upload File" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" class="margin20p btn btn-upper btn-primary" />
+                            <a class="margin20p btn btn-upper btn-primary" (click)="addtofinaltable()">Search & Add</a>
+                            <!-- <input type="text" id="fname" name="firstname" placeholder="Insert SKU/Product Name"> -->
+                            <!-- <div class="row">
+                              <div class="col-md-12">
+                                  <div class="marginex20">
+                                      <a class="btn btn-upper btn-primary" (click)="addfiverowsin()">Upload File</a>
+                                  </div>
+                              </div>
+                          </div> -->
+                        </section>
+                    </div>
+                </div>
+                <!-- 
+              <p class="no_wrap">
+                  And Of-course this paragrapgh with not wrap Tab
+              </p>
+
+              <p class="link">
+                  Just in case you want to go through the tutorial follow this link: <a href="http://www.sevensignature.com/blog/code/responsive-pure-css-tabs/">Responsive Pure CSS Tabs</a>
+              </p> -->
+            </div>
+            <div class="col-sm-12 col-md-12">
+                <div class="quickpade_table">
+                    <!-- <div class="container"> -->
+                        <span *ngIf="productlistfortable!=undefined && productlistfortable.length>0"> {{productlistfortable.length}} Item Added</span>
+                        <a *ngIf="productlistfortable!=undefined && productlistfortable.length>0" class="btn btn-upper btn-success pull-right outer-right-xs" style="margin-bottom: 10px;" (click)="removeall()">Remove All</a>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Image</th>
+                                    <th>DESCRIPTION</th>
+                                    <th>item</th>
+                                    <th>Qty</th>
+                                    <th>delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let pro of productlistfortable;let i = index">
+                                    <td data-label="Image"><img src="{{pro.item.image}}" alt="{{pro.product}}" style="width: 35px;" /></td>
+                                    <td data-label="DESCRIPTION">{{pro.item.description1 | keys}}</td>
+                                    <td data-label="item"> {{pro.product}}</td>
+                                    <td data-label="Qty">{{pro.qty}}</td>
+                                    <td data-label="delete"><i class="fa fa-trash" (click)="deleteitem(i)"></i></td>
+                                </tr>
+                                <!-- <tr>
+                                  <td data-label="first-name">Mary</td>
+                                  <td data-label="last-name">Moe</td>
+                                  <td data-label="email">mary@example.com</td>
+                              </tr>
+                              <tr>
+                                  <td data-label="first-name">July</td>
+                                  <td data-label="last-name">Dooley</td>
+                                  <td data-label="email">july@example.com</td>
+                              </tr> -->
+                            </tbody>
+                        </table>
+                    <!-- </div> -->
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="marginex20 text-center">
+                            <a class="btn btn-upper btn-primary" *ngIf="productlistfortable!=undefined && productlistfortable.length>0" (click)="Addtocart()">I am done Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <!-- </div> -->
+</div>
+<!--<div class="body-content">
+  <div class="container">
+<div class="row">
+  <h1>Quick Order Pad</h1>
+  <div class="col-sm-6 col-md-6">
+<mat-tab-group>
+    <mat-tab label="Line By Line"> 
+      <div class="row">
+      <div class="col-sm-12 col-md-12">
+       <h3>Already know your Item IDs?</h3>
+       <h5>Use the quick order pad to enter product codes and quantities for each item you want to purchase. Click the "Add Items" button to add the items from the quick order pad, to your shopping cart.</h5>
+       <div class="table-responsive table-mobile" style="margin-top: 29px;">
+        <table class="table table-striped">
+          <thead>
+          <tr>
+              <th>
+                  Product
+              </th>
+              <th>
+                Qty
+            </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let pro of productlines;let i = index">
+              <td>
+                <input [(ngModel)]="pro.product"
+                [typeahead]="dataSource"
+                [typeaheadScrollable]="true"
+                (keypress)="searchallnew(pro.product)" 
+                [typeaheadAsync]="true"
+                [typeaheadSelectFirstItem]="false"
+                (typeaheadOnSelect)="typeaheadOnSelect($event,i)"
+                (keyup.enter)="typeaheadOnSelect($event,i)"                
+                [typeaheadOptionsLimit]="10"
+                [typeaheadOptionField]="itemname"
+                [typeaheadIsFirstItemActive]="false"           
+                [typeaheadItemTemplate]="customItemTemplate"
+                placeholder="Search Product..."
+                class="form-control">
+                <ng-template #customItemTemplate let-model="item" class="itemmenu" let-index="index">
+                  <a (click)='typeaheadOnSelect(model,i)' class="menuhover cpointer">
+                      <div style="float: left;">
+                        <img src="{{model.image}}" style="width: 35px;"/>
+                      </div>
+                      <div style="margin-left: 50px;">
+                        <label>{{model.itemname}}</label><br>
+                        <span>{{model.description1 | keys}}</span>
+                      </div>
+                    
+                </a>
+                </ng-template>
+
+              </td>
+              <td>
+                <input type="number"  class="form-control unicase-form-control text-input reordertext" 
+                #Product{{i}} id="qty{{i}}" name="qty{{i}}" 
+                [ngModelOptions]="{standalone:true}" [(ngModel)]='pro.qty'>
+              </td>
+            </tr>
+            </tbody>
+        </table>
+       </div>
+       <a class="btn btn-upper btn-success pull-right outer-right-xs" (click)="addfiverowsin()">Add 5 more rows</a>
+       <a class="btn btn-upper btn-info pull-right outer-right-xs" (click)="addtotable()">Search & Add</a>
+      </div>      
+    </div>
+    </mat-tab>
+    <mat-tab label="Copy & Paste"> Content 2 </mat-tab>
+    <mat-tab label="Upload File"> Content 3 </mat-tab>
+  </mat-tab-group>
+</div>
+<div class="col-sm-6 col-md-6"></div>
+<span *ngIf="productlistfortable!=undefined && productlistfortable.length>0"> {{productlistfortable.length}} Item Added</span>
+<a *ngIf="productlistfortable!=undefined && productlistfortable.length>0" class="btn btn-upper btn-success pull-right outer-right-xs" (click)="removeall()">Remove All</a>
+<div class="table-responsive table-mobile" style="margin-top: 29px;">
+  <table style="width: 50%;" class="table table-striped">
+    <thead>
+    <tr>
+        <th>
+            image
+        </th>
+        <th>
+          DESCRIPTION</th>
+        <th>
+          Item
+      </th>
+      <th>
+        Qty
+    </th>
+    <th>
+      delete
+  </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let pro of productlistfortable;let i = index">
+        
+<td>
+  <img src="{{pro.item.image}}" style="width: 35px;"/>
+</td>
+<td>
+  {{pro.item.description1 | keys}}
+</td>
+<td>
+  {{pro.product}}
+</td>
+<td>
+  {{pro.qty}}
+</td>
+<td>
+<i class="fa fa-trash" (click)="deleteitem(i)"></i>
+</td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="btn btn-upper btn-success pull-right outer-right-xs" *ngIf="productlistfortable!=undefined && productlistfortable.length>0" (click)="Addtocart()">I'm Done, Add to Cart</a>
+</div>
+</div>
+</div>
+</div>-->

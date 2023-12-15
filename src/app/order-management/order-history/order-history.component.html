@@ -1,0 +1,129 @@
+<div class="row padding-lr-80">
+    <div class="d-inline-block text-end">
+        <span class="font-sm color-gray-500 font-medium">Sort by:</span>
+        <div class="dropdown dropdown-sort">
+            <button class="btn dropdown-toggle font-sm color-gray-900 font-medium" id="dropdownSort" type="button" data-bs-toggle="dropdown" aria-expanded="false" data-bs-display="static">
+            <span *ngIf="sorttype==1">Order Date Latest First</span>
+            <span *ngIf="sorttype==2">Order Date Latest Last</span>
+            <span *ngIf="sorttype==3">{{wanterdatelable}} Latest First</span>
+            <span *ngIf="sorttype==4">{{wanterdatelable}} Latest Last</span>
+            <span *ngIf="sorttype==5">Order Number Latest First</span>
+            <span *ngIf="sorttype==6">Order Number Latest Last</span>
+         </button>
+            <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="dropdownSort" style="margin: 0px;">
+                <li><a class="dropdown-item active" (click)="changeDropdown(1)">Order Date Latest First</a></li>
+                <li><a class="dropdown-item" (click)="changeDropdown(2)">Order Date Latest Last</a></li>
+                <li><a class="dropdown-item" (click)="changeDropdown(3)">{{wanterdatelable}} First</a></li>
+                <li><a class="dropdown-item" (click)="changeDropdown(4)">{{wanterdatelable}} Last</a></li>
+                <li><a class="dropdown-item" (click)="changeDropdown(5)">Order Number Latest First</a></li>
+                <li><a class="dropdown-item" (click)="changeDropdown(6)">Order Number Latest Last</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+<div class="row mb-50 padding-lr-80">
+    <div class="col-lg-12 col-md-12">
+        <div class="box-cart-left" data-match-height="groupName">
+            <!-- <h5 class="font-md-bold mb-10">Order History Details</h5> -->
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Order Numbers</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" #OrderNumber="ngModel" [(ngModel)]="Order" name="Order">
+                            <label class="did-floating-label">Order Numbers</label>
+                            <!--<div class="invalid-feedback">Please write Order Number</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">PO Numbers</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" #PONumber="ngModel" [(ngModel)]="pono" name="pono">
+                            <label class="did-floating-label">PO Numbers</label>
+                            <!-- <div class="invalid-feedback">Please write PO Number</div>  -->
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Start Date</label>
+
+                        <div class="did-floating-label-content mb-0">
+                            <dp-date-picker [(ngModel)]="sdate" style="width: 100%;" [config]="config" [ngModelOptions]="{standalone:true}"></dp-date-picker>
+
+                            <label class="did-floating-label mt-8">Start Date</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">End Date</label>
+                        <div class="did-floating-label-content mb-0">
+                            <dp-date-picker [(ngModel)]="edate" style="width: 100%;" [config]="config" [ngModelOptions]="{standalone:true}"></dp-date-picker>
+
+
+                            <label class="did-floating-label mt-8">End Date</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="align-flex">
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <!-- <input class="btn btn-buy w-auto" type="submit" value="Submit"> -->
+                            <button type="button" class="btn btn-buy w-auto" (click)="SearchOrderHistory()">Submit</button>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group text-end">
+                            <!-- <input class="btn btn-buy w-auto" type="submit" value="Clear"> -->
+                            <button type="button" class="btn btn-buy w-auto" (click)="ClearAll()">Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-lg-12 col-md-12" style="margin-top: 10px;">
+        <table class="rwd-table mb-20">
+            <tbody>
+                <tr>
+                    <th>Date</th>
+                    <th>Order No.</th>
+                    <th>Customer Po.</th>
+                    <th *ngIf="priceshowcust=='1'">Orig Amt.</th>
+                </tr>
+                <tr (click)="navigatetoOrderView(order.order,order.invc_seq)" class="cpointer" *ngFor="let order of orderList">
+                    <td data-th="Date">
+                        {{order.ord_date | date: 'MMM-dd-yyyy'}}
+                    </td>
+                    <td data-th="Order No">
+                        {{order.order}}-{{order.rec_seq}}
+                    </td>
+                    <td data-th="Customer PO">
+                        {{order.cu_po}}
+                    </td>
+                    <td data-th="Orig. Amt" *ngIf="priceshowcust=='1'">
+                        ${{order.curx_c_tot_gross + order.curx_c_tot_tax_amt | million}}
+                    </td>
+
+                </tr>
+                <!-- <tr>
+                    <td colspan="8" class="td-pagination textaligncenter">
+
+                        <button *ngIf="page>1" (click)="getpagewiselist(page-1)" id="ohpre" class="btn btn-primary">Pre.
+                     Page</button>
+                        <button *ngIf="orderList.length>=10" (click)="getpagewiselist(page+1)" id="ohnext" class="btn btn-primary">Next Page</button>
+                    </td>
+                </tr> -->
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+<div class="head-main bd-gray-200 mt-20"></div>
+<div class="row padding-lr-80">
+    <div class="col-lg-12 col-md-12">
+        <div class="box-cart-left mb-20" data-match-height="groupName">
+            <h5 class="font-md-bold mb-10">Customer Product Details</h5>
+            <div class="row align-items-end">
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="form-group">
+                        <label class="mb-5 font-sm color-gray-700">Item</label>
+                        <!-- <input class="form-control" type="text" placeholder="emailid@gmail.com"> -->
+                        <div class="did-floating-label-content mb-0">
+                            <input class="did-floating-input brder-color-grey" type="text" [ngModelOptions]="{standalone:true}" [(ngModel)]="itemname" name="itemname">
+                            <label class="did-floating-label">Item</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 col-md-6">
+                    <div class="align-flex justify-content-start">
+                        <div class="form-group mr-15">
+                            <a (click)="updated()" class="btn btn-buy w-auto btn-mobile">Search</a>
+                        </div>
+                        <div class="form-group mr-15">
+                            <a (click)="clearall()" class="btn btn-buy w-auto btn-mobile">Clear</a>
+                        </div>
+                        <div class="form-group mr-15">
+                            <a (click)="addToCartMultiple()" class="btn btn-buy w-auto btn-mobile">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="row padding-lr-80">
+    <div class="container">
+        <table class="rwd-table mb-20">
+            <tbody>
+                <tr>
+                    <th>Item #</th>
+                    <th>Customer Item</th>
+                    <th>Description</th>
+                    <th>Price / Unit </th>
+                    <th class="text-center">Quantity</th>
+                </tr>
+                <tr *ngFor="let order of finalorderList | paginate : { itemsPerPage:20, currentPage:page,totalItems:totalPage, id:'second' } ;let i = index">
+                    <td data-th="Item #">
+                        <h4 class="font-base color-brand-3"> {{order.itemname}}</h4>
+                    </td>
+                    <td data-th="Customer Item">
+                        <h4 class="font-base color-brand-3">{{order.cu_item}}</h4>
+                    </td>
+                    <td *ngIf="order.cu_item_desc==undefined || order.cu_item_desc==null || order.cu_item_desc==''" data-th="DESCRIPTION">
+                        <h4 class="font-base color-brand-3" *ngFor="let desc of order.itemdesc"> {{desc}} <br /></h4>
+                    </td>
+                    <td *ngIf="order.cu_item_desc!=undefined && order.cu_item_desc!=null && order.cu_item_desc!=''" data-th="DESCRIPTION">
+                        <h4 class="font-base color-brand-3" *ngFor="let desc of order.cu_item_desc">
+                            {{desc}} <br />
+                        </h4>
+                    </td>
+                    <td data-th="Price / Unit">
+                        <h4 class="font-base color-brand-3">${{order.list_price | million}} / {{order.um_display}}</h4>
+                    </td>
+                    <td class="width-200" data-th="Quantity">
+                        <div class="did-floating-label-content mb-0">
+                            <div class="increment-wrapper d-flex justify-content-evenly align-items-center mt-8">
+                                <button class="button dec" (click)="minusqty(order)">
+                                    <i class="fa fa-minus" aria-hidden="true"></i>
+                                 </button>
+                                <input class="did-floating-input brder-color-grey mt-0" aria-label="Quantity input" autocomplete="off" name="quantity-field" type="tel" title="Qty" maxlength="5" value="1" [ngModelOptions]="{standalone:true}" #{{i}} name="Reorder" id={{i}} (blur)="onbluerevent(order)"
+                                    [(ngModel)]='order.quantity' (keydown)="onKeydown($event,order,i)">
+                                    <label class="did-floating-label">Qty</label>
+                                <button class="button inc" (click)="addqty(order)">
+                          <i class="fa fa-plus" aria-hidden="true"></i></button>
+                                
+                                
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr *ngIf="IsShow">
+                    <td colspan="8" class="td-pagination tacenter">
+                        <pagination-controls id="second" (pageChange)="page = getorderlistpage($event)" maxSize="9" directionLinks="true" autoHide="false" previousLabel="Previous" nextLabel="Next" screenReaderPaginationLabel="Pagination" screenReaderPageLabel="page" screenReaderCurrentLabel="You're on page">
+                        </pagination-controls>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
