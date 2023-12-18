@@ -23,13 +23,15 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { RegistrationService } from './services/registration.service';
 import { ToastrModule } from 'ngx-toastr';
 import { MenuService } from './services/menu.service';
+import { TypeaheadComponent } from './typeahead/typeahead.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SideMenuComponent,
-    FooterComponent
+    FooterComponent,
+    TypeaheadComponent
   ],
   imports: [
     BrowserModule,

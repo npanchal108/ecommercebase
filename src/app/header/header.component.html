@@ -1,20 +1,22 @@
 <div class="topbar top-brand-2">
     <div class="container-fluid container-topbar justify-content-between">
-        
+
 
         <div class="menu-topbar-left d-none d-xl-block">
             <a [routerLink]="[logourl]" class="font-sm color-success">{{headermsg}}</a>
 
-           
+
         </div>
         <div class="menu-topbar-right" *ngIf="!iskyraden">
             <ul class="nav-small">
-                <li *ngIf="(Secondcontact==null || Secondcontact==undefined || Secondcontact.cPhone==null || Secondcontact.cPhone==undefined || Secondcontact.cPhone=='') && (contactDtl!=null && contactDtl!=undefined && contactDtl.phone!=null && contactDtl.phone!=undefined && contactDtl.phone!='') ">
+                <li
+                    *ngIf="(Secondcontact==null || Secondcontact==undefined || Secondcontact.cPhone==null || Secondcontact.cPhone==undefined || Secondcontact.cPhone=='') && (contactDtl!=null && contactDtl!=undefined && contactDtl.phone!=null && contactDtl.phone!=undefined && contactDtl.phone!='') ">
                     <a href="tel:{{contactDtl.phone}}" class="font-sm"><i class="icon fa fa-phone"></i>
                         {{contactDtl.phone |
                         phone:'US' }}</a>
                 </li>
-                <li *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cPhone!=null && Secondcontact.cPhone!=undefined && Secondcontact.cPhone!=''">
+                <li
+                    *ngIf="Secondcontact!=null && Secondcontact!=undefined && Secondcontact.cPhone!=null && Secondcontact.cPhone!=undefined && Secondcontact.cPhone!=''">
                     <a href="tel:{{contactDtl.cPhone}}" class="font-sm"><i class="icon fa fa-phone"></i>
                         {{Secondcontact.cPhone | phone:'US' }}</a>
                 </li>
@@ -32,7 +34,8 @@
               <img class="img-fluid" alt="Ecommerce" src="assets/imgs/BRP-Logo-White.png">
               </a> -->
 
-                    <a [routerLink]="[logourl]" *ngIf="!isDisableElem && logourl!=undefined && logourl.indexOf('http')==-1">
+                    <a [routerLink]="[logourl]"
+                        *ngIf="!isDisableElem && logourl!=undefined && logourl.indexOf('http')==-1">
                         <img class="img-fluid" src="{{logoimageurl}}" alt="{{webname}}">
                     </a>
                     <a href="{{logourl}}" *ngIf="!isDisableElem && logourl!=undefined && logourl.indexOf('http')>-1">
@@ -49,61 +52,33 @@
           </div> -->
                 <div class="header-nav text-start">
 
-                    <div class="burger-icon burger-icon-white" (click)="openmenumobile()"><span class="burger-icon-top"></span><span class="burger-icon-mid"></span><span class="burger-icon-bottom"></span></div>
+                    <div class="burger-icon burger-icon-white" (click)="openmenumobile()"><span
+                            class="burger-icon-top"></span><span class="burger-icon-mid"></span><span
+                            class="burger-icon-bottom"></span></div>
                 </div>
 
                 <div class="header-search">
                     <div class="box-header-search">
                         <form class="form-search" method="post" action="#">
                             <div class="box-keysearch">
-
                                 <div class="did-floating-label-content mb-0 w-100">
-                                    
-                                    <!-- <input
-			id="typeahead-template"
-			type="text"
-			class="form-control col"
-			[(ngModel)]="asyncSelected"
-			[ngbTypeahead]="dataSource"
-			[resultTemplate]="customItemTemplate"
-			[inputFormatter]="formatter"
-            [resultFormatter]="formatter"
-            [showHint]="true"
-		/> -->
-        <input id="typeahead-template" type="text" 
-  class="form-control col" 
-  [class.is-invalid]="searchFailed" 
-  [(ngModel)]="asyncSelected" 
-  [ngbTypeahead]="search" 
-  [resultTemplate]="customItemTemplate"
-  [inputFormatter]="formatter"
-  [resultFormatter]="formatter1"
-  [showHint]="true"
-  placeholder="Product search" />
-        <ng-template #customItemTemplate let-model="item" class="itemmenu" let-index="index">
-            <a (click)='clearsearchtext(model)' class="cpointer color-brand-3">
-                <div class="d-flex">
-                    <div>
-                        <img src="{{model.image}}" alt="{{model.itemname}}" class="fixwidthimg35" />
-                    </div>
-                    <div class="search-data-align">
-                        <label>{{model.itemname}}</label>
-                        <span *ngIf="isdescron=='1'">{{model.description1 | keys}}</span>
-                        <span *ngIf="isdescron=='0'">{{model.freeform}}</span>
-                    </div>
-                </div>
-
-            </a>
-        </ng-template>
-                                    
-                                    <!-- <input [(ngModel)]="asyncSelected" autocomplete="off" class="search-bar-head" type="search" id="searchcontrol" [typeahead]="dataSource" [typeaheadScrollable]="true" [typeaheadAsync]="true" [typeaheadSelectFirstItem]="false" (typeaheadOnSelect)="typeaheadOnSelect($event)"
-                                        (keyup.enter)="selectProductNew($event)" [typeaheadOptionsLimit]="10" [typeaheadOptionField]="itemname" [typeaheadIsFirstItemActive]="false" [typeaheadItemTemplate]="customItemTemplate" class="did-floating-input">
+                                    <app-typeahead></app-typeahead>
+                                    <!-- <input [(ngModel)]="asyncSelected" autocomplete="off" class="search-bar-head"
+                                        type="search" id="searchcontrol" [typeahead]="dataSource"
+                                        [typeaheadScrollable]="true" [typeaheadAsync]="true"
+                                        [typeaheadSelectFirstItem]="false"
+                                        (typeaheadOnSelect)="typeaheadOnSelect($event)"
+                                        (keyup.enter)="selectProductNew($event)" [typeaheadOptionsLimit]="10"
+                                        [typeaheadOptionField]="itemname" [typeaheadIsFirstItemActive]="false"
+                                        [typeaheadItemTemplate]="customItemTemplate" class="did-floating-input">
                                     <label class="did-floating-label">{{Searchplaceholder}}</label>
-                                    <ng-template #customItemTemplate let-model="item" class="itemmenu" let-index="index">
+                                    <ng-template #customItemTemplate let-model="item" class="itemmenu"
+                                        let-index="index">
                                         <a (click)='clearsearchtext(model)' class="cpointer color-brand-3">
                                             <div class="d-flex">
                                                 <div>
-                                                    <img src="{{model.image}}" alt="{{model.itemname}}" class="fixwidthimg35" />
+                                                    <img src="{{model.image}}" alt="{{model.itemname}}"
+                                                        class="fixwidthimg35" />
                                                 </div>
                                                 <div class="search-data-align">
                                                     <label>{{model.itemname}}</label>
@@ -114,20 +89,14 @@
 
                                         </a>
                                     </ng-template> -->
-                                    <!-- <input class="did-floating-input" type="text" placeholder=" " required>
-                          <label class="did-floating-label">Search Here</label>
-                          <div class="search-icon">
-                             <a href="#">
-                             <i class="fa fa-search" aria-hidden="true"></i>
-                             </a>
-                          </div> -->
                                 </div>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="header-shop" id="hsop">
-                    <a class="font-lg icon-list icon-wishlist" (click)="clikctorfq()" id="myqu" title="My Quotes" *ngIf="webtype != '1' && isrfqshow=='1' " [routerLink]="['/rfqlist']">
+                    <a class="font-lg icon-list icon-wishlist" (click)="clikctorfq()" id="myqu" title="My Quotes"
+                        *ngIf="webtype != '1' && isrfqshow=='1' " [routerLink]="['/rfqlist']">
                         <!-- <i class="fa fa-file-o" aria-hidden="true"></i> -->
                         <img src="assets/imgs/qoute.png" id="mquo" title="My Quotes" />
                         <!-- <span class="navUser-label">My Quotes</span> -->
@@ -138,20 +107,27 @@
                                 aria-hidden="true"></i></span>
                         <div class="dropdown-account" [ngClass]="{'dropdown-open': shuser==1}">
                             <ul>
-                                <li *ngIf="isNotLoggedIn==false && user!='' && !isDisableElem"><a [routerLink]="['/dashboard']">{{user}}</a></li>
-                                <li *ngIf="webtype != '1' && iswishshow=='1' && isNotLoggedIn==false"><a [routerLink]="['/wishlist']" class="cpointer">{{wishlistlable}}</a></li>
-                                <li *ngIf="webtype != '1' && isrfqshow=='1' && isNotLoggedIn==false"><a (click)="gotorfqpage()" class="cpointer">RFQ List</a></li>
-                                <li *ngIf="webtype != '1' && IsRMA=='1' && isNotLoggedIn==false"><a (click)="gotormapage()" class="cpointer">{{RMALable}}</a></li>
-                                <li *ngIf="isNotLoggedIn && !isDisableElem" class="cpointer"><a [routerLink]="['/login']">Login</a></li>
-                                <li *ngIf="isNotLoggedIn==false && !isDisableElem" class="cpointer"><a (click)="logout()" class="cpointer">Logout</a></li>
+                                <li *ngIf="isNotLoggedIn==false && user!='' && !isDisableElem"><a
+                                        [routerLink]="['/dashboard']">{{user}}</a></li>
+                                <li *ngIf="webtype != '1' && iswishshow=='1' && isNotLoggedIn==false"><a
+                                        [routerLink]="['/wishlist']" class="cpointer">{{wishlistlable}}</a></li>
+                                <li *ngIf="webtype != '1' && isrfqshow=='1' && isNotLoggedIn==false"><a
+                                        (click)="gotorfqpage()" class="cpointer">RFQ List</a></li>
+                                <li *ngIf="webtype != '1' && IsRMA=='1' && isNotLoggedIn==false"><a
+                                        (click)="gotormapage()" class="cpointer">{{RMALable}}</a></li>
+                                <li *ngIf="isNotLoggedIn && !isDisableElem" class="cpointer"><a
+                                        [routerLink]="['/login']">Login</a></li>
+                                <li *ngIf="isNotLoggedIn==false && !isDisableElem" class="cpointer"><a
+                                        (click)="logout()" class="cpointer">Logout</a></li>
                             </ul>
                         </div>
                     </div>
-                    <a class="font-lg icon-list icon-wishlist" title="{{wishlistlable}}" *ngIf="webtype != '1' && iswishshow=='1' && isNotLoggedIn==false" [routerLink]="['/wishlist']">
+                    <a class="font-lg icon-list icon-wishlist" title="{{wishlistlable}}"
+                        *ngIf="webtype != '1' && iswishshow=='1' && isNotLoggedIn==false" [routerLink]="['/wishlist']">
                         <i class="fa fa-heart-o" aria-hidden="true"></i>
                         <!-- <span class="number-item font-xs"></span> -->
                     </a>
-                    
+
                     <div class="d-inline-block box-dropdown-cart" (click)="showhidecart()">
                         <span class="font-lg icon-list icon-cart" id="opencart"><i class="fa fa-cart-arrow-down"
                                 aria-hidden="true"></i>
@@ -159,15 +135,21 @@
                         </span>
                         <div class="dropdown-cart" [ngClass]="{'dropdown-open': shcart==1}">
                             <div class="item-cart mb-20" *ngFor="let item of products">
-                                <a [routerLink]="['/productdetail',item.product.itemname.toLowerCase(),item.product.links.toLowerCase()]">
+                                <a
+                                    [routerLink]="['/productdetail',item.product.itemname.toLowerCase(),item.product.links.toLowerCase()]">
                                     <div class="cart-image">
 
-                                        <img src="assets/images/Product.png" alt="{{item.product.itemname+'' + item.product.descr1+'' + item.product.freeform}}" *ngIf="item.product.image == 'NotFound'">
-                                        <img src="{{item.product.image}}" alt="{{item.product.itemname +''+ item.product.descr1 +''+ item.product.freeform}}" *ngIf="item.product.image != undefined">
+                                        <img src="assets/images/Product.png"
+                                            alt="{{item.product.itemname+'' + item.product.descr1+'' + item.product.freeform}}"
+                                            *ngIf="item.product.image == 'NotFound'">
+                                        <img src="{{item.product.image}}"
+                                            alt="{{item.product.itemname +''+ item.product.descr1 +''+ item.product.freeform}}"
+                                            *ngIf="item.product.image != undefined">
                                     </div>
                                 </a>
                                 <div class="cart-info">
-                                    <a class="font-sm-bold color-brand-3" [routerLink]="['/productdetail',item.product.itemname.toLowerCase(),item.product.links.toLowerCase()]">{{item.product.itemname}}</a>
+                                    <a class="font-sm-bold color-brand-3"
+                                        [routerLink]="['/productdetail',item.product.itemname.toLowerCase(),item.product.links.toLowerCase()]">{{item.product.itemname}}</a>
                                     <p><span class="color-brand-2 font-sm-bold">{{item.quantity}} x
                                             ${{item.product.parsedPrice |
                                             million }} {{getumdescbyumcode(item.product.um)}}</span></p>
@@ -189,9 +171,11 @@
                                             million}}</span></div>
                                 </div>
                                 <div class="row mt-15" *ngIf="webtype != '1'">
-                                    <div class="col-6 text-start" [routerLink]="['/viewcart']"><a class="btn btn-cart w-auto" [routerLink]="['/viewcart']">View cart</a>
+                                    <div class="col-6 text-start" [routerLink]="['/viewcart']"><a
+                                            class="btn btn-cart w-auto" [routerLink]="['/viewcart']">View cart</a>
                                     </div>
-                                    <div class="col-6" *ngIf="isNotLoggedIn==false" [routerLink]="['/checkout']"><a class="btn btn-buy w-auto" [routerLink]="['/checkout']">Checkout</a>
+                                    <div class="col-6" *ngIf="isNotLoggedIn==false" [routerLink]="['/checkout']"><a
+                                            class="btn btn-buy w-auto" [routerLink]="['/checkout']">Checkout</a>
                                     </div>
                                 </div>
                             </div>
@@ -205,12 +189,15 @@
     <div class="header-bottom">
         <div class="container-fluid">
             <div class="align-flex flex-nowrap mobile-header">
-                <div class=" dropdown d-flex mobile-view " *ngIf="categoryList!=null && categoryList.length>0 && !iskyraden">
-                    <button type="button" class="btn dropdown-toggle btn-category bg-gray-50 mr-10" (click)="openpopup()" style="min-width: auto;"><span
+                <div class=" dropdown d-flex mobile-view "
+                    *ngIf="categoryList!=null && categoryList.length>0 && !iskyraden">
+                    <button type="button" class="btn dropdown-toggle btn-category bg-gray-50 mr-10"
+                        (click)="openpopup()" style="min-width: auto;"><span
                             class="dropdown-right font-sm-bold color-white"><i class="fa fa-bars mr-10"
-                        aria-hidden="true"></i> {{menulable1}} </span></button>
+                                aria-hidden="true"></i> {{menulable1}} </span></button>
                     <div class="modal-overlay" [ngClass]="{'active': addcartpop=='1'}">
-                        <div class="modal" [ngClass]="{'active': addcartpop=='1'}" [ngStyle]="{'display': addcartpop=='1'?'block':'none'}">
+                        <div class="modal" [ngClass]="{'active': addcartpop=='1'}"
+                            [ngStyle]="{'display': addcartpop=='1'?'block':'none'}">
 
 
 
@@ -222,7 +209,8 @@
                                                 <h5>{{user}}</h5>
                                             </div>
                                             <div class="col-md-2 text-end">
-                                                <a class="btn-close close-modal" type="button" data-bs-dismiss="modal" (click)="openpopup()" aria-label="Close"></a>
+                                                <a class="btn-close close-modal" type="button" data-bs-dismiss="modal"
+                                                    (click)="openpopup()" aria-label="Close"></a>
                                             </div>
                                         </div>
                                     </div>
@@ -274,23 +262,48 @@
                     <nav class="nav-main-menu d-xl-block" [ngClass]="{'d-none':mobilemenu==0}">
                         <ul class="main-menu">
                             <ng-container *ngFor="let hlink of headerlinks">
-                                <li [ngClass]="{'Menuactive': isactive==hlink.linkname}" *ngIf="hlink.parent_seq==null || hlink.parent_seq==undefined">
-                                    <a [routerLink]="[hlink.linkurl.toLowerCase()]" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')==-1" target="_blank" (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'" class='fa fa-caret-down right'></span></a>
-                                    <a href="{{hlink.linkurl.toLowerCase()}}" *ngIf="hlink.popover && hlink.linkurl.indexOf('http')>-1" target="_blank" (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'" class='fa fa-caret-down right'></span></a>
-                                    <a [routerLink]="[hlink.linkurl.toLowerCase()]" *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')==-1" (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'" class='fa fa-caret-down right'></span></a>
-                                    <a href="{{hlink.linkurl.toLowerCase()}}" *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')>-1" (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'" class='fa fa-caret-down right'></span></a>
+                                <li [ngClass]="{'Menuactive': isactive==hlink.linkname}"
+                                    *ngIf="hlink.parent_seq==null || hlink.parent_seq==undefined">
+                                    <a [routerLink]="[hlink.linkurl.toLowerCase()]"
+                                        *ngIf="hlink.popover && hlink.linkurl.indexOf('http')==-1" target="_blank"
+                                        (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span
+                                            *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'"
+                                            class='fa fa-caret-down right'></span></a>
+                                    <a href="{{hlink.linkurl.toLowerCase()}}"
+                                        *ngIf="hlink.popover && hlink.linkurl.indexOf('http')>-1" target="_blank"
+                                        (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span
+                                            *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'"
+                                            class='fa fa-caret-down right'></span></a>
+                                    <a [routerLink]="[hlink.linkurl.toLowerCase()]"
+                                        *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')==-1"
+                                        (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span
+                                            *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'"
+                                            class='fa fa-caret-down right'></span></a>
+                                    <a href="{{hlink.linkurl.toLowerCase()}}"
+                                        *ngIf="!hlink.popover && hlink.linkurl.indexOf('http')>-1"
+                                        (click)="SetActiveTab(hlink.linkname)">{{hlink.linkname}} <span
+                                            *ngIf="(hlink.ismenu==1) || getFilterByParentmenu(hlink.seq).length>0 || hlink.linkurl=='/categories' || hlink.linkurl=='/product'"
+                                            class='fa fa-caret-down right'></span></a>
 
 
                                     <ul class="sub-menu two-col" id="menu1" *ngIf="hlink.linkurl=='/product'">
                                         <ng-container *ngFor="let category of parentMenu">
-                                            <li [ngClass]="{'has-children': category.maj_class!='' && category.maj_class!=undefined}">
-                                                <a id="{{category.maj_class}}" [routerLink]="['/product',category.maj_class.toLowerCase(), category.MCDescr.toLowerCase() | tturls]" *ngIf="category.maj_class!='' && category.maj_class!=undefined"><span class="text-link">{{category.MCDescr}}</span></a>
-                                                <a id="{{category.product_line}}" [routerLink]="['/products',category.product_line.toLowerCase(), category.PLDescr.toLowerCase() | tturls]" *ngIf="category.maj_class=='' || category.maj_class==undefined"><span
-                                                    class="text-link">{{category.PLDescr}}</span></a>
-                                                <ul id="submenu1" *ngIf="category.maj_class!='' && category.maj_class!=undefined">
+                                            <li
+                                                [ngClass]="{'has-children': category.maj_class!='' && category.maj_class!=undefined}">
+                                                <a id="{{category.maj_class}}"
+                                                    [routerLink]="['/product',category.maj_class.toLowerCase(), category.MCDescr.toLowerCase() | tturls]"
+                                                    *ngIf="category.maj_class!='' && category.maj_class!=undefined"><span
+                                                        class="text-link">{{category.MCDescr}}</span></a>
+                                                <a id="{{category.product_line}}"
+                                                    [routerLink]="['/products',category.product_line.toLowerCase(), category.PLDescr.toLowerCase() | tturls]"
+                                                    *ngIf="category.maj_class=='' || category.maj_class==undefined"><span
+                                                        class="text-link">{{category.PLDescr}}</span></a>
+                                                <ul id="submenu1"
+                                                    *ngIf="category.maj_class!='' && category.maj_class!=undefined">
                                                     <ng-container *ngFor="let mm1 of childMenu">
                                                         <li *ngIf="mm1.maj_class==category.maj_class">
-                                                            <a id="{{mm1.product_line}}" [routerLink]="['/products',mm1.product_line.toLowerCase(), mm1.PLDescr.toLowerCase() | tturls]"><span
+                                                            <a id="{{mm1.product_line}}"
+                                                                [routerLink]="['/products',mm1.product_line.toLowerCase(), mm1.PLDescr.toLowerCase() | tturls]"><span
                                                                     class="text-link">{{mm1.PLDescr}}</span></a>
 
                                                         </li>
@@ -302,20 +315,37 @@
 
                                     <ul class="sub-menu two-col" id="menu1" *ngIf="hlink.linkurl=='/categories'">
                                         <ng-container *ngFor="let menu of getFilterByParent('')">
-                                            <li *ngIf="menu.tree_node.toLowerCase()!='brands'" [ngClass]="{'has-children': menu.parent!=0}">
-                                                <a id="{{menu.name}}" routerLink="/categories/{{menu.tree_node}}" [ngClass]="{'submenuicon': getFilterByParent(menu.tree_node).length>0}" *ngIf="menu.parent!=0"><span class="text-link">{{menu.name}}</span></a>
-                                                <a id="{{menu.name}}" routerLink="/category/{{menu.tree_node}}" *ngIf="menu.parent==0"><span
-                                                    class="text-link">{{menu.name}}</span></a>
-                                                <ul class="sub-menu" id="submenu" *ngIf="menu.parent!=0 && getFilterByParent(menu.tree_node).length>0">
+                                            <li *ngIf="menu.tree_node.toLowerCase()!='brands'"
+                                                [ngClass]="{'has-children': menu.parent!=0}">
+                                                <a id="{{menu.name}}" routerLink="/categories/{{menu.tree_node}}"
+                                                    [ngClass]="{'submenuicon': getFilterByParent(menu.tree_node).length>0}"
+                                                    *ngIf="menu.parent!=0"><span
+                                                        class="text-link">{{menu.name}}</span></a>
+                                                <a id="{{menu.name}}" routerLink="/category/{{menu.tree_node}}"
+                                                    *ngIf="menu.parent==0"><span
+                                                        class="text-link">{{menu.name}}</span></a>
+                                                <ul class="sub-menu" id="submenu"
+                                                    *ngIf="menu.parent!=0 && getFilterByParent(menu.tree_node).length>0">
                                                     <ng-container *ngFor="let mm of getFilterByParent(menu.tree_node)">
-                                                        <li [ngClass]="{'has-children temp-css': mm.parent!=0}" (mouseover)="setflagtoshow(mm)" (mouseleave)="setflagtohide(mm)">
-                                                            <a routerLink="/categories/{{mm.tree_node}}" [ngClass]="{'submenuicon': mm.parent!=0}" *ngIf="mm.parent!=0">{{mm.name}}</a>
-                                                            <a routerLink="/category/{{mm.tree_node}}" *ngIf="mm.parent==0">{{mm.name}}</a>
-                                                            <ul [ngClass]="{'sub-menu': mm.parent!=0}" id="submenu1" *ngIf="mm.flag && mm.parent!=0 && getFilterByParent(mm.tree_node).length>0">
-                                                                <ng-container *ngFor="let mm1 of getFilterByParent(mm.tree_node)">
-                                                                    <li [ngClass]="{'has-children temp-css': mm1.parent!=0}">
-                                                                        <a routerLink="/categories/{{mm1.tree_node}}" [ngClass]="{'submenuicon': mm1.parent!=0}" *ngIf="mm1.parent!=0">{{mm1.name}}</a>
-                                                                        <a routerLink="/category/{{mm1.tree_node}}" *ngIf="mm1.parent==0">{{mm1.name}}</a>
+                                                        <li [ngClass]="{'has-children temp-css': mm.parent!=0}"
+                                                            (mouseover)="setflagtoshow(mm)"
+                                                            (mouseleave)="setflagtohide(mm)">
+                                                            <a routerLink="/categories/{{mm.tree_node}}"
+                                                                [ngClass]="{'submenuicon': mm.parent!=0}"
+                                                                *ngIf="mm.parent!=0">{{mm.name}}</a>
+                                                            <a routerLink="/category/{{mm.tree_node}}"
+                                                                *ngIf="mm.parent==0">{{mm.name}}</a>
+                                                            <ul [ngClass]="{'sub-menu': mm.parent!=0}" id="submenu1"
+                                                                *ngIf="mm.flag && mm.parent!=0 && getFilterByParent(mm.tree_node).length>0">
+                                                                <ng-container
+                                                                    *ngFor="let mm1 of getFilterByParent(mm.tree_node)">
+                                                                    <li
+                                                                        [ngClass]="{'has-children temp-css': mm1.parent!=0}">
+                                                                        <a routerLink="/categories/{{mm1.tree_node}}"
+                                                                            [ngClass]="{'submenuicon': mm1.parent!=0}"
+                                                                            *ngIf="mm1.parent!=0">{{mm1.name}}</a>
+                                                                        <a routerLink="/category/{{mm1.tree_node}}"
+                                                                            *ngIf="mm1.parent==0">{{mm1.name}}</a>
                                                                     </li>
                                                                 </ng-container>
                                                             </ul>
@@ -329,14 +359,22 @@
 
                                     <ul class="sub-menu two-col" id="submenu" *ngIf="hlink.ismenu==1">
                                         <ng-container *ngFor="let mm of getFilterByParent(hlink.linkurl)">
-                                            <li [ngClass]="{'has-children temp-css': mm.parent!=0}" (mouseover)="setflagtoshow(mm)" (mouseleave)="setflagtohide(mm)">
-                                                <a routerLink="/categories/{{mm.tree_node}}" [ngClass]="{'submenuicon': mm.parent!=0}" *ngIf="mm.parent!=0">{{mm.name}}</a>
-                                                <a routerLink="/category/{{mm.tree_node}}" *ngIf="mm.parent==0">{{mm.name}}</a>
-                                                <ul [ngClass]="{'sub-menu': mm.parent!=0}" id="submenu1" *ngIf="mm.flag && mm.parent!=0 && getFilterByParent(mm.tree_node).length>0">
+                                            <li [ngClass]="{'has-children temp-css': mm.parent!=0}"
+                                                (mouseover)="setflagtoshow(mm)" (mouseleave)="setflagtohide(mm)">
+                                                <a routerLink="/categories/{{mm.tree_node}}"
+                                                    [ngClass]="{'submenuicon': mm.parent!=0}"
+                                                    *ngIf="mm.parent!=0">{{mm.name}}</a>
+                                                <a routerLink="/category/{{mm.tree_node}}"
+                                                    *ngIf="mm.parent==0">{{mm.name}}</a>
+                                                <ul [ngClass]="{'sub-menu': mm.parent!=0}" id="submenu1"
+                                                    *ngIf="mm.flag && mm.parent!=0 && getFilterByParent(mm.tree_node).length>0">
                                                     <ng-container *ngFor="let mm1 of getFilterByParent(mm.tree_node)">
                                                         <li [ngClass]="{'has-children temp-css': mm1.parent!=0}">
-                                                            <a routerLink="/categories/{{mm1.tree_node}}" [ngClass]="{'submenuicon': mm1.parent!=0}" *ngIf="mm1.parent!=0">{{mm1.name}}</a>
-                                                            <a routerLink="/category/{{mm1.tree_node}}" *ngIf="mm1.parent==0">{{mm1.name}}</a>
+                                                            <a routerLink="/categories/{{mm1.tree_node}}"
+                                                                [ngClass]="{'submenuicon': mm1.parent!=0}"
+                                                                *ngIf="mm1.parent!=0">{{mm1.name}}</a>
+                                                            <a routerLink="/category/{{mm1.tree_node}}"
+                                                                *ngIf="mm1.parent==0">{{mm1.name}}</a>
                                                         </li>
                                                     </ng-container>
                                                 </ul>
@@ -344,14 +382,26 @@
                                         </ng-container>
                                     </ul>
 
-                                    <ul class="sub-menu two-col" id="menu-right" *ngIf="getFilterByParentmenu(hlink.seq).length>0">
-                                        <ng-container *ngFor="let hlink1 of getFilterByParentmenu(hlink.seq);let l=index;">
-                                            
+                                    <ul class="sub-menu two-col" id="menu-right"
+                                        *ngIf="getFilterByParentmenu(hlink.seq).length>0">
+                                        <ng-container
+                                            *ngFor="let hlink1 of getFilterByParentmenu(hlink.seq);let l=index;">
+
                                             <li>
-                                                <a [routerLink]="[hlink1.linkurl.toLowerCase()]" *ngIf="hlink1.popover && hlink1.linkurl.indexOf('http')==-1" target="_blank" (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}} </a>
-                                                <a href="{{hlink1.linkurl.toLowerCase()}}" *ngIf="hlink1.popover && hlink1.linkurl.indexOf('http')>-1" target="_blank" (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}} </a>
-                                                <a [routerLink]="[hlink1.linkurl.toLowerCase()]" *ngIf="!hlink1.popover && hlink1.linkurl.indexOf('http')==-1" (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}}</a>
-                                                <a href="{{hlink1.linkurl.toLowerCase()}}" *ngIf="!hlink1.popover && hlink1.linkurl.indexOf('http')>-1" (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}}</a>
+                                                <a [routerLink]="[hlink1.linkurl.toLowerCase()]"
+                                                    *ngIf="hlink1.popover && hlink1.linkurl.indexOf('http')==-1"
+                                                    target="_blank"
+                                                    (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}} </a>
+                                                <a href="{{hlink1.linkurl.toLowerCase()}}"
+                                                    *ngIf="hlink1.popover && hlink1.linkurl.indexOf('http')>-1"
+                                                    target="_blank"
+                                                    (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}} </a>
+                                                <a [routerLink]="[hlink1.linkurl.toLowerCase()]"
+                                                    *ngIf="!hlink1.popover && hlink1.linkurl.indexOf('http')==-1"
+                                                    (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}}</a>
+                                                <a href="{{hlink1.linkurl.toLowerCase()}}"
+                                                    *ngIf="!hlink1.popover && hlink1.linkurl.indexOf('http')>-1"
+                                                    (click)="SetActiveTab(hlink1.linkname)">{{hlink1.linkname}}</a>
                                             </li>
                                         </ng-container>
                                     </ul>
@@ -369,13 +419,18 @@
                                     <li *ngIf="isNotLoggedIn==false && !isDisableElem" class="cpointer"><a (click)="logout()" class="cpointer">Logout</a></li>
                                 </ul>
                              </li> -->
-                            <li id="liRegister" class="fright cpointer" *ngIf="isNotLoggedIn && webtype != '1' && isShowRegistration" [ngClass]="{'Menuactive': isactive=='Register'}">
+                            <li id="liRegister" class="fright cpointer"
+                                *ngIf="isNotLoggedIn && webtype != '1' && isShowRegistration"
+                                [ngClass]="{'Menuactive': isactive=='Register'}">
                                 <a (click)="register()">Register</a>
                             </li>
-                            <li id="liSalesLogin" class="fright cpointer" *ngIf="isNotLoggedIn && webtype=='6' && isShowSalesLogin=='1'" [ngClass]="{'Menuactive': isactive=='SLogin'}">
+                            <li id="liSalesLogin" class="fright cpointer"
+                                *ngIf="isNotLoggedIn && webtype=='6' && isShowSalesLogin=='1'"
+                                [ngClass]="{'Menuactive': isactive=='SLogin'}">
                                 <a (click)="slogClick()">Sales Login</a>
                             </li>
-                            <li id="liLogin" class="fright cpointer" *ngIf="isNotLoggedIn" [ngClass]="{'Menuactive': isactive=='Login'}">
+                            <li id="liLogin" class="fright cpointer" *ngIf="isNotLoggedIn"
+                                [ngClass]="{'Menuactive': isactive=='Login'}">
                                 <a (click)="logClick()">Login</a>
                             </li>
                             <li id="liLogOut" class="fright cpointer" *ngIf="isNotLoggedIn==false">

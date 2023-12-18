@@ -1,0 +1,23 @@
+<input type="text" class="form-control" placeholder="Search..." [formControl]="searchControl" />
+
+<div *ngIf="searchResults.length > 0" class="type-ahead-container">
+    <ul class="list-group">
+        <li class="list-group-item" *ngFor="let result of searchResults">
+            <a (click)='clearsearchtext(result)' class="cpointer color-brand-3">
+                <div class="d-flex">
+                    <div>
+                        <img src="{{result.image}}" alt="{{result.itemname}}"
+                            class="fixwidthimg35" />
+                    </div>
+                    <div class="search-data-align">
+                        <label>{{result.itemname}}</label>
+                        <span *ngIf="isdescron=='1'">{{result.description1 | keys}}</span>
+                        <span *ngIf="isdescron=='0'">{{result.freeform}}</span>
+                    </div>
+                </div>
+
+            </a>
+            <!-- {{ result.itemname }} -->
+        </li>
+    </ul>
+</div>

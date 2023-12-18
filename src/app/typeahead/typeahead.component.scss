@@ -1,0 +1,27 @@
+.type-ahead-container{
+    position: absolute;
+    display: block;
+    visibility: visible;
+    will-change: transform;
+    top: 0px;
+    left: 0px;
+    transform: translate3d(0px, 35px, 0px);
+    height: 336px;
+    width: 100%;
+    overflow-y: auto;
+    z-index: 1000;
+    font-family: 'Saira Semi Condensed', sans-serif;
+    font-size: 14px;
+    .cpointer{
+        text-decoration: none;
+    }
+
+   
+}
+
+.type-ahead-container li.list-group-item:hover{
+    background: #111;
+}
+.type-ahead-container li.list-group-item:hover .search-data-align{
+    color: #fff;
+}
