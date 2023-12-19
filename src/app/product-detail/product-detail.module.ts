@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { ProductDetailRoutingModule } from './product-detail-routing.module';
 import { ProductDetailComponent } from './product-detail.component';
 
-import { OrderModule } from 'ngx-order-pipe';
+//import { OrderModule } from 'ngx-order-pipe';
 import { FormsModule } from '@angular/forms';
 import { NgxGalleryModule } from '@kolkov/ngx-gallery';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../../app/model/shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
+// import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
 
@@ -20,13 +20,13 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
   ],
   imports: [
     CommonModule,
-    OrderModule,
+   // OrderModule,
     FormsModule,
     sharedModule,
     NgxGalleryModule,
     ProductDetailRoutingModule,
     SlickCarouselModule,
-    PdfViewerModule
+    //PdfViewerModule
   ],
  
 })

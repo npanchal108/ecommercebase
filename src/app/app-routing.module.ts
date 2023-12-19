@@ -120,14 +120,14 @@ export const AppRoutes: Routes = [
   //   path: 'viewcart',
   //   loadChildren: () => import('./cart-preview/cart-preview.module').then(m => m.CartPreviewModule)
   // },
-  // {
-  //   path: 'productdetail/:item',
-  //   loadChildren: () => import('./product-detail/product-detail.module').then(m => m.ProductDetailModule)
-  // },
-  // {
-  //   path: 'productdetail/:item/:desc',
-  //   loadChildren: () => import('./product-detail/product-detail.module').then(m => m.ProductDetailModule)
-  // },
+  {
+    path: 'productdetail/:item',
+    loadChildren: () => import('./product-detail/product-detail.module').then(m => m.ProductDetailModule)
+  },
+  {
+    path: 'productdetail/:item/:desc',
+    loadChildren: () => import('./product-detail/product-detail.module').then(m => m.ProductDetailModule)
+  },
   // {
   //   path: 'info/:id/:desc',
   //   loadChildren: () => import('./infopage/infopage.module').then(m => m.infopageModule)

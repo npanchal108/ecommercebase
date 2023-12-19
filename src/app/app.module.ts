@@ -24,6 +24,7 @@ import { RegistrationService } from './services/registration.service';
 import { ToastrModule } from 'ngx-toastr';
 import { MenuService } from './services/menu.service';
 import { TypeaheadComponent } from './typeahead/typeahead.component';
+import { RoutingState } from './services/routingState';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import { TypeaheadComponent } from './typeahead/typeahead.component';
     CartService,
     RegistrationService,
     MenuService,
-    DecimalPipe
+    DecimalPipe,
+    RoutingState
   ],
   bootstrap: [AppComponent]
 })

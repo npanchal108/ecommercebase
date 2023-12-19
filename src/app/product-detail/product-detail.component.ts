@@ -4,7 +4,7 @@ import { RoutingState } from '../services/routingState';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { CartService } from '../services/cart.service';
 import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryComponent } from '@kolkov/ngx-gallery';
-import { DomSanitizer, SafeResourceUrl } from '../../../node_modules/@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { Common } from '../../app/model/common.model';
 import { SEOService } from '../services/seo.service';
@@ -12,15 +12,15 @@ import { DemoService } from '../services/demo.service';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { Component, OnInit, Optional, Inject, PLATFORM_ID, OnDestroy, ViewChild } from '@angular/core';
-import { RESPONSE, REQUEST } from '@nguniversal/express-engine/tokens';
+//import { RESPONSE, REQUEST } from '@nguniversal/express-engine/tokens';
 import { isPlatformServer } from '@angular/common';
 import { Request, Response, urlencoded } from 'express';
 import { HttpErrorResponse } from '@angular/common/http';
-import * as arraySort from 'array-sort'
+//import * as arraySort from 'array-sort';
 // import 'owl.carousel/dist/assets/owl.carousel.css';
 // import 'owl.carousel';
 import * as $ from 'jquery';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
 
 @Component({
@@ -219,8 +219,9 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   whlable3:any;
   documentlist:any;
   iskrayden:any;
-  constructor(@Optional() @Inject(REQUEST) private request: Request,
-    @Optional() @Inject(RESPONSE) private response: Response,
+  constructor(
+    // @Optional() @Inject(REQUEST) private request: Request,
+    // @Optional() @Inject(RESPONSE) private response: Response,
     @Inject(PLATFORM_ID) private platformId: any,private gtmService: GoogleTagManagerService, private seoService: SEOService, private routingState: RoutingState, private toastr: ToastrService, private dataService: DataService, private route: ActivatedRoute, private cartService: CartService, private router: Router,
     private sanitizer: DomSanitizer, private demoService: DemoService) {
     //this.galleryImages=[];
@@ -4724,6 +4725,7 @@ selectimage(image1){
       e.preventDefault();
       return false;
     }
+    return undefined;
   }
   onAddToCartNew(product) {
 
