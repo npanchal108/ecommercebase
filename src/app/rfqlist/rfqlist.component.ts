@@ -16,7 +16,7 @@ import * as parser from 'parse-address'
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';

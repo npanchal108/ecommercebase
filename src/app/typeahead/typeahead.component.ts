@@ -16,6 +16,7 @@ export class TypeaheadComponent {
   searchControl = new FormControl();
   searchResults: any[] = [];
   isdescron:any='1';
+  itemSelected: boolean = false;
 
   constructor(private http: HttpClient, private router: Router) {
     this.searchControl.valueChanges
@@ -26,22 +27,27 @@ export class TypeaheadComponent {
       )
       .subscribe((results) => {
         this.searchResults = results;
-        console.log('results',results);
-        console.log('this.searchResults',this.searchResults);
       });
   }
 
-  clearsearchtext(item:any){    
-    // this.txtSearch=item.itemname;
-    // this.keyword=item.itemname;
-    // this.asyncSelected=item.itemname;
-    // this.selecteditem=undefined;
+  navigateToProductDetail(item:any){    
+    this.itemSelected = true;
+    this.searchResults = [];
+    this.searchControl.setValue('');
     this.router.navigate(['productdetail', item.itemname,item.links]);
   }
 
+  closeTypeahead() {
+    this.searchControl.setValue('');
+    this.searchResults = []; // Clear the search results
+  }
+
   search(term: string) {
-    console.log('term===>',term);
     if (term === '') {
+      return of([]);
+    }
+    if (term === '' || this.itemSelected) {
+      this.itemSelected = false; // Reset the flag when a new search is initiated
       return of([]);
     }
     var Guestwarehouse = Common.getWithExpiry("Guestwarehouse");
@@ -57,7 +63,6 @@ export class TypeaheadComponent {
     }
     return this.http.post<any>(environment.APIUrl + '/Product/GetProductListBySearchforheader', pmodel, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) }).pipe(
       map(response => response)
-      //map(response => response.data), //since the response is wrapped in a data object
     );
   }
 }

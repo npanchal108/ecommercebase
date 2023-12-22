@@ -3,14 +3,14 @@ import { Common } from '../../app/model/common.model';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { RegistrationService } from '../services/registration.service';
-import { Md5 } from 'ts-md5/dist/md5';
+//import { Md5 } from 'ts-md5/dist/md5';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../services/data.service';
 import { SEOService } from '../services/seo.service';
 import { LoadingService } from '../services/loading.service';
 // import * as $ from 'jquery';
 import * as parser from 'parse-address'
-import * as passwordPolicy from 'password-policy'
+//import * as passwordPolicy from 'password-policy'
 // import { IpServiceService } from '../ip-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';

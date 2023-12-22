@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-
-//import { AddressvalidationpopupComponent } from '../app/addressvalidationpopup/addressvalidationpopup.component';
+import { AddressvalidationpopupComponent } from '../../app/addressvalidationpopup/addressvalidationpopup.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -25,7 +24,7 @@ import { SplitPipe } from '../services/SplitPipe';
         DateFormatPipe,
         SplitPipe,
         weburlPipe,
-        // AddressvalidationpopupComponent,
+        AddressvalidationpopupComponent,
         // ShipToAddressPopupComponent,
         // CreditCardAddrsPopupComponent
     ],
@@ -40,7 +39,7 @@ import { SplitPipe } from '../services/SplitPipe';
         DateFormatPipe,
         SplitPipe,
         weburlPipe,
-        // AddressvalidationpopupComponent,
+        AddressvalidationpopupComponent,
         // ShipToAddressPopupComponent,
         // CreditCardAddrsPopupComponent
     ]

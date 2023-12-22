@@ -219,6 +219,8 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   whlable3:any;
   documentlist:any;
   iskrayden:any;
+  pdfSrc = '../../../assets/sample.pdf';
+
   constructor(
     // @Optional() @Inject(REQUEST) private request: Request,
     // @Optional() @Inject(RESPONSE) private response: Response,
@@ -1614,6 +1616,7 @@ this.tabord=tab;
 
   ProductDetailsOrderConfig() {
     this.orderdic = this.dataService.Getconfigbykey("detailorder");
+    
     if (this.orderdic == null || this.orderdic == undefined || this.orderdic == '') {
       this.orderdic = Common.getWithExpiry("detailorder");
     }
@@ -1657,6 +1660,7 @@ this.tabord=tab;
         }
       }
     }
+    console.log('ProductDetailsOrderConfig',this.orderdic1);
   }
 
   register() {
@@ -2911,6 +2915,7 @@ this.tabord=tab;
   }
 
   ngOnInit() {
+    console.log('Product Details Page on init');
     this.gototop();
     this.webtype = this.dataService.Getconfigbykey("websitetype");
     if (this.webtype == null || this.webtype == undefined || this.webtype == '') {

@@ -18,21 +18,27 @@ import { ContactService } from './services/contact.service';
 import { LoadingService } from './services/loading.service';
 import { DataService } from './services/data.service';
 import { CartService } from './services/cart.service';
-import { sharedModule } from './model/shared.module';
+//import { sharedModule } from './model/shared.module';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RegistrationService } from './services/registration.service';
 import { ToastrModule } from 'ngx-toastr';
 import { MenuService } from './services/menu.service';
 import { TypeaheadComponent } from './typeahead/typeahead.component';
 import { RoutingState } from './services/routingState';
-
+import { DemoService } from './services/demo.service';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+//import { FloorPipe, MillionPipe, weburlPipe } from '../app/services/MillionPipe';
+import { sharedModule } from '../app/model/shared.module';
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     SideMenuComponent,
     FooterComponent,
-    TypeaheadComponent
+    TypeaheadComponent,
+    // MillionPipe,
+    // FloorPipe,
+    // weburlPipe
   ],
   imports: [
     BrowserModule,
@@ -45,6 +51,7 @@ import { RoutingState } from './services/routingState';
     CommonModule,
     sharedModule,
     RecaptchaModule,
+    NgxExtendedPdfViewerModule,
     GoogleTagManagerModule.forRoot({
       id: environment.ga,
     }),
@@ -63,7 +70,8 @@ import { RoutingState } from './services/routingState';
     RegistrationService,
     MenuService,
     DecimalPipe,
-    RoutingState
+    RoutingState,
+    DemoService
   ],
   bootstrap: [AppComponent]
 })

@@ -25,3 +25,12 @@
 .type-ahead-container li.list-group-item:hover .search-data-align{
     color: #fff;
 }
+.clear-button {
+    position: absolute;
+    right: 5px; /* Adjust the right position as needed */
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: transparent; /* Set the desired background color */
+    border: none;
+    cursor: pointer;
+  }

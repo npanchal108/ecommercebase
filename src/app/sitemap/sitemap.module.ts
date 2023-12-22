@@ -16,7 +16,7 @@ import { sharedModule } from '../model/shared.module';
   ],
   imports: [
     CommonModule,
-    sharedModule,
+    //sharedModule,
     SitemapRoutingModule,
     
   ],

@@ -1,13 +1,16 @@
-<input type="text" class="form-control" placeholder="Search..." [formControl]="searchControl" />
-
-<div *ngIf="searchResults.length > 0" class="type-ahead-container">
+<div class="search-container">
+    <input type="text" class="form-control" placeholder="Search..." [formControl]="searchControl"/>
+    <button  class="clear-button" class="clear-button" (click)="closeTypeahead()">
+        <i class="fa fa-times"></i>
+    </button>
+</div>
+<div *ngIf="searchResults.length > 0 && !itemSelected" class="type-ahead-container">
     <ul class="list-group">
         <li class="list-group-item" *ngFor="let result of searchResults">
-            <a (click)='clearsearchtext(result)' class="cpointer color-brand-3">
+            <a (click)='navigateToProductDetail(result)' class="cpointer color-brand-3">
                 <div class="d-flex">
                     <div>
-                        <img src="{{result.image}}" alt="{{result.itemname}}"
-                            class="fixwidthimg35" />
+                        <img src="{{result.image}}" alt="{{result.itemname}}" class="fixwidthimg35" />
                     </div>
                     <div class="search-data-align">
                         <label>{{result.itemname}}</label>
