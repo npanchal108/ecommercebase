@@ -3891,7 +3891,9 @@ this.tabord=tab;
         this.sysnote = []
         for (var i = 0; i < data.length; i++) {
           if (data[i].note != '' && data[i].note != 'undefined' && data[i].note != undefined) {
+            try{
             var geturl = window.location.href.toString();
+            }catch(ed){}
             geturl = geturl.replace(this.router.url, '');
 
             do {
@@ -3947,7 +3949,9 @@ this.tabord=tab;
         this.sysnote = []
         for (var i = 0; i < data.length; i++) {
           if (data[i].note != '' && data[i].note != 'undefined' && data[i].note != undefined) {
+            try{
             var geturl = window.location.href.toString();
+            }catch(ed){}
             geturl = geturl.replace(this.router.url, '');
 
             do {
@@ -4948,7 +4952,9 @@ selectimage(image1){
       this.demoService.downloadPDF(this.item1.itemname).subscribe((response: any) => {
         let file = new Blob([response], { type: 'application/pdf' });
         var fileURL = URL.createObjectURL(file);
+        try{
         window.open(fileURL);
+        }catch(ed){}
       });
     } catch (exc) { }
   }

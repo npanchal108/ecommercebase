@@ -69,7 +69,9 @@ export class ChangepwdComponent implements OnInit {
     Common.removeWithExpiry("Permission");
     Common.removeWithExpiry("SalesUserID");
     Common.removeWithExpiry("SalesUserType");
+    try{
     localStorage.clear();
+  }catch(ed){}
   }
   sendMessage(message): void {
     this.loadingService.LoadingMessage(message);

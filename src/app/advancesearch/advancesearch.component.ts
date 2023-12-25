@@ -208,6 +208,8 @@ export class AdvancesearchComponent implements OnInit {
     this.router.navigate(['asearch', 'asearch']);
   }
   ResetForm() {
+    try{
     window.location.reload();
+    }catch(e){}
   }
 }

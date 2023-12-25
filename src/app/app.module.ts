@@ -29,6 +29,7 @@ import { DemoService } from './services/demo.service';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 //import { FloorPipe, MillionPipe, weburlPipe } from '../app/services/MillionPipe';
 import { sharedModule } from '../app/model/shared.module';
+import { LocalStorage } from './model/common.model';
 @NgModule({
   declarations: [
     AppComponent,
@@ -62,6 +63,7 @@ import { sharedModule } from '../app/model/shared.module';
   ],
   providers: [
     provideClientHydration(),
+    { provide: LocalStorage, useFactory: localStorageFactory },
     SEOService,
     ContactService,
     LoadingService,
@@ -76,3 +78,6 @@ import { sharedModule } from '../app/model/shared.module';
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function localStorageFactory() {
+  return localStorage;
+}

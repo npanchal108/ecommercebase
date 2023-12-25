@@ -114,37 +114,57 @@ export class HomeComponent implements OnInit {
   }
   }
   getFacebookShareLink(pageTitle: any): string {
-    const currentUrl = window.location.href;
+    var currentUrl ='';
+    try{
+      currentUrl=window.location.href;
+    }catch(ed){}
     return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${currentUrl}/${pageTitle}`)}`;
+    
   }
   sendMessage(message: string): void {
     this.loadingService.LoadingMessage(message);
   }
 
   getInstaShareLink(pageTitle: any): string {
-    const currentUrl = window.location.href;
+    var currentUrl='';
+    try{
+      currentUrl= window.location.href;
+    }catch(ed){}
     return `https://www.instagram.com/share?url=${currentUrl}/${pageTitle}`
+  
   }
 
   getPinterestShareLink(pageTitle: any, image: string | number | boolean, description: string | number | boolean): string {
-    const urlToShare = `${window.location.href}/${pageTitle}`;
+    var urlToShare ='';
+    try{
+      urlToShare=`${window.location.href}/${pageTitle}`;
+    }catch(ed){}
     return `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(
       urlToShare
     )}&media=${encodeURIComponent(image)}&description=${encodeURIComponent(
       description
     )}`;
+    
   }
   getlinkedinShareLink(pageTitle: any): string {
-    const currentUrl = window.location.href;
+    var currentUrl=''
+    try{
+      currentUrl= window.location.href;
+  }catch(ed){}
     return `https://www.linkedin.com/share?url=${currentUrl}/${pageTitle}`;
+   
   }
 
   getTwitterShareLink(pageTitle: any): string {
-    const urlToShare = `${window.location.href}/${pageTitle}`;
+    var urlToShare ='';
+    try{
+      urlToShare=`${window.location.href}/${pageTitle}`;
+    }catch(ed){}
     const text = pageTitle; // Replace with your desired text
     return `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       urlToShare
     )}&text=${encodeURIComponent(text)}`;
+    
   }
   GetHomePageConfigurations() {
 
@@ -370,8 +390,10 @@ export class HomeComponent implements OnInit {
     }
   }
   gototop() {
+    try{
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    }catch(ed){}
   }
   ngOnInit() {
     this.gototop();

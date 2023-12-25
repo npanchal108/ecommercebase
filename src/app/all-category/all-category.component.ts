@@ -2690,10 +2690,12 @@ export class AllCategoryComponent implements OnInit {
     this.Setitemname(product.itemname);
     //this.router.navigate(['/productdetail', product.itemname,product.links]);
     const angularRoute = this.router.url;
-    const url = window.location.href;
+    const url = this.router.url;
     const domainAndApp = url.replace(angularRoute, '');
     var link = domainAndApp + '/productdetail/' + encodeURIComponent(product.itemname);
+    try{
     this.router.navigate([]).then(result => { window.open(link, '_blank'); });
+    }catch(ed){}
     // const angularRoute = this.router.url;
     // const url = window.location.href;
 

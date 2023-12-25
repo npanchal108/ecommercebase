@@ -99,13 +99,17 @@ export class B2cRegistrationComponent implements OnInit {
     if (company != undefined && company != null && company != '0') {
       this.dataService.GetSysCompanyDetails(company).subscribe((data: any) => {
         this.selectedcompany = data;
+        try{
         localStorage.clear();
+      }catch(ed){}
         if (this.selectedcompany != undefined && this.selectedcompany != null) {
           Common.setWithExpiry("company_cu", this.selectedcompany.company_cu);
           Common.setWithExpiry("company_it", this.selectedcompany.company_it);
           Common.setWithExpiry("company_sy", this.selectedcompany.company_sy);
         }
+        try{
         window.location.reload();
+        }catch(ed){}
 
       })
     }

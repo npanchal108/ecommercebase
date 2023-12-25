@@ -15,12 +15,12 @@ export class pagedetailsComponent  {
   pagedetails: any;
   private _routerSub = Subscription.EMPTY;
   ptype:any;
-  postUrl = window.location.href;
+  postUrl: any;
   postTitle = '';
   postImage = '';
   dynamicpagelist: any;
   constructor(private seoService: SEOService, private route: ActivatedRoute, private dataService: DataService,private router: Router) {
-    
+    this.postUrl=this.route.url;
     //var geturl = window.location.href.toString().split('/#')[0];
     //this.seoService.setPageTitle('User Profile - ' + geturl);
     //this.seoService.setkeywords('User Profile - ' + geturl);
@@ -54,39 +54,60 @@ export class pagedetailsComponent  {
    
   }
   getFacebookShareLink(pageTitle): string {
-    const currentUrl = window.location.href;
+    var currentUrl ='';
+    try{
+      currentUrl=window.location.href;
+    }catch(ed){}
     return `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(`${currentUrl}/${pageTitle}`)}`;
+    
   }
   getlinkedinShareLink(pageTitle): string {
-    const currentUrl = window.location.href;
+    var currentUrl ='';
+    try{
+      currentUrl=window.location.href;
+    }catch(ed){}
     return `https://www.linkedin.com/share?url=${currentUrl}/${pageTitle}`;
+  
   }
 
   getInstaShareLink(pageTitle): string {
-    const currentUrl = window.location.href;
+    var currentUrl ='';
+    try{
+      currentUrl= window.location.href;
+    }catch(ed){}
     return `https://www.instagram.com/share?url=${currentUrl}/${pageTitle}`
+  
   }
 
   getPinterestShareLink(pageTitle, image, description): string {
-    const urlToShare = `${window.location.href}/${pageTitle}`;
+    var urlToShare ='';
+    try{
+      urlToShare =`${window.location.href}/${pageTitle}`;
+    }catch(ed){}
     return `https://www.pinterest.com/pin/create/button/?url=${encodeURIComponent(
       urlToShare
     )}&media=${encodeURIComponent(image)}&description=${encodeURIComponent(
       description
     )}`;
+  
   }
   
 
   getTwitterShareLink(pageTitle): string {
-    const urlToShare = `${window.location.href}/${pageTitle}`;
+    var urlToShare='';
+    try{
+     urlToShare = `${window.location.href}/${pageTitle}`;
+    }catch(ed){}
     const text = pageTitle; // Replace with your desired text
     return `https://twitter.com/intent/tweet?url=${encodeURIComponent(
       urlToShare
     )}&text=${encodeURIComponent(text)}`;
   }
   gototop() {
+    try{
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    }catch(ed){}
   }
 
   Getpagelistbytype() {

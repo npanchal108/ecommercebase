@@ -995,11 +995,13 @@ this.asyncSelected=event.item.itemname;
       usrid = Common.getWithExpiry("CustID");
     }
     this.cartService.deleteCartItem(product.itemnumber, product.um).subscribe((res: any) => {
+      try{
       var getirl = window.location.href;
       this.getCartItems();
       if (getirl.indexOf('viewcart') != -1) {
         window.location.reload();
       }
+    }catch(ed){}
     });
   }
   deleteitemforsession(item: { itemname: any; um: any; }){
@@ -1094,8 +1096,9 @@ totalitem=Number(totalitem)+Number(pp.Quantity);
     Common.removeWithExpiry("Permission");
     Common.removeWithExpiry("SalesUserID");
     Common.removeWithExpiry("SalesUserType");
-
+try{
     localStorage.clear();
+  }catch(ed){}
     if(flag==1){
       this.router.navigate(['/login']);
       }
@@ -1125,7 +1128,9 @@ totalitem=Number(totalitem)+Number(pp.Quantity);
 
   gotorfqpage() {
     if (this.router.url.toString().indexOf('rfqlist') != -1) {
+      try{
       window.location.reload();
+      }catch(ed){}
     }
     else {
       this.router.navigate(['/rfqlist']);
@@ -1143,7 +1148,9 @@ totalitem=Number(totalitem)+Number(pp.Quantity);
   }
   gotormapage() {
     if (this.router.url.toString().indexOf('rma') != -1) {
+      try{
       window.location.reload();
+      }catch(ed){}
     }
     else {
       this.router.navigate(['/rma']);

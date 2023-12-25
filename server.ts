@@ -7,17 +7,19 @@ import AppServerModule from './src/main.server';
 
 // The Express app is exported so that it can be used by serverless Functions.
 export function app(): express.Express {
+  
   const server = express();
   const serverDistFolder = dirname(fileURLToPath(import.meta.url));
   const browserDistFolder = resolve(serverDistFolder, '../browser');
   const indexHtml = join(serverDistFolder, 'index.server.html');
+  try{
   global['localStorage'] = window.localStorage;
   global['window'] = window;
 global['document'] = window.document;
 //global['object'] = window.object;
 global['navigator'] = window.navigator;
 global['Event'] = window.Event;
-
+  }catch(ed){}
   const commonEngine = new CommonEngine();
 
   server.set('view engine', 'html');

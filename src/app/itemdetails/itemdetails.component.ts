@@ -118,7 +118,9 @@ export class ItemDetailsComponent {
     this.getcounts(); // Update counts or perform other actions as needed
   }
   redirectToUrl(url: string) {
+    try{
     window.open(url, '_blank');
+    }catch(ed){}
   }
 
   openPopup(item): void {
@@ -147,7 +149,9 @@ export class ItemDetailsComponent {
     }
 
     else {
+      try{
       window.open(item.Url, '_blank');
+      }catch(ed){}
     }
   }
 }
