@@ -52,14 +52,12 @@
         </div>
     </div>
     <section class="section-box shop-template mt-100">
-        <!-- <div class="container"> -->
         <div class="row padding-lr-80">
             <div class="col-lg-4 detail-gallery px-3 py-2">
-
-
-                <ngx-gallery [options]="galleryOptions"
+                <app-image-slider [slides]="galleryImages" [thumbnailSlides]="galleryImages"></app-image-slider>
+                <!-- <ngx-gallery [options]="galleryOptions"
                     *ngIf="showSlider && galleryImages!=undefined && galleryImages.length>0" [images]="galleryImages"
-                    class="ngx-gallery"></ngx-gallery>
+                    class="ngx-gallery"></ngx-gallery> -->
             </div>
             <div class="col-lg-8">
                 <div class="product-info padding-lr-50">

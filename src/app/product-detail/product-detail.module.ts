@@ -6,9 +6,10 @@ import { ProductDetailComponent } from './product-detail.component';
 
 //import { OrderModule } from 'ngx-order-pipe';
 import { FormsModule } from '@angular/forms';
-import { NgxGalleryModule } from '@kolkov/ngx-gallery';
+//import { NgxGalleryModule } from '@kolkov/ngx-gallery';
 import { sharedModule } from '../../app/model/shared.module';
 import { SlickCarouselModule } from 'ngx-slick-carousel';
+import { ImageSliderComponent } from '../common/image-slider/image-slider.component';
 // import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 
@@ -23,10 +24,11 @@ import { SlickCarouselModule } from 'ngx-slick-carousel';
    // OrderModule,
     FormsModule,
     sharedModule,
-    NgxGalleryModule,
+    //NgxGalleryModule,
     ProductDetailRoutingModule,
     SlickCarouselModule,
-    //PdfViewerModule
+    //PdfViewerModule,
+    ImageSliderComponent
   ],
  
 })

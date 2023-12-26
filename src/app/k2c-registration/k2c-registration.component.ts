@@ -9,8 +9,8 @@ import { DataService } from '../services/data.service';
 import { SEOService } from '../services/seo.service';
 import { LoadingService } from '../services/loading.service';
 // import * as $ from 'jquery';
-import * as parser from 'parse-address'
-//import * as passwordPolicy from 'password-policy'
+import * as parser from 'parse-address';
+import * as passwordPolicy from 'password-policy';
 // import { IpServiceService } from '../ip-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';

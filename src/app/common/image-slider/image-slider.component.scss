@@ -1,0 +1,32 @@
+/* src\app\common\image-slider\image-slider.component.scss */
+
+.thumbnail-carousel {
+    width: 100%;
+
+    .slick-list {
+        height: 100%;
+    }
+
+    .slick-track {
+       width: auto !important;
+    }
+
+    .slick-slide {
+
+        cursor: pointer;
+        border: 2px solid transparent;
+
+        &.slick-current {
+            border-color: #007bff;
+            /* Highlight the current thumbnail */
+        }
+    }
+}
+
+.carousel-container {
+    width: 100%;
+}
+
+.slick-list{
+    padding: 0 !important;
+}

@@ -174,10 +174,10 @@ export const AppRoutes: Routes = [
   //   path: 'registration',
   //   loadChildren: () => import('./b2c-registration/b2c-registration.module').then(m => m.b2cregistrationModule)
   // },
-  // {
-  //   path: 'create-account',
-  //   loadChildren: () => import('./k2c-registration/k2c-registration.module').then(m => m.k2cregistrationModule)
-  // },
+  {
+    path: 'create-account',
+    loadChildren: () => import('./k2c-registration/k2c-registration.module').then(m => m.k2cregistrationModule)
+  },
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then(m => m.loginModule)

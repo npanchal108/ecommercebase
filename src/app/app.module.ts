@@ -29,6 +29,7 @@ import { DemoService } from './services/demo.service';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 //import { FloorPipe, MillionPipe, weburlPipe } from '../app/services/MillionPipe';
 import { sharedModule } from '../app/model/shared.module';
+import { ImageSliderComponent } from './common/image-slider/image-slider.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -52,6 +53,7 @@ import { sharedModule } from '../app/model/shared.module';
     sharedModule,
     RecaptchaModule,
     NgxExtendedPdfViewerModule,
+    ImageSliderComponent,
     GoogleTagManagerModule.forRoot({
       id: environment.ga,
     }),

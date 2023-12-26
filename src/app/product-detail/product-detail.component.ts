@@ -3,7 +3,7 @@ import { DataService } from '../services/data.service';
 import { RoutingState } from '../services/routingState';
 import { ActivatedRoute, Router, NavigationEnd } from '@angular/router';
 import { CartService } from '../services/cart.service';
-import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryComponent } from '@kolkov/ngx-gallery';
+//import { NgxGalleryOptions, NgxGalleryImage, NgxGalleryAnimation, NgxGalleryComponent } from '@kolkov/ngx-gallery';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { ToastrService } from 'ngx-toastr';
 import { Common } from '../../app/model/common.model';
@@ -35,13 +35,14 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
   itemNo: any;
   sysnote = [];
   sysimage = [];
-  @ViewChild(NgxGalleryComponent) ngxGalleryComponent: NgxGalleryComponent;
+  // @ViewChild(NgxGalleryComponent) ngxGalleryComponent: NgxGalleryComponent;
   qtymsg: any;
   objUnitArr = [];
   slideConfig = { "slidesToShow": 3, "slidesToScroll": 3, "autoplay": false, "arrows": true, "dots": true, "responsive": [{ "breakpoint": 767, "settings": { "slidesToShow": 2, } }, { "breakpoint": 480, "settings": { "slidesToShow": 1, } }] };
   isSAitem: any;
-  galleryOptions: NgxGalleryOptions[];
-  galleryImages: NgxGalleryImage[];
+  // galleryOptions: NgxGalleryOptions[];
+  // galleryImages: NgxGalleryImage[];
+  galleryImages = [];
   Label7: any;
   isvendor: any;
   isMenufacturer: any;
@@ -226,7 +227,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
     // @Optional() @Inject(RESPONSE) private response: Response,
     @Inject(PLATFORM_ID) private platformId: any,private gtmService: GoogleTagManagerService, private seoService: SEOService, private routingState: RoutingState, private toastr: ToastrService, private dataService: DataService, private route: ActivatedRoute, private cartService: CartService, private router: Router,
     private sanitizer: DomSanitizer, private demoService: DemoService) {
-    //this.galleryImages=[];
+    // this.galleryImages=[];
     this.getlogintype();
     this.GetavaibilitylableConfig();
     this.guestLoginSetting();
@@ -278,7 +279,7 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
           itemNo = decodeURI(itemNo);
           
           if (this.item1 != undefined && this.item1 != null && this.item1.itemname != itemNo) {
-            this.galleryImages=[];
+            // this.galleryImages=[];
             this.getproductdetailsfirst();
             this.gototop();
           }
@@ -1071,10 +1072,9 @@ this.tabord=tab;
             
             if(docl.sequence>1){
             this.galleryImages.push({
-              small: docl.details_or_url,
-              medium: docl.details_or_url,
-              big: docl.details_or_url
+              img: docl.details_or_url
             })
+            console.log('this.galleryImages 1===>',this.galleryImages);
           }
           }
           else{
@@ -2993,16 +2993,6 @@ this.tabord=tab;
       this.getProductImage(this.item1);
       this.GetItemNotes(this.item1.itemname);
 
-      try {
-        this.ngxGalleryComponent.images = this.galleryImages;
-        this.ngxGalleryComponent.openPreview(0);
-        this.ngxGalleryComponent.onPreviewClose();
-      } catch (ex) { }
-
-      // }
-      // else{
-      //   this.GetItemNotes(this.item1.itemname);
-      // }
       if (this.webtype == '5' || this.webtype == '6') {
         var sa_group_label = JSON.parse(this.item1.sa_group_label);
         var sa_group_label1 = [];
@@ -3404,27 +3394,6 @@ this.tabord=tab;
           break;
         }
       }
-      this.galleryOptions = [
-        {
-          width: '100%',
-          height: '400px',
-          thumbnailsColumns: 4,
-          imageAnimation: NgxGalleryAnimation.Slide
-        },
-        {
-          breakpoint: 800,
-          width: '100%',
-          height: '600px',
-          imagePercent: 80,
-          thumbnailsPercent: 20,
-          thumbnailsMargin: 20,
-          thumbnailMargin: 20
-        },
-        {
-          breakpoint: 400,
-          preview: false
-        }
-      ];
       //this.galleryImages = [];
       var units = JSON.parse(this.item1.um);
 
@@ -3545,30 +3514,6 @@ this.tabord=tab;
 
   setimageindex(index) {
     index = index - 1;
-    this.galleryOptions = [
-      {
-        width: '100%',
-        height: '350px',
-        thumbnailsColumns: 4,
-        imageAnimation: NgxGalleryAnimation.Slide,
-        startIndex: index
-      },
-      // max-width 800
-      {
-        breakpoint: 500,
-        width: '100%',
-        height: '600px',
-        imagePercent: 80,
-        thumbnailsPercent: 20,
-        thumbnailsMargin: 20,
-        thumbnailMargin: 20
-      },
-      // max-width 400
-      {
-        breakpoint: 400,
-        preview: false
-      }
-    ];
   }
   getpricebreaks(uname, items) {
     if (items != undefined && items != null) {
@@ -3800,7 +3745,6 @@ this.tabord=tab;
     var flag = true;
     if(this.galleryImages!=undefined && this.galleryImages!=null && this.galleryImages.length>0){
     for (let imgObj of this.galleryImages) {
-
       if (imgObj.small === item) {
         flag = false;
         break;
@@ -3820,16 +3764,10 @@ this.tabord=tab;
           this.sysimage.push(getimah);
 
           this.galleryImages.push({
-            small: getimah,
-            medium: getimah,
-            big: getimah
+            img: getimah
           })
+          console.log('this.galleryImages 2==>',this.galleryImages);
         }
-        try {
-          //this.ngxGalleryComponent.images =arraySort(this.galleryImages, ['small']); ;
-          this.ngxGalleryComponent.openPreview(0);
-          this.ngxGalleryComponent.onPreviewClose();
-        } catch (ex) { }
       }
     })
   }
@@ -3841,16 +3779,10 @@ this.tabord=tab;
 
         this.sysimage.push(getimah);
         this.galleryImages.push({
-          small: getimah,
-          medium: getimah,
-          big: getimah
+          img: getimah
         })
+        console.log('this.galleryImages 3==>',this.galleryImages);
       }
-      try {
-        this.ngxGalleryComponent.images = this.galleryImages;
-        this.ngxGalleryComponent.openPreview(0);
-        this.ngxGalleryComponent.onPreviewClose();
-      } catch (ex) { }
     })
   }
 
@@ -4460,16 +4392,10 @@ this.tabord=tab;
           }
 
           this.galleryImages.push({
-            small: pitem.image,
-            medium: pitem.image,
-            big: pitem.image
+            img: pitem.image
           })
+          console.log('this.galleryImages 4==>',this.galleryImages);
         }
-        try {
-          this.ngxGalleryComponent.images = this.galleryImages;
-          this.ngxGalleryComponent.openPreview(0);
-          this.ngxGalleryComponent.onPreviewClose();
-        } catch (ex) { }
       }
       else {
         var getimage = 'https://portal.distone.com/assets/images/Product.png';
@@ -4477,18 +4403,11 @@ this.tabord=tab;
           this.sysimage.push(getimage);
 
           this.galleryImages.push({
-            small: getimage,
-            medium: getimage,
-            big: getimage
+            img: getimage
           })
         }
-        try {
-          this.ngxGalleryComponent.images = this.galleryImages;
-          this.ngxGalleryComponent.openPreview(0);
-          this.ngxGalleryComponent.onPreviewClose();
-        } catch (ed) { }
-
         this.image1=this.galleryImages[0];
+        console.log('this.galleryImages 5==>',this.galleryImages);
       }
     }
   }
