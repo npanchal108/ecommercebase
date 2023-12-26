@@ -30,6 +30,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 //import { FloorPipe, MillionPipe, weburlPipe } from '../app/services/MillionPipe';
 import { sharedModule } from '../app/model/shared.module';
 import { ImageSliderComponent } from './common/image-slider/image-slider.component';
+import { LocalStorage } from './model/common.model';
 @NgModule({
   declarations: [
     AppComponent,
@@ -64,6 +65,7 @@ import { ImageSliderComponent } from './common/image-slider/image-slider.compone
   ],
   providers: [
     provideClientHydration(),
+    { provide: LocalStorage, useFactory: localStorageFactory },
     SEOService,
     ContactService,
     LoadingService,
@@ -78,3 +80,6 @@ import { ImageSliderComponent } from './common/image-slider/image-slider.compone
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function localStorageFactory() {
+  return localStorage;
+}

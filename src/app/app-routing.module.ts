@@ -32,10 +32,10 @@ export const AppRoutes: Routes = [
   //   path: 'rma',canActivate: [AuthGuardGuard],
   //   loadChildren: () => import('./rma/rma.module').then(m => m.rmaModule)
   // },
-  // {
-  //   path: 'login/:customerId/:userId/:password',
-  //   loadChildren: () => import('./login/login.module').then(m => m.loginModule)
-  // },
+  {
+    path: 'login/:customerId/:userId/:password',
+    loadChildren: () => import('./login/login.module').then(m => m.loginModule)
+  },
   // {
   //   path: 'wishlist',
   //   loadChildren: () => import('./wishlist/wishlist.module').then(m => m.wishlistModule)

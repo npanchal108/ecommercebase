@@ -83,12 +83,16 @@ export class B2bRegistrationComponent implements OnInit {
   GetConfigForTextUpperCaseSetting() {
     this.TextUpperCase =this.dataService.Getconfigbykey("TextUpperCaseSetting");
     if (this.TextUpperCase == null || this.TextUpperCase == undefined || this.TextUpperCase == '') {
-    this.TextUpperCase = localStorage.getItem("TextUpperCase");
+      try{
+            this.TextUpperCase = localStorage.getItem("TextUpperCase");
+      }catch(ed){}
     }
     if (this.TextUpperCase == null || this.TextUpperCase == undefined || this.TextUpperCase == '') {
       this.dataService.GetConfigForTextUpperCaseSetting().subscribe((res: any) => {
         this.TextUpperCase = res;
+        try{
         localStorage.setItem("TextUpperCase", this.TextUpperCase);
+      }catch(ed){}
       });
     }
   }
@@ -132,7 +136,9 @@ export class B2bRegistrationComponent implements OnInit {
             this.registrationcontrols[i].optionlist = this.registrationcontrols[i].dropdowndetails.split(',');
           }
         }
+        try{
         localStorage.setItem("registrationcontrols", JSON.stringify(this.registrationcontrols));
+      }catch(ed){}
       })
     }
     else {
@@ -142,36 +148,48 @@ export class B2bRegistrationComponent implements OnInit {
   Accessannomyous() {
     this.isaccesswithlogin=this.dataService.Getconfigbykey("withoutloginBrowse");
     if (this.isaccesswithlogin == null || this.isaccesswithlogin == undefined || this.isaccesswithlogin == '') {
+      try{
     this.isaccesswithlogin = localStorage.getItem("isaccesswithlogin");
+  }catch(ed){}
     }
     if (this.isaccesswithlogin == null || this.isaccesswithlogin == undefined || this.isaccesswithlogin == '') {
       this.dataService.GetConfidForanonymoususersbrowsethesite().subscribe((res: any) => {
         this.isaccesswithlogin = res;
+        try{
         localStorage.setItem("isaccesswithlogin", this.isaccesswithlogin);
+      }catch(ed){}
       });
     }
   }
   GetConfigtoRegistrationLable() {
     this.RegistrationLable =this.dataService.Getconfigbykey("RegistrationLable");
     if (this.RegistrationLable == null || this.RegistrationLable == undefined || this.RegistrationLable == '') {
+      try{
     this.RegistrationLable = localStorage.getItem("RegistrationLable");
+  }catch(ed){}
     }
     if (this.RegistrationLable == null || this.RegistrationLable == undefined || this.RegistrationLable == '') {
       this.dataService.GetConfigtoRegistrationLable().subscribe((res: any) => {
         this.RegistrationLable = res;
+        try{
         localStorage.setItem("RegistrationLable", this.RegistrationLable);
+      }catch(ed){}
       });
     }
   }
   GetconfigurationfroAddressParser() {
     this.isaddressparse =this.dataService.Getconfigbykey("AddressParser");
     if (this.isaddressparse == null || this.isaddressparse == undefined || this.isaddressparse == '') {
+      try{
     this.isaddressparse = localStorage.getItem("isaddressparse");
+  }catch(ed){}
     }
     if (this.isaddressparse == null || this.isaddressparse == undefined || this.isaddressparse == '') {
       this.dataService.GetconfigurationfroAddressParser().subscribe((res: any) => {
         this.isaddressparse = res;
+        try{
         localStorage.setItem("isaddressparse", this.isaddressparse);
+      }catch(ed){}
       });
     }
   }
@@ -207,12 +225,16 @@ export class B2bRegistrationComponent implements OnInit {
   getisprofiledesc() {
     this.showprovince =this.dataService.Getconfigbykey("provinceregistration");
     if (this.showprovince == null || this.showprovince == undefined || this.showprovince == '') {
+      try{
     this.showprovince = localStorage.getItem("showprovince");
+  }catch(ed){}
     }
     if (this.showprovince == null || this.showprovince == undefined || this.showprovince == '') {
       this.registerService.GetconfigurationforshowprovinceinRegistration().subscribe((res: any) => {
         this.showprovince = res;
+        try{
         localStorage.setItem("showprovince", this.showprovince);
+      }catch(ed){}
       });
     }
   }
@@ -245,12 +267,16 @@ export class B2bRegistrationComponent implements OnInit {
   Getcaptchavalue() {
     this.iscaptcha =this.dataService.Getconfigbykey("CaptchaInRegistration");
     if (this.iscaptcha == undefined || this.iscaptcha == null || this.iscaptcha =='') {
+      try{
     this.iscaptcha = localStorage.getItem("iscaptchar");
+  }catch(ed){}
     }
     if (this.iscaptcha == undefined || this.iscaptcha == null || this.iscaptcha =='') {
       this.dataService.GetConfidForcaptchaRegistration().subscribe((data: any) => {
         this.iscaptcha = data;
+        try{
         localStorage.setItem("iscaptchar", this.iscaptcha);
+      }catch(ed){}
       })
     }
   }

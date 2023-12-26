@@ -388,7 +388,9 @@ this.iskrayden=environment.iskyraden;
     }
   }
   getIsMuscle() {
+    try{
     var geturl = window.location.hostname;
+    }catch(ed){}
     if (geturl.indexOf('shop.musclefoodsusa.com') == -1) {
       this.IsMuscle = Common.getWithExpiry("IsMuscle");
       if (this.IsMuscle == null || this.IsMuscle == undefined) {

@@ -89,7 +89,9 @@ title:any;
       .subscribe(() => {       
         
         this.url = this.router.url; 
-        this.gtmService.addGtmToDom();
+        try{
+        //this.gtmService.addGtmToDom();
+        }catch(ed){}
         this.getisaccesswithlogin();
         if (Common.getWithExpiry("CustID") != "" && Common.getWithExpiry("CustID") != null) {
           this.isLoggedIn = true;

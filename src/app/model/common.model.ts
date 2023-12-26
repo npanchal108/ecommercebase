@@ -1,3 +1,4 @@
+import { Inject } from "@angular/core";
 import { environment } from "../../environments/environment.development";
 
 
@@ -27,9 +28,20 @@ export class CSVRecord {
 	public qty: any;
 	
 }
+export abstract class LocalStorage {
+    readonly length: number;
+    abstract clear(): void;
+    abstract getItem(key: string): string | null;
+    abstract key(index: number): string | null;
+    abstract removeItem(key: string): void;
+    abstract setItem(key: string, data: string): void;
+    [key: string]: any;
+    [index: number]: string;
+}
   
 
 export class Common {
+	
 	//APIUrl:string="https://localhost:44320";   
 	//APIUrl: string = "https://portal.distone.com/ecommerceapi";
 	//APIUrl: string = "https://portal2.distone.com/apexelectricapi";
@@ -95,12 +107,16 @@ export class Common {
 			value: value,
 			expiry: now.getTime() + environment.storagetime
 		}
+		try{
 		localStorage.setItem(key, JSON.stringify(item));
+	}catch(ed){}
 	}
 
 	public static removeWithExpiry(key: string){
 		key=environment.cookname+key;
+		try{
 		localStorage.removeItem(key);
+	}catch(ed){}
 	} 
 public static getWithExpiry(key: string) {
 		key=environment.cookname+key;

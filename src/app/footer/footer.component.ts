@@ -194,11 +194,15 @@ this.iskyraden=environment.iskyraden;
     Common.removeWithExpiry("Permission");
     Common.removeWithExpiry("SalesUserID");
     Common.removeWithExpiry("SalesUserID");
+    try{
     localStorage.clear();
+  }catch(ed){}
     this.isNotLoggedIn = true;
     this.router.navigate(['/login']);
     this.ngOnInit();
+    try{
     window.location.reload();
+    }catch(ed){}
 
   }
 
