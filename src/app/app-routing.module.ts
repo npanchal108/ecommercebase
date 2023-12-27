@@ -40,18 +40,18 @@ export const AppRoutes: Routes = [
   //   path: 'wishlist',
   //   loadChildren: () => import('./wishlist/wishlist.module').then(m => m.wishlistModule)
   // },
-  // {
-  //   path: 'advancesearch',
-  //   loadChildren: () => import('./advancesearch/advancesearch.module').then(m => m.advancesearchModule)
-  // },
-  // {
-  //   path: 'productlisting',
-  //   loadChildren: () => import('./maj-prod/MajProd.module').then(m => m.MajProdModule)
-  // },
-  // {
-  //   path: 'addyourcard/:id/:ctype',
-  //   loadChildren: () => import('./addyourcard/addyourcard.module').then(m => m.addyourcardModule)
-  // },
+  {
+    path: 'advancesearch',
+    loadChildren: () => import('./advancesearch/advancesearch.module').then(m => m.advancesearchModule)
+  },
+  {
+    path: 'productlisting',
+    loadChildren: () => import('./maj-prod/MajProd.module').then(m => m.MajProdModule)
+  },
+  {
+    path: 'addyourcard/:id/:ctype',
+    loadChildren: () => import('./addyourcard/addyourcard.module').then(m => m.addyourcardModule)
+  },
   // {
   //   path: 'addyourcard/:id/:type/:amount/:ctype',
   //   loadChildren: () => import('./addyourcard/addyourcard.module').then(m => m.addyourcardModule)
@@ -198,10 +198,10 @@ export const AppRoutes: Routes = [
   //   path: 'sales-login',
   //   loadChildren: () => import('./sales-login/sales-login.module').then(m => m.salesloginModule)
   // },
-  // {
-  //   path: 'dashboard',
-  //   loadChildren: () => import('./dashboard/dashboard.module').then(m => m.dashboardModule)
-  // },
+  {
+    path: 'dashboard',
+    loadChildren: () => import('./dashboard/dashboard.module').then(m => m.dashboardModule)
+  },
   // {
   //   path: 'userprofile', canActivate: [AuthGuardGuard],
   //   loadChildren: () => import('./userprofile/userprofile.module').then(m => m.userprofileModule)

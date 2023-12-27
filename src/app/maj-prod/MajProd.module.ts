@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { MajProdRoutingModule } from './MajProd-routing.module';
 import { MajProdComponent } from './maj-prod.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

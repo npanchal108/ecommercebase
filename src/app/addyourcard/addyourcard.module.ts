@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { addyourcardRoutingModule } from './addyourcard-routing.module';
 import { AddyourcardComponent } from './addyourcard.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

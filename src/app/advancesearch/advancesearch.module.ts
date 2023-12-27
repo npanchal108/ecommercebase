@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { advancesearchRoutingModule } from './advancesearch-routing.module';
 import { AdvancesearchComponent } from './advancesearch.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AuthGuardGuard } from '../auth-guard.guard';
+import { AuthGuardGuard } from '../model/auth-guard.guard';
+
 import { AddyourcardComponent } from './addyourcard.component';
 
 

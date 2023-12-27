@@ -151,8 +151,10 @@ export class AdvancesearchComponent implements OnInit {
     //this.getIP();
   }
   gototop() {
+    try{
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    }catch(ed){}
   }
   updatePermission(event) {
     if (event.target.checked) {

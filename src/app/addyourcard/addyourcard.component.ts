@@ -12,7 +12,8 @@ import * as parser from 'parse-address'
 import { json } from 'express';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+
 @Component({
   selector: 'app-addyourcard',
   templateUrl: './addyourcard.component.html',

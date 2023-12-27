@@ -10,7 +10,7 @@ import { SideMenuComponent } from './side-menu/side-menu.component';
 import { FooterComponent } from './footer/footer.component';
 import { GoogleTagManagerModule } from 'angular-google-tag-manager';
 import { environment } from '../environments/environment.development';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { SEOService } from './services/seo.service';
@@ -62,9 +62,11 @@ import { LocalStorage } from './model/common.model';
       positionClass: 'toast-bottom-right',
       }),
       NgbTypeaheadModule,
+      
   ],
   providers: [
     provideClientHydration(),
+    HttpClient,
     { provide: LocalStorage, useFactory: localStorageFactory },
     SEOService,
     ContactService,
