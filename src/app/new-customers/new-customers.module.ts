@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { NewCustomersComponent } from './new-customers.component';
 import { newcustomersRoutingModule } from './new-customers-routing.module';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+
 import { RecaptchaModule } from 'ng-recaptcha';
+import { sharedModule } from '../model/shared.module';
 
 
 

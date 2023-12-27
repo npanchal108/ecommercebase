@@ -4,8 +4,10 @@ import { UserComponent } from './user.component';
 import { userRoutingModule } from './user-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
-import { sharedModule } from '../shared.module';
+
+import { sharedModule } from '../model/shared.module';
+import { SelectDropDownModule } from 'ngx-select-dropdown';
+
 
 
 
@@ -20,7 +22,7 @@ import { sharedModule } from '../shared.module';
     FormsModule,
     sharedModule,
     NgxPaginationModule,
-    NgMultiSelectDropDownModule,
+    SelectDropDownModule,
     userRoutingModule
   ],
  

@@ -3,7 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '../../../node_modules/@angular/router';
 import { DataService } from '../services/data.service';
 import { Common } from '../model/common.model';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+
+
 @Component({
   selector: 'app-order-management',
   templateUrl: './order-management.component.html',

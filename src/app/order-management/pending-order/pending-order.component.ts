@@ -4,7 +4,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DataService } from '../../services/data.service';
 import { Common } from '../../model/common.model';
 import { SEOService } from '../../services/seo.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-pending-order',
   templateUrl: './pending-order.component.html',

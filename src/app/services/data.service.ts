@@ -1105,11 +1105,11 @@ var Allconfigurationlist=null;
     }
     return this.http.post(environment.APIUrl + '/Product/GetProductListBySearchforheader', pmodel, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) });
   }
-  GetProductAdvanceSearch(searchview: { company_sy: any; }) {
+  GetProductAdvanceSearch(searchview: any) {
     searchview.company_sy = Common.getWithExpiry("company_sy");
     return this.http.post(environment.APIUrl + '/Product/GetAdvanceSearch', searchview, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) });
   }
-  GetProductAdvanceSearchCount(searchview: { company_sy: any; }) {
+  GetProductAdvanceSearchCount(searchview: any) {
     searchview.company_sy = Common.getWithExpiry("company_sy");
     return this.http.post(environment.APIUrl + '/Product/GetAdvanceSearchCount', searchview, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) });
   }

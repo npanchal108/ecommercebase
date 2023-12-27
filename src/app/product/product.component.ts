@@ -11,9 +11,10 @@ import { SEOService } from '../services/seo.service';
 //import { SSL_OP_SSLEAY_080_CLIENT_DH_BUG } from 'constants';
 import * as arraySort from 'array-sort'
 import { MenuService } from '../services/menu.service';
-import { environment } from 'src/environments/environment';
+
 
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
+import { environment } from '../../environments/environment';
 
 @Component({
 
@@ -2244,6 +2245,7 @@ export class ProductComponent implements OnInit {
     }
   }
   copyMessage(val: string) {
+    try{
     const selBox = document.createElement('textarea');
     selBox.style.position = 'fixed';
     selBox.style.left = '0';
@@ -2256,6 +2258,7 @@ export class ProductComponent implements OnInit {
     document.execCommand('copy');
     document.body.removeChild(selBox);
     this.toastr.success("Copied to Clipboard")
+    }catch(ed){}
   }
   getfirstpagelist() {
     this.route.params.subscribe(params => {
@@ -2288,7 +2291,7 @@ export class ProductComponent implements OnInit {
 
       if (this.category != undefined && this.category != null && this.category != '') {
         this.pptype = 1;
-        this.dataService.getproductdetailforlist(1, this.category).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('1', this.category).subscribe((res: any) => {
           this.productdetailsforlist = res;
           this.seoService.createLinkForCanonicalURLforproduct(encodeURIComponent(this.productdetailsforlist[0].tree_node) + '/' + this.productdetailsforlist[0].name.replace(/[^A-Z0-9]/ig, "-").replace(/---/g, '-').replace(/--/g, '-'));
           this.seoService.setPageTitle(this.productdetailsforlist[0].title_tag);
@@ -2298,7 +2301,7 @@ export class ProductComponent implements OnInit {
       }
       else if (this.productName != undefined && this.productName != null && this.productName != '') {
         this.pptype = 2;
-        this.dataService.getproductdetailforlist(2, this.productName).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('2', this.productName).subscribe((res: any) => {
           this.productdetailsforlist = res;
           
           this.seoService.createLinkForCanonicalURLforproduct(encodeURIComponent(this.productdetailsforlist[0].product_line) + '/' + this.productdetailsforlist[0].descr.replace(/[^A-Z0-9]/ig, "-").replace(/---/g, '-').replace(/--/g, '-'));
@@ -2309,7 +2312,7 @@ export class ProductComponent implements OnInit {
       }
       else if (selectedmaj_class != undefined && selectedmaj_class != null && selectedmaj_class != '') {
         this.pptype = 3;
-        this.dataService.getproductdetailforlist(3, selectedmaj_class).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('3', selectedmaj_class).subscribe((res: any) => {
           this.productdetailsforlist = res;
         });
       }
@@ -3598,6 +3601,7 @@ export class ProductComponent implements OnInit {
     this.gototop();
   }
   public loadScript() {
+    try{
     let body = <HTMLDivElement>document.body;
     let script = document.createElement('script');
     script.innerHTML = "";
@@ -3611,7 +3615,7 @@ export class ProductComponent implements OnInit {
     script1.async = true;
     script1.defer = true;
     body.appendChild(script1);
-
+    }catch(ed){}
   }
 
   LoginForAddtoQuote(){

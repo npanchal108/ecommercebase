@@ -17,19 +17,21 @@ import { LoadingService } from '../services/loading.service';
 import * as parser from 'parse-address'
 import { NavigationEnd, Router } from '@angular/router';
 import { UntypedFormBuilder, NgForm } from '@angular/forms';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 import { IDatePickerConfig } from 'ng2-date-picker';
 import { DEF_CONF } from '../model/consts';
 import { filter } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
-import { environment } from 'src/environments/environment';
+
 import { MatDialog } from '@angular/material/dialog';
-import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';
+//import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
-import { ShipToAddressPopupComponent } from './shiptoaddresspopup.component';
-import { CreditCardAddrsPopupComponent } from './creditcardaddrspopup.component';
+//import { ShipToAddressPopupComponent } from './shiptoaddresspopup.component';
+//import { CreditCardAddrsPopupComponent } from './creditcardaddrspopup.component';
 import { forkJoin } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
+import { environment } from '../../environments/environment';
+
 
 @Component({
     selector: 'app-checkout',
@@ -482,20 +484,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
                     }
                     this.newArray.push(temp);
                 });
-                const dialogRef = this.dialog.open(AddressvalidationpopupComponent, {
-                    data: { userList: this.newArray },
-                    width: '600px',
-                });
+                // const dialogRef = this.dialog.open(AddressvalidationpopupComponent, {
+                //     data: { userList: this.newArray },
+                //     width: '600px',
+                // });
 
-                dialogRef.afterClosed().subscribe(result => {
-                    if (result) {
-                        this.isPostalCodeValid = true;
-                        this.shipping.Addr1 = result.addressLine1;
-                        this.shipping.Addr2 = result.addressLine2;
-                        this.shipping.PostalCode = result.postalCode;
-                        this.shipping.City = result.city;
-                    }
-                });
+                // dialogRef.afterClosed().subscribe(result => {
+                //     if (result) {
+                //         this.isPostalCodeValid = true;
+                //         this.shipping.Addr1 = result.addressLine1;
+                //         this.shipping.Addr2 = result.addressLine2;
+                //         this.shipping.PostalCode = result.postalCode;
+                //         this.shipping.City = result.city;
+                //     }
+                // });
             }
             else if (this.addressList.length == 1) {
                 this.shipping.Addr1 = Array.isArray(this.addressList[0].AddressKeyFormat.AddressLine) ? this.addressList[0].AddressKeyFormat.AddressLine[0] : this.addressList[0].AddressKeyFormat.AddressLine,
@@ -525,20 +527,20 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             Fax : this.billAdr.fax
         }
         this.cardid = this.cardid == undefined ? 0 : this.cardid;
-        const dialogRef = this.dialog.open(CreditCardAddrsPopupComponent, {
-            data: { billingAddress: billingAddress,cardId :  this.cardid,cType:'1'},
-            width: '800px'
-        });
+        // const dialogRef = this.dialog.open(CreditCardAddrsPopupComponent, {
+        //     data: { billingAddress: billingAddress,cardId :  this.cardid,cType:'1'},
+        //     width: '800px'
+        // });
 
-        dialogRef.afterClosed().subscribe(async(result) => {
-            if (result) {
-                this.cardList = [];
-                this.add_payment_info();
-                await this.getCardDetails(true);
-                this.head.CardNo = result;
-                this.cardChanged(result);
-            }
-        });
+        // dialogRef.afterClosed().subscribe(async(result) => {
+        //     if (result) {
+        //         this.cardList = [];
+        //         this.add_payment_info();
+        //         await this.getCardDetails(true);
+        //         this.head.CardNo = result;
+        //         this.cardChanged(result);
+        //     }
+        // });
     }
     openShippingAddressPopup(addModifyFlag): void {
         let billingAddress = {
@@ -556,19 +558,19 @@ export class CheckoutComponent implements OnInit, OnDestroy {
         }
        
         let modifyShipId = addModifyFlag == "modify" ? this.shipId : '0';
-        const dialogRef = this.dialog.open(ShipToAddressPopupComponent, {
-            data: { billingAddress: billingAddress,modifyShipId :  modifyShipId},
-            width: '800px',
-            // height:'0px'
-        });
+        // const dialogRef = this.dialog.open(ShipToAddressPopupComponent, {
+        //     data: { billingAddress: billingAddress,modifyShipId :  modifyShipId},
+        //     width: '800px',
+        //     // height:'0px'
+        // });
 
-        dialogRef.afterClosed().subscribe(async(result) => {
-            if (result) {
-              await this.getShipingAddress(result);
-              this.shipAddressChange(result);
-              this.add_shipping_info();
-            }
-          });
+        // dialogRef.afterClosed().subscribe(async(result) => {
+        //     if (result) {
+        //       await this.getShipingAddress(result);
+        //       this.shipAddressChange(result);
+        //       this.add_shipping_info();
+        //     }
+        //   });
     }
     Getaddnewqtywithnewlogic() {
         this.addnewqtywithnewlogic = this.dataService.Getconfigbykey("addnewqtywithnewlogic");
@@ -1144,7 +1146,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             this.dataService.GetconfigurationforIsDisablePayment().subscribe((data: any) => {
                 IsDisablePayment = data;
                 this.IsDisablePayment = (IsDisablePayment == '1' ? true : false);
-                Common.setWithExpiry("IsDisablePayment", this.IsDisablePayment);
+                Common.setWithExpiry("IsDisablePayment", this.IsDisablePayment.toString());
 
             });
         }
@@ -1629,8 +1631,8 @@ export class CheckoutComponent implements OnInit, OnDestroy {
             this.isReviewPermission = false;
         }
 
-        this.head.WantedDate = moment();
-        this.head.CancelDate = moment();
+        //this.head.WantedDate = moment();
+        //this.head.CancelDate = moment();
         this.getShipFOB();
         this.getPaymentType();
         

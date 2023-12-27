@@ -4,9 +4,10 @@ import { PurchaseHistoryComponent } from './purchase-history.component';
 import { purchasehistoryRoutingModule } from './purchase-history-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { sharedModule } from 'src/app/shared.module';
+
 
 import { DpDatePickerModule } from 'ng2-date-picker';
+import { sharedModule } from '../../model/shared.module';
 
 
 @NgModule({

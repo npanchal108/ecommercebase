@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { b2bregistrationRoutingModule } from './b2b-registration-routing.module';
 import { B2bRegistrationComponent } from './b2b-registration.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+
 import { RecaptchaModule } from 'ng-recaptcha';
+import { sharedModule } from '../model/shared.module';
 
 
 

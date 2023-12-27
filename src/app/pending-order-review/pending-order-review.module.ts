@@ -2,7 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PendingOrderReviewComponent } from './pending-order-review.component';
 import { pendingorderreviewRoutingModule } from './pending-order-review-routing.module';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

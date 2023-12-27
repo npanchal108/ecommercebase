@@ -2,7 +2,7 @@ import { Component, OnInit, Renderer2 } from '@angular/core';
 import { Common } from '../../app/model/common.model';
 import { NgForm } from '@angular/forms';
 import { RegistrationService } from '../services/registration.service';
-import { Md5 } from 'ts-md5/dist/md5';
+
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../services/data.service';
 import { SEOService } from '../services/seo.service';

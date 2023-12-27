@@ -4,7 +4,8 @@ import { PendingOrderComponent } from './pending-order.component';
 import { pendingorderRoutingModule } from './pending-order-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from 'src/app/shared.module';
+import { sharedModule } from '../../model/shared.module';
+
 
 
 

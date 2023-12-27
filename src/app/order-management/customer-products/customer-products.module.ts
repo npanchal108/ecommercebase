@@ -4,7 +4,8 @@ import { CustomerProductsComponent } from './customer-products.component';
 import { customerproductsRoutingModule } from './customer-products-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { sharedModule } from 'src/app/shared.module';
+import { sharedModule } from '../../model/shared.module';
+
 
 
 

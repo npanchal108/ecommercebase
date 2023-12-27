@@ -8,7 +8,8 @@ import { ToastrService } from 'ngx-toastr';
 import { SEOService } from '../services/seo.service';
 import { LoadingService } from '../services/loading.service';
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+
 //declare function callforgatag(total,tax,orderno):any;
 // import { IpServiceService } from '../ip-service.service';
 // declare var $: any;

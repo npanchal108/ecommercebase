@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { InvoicePaymentComponent } from './invoice-payment.component';
 import { invoicepaymentRoutingModule } from './invoice-payment-routing.module';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from 'src/app/shared.module';
+import { sharedModule } from '../../model/shared.module';
+
 
 
 

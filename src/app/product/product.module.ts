@@ -6,7 +6,8 @@ import { ProductComponent } from './product.component';
 
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

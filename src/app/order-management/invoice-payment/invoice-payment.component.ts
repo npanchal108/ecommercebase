@@ -7,9 +7,10 @@ import { Common } from '../../../app/model/common.model';
 import { ToastrService } from 'ngx-toastr';
 import { SEOService } from '../../services/seo.service';
 import { UntypedFormBuilder } from '@angular/forms';
-import { LoadingService } from 'src/app/services/loading.service';
+
 import { OrderManagementService } from '../../services/order-management.service';
-import { id } from 'date-fns/locale';
+import { LoadingService } from '../../services/loading.service';
+
 // import * as $ from 'jquery';
 @Component({
   selector: 'app-invoice-payment',

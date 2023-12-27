@@ -31,6 +31,8 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 import { sharedModule } from '../app/model/shared.module';
 import { ImageSliderComponent } from './common/image-slider/image-slider.component';
 import { LocalStorage } from './model/common.model';
+import { OrderManagementService } from './services/order-management.service';
+import { CheckoutService } from './services/checkout.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -68,6 +70,7 @@ import { LocalStorage } from './model/common.model';
     provideClientHydration(),
     HttpClient,
     { provide: LocalStorage, useFactory: localStorageFactory },
+    
     SEOService,
     ContactService,
     LoadingService,
@@ -77,7 +80,9 @@ import { LocalStorage } from './model/common.model';
     MenuService,
     DecimalPipe,
     RoutingState,
-    DemoService
+    DemoService,
+    OrderManagementService,
+    CheckoutService
   ],
   bootstrap: [AppComponent]
 })

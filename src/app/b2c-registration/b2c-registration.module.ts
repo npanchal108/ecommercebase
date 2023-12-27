@@ -4,8 +4,9 @@ import { CommonModule } from '@angular/common';
 import { b2cregistrationRoutingModule } from './b2c-registration-routing.module';
 import { B2cRegistrationComponent } from './b2c-registration.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+
 import { RecaptchaFormsModule, RecaptchaModule } from 'ng-recaptcha';
+import { sharedModule } from '../model/shared.module';
 
 
 

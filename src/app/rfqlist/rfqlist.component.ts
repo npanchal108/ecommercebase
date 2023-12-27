@@ -19,8 +19,8 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
-import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';
-import { ShipToAddressPopupComponent } from '../../../src/app/checkout/shiptoaddresspopup.component';
+//import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';
+//import { ShipToAddressPopupComponent } from '../../../src/app/checkout/shiptoaddresspopup.component';
 @Component({
   selector: 'app-rfqlist',
   templateUrl: './rfqlist.component.html',
@@ -227,19 +227,19 @@ export class RfqlistComponent implements OnInit {
    
     let modifyShipId = addModifyFlag == "modify" ? this.shipId : '0';
     console.log('modifyShipId====>>',modifyShipId);
-    const dialogRef = this.dialog.open(ShipToAddressPopupComponent, {
-        data: { billingAddress: billingAddress,modifyShipId :  modifyShipId},
-        width: '800px',
-        // height:'0px'
-    });
+    // const dialogRef = this.dialog.open(ShipToAddressPopupComponent, {
+    //     data: { billingAddress: billingAddress,modifyShipId :  modifyShipId},
+    //     width: '800px',
+    //     // height:'0px'
+    // });
 
-    dialogRef.afterClosed().subscribe(async(result) => {
-        if (result) {
-          console.log('result===>',result)
-          await this.getShipingAddress(result);
-          this.shipAddressChange(result);
-        }
-      });
+    // dialogRef.afterClosed().subscribe(async(result) => {
+    //     if (result) {
+    //       console.log('result===>',result)
+    //       await this.getShipingAddress(result);
+    //       this.shipAddressChange(result);
+    //     }
+    //   });
   }
   
   openAddressvalidationpopup(): void {
@@ -267,21 +267,21 @@ export class RfqlistComponent implements OnInit {
           }
           this.newArray.push(temp);
         });
-        const dialogRef = this.dialog.open(AddressvalidationpopupComponent, {
-          data: { userList: this.newArray },
-          width: '600px',
-        });
+        // const dialogRef = this.dialog.open(AddressvalidationpopupComponent, {
+        //   data: { userList: this.newArray },
+        //   width: '600px',
+        // });
 
-        dialogRef.afterClosed().subscribe(result => {
-          if (result) {
-          console.log('result',result)
-           this.isPostalCodeValid = true;
-           this.shipping.Addr1 = result.addressLine1;
-           this.shipping.Addr2 = result.addressLine2;
-           this.shipping.PostalCode = result.postalCode;
-           this.shipping.City = result.city;
-          }
-        });
+        // dialogRef.afterClosed().subscribe(result => {
+        //   if (result) {
+        //   console.log('result',result)
+        //    this.isPostalCodeValid = true;
+        //    this.shipping.Addr1 = result.addressLine1;
+        //    this.shipping.Addr2 = result.addressLine2;
+        //    this.shipping.PostalCode = result.postalCode;
+        //    this.shipping.City = result.city;
+        //   }
+        // });
       }
       else if (this.addressList.length == 1) {
         console.log('this.addressList',this.addressList);
@@ -340,7 +340,7 @@ getitlableconfig() {
       company_sy: Common.getWithExpiry("company_sy")
     }
     return this.http.post(environment.APIUrl + '/Product/GetProductListBySearchforheader', pmodel, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) })
-      .map((results: any[]) => results.filter(res => res.freeform.toLowerCase().indexOf(token.toLowerCase()) > -1));
+      //.map((results: any[]) => results.filter(res => res.freeform.toLowerCase().indexOf(token.toLowerCase()) > -1));
   }
   typeaheadOnSelect(event) {
     if (event.item != undefined && event.item != null) {

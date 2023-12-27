@@ -5,7 +5,8 @@ import { SEOService } from '../services/seo.service';
 import { Common } from '../../app/model/common.model';
 import { DataService } from '../services/data.service';
 import { CheckoutService } from '../services/checkout.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../environments/environment';
+
 
 @Component({
   selector: 'app-contact',

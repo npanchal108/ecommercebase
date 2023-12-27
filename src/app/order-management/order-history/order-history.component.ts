@@ -6,11 +6,13 @@ import { DataService } from '../../services/data.service';
 import { Common } from '../../../app/model/common.model';
 // import { DatepickerOptions } from 'ng2-datepicker';
 import { SEOService } from '../../services/seo.service';
-import { DEF_CONF } from 'src/app/model/consts';
+
 import { IDatePickerConfig } from 'ng2-date-picker';
-import * as moment from 'moment';
-import { LoadingService } from 'src/app/services/loading.service';
-import { environment } from 'src/environments/environment';
+//import * as moment from 'moment';
+import { DEF_CONF } from '../../model/consts';
+import { LoadingService } from '../../services/loading.service';
+import { environment } from '../../../environments/environment';
+
 @Component({
   selector: 'app-order-history',
   templateUrl: './order-history.component.html',
@@ -38,8 +40,8 @@ export class OrderHistoryComponent implements OnInit {
   logintype:any;
   wanterdatelable:any;
   constructor(private loadingService: LoadingService,private seoService: SEOService, private dataService: DataService, private router: Router, private orderService: OrderManagementService) {
-    this.edate =moment(new Date());
-    this.sdate =moment(new Date()).add(-1, 'years');
+    //this.edate =moment(new Date());
+    //this.sdate =moment(new Date()).add(-1, 'years');
     this.wanterdatelable=environment.wanted_date;
 
     //this.edate = 
@@ -135,8 +137,8 @@ export class OrderHistoryComponent implements OnInit {
     this.Order = null;
     this.pono = null;
     this.itemnum = null;
-    this.sdate = moment();
-    this.edate = moment();
+    //this.sdate = moment();
+    //this.edate = moment();
     //this.Duration = 30;
     this.IsShow = true;
     this.getOrderHistory(this.page);

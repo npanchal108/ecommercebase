@@ -5,7 +5,8 @@ import { orderhistoryRoutingModule } from './order-history-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { DpDatePickerModule } from 'ng2-date-picker';
-import { sharedModule } from 'src/app/shared.module';
+import { sharedModule } from '../../model/shared.module';
+
 
 
 

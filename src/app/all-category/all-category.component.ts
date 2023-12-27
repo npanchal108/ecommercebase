@@ -8,11 +8,12 @@ import { SEOService } from '../services/seo.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Subscription } from 'rxjs';
 import { filter } from 'rxjs/operators';
-import { environment } from 'src/environments/environment';
+
 import { CartService } from '../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import * as arraySort from 'array-sort'
 import { LoadingService } from '../services/loading.service';
+import { environment } from '../../environments/environment';
 
 
 @Component({
@@ -2421,7 +2422,7 @@ export class AllCategoryComponent implements OnInit {
 
       if (this.category != undefined && this.category != null && this.category != '') {
         this.pptype = 1;
-        this.dataService.getproductdetailforlist(1, this.category).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('1', this.category).subscribe((res: any) => {
           this.productdetailsforlist = res;
           this.seoService.createLinkForCanonicalURLforproduct(encodeURIComponent(this.productdetailsforlist[0].tree_node) + '/' + this.productdetailsforlist[0].name.replace(/[^A-Z0-9]/ig, "-").replace(/---/g, '-').replace(/--/g, '-'));
           this.seoService.setPageTitle(this.productdetailsforlist[0].title_tag);
@@ -2431,7 +2432,7 @@ export class AllCategoryComponent implements OnInit {
       }
       else if (this.productName != undefined && this.productName != null && this.productName != '') {
         this.pptype = 2;
-        this.dataService.getproductdetailforlist(2, this.productName).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('2', this.productName).subscribe((res: any) => {
           this.productdetailsforlist = res;
 
           this.seoService.createLinkForCanonicalURLforproduct(encodeURIComponent(this.productdetailsforlist[0].product_line) + '/' + this.productdetailsforlist[0].descr.replace(/[^A-Z0-9]/ig, "-").replace(/---/g, '-').replace(/--/g, '-'));
@@ -2442,7 +2443,7 @@ export class AllCategoryComponent implements OnInit {
       }
       else if (selectedmaj_class != undefined && selectedmaj_class != null && selectedmaj_class != '') {
         this.pptype = 3;
-        this.dataService.getproductdetailforlist(3, selectedmaj_class).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('3', selectedmaj_class).subscribe((res: any) => {
           this.productdetailsforlist = res;
         });
       }

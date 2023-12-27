@@ -4,8 +4,10 @@ import { CommonModule } from '@angular/common';
 import { rfqlistRoutingModule } from './rfqlist-routing.module';
 import {RfqlistComponent } from './rfqlist.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
+import { sharedModule } from '../model/shared.module';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+
+
 
 
 
@@ -21,7 +23,7 @@ import { TypeaheadModule } from 'ngx-bootstrap/typeahead';
     CommonModule,
     FormsModule,
     sharedModule,
-    TypeaheadModule.forRoot(),
+    NgbTypeaheadModule,
     rfqlistRoutingModule
     
   ],

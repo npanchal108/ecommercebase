@@ -10,8 +10,9 @@ import { SEOService } from '../services/seo.service';
 import { LoadingService } from '../services/loading.service';
 import { OrderManagementService } from '../services/order-management.service';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment';
+
 import { GoogleTagManagerService } from 'angular-google-tag-manager';
+import { environment } from '../../environments/environment';
 //import { $ } from 'protractor';
 // import * as $ from 'jquery';
 @Component({
@@ -537,7 +538,7 @@ export class CartPreviewComponent implements OnInit, AfterViewInit {
       company_sy: Common.getWithExpiry("company_sy")
     }
     return this.http.post(environment.APIUrl + '/Product/GetProductListBySearchforheader', pmodel, { headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' }) })
-      .map((results: any[]) => results.filter(res => res.freeform.toLowerCase().indexOf(token.toLowerCase()) > -1));
+      //.map((results: any[]) => results.filter(res => res.freeform.toLowerCase().indexOf(token.toLowerCase()) > -1));
   }
   typeaheadOnSelect(event) {
     if (event.item != undefined && event.item != null) {
@@ -698,8 +699,10 @@ export class CartPreviewComponent implements OnInit, AfterViewInit {
     }
   }
   gototop() {
+    try{
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
+    }catch(ed){}
   }
 
   gerpricebreakconfig() {

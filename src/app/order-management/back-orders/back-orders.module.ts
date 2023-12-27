@@ -4,7 +4,8 @@ import { BackOrdersComponent } from './back-orders.component';
 import { backordersRoutingModule } from './back-orders-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { sharedModule } from 'src/app/shared.module';
+import { sharedModule } from '../../model/shared.module';
+
 
 
 

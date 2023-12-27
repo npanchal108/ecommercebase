@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { RegistrationService } from '../services/registration.service';
-import { Md5 } from 'ts-md5/dist/md5';
+
 import { Router } from '@angular/router';
 import * as CryptoJS from 'crypto-js';
 import { DataService } from '../services/data.service';

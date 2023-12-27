@@ -111,7 +111,7 @@ export class CategoryComponent implements OnInit {
         this.getBrandProduct();
       }
       else {
-        this.dataService.getproductdetailforlist(3, this.majclass).subscribe((res: any) => {
+        this.dataService.getproductdetailforlist('3', this.majclass).subscribe((res: any) => {
           this.productdetailsforlist = res;
         });
         this.getBrandListWithCount(this.majclass);

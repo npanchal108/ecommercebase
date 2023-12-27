@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { RegistrationService } from '../services/registration.service';
-import { Md5 } from 'ts-md5/dist/md5';
+
 import { CartService } from '../services/cart.service';
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../services/data.service';
@@ -162,7 +162,7 @@ export class SalesLoginComponent implements OnInit {
     //this.user.Password = Md5.hashStr(this.user.Password)
     var model = {
       "Username": this.user.Username,
-      "Password": Md5.hashStr(this.user.Password),
+      "Password": this.registerService.logMd5(this.user.Password),
       "LoginType": false
     }
 

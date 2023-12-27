@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { OrderViewComponent } from './order-view.component';
 import { orderviewRoutingModule } from './order-view-routing.module';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from 'src/app/shared.module';
+import { sharedModule } from '../../model/shared.module';
+
 
 
 

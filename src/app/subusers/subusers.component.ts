@@ -1,7 +1,7 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RegistrationService } from '../services/registration.service';
 import { NgForm } from '@angular/forms';
-import { Md5 } from 'ts-md5';
+
 import { ToastrService } from 'ngx-toastr';
 import { DataService } from '../services/data.service';
 import { Router } from '@angular/router';
@@ -12,7 +12,7 @@ import * as $ from 'jquery';
 import * as parser from 'parse-address'
 import * as passwordPolicy from 'password-policy'
 import { json } from 'express';
-import { environment } from 'src/environments/environment';
+
 @Component({
   selector: 'app-subusers',
   templateUrl: './subusers.component.html',

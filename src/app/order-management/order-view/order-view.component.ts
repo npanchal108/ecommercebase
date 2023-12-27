@@ -9,8 +9,9 @@ import { CheckoutService } from '../../services/checkout.service';
 import { SEOService } from '../../services/seo.service';
 import { ToastrService } from 'ngx-toastr';
 import { CartService } from '../../services/cart.service';
-import { LoadingService } from 'src/app/services/loading.service';
-import { environment } from 'src/environments/environment';
+import { environment } from '../../../environments/environment';
+import { LoadingService } from '../../services/loading.service';
+
 
 // import * as $ from 'jquery';
 @Component({
@@ -1485,7 +1486,7 @@ export class OrderViewComponent implements OnInit {
                     "MissingItemList": this.missingItems
                   }
 
-                  Common.setWithExpiry("MissingItems", model);
+                  Common.setWithExpiry("MissingItems",JSON.stringify(model));
 
                   this.cartService.cartBroadCaster1(this.orderDetail.length);
                 }

@@ -3,7 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ShippingAddressComponent } from './shipping-address.component';
 import { shippingaddressRoutingModule } from './shipping-address-routing.module';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

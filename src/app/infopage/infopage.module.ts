@@ -4,7 +4,8 @@ import { CommonModule } from '@angular/common';
 import { infopageRoutingModule } from './infopage-routing.module';
 import { infopageComponent } from './infopage.component';
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

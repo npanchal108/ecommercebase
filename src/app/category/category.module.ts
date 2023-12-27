@@ -5,7 +5,8 @@ import { categoryRoutingModule } from './category-routing.module';
 import { CategoryComponent } from './category.component';
 
 import { FormsModule } from '@angular/forms';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

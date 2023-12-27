@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 import { CartPreviewComponent } from './cart-preview.component';
 import { CartPreviewRoutingModule } from './cart-preview-routing.module';
 import { FormsModule } from '@angular/forms';
-import { TypeaheadModule } from 'ngx-bootstrap/typeahead'
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+import { NgbTypeaheadModule } from '@ng-bootstrap/ng-bootstrap';
+
 
 
 
@@ -17,7 +18,7 @@ import { sharedModule } from '../shared.module';
     CommonModule,
     FormsModule,
     sharedModule,
-    TypeaheadModule.forRoot(),
+    NgbTypeaheadModule,
     CartPreviewRoutingModule,
     
   ],

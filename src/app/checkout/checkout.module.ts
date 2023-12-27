@@ -4,7 +4,8 @@ import { CheckoutComponent } from './checkout.component';
 import { checkoutRoutingModule } from './checkout-routing.module';
 import { FormsModule } from '@angular/forms';
 import { DpDatePickerModule } from 'ng2-date-picker';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

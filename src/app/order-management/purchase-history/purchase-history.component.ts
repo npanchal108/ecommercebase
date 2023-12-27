@@ -6,15 +6,18 @@ import { Router } from '@angular/router';
 import { NG_VALIDATORS, FormControl, Validators, UntypedFormBuilder } from '@angular/forms';
 import { Common } from '../../../app/model/common.model';
 import { SEOService } from '../../services/seo.service';
-import * as moment from 'moment';
+//import * as moment from 'moment';
 // import * as _ from 'lodash';
 // import Rx from 'rxjs/Rx';
 // import * as $ from 'jquery';
 import { ToastrService } from 'ngx-toastr';
-import { LoadingService } from 'src/app/services/loading.service';
-import { DEF_CONF } from 'src/app/model/consts';
+//import { LoadingService } from 'src/app/services/loading.service';
+//import { DEF_CONF } from 'src/app/model/consts';
 import { IDatePickerConfig } from 'ng2-date-picker';
-import { environment } from 'src/environments/environment';
+import { LoadingService } from '../../services/loading.service';
+import { DEF_CONF } from '../../model/consts';
+import { environment } from '../../../environments/environment';
+//import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-purchase-history',
   templateUrl: './purchase-history.component.html',
@@ -76,8 +79,8 @@ export class PurchaseHistoryComponent implements OnInit {
     //this.ToDate =moment(new Date()).add(1, 'years');
     //this.FromDate =moment(new Date());
 this.iskrayden=environment.iskyraden;
-    this.ToDate=moment(new Date());
-    this.FromDate=moment(new Date()).add(-1, 'years');
+    //this.ToDate=moment(new Date());
+    //this.FromDate=moment(new Date()).add(-1, 'years');
     
     var geturl = Common.getWithExpiry("cpname");
     this.seoService.setPageTitle('Purchase History - ' + geturl);

@@ -4,7 +4,8 @@ import { SouthernQuotesComponent } from './southern-quotes.component';
 import { southernquotesRoutingModule } from './southern-quotes-routing.module';
 import { FormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
-import { sharedModule } from '../shared.module';
+import { sharedModule } from '../model/shared.module';
+
 
 
 

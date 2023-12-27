@@ -1,5 +1,5 @@
 
-import * as moment from 'moment';
+//import * as moment from 'moment';
 import { ECalendarValue, IDatePickerConfig } from 'ng2-date-picker';
 
 export const DEF_CONF: IDatePickerConfig = {
@@ -34,7 +34,7 @@ export const DEF_CONF: IDatePickerConfig = {
   timeSeparator: ':',
   multipleYearsNavigateBy: 10,
   showMultipleYearsNavigation: false,
-  locale: moment.locale(),
+ // locale: moment.locale(),
   hideInputContainer: false,
   returnedValueType: ECalendarValue.String,
   unSelectOnClick: false,

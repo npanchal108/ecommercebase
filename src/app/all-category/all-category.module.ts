@@ -3,8 +3,9 @@ import { CommonModule } from '@angular/common';
 
 import { allcategoryRoutingModule } from './all-category-routing.module';
 import { AllCategoryComponent } from './all-category.component';
-import { sharedModule } from '../shared.module';
+
 import { NgxPaginationModule } from 'ngx-pagination';
+import { sharedModule } from '../model/shared.module';
 
 
 
