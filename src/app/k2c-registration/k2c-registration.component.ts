@@ -10,7 +10,7 @@ import { SEOService } from '../services/seo.service';
 import { LoadingService } from '../services/loading.service';
 // import * as $ from 'jquery';
 import * as parser from 'parse-address';
-import * as passwordPolicy from 'password-policy';
+//import * as passwordPolicy from 'password-policy';
 // import { IpServiceService } from '../ip-service.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AddressvalidationpopupComponent } from '../addressvalidationpopup/addressvalidationpopup.component';
@@ -65,7 +65,7 @@ export class k2cRegistrationComponent implements OnInit {
   phoneval: any;
   cityno: any;
   isaccesswithlogin: any;
-  passwordpolicy1: any;
+  //passwordpolicy1: any;
   isaddressparse: string = '0';
   TextUpperCase: any;
   company: any = 0;
@@ -195,18 +195,18 @@ export class k2cRegistrationComponent implements OnInit {
       });
     }
   }
-  GetConfigurationforPasswordPolicy() {
-    this.passwordpolicy1 = this.dataService.Getconfigbykey("PasswordPolicy");
-    if (this.passwordpolicy1 == null || this.passwordpolicy1 == undefined || this.passwordpolicy1 == '') {
-      this.passwordpolicy1 = Common.getWithExpiry("passwordpolicy");
-    }
-    if (this.passwordpolicy1 == null || this.passwordpolicy1 == undefined || this.passwordpolicy1 == '') {
-      this.dataService.GetConfigurationforPasswordPolicy().subscribe((res: any) => {
-        this.passwordpolicy1 = res;
-        Common.setWithExpiry("passwordpolicy", this.passwordpolicy1);
-      });
-    }
-  }
+  // GetConfigurationforPasswordPolicy() {
+  //   this.passwordpolicy1 = this.dataService.Getconfigbykey("PasswordPolicy");
+  //   if (this.passwordpolicy1 == null || this.passwordpolicy1 == undefined || this.passwordpolicy1 == '') {
+  //     this.passwordpolicy1 = Common.getWithExpiry("passwordpolicy");
+  //   }
+  //   if (this.passwordpolicy1 == null || this.passwordpolicy1 == undefined || this.passwordpolicy1 == '') {
+  //     this.dataService.GetConfigurationforPasswordPolicy().subscribe((res: any) => {
+  //       this.passwordpolicy1 = res;
+  //       Common.setWithExpiry("passwordpolicy", this.passwordpolicy1);
+  //     });
+  //   }
+  // }
   gototop() {
     document.body.scrollTop = 0;
     document.documentElement.scrollTop = 0;
@@ -236,7 +236,7 @@ export class k2cRegistrationComponent implements OnInit {
     this.gototop();
     this.getloginfraudmsg();
     this.Getcaptchavalue();
-    this.GetConfigurationforPasswordPolicy();
+    //this.GetConfigurationforPasswordPolicy();
     this.GetConfigtoRegistrationLable();
     this.GetconfigurationfroAddressParser();
     this.Accessannomyous();
@@ -435,43 +435,43 @@ export class k2cRegistrationComponent implements OnInit {
         element.focus();
         return;
       }
-      if (this.passwordpolicy1 == '1') {
-        if (passwordPolicy.hasLowerCase(this.user.Password) == false) {
-          isValidation = true;
-          this.toastr.error("Password should contain One Lower Case Character", 'Message!');
-          const element = this.renderer.selectRootElement("#userPassword");
-          element.focus();
-          return;
-        }
-        if (passwordPolicy.hasUpperCase(this.user.Password) == false) {
-          isValidation = true;
-          this.toastr.error("Password should contain One Upper Case Character", 'Message!');
-          const element = this.renderer.selectRootElement("#userPassword");
-          element.focus();
-          return;
-        }
-        if (passwordPolicy.hasNumber(this.user.Password) == false) {
-          isValidation = true;
-          this.toastr.error("Password should contain One Numeric value", 'Message!');
-          const element = this.renderer.selectRootElement("#userPassword");
-          element.focus();
-          return;
-        }
-        if (passwordPolicy.hasSpecialCharacter(this.user.Password) == false) {
-          isValidation = true;
-          this.toastr.error("Password should contain One Special Character", 'Message!');
-          const element = this.renderer.selectRootElement("#userPassword");
-          element.focus();
-          return;
-        }
-        if (this.user.Password.length < 8 || this.user.Password.length > 20) {
-          isValidation = true;
-          this.toastr.error("Password Length should not be less then 8 and greater then 20 characters", 'Message!');
-          const element = this.renderer.selectRootElement("#userPassword");
-          element.focus();
-          return;
-        }
-      }
+      // if (this.passwordpolicy1 == '1') {
+      //   if (passwordPolicy.hasLowerCase(this.user.Password) == false) {
+      //     isValidation = true;
+      //     this.toastr.error("Password should contain One Lower Case Character", 'Message!');
+      //     const element = this.renderer.selectRootElement("#userPassword");
+      //     element.focus();
+      //     return;
+      //   }
+      //   if (passwordPolicy.hasUpperCase(this.user.Password) == false) {
+      //     isValidation = true;
+      //     this.toastr.error("Password should contain One Upper Case Character", 'Message!');
+      //     const element = this.renderer.selectRootElement("#userPassword");
+      //     element.focus();
+      //     return;
+      //   }
+      //   if (passwordPolicy.hasNumber(this.user.Password) == false) {
+      //     isValidation = true;
+      //     this.toastr.error("Password should contain One Numeric value", 'Message!');
+      //     const element = this.renderer.selectRootElement("#userPassword");
+      //     element.focus();
+      //     return;
+      //   }
+      //   if (passwordPolicy.hasSpecialCharacter(this.user.Password) == false) {
+      //     isValidation = true;
+      //     this.toastr.error("Password should contain One Special Character", 'Message!');
+      //     const element = this.renderer.selectRootElement("#userPassword");
+      //     element.focus();
+      //     return;
+      //   }
+      //   if (this.user.Password.length < 8 || this.user.Password.length > 20) {
+      //     isValidation = true;
+      //     this.toastr.error("Password Length should not be less then 8 and greater then 20 characters", 'Message!');
+      //     const element = this.renderer.selectRootElement("#userPassword");
+      //     element.focus();
+      //     return;
+      //   }
+      // }
       if (this.user.EmailAddress == "" || this.user.EmailAddress == undefined) {
         this.isEmailrCodeValidation = true;
         isValidation = true;
