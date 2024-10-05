@@ -41,7 +41,7 @@
     "ngx-slick-carousel": "^17.0.0",
     "ngx-toastr": "^18.0.0",
     "node-loader": "^2.0.0",
-    "npm": "^10.2.5",
+    "npm": "^10.9.0",
     "parse-address": "^1.1.2",
     "password-policy": "^0.0.3",
     "pdfjs-dist": "^4.0.269",
